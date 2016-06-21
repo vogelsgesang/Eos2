@@ -1,0 +1,11 @@
+#<type> "." <pattern that is matched> "=" ("@" method | "%" property | "!" class) <template>  "#" <explanation>
+class.CarEv3             = !CarEv3#The standard car of the Lego Ev3 edu.
+
+carev3.connect          = @connect(name)#connect(name:String)<br>Establishes a remoteconnection to the EV3. 
+carev3.turnleft         = @turnLeft(angle)#turnLeft(angle:Integer)<br>Turns the car to the left.
+carev3.turnright        = @turnRight(angle)#turnRight(angle:Integer)<br>Turns the car to the right.
+carev3.moveforward      = @moveForward(distance)#moveForward(distance:Integer)<br>Moves the car forward.
+carev3.movebackward     = @moveBackward(distance)#moveBackward(distance:Integer)<br>Moves the car backward.
+carev3.honk             = @honk()#honk()<br>The car plays a sound.
+carev3.distance         = @distance()#distance():Integer<br>Returns the distances to the next obstacle in mm.
+carev3.angle            = @angle()#angle():Integer<br>Returns the orientation of the car in degree.

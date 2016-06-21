@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Textfeld</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Textfeld</h1>         
+        Textfelder haben alle Attribute und Methoden der Klassen 
+        <a href = "figur.html">Figur</a>, <a href = "strichfigur.html">StrichFigur</a>,
+        <a href = "gefuelltefigur.html">Gef&uuml;llteFigur</a> und <a href = "rechteck.html">Rechteck</a>.
+        <h2>Setter- und Getter-Methoden</h2>
+        Zu jedem Attribut gibt es in der Regel zwei Methoden zum Setzen und Lesen des Attributwertes.<br>
+        ZB. x:Zahl &harr; xLesen():Zahl &harr; xSetzen(x:Zahl)<br>
+        Diese werden nicht separat dokumentiert. 
+        <h2>Methoden</h2>
+        <h3>zeileHinzuf&uuml;gen(zeile:Zeichenkette)</h3>
+        F&uuml;gt die <b>zeile</b> dem Textfeld hinzu.
+        <h3>zeileL&ouml;schen()</h3>
+        L&ouml;scht die letzte Zeile.
+        <h2>Attribute</h2>
+        <h3>schriftfarbe:Farbe</h3>
+        Die Farbe der Schrift.        
+        <h3>schriftgr&ouml;&szlig;e:Zahl</h3>
+        Die Gr&ouml;&szlig;e der Schrift.
+        <h3>schriftart:Zeichenkette</h3>
+        Die Schriftart.
+        <h3>ausrichtungVertikal:Ausrichtung</h3>
+        Die vertikale Ausrichtung des Textes.
+        <h3>ausrichtungHorizontal:Ausrichtung</h3>
+        Die horizontale Ausrichtung des Textes.
+        <h3>gr&ouml;&szlig;eAutomatischAnpassen:Wahrheitswert</h3>
+        Legt fest ob das umgebende Rechteck automatisch an die Gr&ouml;&szlig;e des Textes angepasst wird.
+        Am Anfang ist die automatische Anpassung aktiv.
+        <h3>durchsichtig:Wahrheitswert</h3>
+        Legt fest ob das umgebende Rechteck angezeigt werden soll.
+        <h2>Beispiel</h2>
+<code>t:Textfeld<br>
+t.zeileHinzuf&#252;gen(<span style="color:blue">"Hallo,&nbsp;Welt!"</span>)</code>        
+    </body>
+</html>

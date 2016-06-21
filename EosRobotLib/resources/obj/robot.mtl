@@ -1,0 +1,43 @@
+# Blender MTL File: 'robot.blend'
+# Material Count: 5
+
+newmtl energia_sanilux_game
+Ns 92.156863
+Ka 0.000000 0.000000 0.000000
+Kd 0.000000 0.793846 0.793846
+Ks 0.735294 0.735294 0.735294
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl goma_del_torso
+Ns 92.156863
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl metal_blanco_sanilux_
+Ns 92.156863
+Ka 0.231746 0.231746 0.231746
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 3
+
+newmtl metal_rosa
+Ns 92.156863
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 3
+
+newmtl metal_rosa.001
+Ns 92.156863
+Ks 0.250000 0.250000 0.250000
+Ni 1.000000
+d 1.000000
+illum 3

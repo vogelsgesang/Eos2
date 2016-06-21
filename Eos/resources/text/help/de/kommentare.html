@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Kommentare</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Kommentare</h1>
+        <p>Kommentare sind Texte die zwar in einem Programm stehen, die der Rechner aber vollst&auml;ndig (mit sehr wenigen Ausnahmen) ignoriert.</p>
+        <p>Sie dienen dazu ein Programm mit Erl&auml;uterungen und Bemerkungen zu versehen.
+        Diese sind notwendig, um Programme verstehen zu k&ouml;nnen. Einen Kommentar sollte man immer dann 
+        schreiben, wenn aus dem Quellcode nicht eindeutig hervorgeht, was er tut oder es Informationen gibt die 
+        an dieser Stelle nicht ersichtlich sind.</p>
+        <p>Die Kommentare helfen einerseits anderen Programme schneller und besser zu verstehen. Andererseits vergisst man auch seine eigenen
+        Programme teilweise recht schnell und ist froh, wenn man es aufgeschrieben hat.</p>
+        <h2>Schreibweise</h2>
+        <h3>Zeilen Kommentar</h3>
+        <p><b>//</b> Der ganze Rest der Zeile ist eine Kommentar egal was darin steht.</p>
+        Zeilen Kommentare eignen sich insbesondere, um hinter einem Befehl einen Kommentar zu erg&auml;nzen.
+        <h3>Bereichs Kommentar</h3>
+        <p><b>/*</b> Texte zwischen /* und */ sind ein Kommentar <b>*/</b></p>
+        oder alternativ
+        <p><b>{</b> Texte zwischen geschweiften Klammern sind ein Kommentar <b>}</b></p>
+        Bereichskommentare d&uuml;rfen auch innerhalb von Zeilen stehen. &Uuml;berall wo ein
+        Leerzeichen sein kann, kann auch ein Bereichkommentar stehen.
+    <h2>Beispiel</h2>
+<code>k:Kreis<span style="color:green">&nbsp;//Das&nbsp;ist&nbsp;ein&nbsp;Kreis<br>
+</span><span style="color:green">{Dies&nbsp;ist&nbsp;ein&nbsp;mehrzeiliger&nbsp;Kommentar.<br>
+zweite&nbsp;Zeile.<br>
+dritte&nbsp;Zeile.}</span><br>
+k.verschieben(-<span style="color:blue">1</span><span style="color:green">/*nach&nbsp;links*/</span>,<span style="color:blue">1</span><span style="color:green">/*nach&nbsp;oben*/</span>)</code>    </body>
+</html>

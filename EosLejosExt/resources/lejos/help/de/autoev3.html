@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AutoEv3</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>AutoEv3</h1>
+        <p>Objekte dieser Klasse dienen als Fernsteuerung eines Lego Ev3 Roboters.
+        Die Objekte besitzen daher keine Attribute. Die Methodenaufrufe werden direkt an den Roboter weitergeleitet.
+        Daher ist es unbedingt erforderlich, dass die Methode verbinden() als erstes aufgerufen wird.
+        </p>
+        <p>
+        Bevor Sie diese Klasse das Erste mal verwenden können müssen Sie den Lego Ev 3 Roboter vorbereiten.
+        <ol>
+        <li>Der Roboter sollte nach dem Lego Ev3 Education Modell gebaut werden.
+        <li>Der Roboter muss mit dem Ultraschallensor an Port 4 und dem Gyrosensor an Port 1 bestückt werden.
+        <li>Der Roboter muss mit einer Lejos SD Karte gestartet werden.
+        <li>Der Roboter muss mit dem selben Netzwerk verbunden sein wie der Rechner.
+        <li>Auf dem Roboter muss das Programm EosServer.jar gestartet werden.
+        </ol>
+        </p>
+        <p>Die SD Karte erstellen Sie mit Hilfe des Lejos Images und der Lego JVM von Oracle. Das entsprechende Flash
+        Programm können Sie starten, indem Sie die Datei EosLejosExt.jar aufrufen.
+        Die Lejos Seiten bieten detailiertere Anleitung, wie die SD Karte erstellt wird.
+        </p>
+        <p>
+        Um den Roboter in ein Netzwerk einzubinden bietet es sich an einen WLan Stick an den Roboter anzuschließen.
+        Hier gibt es sehr kompakte Sticks, welche ideal für diesen Zweck sind. Nachdem der Roboter von der Lejos SD Karte
+        gestartet wurde. Kann er relativ einfach ins WLan eingebunden werden.
+        Theoretisch kann man auch Bluetooth verwenden, WLan ist jedoch die bessere Alternative.
+        </p>
+        <p>
+        Das Programm EosServer.jar kann mit Hilfe der Lejos-Konsole direkt an den Roboter geschickt und gestartet werden.
+        Diese Programm wartet auf die Befehle von Eos 2 und setzt sie um. Wenn Sie ein
+        anderes Robotermodell einsetzen wollen, so müssen Sie lediglich die EosServer.jar umschreiben und 
+        entsprechend ihrem Roboter anpassen. Abhängig von ihren verwenden Reifen, Radabstand, Sensorkonfiguration,
+        benötigen Sie andere Motor und Sensorbefehle.
+        Ist ihr Modell konzeptionell völlig anders, zB ein Kran, so müssen Sie auch die EosLejosExt.jar anpassen.
+        </p>
+        <h2>Methoden</h2>
+        <h3>verbinden(ip:Zeichenkette)</h3>
+        Eos 2 baut eine tcp/ip Verbindung zum Roboter auf. War dies erfolgreich wechselt die Farbe des Roboters
+        und er gibt einen Ton von sich. Die Verbindung wird bei Programmende automatisch freigegeben.
+        <h3>linksDrehen(winkel:Integer)</h3>
+        Der Roboter dreht sich um den Winkel nach links. Diese Drehung hängt sowohl vom Untergrund als auch vom
+        Radstand und einigen anderen Bedingungen ab. Der Winkel wird daher nur ungefähr eingehalten.
+        <h3>rechtsDrehen(winkel:Integer)</h3>
+        Der Roboter dreht sich um Winkel nach rechts.
+        <h3>vorwärtsFahren(entfernung:Integer)</h3>
+        Der Roboter fährt die Entfernung in Millimeter nach vorne. Abhängig von den Motoren
+        dem Batteriezustand, fährt der Roboter nur ungefähr nach vorne. Es wird immer eine 
+        kleine Kurve gefahren. Da die Räder usw. nie exakt ausgerichtet sind.
+        <h3>rückwärtsFahren(entfernung:Integer)</h3>
+        Der Roboter fährt die Entfernung in Millimeter nach hinten.
+        <h3>abstand()</h3>
+        Liefert den Messwert des Ultraschallsensors in Millimeter. Der Sensor ist
+        in etwa auf 2 cm genau.
+        <h3>winkel()</h3>
+        Liefert den Messwert des Gyrosensors in Grad. 0 Grad ist hier der Anfangswert. Der Winkel ist auf etwa 3 Grad genau.
+        <h3>hupen()</h3>
+        Der Roboter gibt einen Ton von sich.   
+    </body>
+</html>

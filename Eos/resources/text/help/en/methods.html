@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Methods</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Userdefined methods</h1>
+        <p>
+        A userdefined method is a command sequence, that can be called several times.
+        That way you can reuse command sequences multiple times without tipping
+        them again.
+        EOS knows methods and procedures. Methods can access all defined variables. Procedures can only
+        access parameters.</p>
+        <p>
+           Different methods need at least different names or a different count of parameters.
+        </p>         
+        <h2>Syntax</h2>
+        <h3>Method without parameter</h3>
+        <p><b>method</b> name<br>
+        &nbsp;&nbsp;sequence<br>
+        <b>*method</b></p>
+        <h3>Method with parameters</h3>
+        <p><b>method</b> name( parameters )<br>
+        &nbsp;&nbsp;sequence<br>
+        <b>*method</b></p>
+        <h3>Method with parameters and result</h3>
+        <p><b>method</b> name( narameters ):type<br>
+        &nbsp;&nbsp;sequence<br>
+            &nbsp;&nbsp;result = ...<br>   
+        <b>*method</b></p>
+        <h3>Parameters</h3>
+        Parameter are written like<br>
+        <p>
+            name : type, name : type , ... , name : type 
+        </p>
+        you can define several parameters at once, that use the same type
+        <p>
+            name, name, ... , name : type 
+        </p>
+        <h3>Usage</h3>
+        In order to invoke a procdure or method write
+        <p>
+            name( arguments ) 
+        </p>
+<h2>Example</h2>
+<code>
+<b>method</b>&nbsp;move(r:Rectangle,&nbsp;degree:real)<br>
+&nbsp;&nbsp;&nbsp;r.move(cos(degree),&nbsp;sin(degree))<b><br>
+*method</b><br>
+r1:Rectangle<br>
+r2:Rectangle<br>
+move(r1,<span style="color:blue">&nbsp;10</span>)<br>
+move(r2,<span style="color:blue">&nbsp;20</span>)
+</code>                
+        <h2>BNF</h2>
+Method := "method" Name [ Parameter ] [ ":" Typ ] Sequence "*methode" <br>
+Parameter := "(" [ Name ( "," Name )* ":" Typ ( "," Name ( "," Name )* ":" Typ )* ] ")" <br>
+Name := Any name that starts with a letter without empty spaces<br>
+Sequence := A command sequence<br> 
+Explanation: <br>
+[] optional<br>
+()* any number of<br>
+    </body>
+</html>

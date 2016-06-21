@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jardesc>
+    <jar path="Distribution/EosBase/Eos.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/Eos/mf/Eos.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="false" mainClassHandleIdentifier="=Eos/src&lt;de.lathanda.eos{Start.java[Start" manifestLocation="/Eos/mf/eos.mf" manifestVersion="1.0" reuseManifest="false" saveManifest="true" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
+        <javaElement handleIdentifier="=Eos/src"/>
+        <javaElement handleIdentifier="=Eos/resources"/>
+        <file path="/Eos/.classpath"/>
+        <file path="/Eos/.project"/>
+    </selectedElements>
+</jardesc>

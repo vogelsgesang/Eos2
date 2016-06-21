@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Randart/Linienart</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Randart/Linienart</h1>
+        <p>Die Randart gibt an wie der Rand einer Figur gezeichnet wird. Es gibt folgende vordefinierte Werte: 
+        </p>    
+        <ul>
+        <li>gestrichelt</li>
+        <li>durchgezogen</li>
+        <li>gepunktelt</li>
+        <li>gestrichpunktelt</li>
+        <li>unsichtbar</li>
+        </ul>       
+        <h2>Verwendung</h2>
+        Die Randart/Linienart wird f&uuml;r folgende Methoden und Attribute ben&ouml;tigt.
+        <ul>
+        <li>Gruppe.randartsetzen(art:Randart)</li>
+        <li>StrichFigur.randartSetzen(art:Randart)</li>
+        <li>StrichFigur.randartlesen():Randart</li>
+        <li>StrichFigur.randart:Randart </li>
+        <li>Linie.linienartLesen():LinienArt</li>
+        <li>Linie.linienartSetzen(art:LinienArt)</li>
+        <li>Linie.linienart:LinienArt</li>
+        </ul>
+<h2> Beispiel</h2>
+<code>k:Kreis<br>
+k.randartSetzen(<span style="color:blue">gepunktelt</span>)</code>               
+        <h2>BNF</h2>
+RandArt :=  "gestrichelt" | "durchgezogen" | "gepunktelt" | "gestrichpunktelt" | "unsichtbar" <br>
+    </body>
+</html>

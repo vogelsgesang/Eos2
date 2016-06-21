@@ -1,0 +1,19 @@
+t:Turtle
+t.vor(10)
+t.füllfarbeSetzen(rot)
+t.füllartSetzen(ausgemalt)
+t.rechtsDrehen(60)
+wiederhole 6 mal
+  t.vor(5)
+  t.linksDrehen(60)
+*wiederhole
+t.turtleSichtbarSetzen(falsch)
+g:Gruppe
+wiederhole 5 mal
+  g.kopiere(t)
+  g.drehen(60)
+*wiederhole
+g.schlucke(t)
+wiederhole immer
+  g.drehen(1)
+*wiederhole

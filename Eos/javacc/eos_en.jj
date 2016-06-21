@@ -1,0 +1,1057 @@
+/**
+ * Copyright (c) 2015, Peter "Lathanda" Schneider
+ * CC BY-NC-SA
+ * Version 0.9.9
+ *
+ */
+options {
+  LOOKAHEAD              = 1;
+  CHOICE_AMBIGUITY_CHECK = 2;
+  OTHER_AMBIGUITY_CHECK  = 2;
+  STATIC = false;
+  DEBUG_PARSER        = false;
+  DEBUG_LOOKAHEAD     = false;
+  DEBUG_TOKEN_MANAGER = false;
+  ERROR_REPORTING     = true;
+  JAVA_UNICODE_ESCAPE = false;
+  UNICODE_INPUT       = true;
+  IGNORE_CASE         = true;
+  USER_TOKEN_MANAGER  = false;
+  USER_CHAR_STREAM    = true;
+  BUILD_PARSER        = true;
+  BUILD_TOKEN_MANAGER = true;
+  SANITY_CHECK        = true;
+  FORCE_LA_CHECK      = false;
+  COMMON_TOKEN_ACTION = true;
+  CACHE_TOKENS        = false;
+  OUTPUT_DIRECTORY    = "../src/de/lathanda/eos/interpreter/javacc";
+}
+
+PARSER_BEGIN(EnParser)
+
+package de.lathanda.eos.interpreter.javacc;
+import de.lathanda.eos.interpreter.parsetree.*;
+import de.lathanda.eos.interpreter.*;
+import de.lathanda.eos.base.*;
+import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
+@SuppressWarnings("unused")
+public class EnParser implements EosParser {  
+    private MarkerStack markerStack = new MarkerStack();
+    private Program program;
+    private String path;
+    private int level;
+    void open() {
+        markerStack.push(new Marker());
+        Token old = token;
+        markerStack.peek().begin(getNextToken());
+        token = old;
+    }
+    void close(Node node) {
+        markerStack.peek().end(token);
+        node.setMarker(markerStack.pop());
+        program.addNode(node);
+    }
+    void setCode(Node node) {
+        node.setMarker(new Marker(token));
+        program.addNode(node);
+    }
+    void newlineInc() {
+        Token old = token;
+        program.prettyPrinterNewline(getNextToken().beginColumn, level);
+        level++;
+        token = old;    
+    }
+    void newlineDec() {
+        Token old = token;
+        level--;
+        program.prettyPrinterNewline(getNextToken().beginColumn, level);
+        token = old;    
+    }
+    void newlineDecInc() {
+        Token old = token;
+        level--;
+        program.prettyPrinterNewline(getNextToken().beginColumn, level);
+        level++;
+        token = old;    
+    }
+    void newline() {
+        Token old = token;
+        program.prettyPrinterNewline(getNextToken().beginColumn, level);
+        token = old;    
+    }    
+}
+
+
+PARSER_END(EnParser)
+
+TOKEN_MGR_DECLS : {
+  Program program;
+  void CommonTokenAction(Token t) {
+    Token comment = t.specialToken;
+    if (comment != null) {
+      while (comment.specialToken != null) {
+        comment = comment.specialToken;
+      }
+      while (comment != null) {
+        program.addToken(new SourceToken(comment));
+        comment = comment.next;
+      }      
+    }
+    program.addToken(new SourceToken(t));
+  }
+  void setProgram(Program program) {
+    this.program = program;
+  }
+}
+
+/** Wörter der Sprache */
+TOKEN: 
+{ 
+  < IMPORT:        "insert" >
+| < END_IMPORT:    "*insert" >
+| < PROGRAM:       "program" >
+| < END_PROGRAM:   "*program" >
+| < PROCEDURE:     "procedure" >
+| < END_PROCEDURE: "*procedure" >   
+| < METHOD:        "method" >
+| < END_METHOD:    "*method" >   
+| < REPEAT:        "repeat" >
+| < TIMES:         "times">  
+| < FOREVER:       "forever" >
+| < UNTIL:         "until" >
+| < END_REPEAT:    "*repeat" >
+| < IF:            "if" >
+| < THEN:          "then" >
+| < ELSE:          "else" >
+| < END_IF:        "*if" >
+| < WITH:          "with" >
+| < END_WITH:      "*with" >
+| < WHILE:         "while" >
+| < DO:            "do" > 
+| < END_WHILE:     "*while" >
+| < TRUE:          "true" >
+| < FALSE:         "false" >
+| < RESULT:        "result" >
+}
+
+/** Trennende Zeichen */
+TOKEN : 
+{
+  < LPAREN:    "(" >
+| < RPAREN:    ")" >
+| < SEMICOLON: ";" >
+| < COLON:     ":" >  
+| < SEPARATOR: "," >
+| < DOT:       "." >
+}
+
+/** Operationen */
+TOKEN : 
+{
+  < ASSIGN: ":=" >
+| < GT:     ">" >
+| < LT:     "<" >
+| < EQ:     "=" >
+| < LE:     "<=" >
+| < GE:     ">=" >
+| < NE:     "<>" >
+| < OR:     "or" >
+| < AND:    "and" >
+| < NOT:    "not" >
+| < PLUS:   "+" >
+| < MINUS:  "-" >
+| < MULT:   "*" >
+| < DIV:    "/" >
+| < POW:    "^" >
+}
+
+/** Konstanten */
+TOKEN : 
+{
+  < YELLOW:        "yellow" >
+| < RED:           "red" >
+| < GREEN:         "green" >
+| < BLUE:          "blue" >
+| < WHITE:         "white" >
+| < BLACK:         "black" >
+| < BROWN:         "brown" >
+| < LIGHT_BLUE:    "lightblue" >
+| < LIGHT_GREEN:   "lightgreen" >
+| < GRAY:          "grey" >
+| < LIGHT_GRAY:    "lightgrey" >
+| < DASHED:        "dashed" >
+| < SOLID:         "solid" >
+| < DOTTED:        "dotted" >
+| < DASHED_DOTTED: "dasheddotted" >
+| < INVISIBLE:     "invisible" >
+| < FILLED:        "filled" >
+| < SHADED:        "ruled" >
+| < DARK_SHADED:   "checked" >
+| < TRANSPARENT:   "transparent" >
+| < CENTER:        "centered" >
+| < LEFT:          "leftaligned" >
+| < RIGHT:         "rightaligned" >
+| < TOP:           "topaligned" >
+| < BOTTOM:        "bottomaligned" >
+}
+
+/** Leere Zeichen */
+SKIP : 
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| "\f"
+| "\u00a0"
+}
+
+/** Kommentare */
+SPECIAL_TOKEN : 
+{
+  <SINGLE_LINE_COMMENT: "//" (~["\n","\r"])* ("\n"|"\r"|"\r\n")>
+| <MULTI_LINE_COMMENT: "/*" (~["*"])* "*" ("*" | (~["*","/"] (~["*"])* "*"))* "/">
+| <MULTI_LINE_COMMENT2: "{" (~["}"])* "}">
+}
+
+/** Zahlen und Zeichenketten */
+TOKEN : 
+{
+  < INTEGER_LITERAL:
+        <DECIMAL_LITERAL>
+  >
+|
+  < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* | "0" >
+|
+  < FLOATING_POINT_LITERAL:
+        (["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)?
+      | "." (["0"-"9"])+ (<EXPONENT>)?
+      | (["0"-"9"])+ <EXPONENT>
+  >
+|
+  < #EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ >
+|
+  < STRING_LITERAL1:
+      "\""
+      (   (~["\"","\\","\n","\r"])
+        | ("\\"
+            ( ["n","t","r","\\","\""]
+            )
+          )
+      )*
+      "\""
+  >
+|  < STRING_LITERAL2:
+      "\'"
+      (   (~["\'","\\","\n","\r"])
+        | ("\\"
+            ( ["n","t","r","\\","\'"]
+            )
+          )
+      )*
+      "\'"
+  >
+| < COLOR_LITERAL_RGB:
+     "#" ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"]
+  >
+| < COLOR_LITERAL_RGBA:
+     "#" ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] 
+  >
+}
+/** Bezeichner */
+TOKEN : 
+{
+  < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
+|
+  < #LETTER:
+      [
+       "\u0024",
+       "\u0041"-"\u005a",
+       "\u005f",
+       "\u0061"-"\u007a",
+       "\u00c0"-"\u00d6",
+       "\u00d8"-"\u00f6",
+       "\u00f8"-"\u00ff",
+       "\u0100"-"\u1fff",
+       "\u3040"-"\u318f",
+       "\u3300"-"\u337f",
+       "\u3400"-"\u3d2d",
+       "\u4e00"-"\u9fff",
+       "\uf900"-"\ufaff"
+      ]
+  >
+|
+  < #DIGIT:
+      [
+       "\u0030"-"\u0039",
+       "\u0660"-"\u0669",
+       "\u06f0"-"\u06f9",
+       "\u0966"-"\u096f",
+       "\u09e6"-"\u09ef",
+       "\u0a66"-"\u0a6f",
+       "\u0ae6"-"\u0aef",
+       "\u0b66"-"\u0b6f",
+       "\u0be6"-"\u0bef",
+       "\u0c66"-"\u0c6f",
+       "\u0ce6"-"\u0cef",
+       "\u0d66"-"\u0d6f",
+       "\u0e50"-"\u0e59",
+       "\u0ed0"-"\u0ed9",
+       "\u1040"-"\u1049"
+      ]
+  >
+}
+
+/** Produktionen */
+void Parse(Program program, String path) :
+{
+  this.path = path;
+  this.program = program;
+  token_source.setProgram(program);
+  Sequence sequence;
+  SubRoutine sub;
+}
+{
+  sequence = Sequence() {program.add(sequence); }
+  (
+    ( 
+      sequence = Program() {program.add(sequence);} | 
+      sub = Procedure()    {program.add(sub);} |
+      sub = Method()       {program.add(sub);} |
+      Import()
+    )
+     sequence = Sequence() {program.add(sequence);}
+  )*
+  <EOF>
+}
+Sequence Program( ) :
+{Sequence sequence;}
+{
+  {newlineInc();} "program"
+    sequence = Sequence()
+  {newlineDec();} "*program"
+  {
+    return sequence;
+  }
+}
+
+SubRoutine Procedure( ) :
+{String name; Sequence sequence;Parameters parameters = null; Type ret =null;}
+{
+  {open();}
+  {newlineInc();} "procedure" name = Name() [parameters = Parameters()] [":" ret = Type()]
+    sequence = Sequence()
+  {newlineDec();} "*procedure"
+  {
+    SubRoutine subroutine = new SubRoutine(name, parameters, sequence, ret, false);
+    close(subroutine); 
+    return subroutine;
+  }
+}
+
+SubRoutine Method( ) :
+{String name; Sequence sequence;Parameters parameters = null; Type ret =null;}
+{
+  {open();}
+  {newlineInc();} "method" name = Name() [parameters = Parameters()] [":" ret = Type()]
+    sequence = Sequence()
+  {newlineDec();} "*method"
+  {
+    SubRoutine subroutine = new SubRoutine(name, parameters, sequence, ret, true);
+    close(subroutine); 
+    return subroutine;
+  }
+}
+
+Parameters Parameters( ) :
+{Parameters parameters = new Parameters();}
+{      
+  "(" [ 
+    Parameter(parameters)  
+    ( "," Parameter(parameters) )* 
+  ] ")"
+  { return parameters;}
+}
+
+void Parameter(Parameters parameters ) :
+{String name; Type type; }
+{
+  name = Name() {parameters.addName(name);} 
+  (
+    "," name = Name() {parameters.addName(name);}
+  )* ":" type = Type() {parameters.setType(type);}
+}
+
+void Import( ) :
+{
+  File file;
+  Program subprogram;
+}
+{
+  {newlineInc();} "insert"
+    file = File()
+    {
+      try {
+        subprogram = new Program();
+        Parser parser = new Parser(new StringCharStream(file));
+        parser.Parse(subprogram, file.getParent());
+        program.merge(subprogram, new Marker(token));
+      } catch (IOException ioe) {
+        throw new ParseException(ioe.getLocalizedMessage());
+      }
+    } 
+    
+    ( "," {newline();} file = File()
+      {
+        try {
+          subprogram = new Program();
+          Parser parser = new Parser(new StringCharStream(file));
+          parser.Parse(subprogram, file.getParent());
+          program.merge(subprogram, new Marker(token));
+        } catch (IOException ioe) {
+          throw new ParseException(ioe.getLocalizedMessage());
+        }
+      } )*
+  {newlineDec();} "*insert"
+}
+
+Sequence Sequence( ) :
+{
+  Sequence sequence = new Sequence();
+  Node instruction;
+  open();
+}
+{
+  (
+  {
+    open();
+  }
+  (
+    instruction = Loop() |
+    instruction = IfElse() |
+    instruction = With() |
+    instruction = Statement()
+  )
+  {
+    close(instruction);
+    sequence.append(instruction);
+  }
+  )*
+  {    
+    close(sequence);
+    return sequence;
+  }
+}
+
+Node Loop( ) : 
+{Node loop;}
+{
+  (
+  {newlineInc();} "repeat" (
+    loop = RepeatForever() | 
+    loop = RepeatUntil() | 
+    //LOOKAHEAD(1)  //Enforces detection of repeat while like in EOS1
+    LOOKAHEAD("while" Expression() ("*repeat" | "while"| "repeat" | Name() | "result" | "if" | "with") ) //Slower correct detection
+    loop = RepeatPreWhile() |
+    //Detection of repeat Term times
+    LOOKAHEAD(Expression() "times")
+    loop = RepeatTimes() |
+    loop = RepeatPostWhile()
+  ) |
+  loop = WhileDo()
+  )
+  {
+    return loop;
+  }
+}   
+IfElse IfElse( ) : 
+{
+  Sequence a;
+  Sequence b = null;
+  Expression expression;
+}
+{
+  {newlineInc();} "if" expression = Expression() "then" 
+    a = Sequence()
+[ {newlineDecInc();} "else"
+    b = Sequence() ]  
+  {newlineDec();} "*if"
+  {
+    return new IfElse(expression,a,b);
+  }   
+}
+
+With With( ) :
+{
+  Expression with;
+  Sequence sequence;
+}
+{
+  {newlineInc();} "with"
+    with = Expression()
+    sequence = Sequence()
+  {newlineDec();} "*with"
+  {
+    return new With(with, sequence);
+  }  
+}
+
+RepeatForever RepeatForever( ) :
+{
+  Sequence sequence;
+}
+{
+  "forever"
+    sequence = Sequence()
+  {newlineDec();} "*repeat"
+  {
+    return new RepeatForever(sequence);
+  }  
+}
+
+RepeatTimes RepeatTimes( ) : 
+{
+  Sequence sequence;
+  Expression times = null;
+}
+{ 
+      times = Expression() {setCode(times);}
+  "times"
+    sequence = Sequence()
+  {newlineDec();} "*repeat"
+  {
+    return new RepeatTimes(times, sequence);
+  }
+}
+
+WhileDo RepeatUntil( ) :
+{
+  Expression expression;
+  Expression not;
+  Sequence sequence;
+}
+{
+  "until" expression = Expression()
+    sequence = Sequence()
+  {newlineDec();} "*repeat"  
+  {
+    not = expression.not();
+    not.sameMarker(expression);
+    return new WhileDo(not, sequence);
+  }   
+}
+
+WhileDo RepeatPreWhile( ) :
+{
+  Expression expression;
+  Sequence sequence;
+}
+{
+  "while" expression = Expression()
+    sequence = Sequence()
+  {newlineDec();} "*repeat" 
+  {
+    return new WhileDo(expression, sequence);
+  }   
+}
+
+DoWhile RepeatPostWhile( ) :
+{
+  Expression expression;
+  Sequence sequence;
+}
+{
+  
+    sequence = Sequence()
+  {newlineDec();} "*repeat" "while" expression = Expression() 
+  {
+    return new DoWhile(sequence, expression);
+  }  
+}
+
+WhileDo WhileDo( ) :
+{
+  Expression expression;
+  Sequence sequence;
+}
+{
+  {newlineInc();} "while" expression = Expression() "do"
+    sequence = Sequence()
+  {newlineDec();} "*while"  
+  {
+    return new WhileDo(expression, sequence);
+  }
+}
+
+Node Statement( ) :
+{Node statement;}
+{
+  {newline();}
+  (
+  LOOKAHEAD(2)
+  statement = Declaration() |
+  statement = Command(null)
+  ) {return statement;}
+}
+ 
+Declaration Declaration( ) :
+{
+  String name;
+  Type type;
+  Declaration declaration = new Declaration();
+}
+{
+  name = Name() {declaration.addName(name);} 
+  ("," name = Name() {declaration.addName(name); })* 
+  ":" type = Type() {declaration.setType(type);}
+  {
+    return declaration;
+  }
+}
+
+Node Command(Expression left) :
+{
+  Expression expression;
+  Node command = null;
+}
+{
+  LOOKAHEAD(2)
+  expression = Function(left) 
+  {
+    return expression;
+  }
+|
+  LOOKAHEAD(2)
+  command = Assignment(left)
+  {
+    return command;
+  } 
+|
+  expression = PropertyRead(left) ["." command = Command(expression)]
+  {
+    if (command != null) {
+      return command;
+    } else {
+      return expression;
+    }
+  }
+}
+
+Assignment Assignment(Expression left) :
+{ 
+  PropertyWrite property;
+  Expression expression;
+}
+{
+  property=PropertyWrite(left) AssignmentOperator() expression=Expression()
+  {
+    return new Assignment(property, expression);
+  }
+}
+
+void AssignmentOperator( ) :
+{}
+{
+  "=" | ":="
+}
+
+Expression Expression() :
+{Expression expression; Expression b; open();}
+{
+  expression = AndExpression() ( 
+    "or" b=AndExpression() {expression = expression.or(b);}
+  )*  
+  {
+    close(expression);
+    return expression;
+  }
+}
+
+Expression AndExpression() :
+{Expression expression; Expression b; open();}
+{
+  expression = EqualityExpression() ( 
+    "and" b=EqualityExpression() {expression = expression.and(b);}
+  )*
+  {
+    close(expression);
+    return expression;
+  }
+}
+
+Expression EqualityExpression() :
+{Expression expression; Expression b; open();}
+{
+  expression = RelationalExpression() ( 
+    "="  b=RelationalExpression() {expression = expression.equals(b);}|
+    "<>" b=RelationalExpression() {expression = expression.unequals(b);}
+  )?
+  {
+    close(expression);
+    return expression;
+  }
+}
+
+Expression RelationalExpression() :
+{Expression expression; Expression b; open();}
+{
+  expression = AdditiveExpression() (
+    "<"  b=AdditiveExpression() {expression = expression.less(b);}|
+    ">"  b=AdditiveExpression() {expression = expression.greater(b);} | 
+    "<=" b=AdditiveExpression() {expression = expression.lessEquals(b);}|
+    ">=" b=AdditiveExpression() {expression = expression.greaterEquals(b);} 
+  )?
+  {
+    close(expression);
+    return expression;
+  }
+}
+
+Expression AdditiveExpression() :
+{Expression expression; Expression b; open();}
+{
+  expression = MultiplicativeExpression() (
+    "+" b=MultiplicativeExpression() {expression = expression.plus(b);}|
+    "-" b=MultiplicativeExpression() {expression = expression.minus(b);} 
+  )*
+  {
+    close(expression);
+    return expression;
+  }
+}
+
+Expression MultiplicativeExpression() :
+{Expression expression; Expression b; open();}
+{
+  expression = UnaryExpression() ( 
+    "*" b=UnaryExpression() {expression = expression.multiply(b);}|
+    "/" b=UnaryExpression() {expression = expression.divide(b);}
+  )*
+  {
+    close(expression);
+    return expression;
+  }
+}
+
+Expression UnaryExpression() :
+{Expression expression; open();}
+{ 
+  (         
+  "-"     expression=Pow() {expression = expression.negate();} |
+  "not" expression=Pow() {expression = expression.not();} |
+  expression=Pow()
+  ) 
+  {
+    close(expression);
+    return expression;
+  }
+}
+
+Expression Pow() :
+{Expression expression; Expression b; open();}
+{
+  (
+  expression=PrimaryExpression() [ "^" b = Pow() {expression = expression.pow(b);} ]
+  )
+  {
+    close(expression);
+    return expression;
+  }
+}
+
+Expression PrimaryExpression() :
+{Expression expression; open();}
+{
+  (
+    expression = Literal() |
+    LOOKAHEAD(2) expression = Function(null) |
+    expression = PropertyRead(null) |  
+    "(" expression = Expression() ")"
+  )
+  [expression = PostPrimaryExpression(expression)]
+  {
+    close(expression);
+    return expression;
+  }
+}
+Expression PostPrimaryExpression(Expression left) :
+{Expression expression = left;}
+{
+  (
+  "."
+  (
+    LOOKAHEAD(2) expression = Function(expression) |
+    expression = PropertyRead(expression)  
+  )
+  )+
+  {
+    return expression;
+  }
+}
+
+PropertyRead PropertyRead(Expression left) : 
+{
+  String name; 
+  open();
+}
+{
+  (name = Name() | "result" {name = ReservedVariables.RESULT;} )
+  {
+    PropertyRead propertyRead = new PropertyRead(left, name);
+    close(propertyRead);
+    return propertyRead;
+  }
+}
+PropertyWrite PropertyWrite(Expression left) : 
+{
+  String name; 
+  open();
+}
+{
+  (name = Name() | "result" {name = ReservedVariables.RESULT;} )
+  {
+    PropertyWrite propertyWrite = new PropertyWrite(left, name);
+    close(propertyWrite);
+    return propertyWrite;
+  }
+}
+
+Invoke Function(Expression left) : 
+{
+  Arguments args;
+  String name;
+  open();
+}
+{
+  name = Name() 
+  args = Arguments()
+  {
+    Invoke invoke = new Invoke(left, name, args);
+    close(invoke);
+    return invoke;
+  }
+} 
+              
+Arguments Arguments() : 
+{
+  Arguments args = new Arguments();
+  Expression arg;
+}
+{
+  "(" 
+    [ 
+      arg = Expression() {args.append(arg);} 
+      ( 
+        "," arg = Expression() {args.append(arg);} 
+      )* 
+    ] 
+  ")"  
+  {
+    return args;
+  }
+}
+Constant Literal() :
+{Constant literal;}
+{
+  (
+  literal = IntNumber() |
+  literal = DoubleNumber() |
+  literal = Text() |
+  literal = BooleanLiteral() | 
+  literal = Color() |
+  literal = LineStyle() |
+  literal = FillStyle() |
+  literal = Alignment() |
+  literal = ColorLiteral()
+  )
+  {
+    setCode(literal);
+    return literal;
+  }
+}
+
+Constant BooleanLiteral() :
+{}
+{  
+  "true"   {return new Constant(Boolean.TRUE,  Type.getBoolean(), "true");} |
+  "false"  {return new Constant(Boolean.FALSE, Type.getBoolean(), "false");}
+}
+
+Constant Color() :
+{Color c;}
+{
+  (
+  "yellow"     {c = Color.YELLOW;}|
+  "red"        {c = Color.RED;}|
+  "green"      {c = Color.GREEN;}|
+  "blue"       {c = Color.BLUE;}|
+  "white"      {c = Color.WHITE;}|
+  "black"      {c = Color.BLACK;}|
+  "brown"      {c = new Color(118,80,8);}|
+  "lightblue"  {c = new Color(123,177,244);}|
+  "lightgreen" {c = new Color(87,225,4);}|
+  "grey"       {c = Color.GRAY;}|
+  "lightgrey"  {c = Color.LIGHT_GRAY;}
+  )
+  {
+    return new Constant(c, Type.getColor(), token.image);
+  }         
+}
+
+Constant ColorLiteral() :
+{Token color; Color c; String hex; int r; int g; int b; int a;}
+{
+  (
+  (color = <COLOR_LITERAL_RGB> 
+  { 
+    hex = color.image;
+    r = Integer.parseInt(hex.substring(1,3),16);
+    g = Integer.parseInt(hex.substring(3,5),16);
+    b = Integer.parseInt(hex.substring(5,7),16);
+    c = new Color(r, g, b); 
+  } ) |
+  (color = <COLOR_LITERAL_RGBA> 
+  { 
+    hex = color.image;
+    r = Integer.parseInt(hex.substring(1,3),16);
+    g = Integer.parseInt(hex.substring(3,5),16);
+    b = Integer.parseInt(hex.substring(5,7),16);
+    a = Integer.parseInt(hex.substring(7,9),16);
+    c = new Color(r, g, b, a); 
+  } )
+  )
+  {
+    return new Constant(c, Type.getColor(), token.image);
+  } 
+}
+
+Constant LineStyle() :
+{
+  LineStyle line;
+}
+{
+  (
+  "dashed"       {line = LineStyle.DASHED;}|
+  "solid"        {line = LineStyle.SOLID;}|
+  "dotted"       {line = LineStyle.DOTTED;}|
+  "dasheddotted" {line = LineStyle.DASHED_DOTTED;}|
+  "invisible"    {line = LineStyle.INVISIBLE;}
+  )
+  {
+    return new Constant(line, Type.getLineStyle(), token.image);
+  }
+}
+
+Constant FillStyle() :
+{FillStyle fill;}
+{
+  (
+  "filled"       {fill = FillStyle.FILLED;} |
+  "ruled"        {fill = FillStyle.RULED;}|
+  "checked"      {fill = FillStyle.CHECKED;}|
+  "transparent"  {fill = FillStyle.TRANSPARENT;}
+  )
+  {
+    return new Constant(fill, Type.getFillStyle(), token.image);
+  } 
+}
+
+Constant Alignment() :
+{Alignment align;}
+{
+  (
+  "centered"      {align = Alignment.CENTER;} |
+  "leftaligned"   {align = Alignment.LEFT;}|
+  "rightaligned"  {align = Alignment.RIGHT;}|
+  "topaligned"    {align = Alignment.TOP;}|
+  "bottomaligned" {align = Alignment.BOTTOM;}
+  )
+  {
+    return new Constant(align, Type.getAlignment(), token.image);
+  }    
+}
+
+String Name() :
+{Token name;}
+{
+  name = <IDENTIFIER>
+  {return name.image;}
+}
+
+Type Type() :
+{Token type;}
+{ 
+  type = <IDENTIFIER>
+  {return Type.getInstanceByName(type.image);}
+}
+
+File File() :
+{String filename; }
+{
+  filename = TextRaw()
+  {    
+     File file = new File(filename);
+     if (!file.exists()) {
+       file = new File(path + File.separator + filename);
+     }
+     return file;
+  }  
+}
+
+Constant Text() : 
+{String text; }
+{
+  text = TextRaw()
+  {
+    return new Constant(text, Type.getString(), token.image); 
+  }
+}
+String TextRaw() : 
+{Token t; String text; }
+{
+  (
+  t = <STRING_LITERAL1> |
+  t = <STRING_LITERAL2>
+  )
+  {
+    text = t.image;
+    text = text.replace("\\n", "\n")
+      .replace("\\t", "\t")
+      .replace("\\n", "\n")
+      .replace("\\r", "\r")
+      .replace("\\\'", "\'")
+      .replace("\\\\", "\\");
+    return text.substring(1, text.length() - 1);
+  }
+}
+Constant IntNumber() :
+{Token number;}
+{
+  number = <INTEGER_LITERAL>
+  {
+    try {
+      return new Constant(new Integer(number.image), Type.getInteger(), number.image);
+    } catch (NumberFormatException nfe) {
+      //shouldn't be possible, crash if it happens
+      nfe.printStackTrace();
+      System.exit(-1);
+    }
+  }
+}
+
+Constant DoubleNumber() :
+{Token number;}
+{
+  number = <FLOATING_POINT_LITERAL>
+  {
+    try {     
+      return new Constant(new Double(number.image), Type.getDouble(), number.image);
+    } catch (NumberFormatException nfe) {
+      //shouldn't be possible, crash if it happens
+      nfe.printStackTrace();
+      System.exit(-1);
+    }
+  }
+}

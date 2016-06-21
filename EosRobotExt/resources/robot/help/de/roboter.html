@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Roboter</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Roboter</h1>
+        <p>Ein Roboter kann innerhalb einer Welt Steine manipulieren. Vorher muss er jedoch einer Welt zugeordnet werden.</p>
+        <h2>Methoden</h2>
+        <h3>schritt()</h3>
+        Der Roboter versucht einen Schritt nach vorne zu gehen.
+        <h3>schritt(anzahl:Zahl)</h3>
+        Der Roboter versucht <b>anzahl</b> Schritt nach vorne zu gehen.
+        <h3>schrittZur&uuml;ck()</h3>
+        Der Roboter versucht einen Schritt zur&uuml;ck zu gehen.        
+        <h3>schrittLinks()</h3>
+        Der Roboter versucht einen Schritt nach links zu gehen.        
+        <h3>schrittRechts()</h3>
+        Der Roboter versucht einen Schritt nach rechts zu gehen.
+        <h3>istHindernis()</h3>
+        Pr&uuml;ft, ob ein Schritt nach vorne m&ouml;glich ist.
+        <h3>istLinksHindernis()</h3>
+        Pr&uuml;ft, ob ein Schritt nach links m&ouml;glich ist.
+        <h3>istRechtsHindernis()</h3>
+        Pr&uuml;ft, ob ein Schritt nach rechts m&ouml;glich ist.
+        <h3>istHintenHindernis()</h3>
+        Pr&uuml;ft, ob ein Schritt zur&uuml;ck m&ouml;glich ist.
+        <h3>fliegen()</h3>
+        Der Roboter versucht nach vorn zu fliegen.        
+        <h3>zur&uuml;ckFliegen()</h3>
+        Der Roboter versucht nach hinten zu fliegen.
+        <h3>linksFliegen()</h3>
+        Der Roboter versucht nach links zu fliegen.
+        <h3>rechtsFliegen()</h3>
+        Der Roboter versucht nach rechts zu fliegen.
+        <h3>runterFliegen()</h3>
+        Der Roboter versucht nach unten zu fliegen.
+        <h3>hochFliegen()</h3>
+        Der Roboter versucht nach oben zu fliegen.
+        <h3>istFrei()</h3>
+        Pr&uuml;ft, ob der Roboter nach vorne fliegen kann.
+        <h3>istLinksFrei()</h3>
+        Pr&uuml;ft, ob der Roboter nach links fliegen kann.
+        <h3>istRechtsFrei()</h3>
+        Pr&uuml;ft, ob der Roboter nach rechts fliegen kann.
+        <h3>istHintenFrei()</h3>
+        Pr&uuml;ft, ob der Roboter nach hinten fliegen kann.
+        <h3>istObenFrei()</h3>
+        Pr&uuml;ft, ob der Roboter nach oben fliegen kann.
+        <h3>istUntenFrei()</h3>
+        Pr&uuml;ft, ob der Roboter nach unten fliegen kann.
+        <h3>linksDrehen()</h3>
+        Der Roboter dreht sich nach links.
+        <h3>rechtsDrehen()</h3>
+        Der Roboter dreht sich nach rechts.
+        <h3>umdrehen()</h3>
+        Der Roboter dreht sich um.
+        <h3>hinlegen()</h3>
+        Der Roboter legt einen Stein von oben auf den Stapel.
+        <h3>aufheben()</h3>
+        Der Roboter hebt den obersten Stein auf.
+        <h3>aufheben(anzahl:Zahl)</h3>
+        Der Roboter hebt <b>anzahl</b> Steine auf.
+        <h3>steinSetzen(n:Zahl)</h3>
+        Der Roboter plaziert einen Stein. n = 0 ist Fu&szlig;h&ouml;he n = 2 ist Kopfh&ouml;he.
+        <h3>steinEntfernen(n:Zahl)</h3>
+        Der Roboter entfernt einen Stein. n = 0 ist Fu&szlig;h&ouml;he n = 2 ist Kopfh&ouml;he.
+        <h3>steinfarbeSetzen(farbe:Farbe)</h3>
+        Legt die Farbe neuer Steine fest.
+        <h3>markeSetzen()</h3>
+        Setzt eine Marke auf dem Feldauf dem der Roboter steht.
+        <h3>markel&ouml;schen()</h3>
+        L&ouml;scht die Marke wo der Roboter steht.
+        <h3>istMarke()</h3>
+        Pr&uuml;ft, ob der Roboter in einer Marke steht.
+        <h3>istStein()</h3>
+        Pr&uuml;ft, ob vor dem Roboter ein Stein liegt.
+        <h3>istStein(anzahl:Zahl)</h3>
+        Pr&uuml;ft, ob vor dem Roboter <b>anzahl</b> Steine liegen.
+        <h3>istS&uuml;den()</h3>
+        Pr&uuml;ft, ob der Roboter nach S&uuml;den blickt.
+        <h3>istWesten()</h3>
+        Pr&uuml;ft, ob der Roboter nach Westen blickt.
+        <h3>istNorden()</h3>
+        Pr&uuml;ft, ob der Roboter nach Norden blickt.
+        <h3>istOsten()</h3>
+        Pr&uuml;ft, ob der Roboter nach Osten blickt.
+        <h2>Beispiel</h2>
+<code>welt:Welt<br>
+welt.laden(<span style="color:blue">"labyrinth.eow"</span>)<br>
+karl:Roboter<br>
+welt.betreten(karl)<b><br>
+wiederhole</b><b>&nbsp;solange</b>&nbsp;nicht&nbsp;karl.istMarke()<br>
+&nbsp;&nbsp;karl.linksDrehen()<b><br>
+&nbsp;&nbsp;wiederhole</b><b>&nbsp;solange</b>&nbsp;karl.istHindernis()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;karl.rechtsDrehen()<b><br>
+&nbsp;&nbsp;*wiederhole</b><br>
+&nbsp;&nbsp;karl.schritt()<b><br>
+*wiederhole</b></code>        
+    </body>
+</html>

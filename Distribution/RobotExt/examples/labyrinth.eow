@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<world version="1">
+<entrance direction="3" x="0" y="0" z="0"/>
+<column mark="0" x="8" y="3">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="8" y="2">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="8" y="1">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="8" y="0">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="8" y="-1">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="8" y="-2">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="8" y="-3">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="8" y="-4">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="7" y="3">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="7" y="-4">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="6" y="3">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="6" y="1">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="6" y="-1">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="6" y="-2">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="6" y="-4">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="6" y="-5">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="5" y="3">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="5" y="1">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="5" y="-2">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="5" y="-5">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="4" y="3">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="4" y="2">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="4" y="1">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="4" y="0">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="4" y="-2">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="4" y="-3">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="4" y="-5">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="3" y="2">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="3" y="-2">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="3" y="-5">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="2" y="2">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="2" y="0">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="2" y="-1">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="2" y="-2">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="2" y="-3">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="2" y="-5">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="1" y="2">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="1" y="-1">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="1" y="-5">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="0" y="2">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="0" y="1">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="0" y="-1">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="0" y="-2">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="0" y="-4">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="0" y="-5">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="-1" y="2">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="-1" y="-1"/>
+<column mark="0" x="-1" y="-2">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="-1" y="-4">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="-2" y="2">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="-2" y="1">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="-2" y="0">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="-2" y="-1">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="-2" y="-2">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="-2" y="-4">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="-2" y="-5">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="-3" y="0">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="1" x="-3" y="-5"/>
+<column mark="0" x="-4" y="0">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="-4" y="-1">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="-4" y="-2">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="-4" y="-3">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="-4" y="-4">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+<column mark="0" x="-4" y="-5">
+<cube color="-6710887" index="0" type="3"/>
+<cube color="-6710887" index="1" type="3"/>
+</column>
+</world>

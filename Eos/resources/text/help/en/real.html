@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Kommazahlen</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Floating points numbers</h1>
+        <p>The datatyp real is nearly the same as real numbers in math. There are some differences.
+        The datatype real is rounded at about 17 digits, therefore results can never be exact.
+        There is a theoretical maximal and minimal value, which are that big and small that it should never really matter.
+        </p>
+        <p>
+        Other programing languages often call that datatype double.
+        </p>
+        <h2>Syntax</h2>
+        <p>
+        You write real numbers like you normally would, the letter E is a shortcut for times 10 high.
+        <p>3.1415<br>
+        1.235E2 = 123.5<br>
+        </p>  
+<h2>Example</h2>
+<code>c:Circle<br>
+c.move(<span style="color:blue">4.2</span>,<span style="color:blue">3.1</span>)<br>
+</code>              
+        <h2>BNF</h2>
+real := (digit)* ["."] (digit)* [exponent]<br>
+exponent := ("e"|"E") [("+"|"-")] (Ziffer)+<br>
+digit := "1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9"|"0" <br>
+Explanation:<br>
+[] optional part<br>
+()* any amount of<br>
+()+ at least once<br>
+    </body>
+</html>
+
+

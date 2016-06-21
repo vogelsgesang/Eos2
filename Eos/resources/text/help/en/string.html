@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Text</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Text</h1>
+        <p>Everytime you want to use a text you need a string.
+        </p>
+        <h2>Syntax</h2>
+        <p>Every text has to be delimitated. In EOS you can write either "text" or 'text'.
+        </p>
+        <p>"I'm a string"<br>
+        'Me too!'<br>
+        </p>  
+<h2>Example</h2>
+<code>t:Textfeld<br>
+t.appendLine(<span style="color:blue">"Hello"</span>)</code>              
+        <h2>BNF</h2>
+String := """ (Letter)* """ | "'" (Letter)* "'"<br>
+Letter := any letter but " or '<br>
+Explanation:<br>
+()* any amount of<br>
+    </body>
+</html>

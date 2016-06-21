@@ -1,0 +1,13 @@
+programm
+    neuesDreieck(-80,-50,80,-50,0,70,8, 0.25)
+*programm
+methode neuesDreieck(x1,y1,x2,y2,x3,y3:Real, n:Integer, w:Real)
+    d:Dreieck
+    d.eckenSetzen((x1+x2)/2,(y1+y2)/2,(x1+x3)/2,(y1+y3)/2,(x2+x3)/2,(y2+y3)/2)
+    d.randstärkeSetzen(w)
+    wenn n > 0 dann
+        neuesDreieck(x1,y1,(x1+x3)/2,(y1+y3)/2,(x1+x2)/2,(y1+y2)/2, n-1, w/2)
+        neuesDreieck(x2,y2,(x2+x3)/2,(y2+y3)/2,(x1+x2)/2,(y1+y2)/2, n-1, w/2)
+        neuesDreieck(x3,y3,(x1+x3)/2,(y1+y3)/2,(x3+x2)/2,(y3+y2)/2, n-1, w/2)
+    *wenn
+*methode

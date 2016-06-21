@@ -1,0 +1,9 @@
+f:Farbe
+f = blau
+f = #ff2011
+r:Rechteck
+r.füllfarbeSetzen(#fe2310)
+wenn f = #ff2011 dann
+    r.drehen(40)
+*wenn
+r.füllfarbeSetzen(#55555555)

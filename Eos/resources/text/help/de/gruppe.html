@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gruppe</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Gruppe</h1>         
+        <p>Gruppen haben alle Attribute und Methoden der Klasse 
+        <a href = "figur.html">Figur</a>.</p>
+        <p>Gruppen dienen dazu mehrere Figuren zusammenzufassen und als ein Objekt zu behandeln.
+        Man kann zum Beispiel mit mehreren Kreisen und Rechtecken ein Auto bauen und dies zu einer Gruppe auto zusammenfassen. 
+        Wodurch man alle Teile des Autos gemeinsam bewegen kann.</p>
+        <p><b>Hinweis:</b> Es ist zwar m&ouml;glich Figuren, die einer Gruppe hinzugef&uuml;gt wurden, nachtr&auml;glich zu ver&auml;ndern,
+        jedoch wird der Effekt eventuell nicht dem entsprechen was man erwartet. Eine Figur ohne Gruppe
+        bewegt sich relativ zum Fenster. Eine Figur innerhalb einer Gruppe bewegt sich relativ zu seiner Gruppe.
+        </p>
+        <h2>Methoden</h2>
+        <h3>randfarbeSetzen(farbe:Farbe)</h3>
+        Setzt die Randfarbe aller Figuren innerhalb der Gruppe.
+        <h3>randartsetzen(art:Randart)</h3>
+        Setzt die Art des Randes aller Figuren in der Gruppe.
+        <h3>randst&auml;rkeSetzen(st&auml;rke:Zahl)</h3>
+        Setzt die St&auml;rke (dicke) des Randes aller Figuren in der Gruppe.
+        <h3>f&uuml;llartsSetzen(art:F&uuml;llart)</h3>
+        Setzt die Art mit der die Figur ausgemalt wird, f&uuml;r alle Figuren der Gruppe die ausgemalt werden k&ouml;nnen.
+        <h3>f&uuml;llfarbeSetzen(farbe:Farbe)</h3>
+        Setzt die Farbe mit der die Figur ausgemalt wird, f&uuml;r alle Figuren der Gruppe die ausgemalt werden k&ouml;nnen.
+        <h3>schlucke(figur:Figur)</h3>
+        Die <b>figur</b> wird der Gruppe hinzugef&uuml;gt.        
+        <h3>zentrumSetzen(x:Zahl, y:Zahl)</h3>
+        Setzt das Zentrum der Gruppe auf die Position (<b>x</b>, <b>y</b>). Alle Methoden die das Zentrum verwenden
+        (drehen, strecken, ...) benutzen den neuen Punkt. Solange diese Methode nicht aufgerufen wird,
+        verwendet die Gruppe den Schwerpunkt aller Figuren als Mittelpunkt. 
+        <h3>kopiere(figur:Figur)</h3>
+        Kopiert die <b>figur</b> und f&uuml;gt die Kopie in die Gruppe hinzu.        
+        <h3>spiegleX()</h3>
+        Spiegelt die Gruppe an der y-Achse.
+        <h3>spiegleY()</h3>
+        Spiegelt die Gruppe an der x-Achse.
+        <h2>Beispiel</h2>
+<code>k:Kreis<br>
+g:Gruppe<br>
+g.zentrumSetzen(<span style="color:blue">0</span>,<span style="color:blue">0</span>)<br>
+k.verschieben(<span style="color:blue">50</span>,<span style="color:blue">0</span>)<b><br>
+wiederhole</b><span style="color:blue">&nbsp;11</span><b>&nbsp;mal</b><br>
+&nbsp;&nbsp;&nbsp;g.kopiere(k)<br>
+&nbsp;&nbsp;&nbsp;g.drehen(<span style="color:blue">30</span>)<b><br>
+*wiederhole</b><br>
+g.schlucke(k)<br>
+g.randfarbeSetzen(<span style="color:blue">blau</span>)<b><br>
+wiederhole</b><span style="color:blue">&nbsp;1000</span><b>&nbsp;mal</b><br>
+&nbsp;&nbsp;&nbsp;g.drehen(<span style="color:blue">1</span>)<br>
+&nbsp;&nbsp;&nbsp;g.f&#252;llfarbeSetzen(<span style="color:blue">rot</span>)<br>
+&nbsp;&nbsp;&nbsp;g.f&#252;llfarbeSetzen(<span style="color:blue">gelb</span>)<b><br>
+*wiederhole</b></code>        
+    </body>
+</html>

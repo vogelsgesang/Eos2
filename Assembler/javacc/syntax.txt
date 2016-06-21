@@ -1,0 +1,23 @@
+Adressierung
+
+Indirekt
+(<Adresse>)
+
+Absolut
+$<Nummer>
+
+Relativ
+#<Nummer>
+
+Indiziert
+<Adresse>,<Register>
+
+Unmittelbar
+#$<Nummer>
+
+Label
+<Name>
+
+Befehlszeile
+
+<Label>: <Befehl> <Adresse>* 

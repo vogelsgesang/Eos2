@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+author Peter (Lathanda) Schneider
+creative commons
+-->
+
+
+<help title = "Help topics">
+    <node title = "EOS" html = "text/help/en/default.html">
+        <node title = "Classes">
+            <node title = "Window" html = "text/help/en/window.html"/>
+            <node title = "Figure" html = "text/help/en/figure.html"/>
+            <node title = "LineFigure" html = "text/help/en/linefigure.html"/>
+            <node title = "Line" html = "text/help/en/line.html"/>
+            <node title = "FilledFigure" html = "text/help/en/filledfigure.html"/>
+            <node title = "Circle" html = "text/help/en/circle.html"/>
+            <node title = "Ellipse" html = "text/help/en/ellipse.html"/>
+            <node title = "Triangle" html = "text/help/en/triangle.html"/>
+            <node title = "Square" html = "text/help/en/square.html"/>
+            <node title = "Rectangle" html = "text/help/en/rectangle.html"/>
+            <node title = "Textfield" html = "text/help/en/textfield.html"/>
+            <node title = "Grafic" html = "text/help/en/grafic.html"/>
+            <node title = "Group" html = "text/help/en/group.html"/>
+            <node title = "Plotter" html = "text/help/en/plotter.html"/>
+            <classes>
+        </node>
+        <node title = "Datatyps">
+            <node title = "Boolean" html = "text/help/en/boolean.html"/>
+            <node title = "Integer" html = "text/help/en/integer.html"/>
+            <node title = "Real" html = "text/help/en/real.html"/>
+            <node title = "String" html = "text/help/en/string.html"/>
+        </node>
+        <node title = "Constants">
+            <node title = "Alignment" html = "text/help/en/alignment.html"/>
+            <node title = "Borderstyle" html = "text/help/en/borderstyle.html"/>
+            <node title = "Color" html = "text/help/en/color.html"/>        
+            <node title = "FillStyle" html = "text/help/en/fillstyle.html"/>
+        </node>
+        <node title = "Language">
+            <node title = "Declaration" html = "text/help/en/declaration.html"/>
+            <node title = "Procedures" html = "text/help/en/procedures.html"/>
+            <node title = "Functions" html = "text/help/en/functions.html"/>
+            <node title = "Expressions" html = "text/help/en/expressions.html"/>
+            <node title = "Variables" html = "text/help/en/variables.html"/>
+            <node title = "Conditional Expressions" html = "text/help/en/conditionalexpression.html"/>            
+            <node title = "Loops" html = "text/help/en/loop.html"/>
+            <node title = "Comments" html = "text/help/en/comments.html"/>
+            <node title = "With" html = "text/help/en/with.html"/>
+            <node title = "Methods" html = "text/help/en/methods.html"/>
+            <node title = "Program" html = "text/help/en/program.html"/>
+            <node title = "Insert" html = "text/help/en/insert.html"/>
+            <node title = "Grammar" html = "text/help/en/bnf.html"/>
+        </node>
+    </node>
+    <node title = "Informations">
+        <node title = "Software" html = "text/help/en/software.html"/>
+        <node title = "Eos 2" html = "text/help/en/info.html"/>
+        <info>     
+    </node>
+</help>

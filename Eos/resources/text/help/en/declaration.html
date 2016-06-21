@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>          
+  <head>                  
+    <title>Declaration          
+    </title>                  
+    <meta charset="UTF-8">          
+  </head>          
+  <body>                  
+    <p>             
+      <img src="../../../images/eos2.png" alt="EOS2">         
+    </p>      
+    <h1>Declaration</h1>
+    <p>
+    A declaration defines a variable. In EOS this will implicitly create an object
+    and store it in the fresh variable. With the exception that classes that are 
+    only general terms like figure, linefigure amd filledfigure will be empty.
+    You can store any object that is subsumed under that general term in such a variable.
+    If you access such an abstract variable before storing an object in it the program will
+    terminate with an error message.
+    </p>
+    <p>
+    If the whole program does not contain a variable of the class window and at least one 
+    figure, a window object is automatically created an every figure object will be automatically
+    added to it. This behaviour excludes procedures as they cannot access global variables.    
+    </p>
+    <h2>Syntax</h2>
+    <p>name:class</p>
+    <p>Creates a variable with that name, which contains a new object.</p>
+    <p>name_1, name_2, ..., name_n:class</p>                                  
+    <p>Creates multiple variables at once.</p>
+    <h2>Example</h2>          
+    <code>
+      eyeLeft, eyeRight:Ellipse<br>
+      mouth:Rectangle<br>
+      face:Circle<br>
+      nose:Triangle<br>
+    </code>                                   
+  </body>
+</html>

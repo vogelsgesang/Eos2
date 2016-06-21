@@ -1,0 +1,13 @@
+round(1)                         = round,real,integer
+trunc(1)                         = floor,real,integer
+zufall(2)                        = random,integer,integer,integer
+abs(1)                           = abs,real,real
+sqrt(1)                          = sqrt,real,real
+sin(1)                           = sin,real,real
+cos(1)                           = cos,real,real
+tan(1)                           = tan,real,real
+arctan(1)                        = arctan,real,real
+arcsin(1)                        = arcsin,real,real
+arccos(1)                        = arccos,real,real
+phi(2)                           = phi,real,real,real
+r(2)                             = r,real,real,real

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>    
+  <head>        
+    <title>Figur
+    </title>        
+    <meta charset="UTF-8">    
+  </head>    
+  <body>        
+    <p>
+      <img src="../../../images/eos2.png" alt="EOS2">
+    </p>        
+    <h1>Figur</h1>        
+    Die Figur ist die Grundklasse aller Geometrieklassen. Das heisst jede Geometrieklasse kann alle Methoden und Attribute der Figur nutzen.         
+    Ein Kreis und ein Rechteck sind beides Figuren, daher kann man beide verschieben und strecken.         
+    <h2>Setter- und Getter-Methoden</h2>        
+    Zu jedem Attribut gibt es in der Regel zwei Methoden zum Setzen und Lesen des Attributwertes.
+    <br>        
+    ZB. x:Zahl &harr; xLesen():Zahl &harr; xSetzen(x:Zahl)
+    <br>        
+    Diese werden nicht separat dokumentiert.          
+    <h2>Methoden</h2>        
+    <h3>verschieben(dx:Zahl,dy:Zahl)</h3>        
+    Verschiebt die Figur um <b>dx</b> in x-Richtung und <b>dy</b> in y-Richtung.         
+    <h3>strecken(faktor:Zahl)</h3>        
+    Streckt die Figur mit dem Mittelpunkt als Streckungszentrum um den <b>faktor</b>.         
+    <h3>verschiebenNach(x:Zahl, y:Zahl)</h3>        
+    Verschiebt die Figur zur Position (<b>x</b>,<b>y</b>).         
+    <h3>drehen(winkel:Zahl)</h3>        
+    Dreht die Figur um den Mittelpunkt gegen den Uhrzeigersinn um <b>winkel</b> Grad.         
+    <h3>drehenAn(x:Zahl, y:Zahl, winkel:Zahl)</h3>        
+    Dreht die Figur um den Punkt (<b>x</b>,<b>y</b>) gegen den Uhrzeigersinn um <b>winkel</b> Grad.         
+    <h2>Attribute</h2>        
+    <h3>sichtbar:Wahrheitswert</h3>        
+    Entscheidet ob die Figur im Fenster angezeigt wird.         
+    <h3>x:Zahl</h3>        
+    Die x-Koordinate des Mittelpunkts der Figur.         
+    <h3>y:Zahl</h3>        
+    Die y-Koordinate des Mittelpunkts der Figur.         
+    <h2>Beispiel</h2>
+    <code>r:Rechteck
+      <br>k:Kreis
+      <br>k.verschieben(
+      <span style="color:blue">10
+      </span>,
+      <span style="color:blue">10
+      </span>)
+      <br>r.verschiebenNach(-
+      <span style="color:blue">20
+      </span>,
+      <span style="color:blue">0
+      </span>)<b>
+        <br>wiederhole</b>
+      <span style="color:blue">&nbsp;10
+      </span><b>&nbsp;mal</b>
+      <br>&nbsp;&nbsp;&nbsp;k.drehenAn(
+      <span style="color:blue">20
+      </span>,
+      <span style="color:blue">0
+      </span>,
+      <span style="color:blue">10
+      </span>)
+      <br>&nbsp;&nbsp;&nbsp;r.drehenAn(
+      <span style="color:blue">20
+      </span>,
+      <span style="color:blue">0
+      </span>,
+      <span style="color:blue">10
+      </span>)<b>
+        <br>*wiederhole</b>
+      <br>k.strecken(
+      <span style="color:blue">2
+      </span>)
+      <br>r.streckenAn(
+      <span style="color:blue">0
+      </span>,
+      <span style="color:blue">0
+      </span>,
+      <span style="color:blue">2
+      </span>)
+    </code>             
+  </body>
+</html>

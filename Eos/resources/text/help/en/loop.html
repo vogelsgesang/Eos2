@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Loops</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Loops</h1>
+        <p>
+        Loops allow to repeat a sequence of commands.
+        This can be used to simply avoid copy & paste, but
+        it can do a lot more. Loops can be controlled by conditions
+        that determine how long a seequence should be repeated.
+        For example repeat until the next obstacle.
+        </p>
+        <h2>Syntax</h2>        
+        <h3>Infinite loop</h3>
+        <p><b>repeat forever</b><br>
+        &nbsp;&nbsp;sequence<br>
+        <b>*repeat</b></p>
+        <h3>Counting loop</h3>
+        <p><b>repeat</b> Number <b>times</b><br>
+        &nbsp;&nbsp;sequence<br>
+        <b>*repeat</b></p>
+        <h3>Conditional loop</h3>
+        <p><b>repeat</b> <b>while</b> condition<br>
+        &nbsp;&nbsp;sequence<br>
+        <b>*repeat</b></p>
+        <p>Alternative syntax</p>
+        <p><b>while</b> condition <b>do</b><br>
+        &nbsp;&nbsp;sequence<br>
+        <b>*while</b></p>      
+        <h3>Conditional loop, that runs at elast once</h3>
+        <p><b>repeat</b><br>
+        &nbsp;&nbsp;sequence<br>
+        <b>*repeat while</b> condition</p>
+        <h3>Conditional loop with inverted condition</h3>
+        <p><b>repeat</b> <b>until</b> condition<br>
+        &nbsp;&nbsp;sequence<br>
+        <b>*repeat</b></p>
+<h2>Example</h2>
+<code>c:Circle<b><br>
+repeat</b><span style="color:blue">&nbsp;5</span><b>&nbsp;times</b><br>
+&nbsp;&nbsp;c.rotate(<span style="color:blue">1</span>)<b><br>
+*repeat</b><b><br>
+repeat</b><b>&nbsp;while</b>&nbsp;c.x&nbsp;&lt;<span style="color:blue">&nbsp;5</span><br>
+&nbsp;&nbsp;c.rotate(-<span style="color:blue">1</span>)<b><br>
+*repeat</b><b><br>
+repeat</b><br>
+&nbsp;&nbsp;c.rotate(<span style="color:blue">1</span>)<b>&nbsp;&nbsp;&nbsp;&nbsp;<br>
+*repeat</b><b>&nbsp;while</b>&nbsp;c.y&nbsp;&gt;<span style="color:blue">&nbsp;10</span><b><br>
+while</b>&nbsp;c.x&nbsp;&lt;<span style="color:blue">&nbsp;5</span><b>&nbsp;do</b><br>
+&nbsp;&nbsp;c.rotate(<span style="color:blue">1</span>)<b><br>
+*while</b><b><br>
+repeat</b><b>&nbsp;forever</b>&nbsp;<br>
+&nbsp;&nbsp;c.rotate(<span style="color:blue">2</span>)<b><br>
+*repeat</b><b><br>
+repeat</b><b>&nbsp;until</b>&nbsp;c.x&nbsp;&lt;<span style="color:blue">&nbsp;15</span><br>
+&nbsp;&nbsp;c.rotate(<span style="color:blue">3</span>)<b><br>
+*repeat</b><br>
+</code>               
+        <h2>BNF</h2>
+Loop := <br>
+	&nbsp;&nbsp;&nbsp;"repeat" "forever" Sequence "*repeat" |<br>
+	&nbsp;&nbsp;&nbsp;"repeat" "while" Condition Sequence "*repeat" |<br>
+	&nbsp;&nbsp;&nbsp;"repeat" "until" Condition Sequence "*repeat" |<br>
+	&nbsp;&nbsp;&nbsp;"repeat" Sequence "*repeat" "while" Condition |<br>
+	&nbsp;&nbsp;&nbsp;"repeat" Expression "times" Sequence "*repeat" |<br>
+	&nbsp;&nbsp;&nbsp;"while" Condition "do" Sequence "*while" |<br>
+Sequence := A sequence of commands<br>   
+
+
+
+    </body>
+</html>

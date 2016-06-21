@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Textfield</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Textfield</h1>         
+        Textfields own all properties and methods of the classes
+        <a href = "figure.html">Figure</a>, <a href = "linefigure.html">LineFigure</a>,
+         <a href = "filledfigure.html">FilledFigure</a> and <a href = "rectangle.html">Rectangle</a>.
+        <h2>Setter- and Getter-Methods</h2>
+        For every property generally there are two methods for setting and getting 
+        the property value.<br>
+        eg x:Number &harr; getX():Number &harr; setX(x:Number)<br>
+        They are not extra documented. 
+        <h2>Methods</h2>
+        <h3>appendLine(line:String)</h3>
+        Appends the text as new line.
+        <h3>deleteLine()</h3>
+        Deletes the last line.
+        <h2>Properties</h2>
+        <h3>textColor:Color</h3>
+        Color of the text.        
+        <h3>textSize:Number</h3>
+        Size of the text.
+        <h3>font:String</h3>
+        The font name.
+        <h3>alignmentVertical:Alignment</h3>
+        The vertical alignment of the text.
+        <h3>alignmentHorizontal:Alignment</h3>
+        The horizontal alignment of the text.
+        <h3>autoAdjustSize:Booleant</h3>
+        Determines if the rectangle should be automatically be adjusted to the text size.
+        This option is active as default.
+        <h3>hideBorder:Boolean</h3>
+        Determins if the border of the rectangle should be drawn.
+        <h2>Beispiel</h2>
+<code>t:Textfield<br>
+t.appendLine(<span style="color:blue">"Hello,&nbsp;World!"</span>)</code>        
+    </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>With</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>With</h1>
+        <p>
+        The with section allows to avoid typing. If you want to call a lot of methods of the same object,
+        you can start a section with that object. Within this section you can call methods without adding the object.
+        </p>
+        <h2>Syntax</h2>
+        <p><b>with</b> variable<br>
+        &nbsp;&nbsp;command sequence<br>
+        <b>*with</b></p>
+        <h2>Example</h2>
+        <code>c:Circle<b><br>
+        with</b>&nbsp;c<br>
+        &nbsp;&nbsp;move(<span style="color:blue">3</span>,<span style="color:blue">2</span>)<br>
+        &nbsp;&nbsp;stretch(<span style="color:blue">2</span>)<b><br>
+        *with</b><br>
+        </code>
+         <h2>BNF</h2>
+With := "with" expression Sequence "*with" <br>
+Sequence := A sequence of commands<br>       
+    </body>
+</html>

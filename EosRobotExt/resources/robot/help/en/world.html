@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>World</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>World</h1>
+        <p>
+        A world is required to use a robot. In order to use a world you should created it beforehand with the world editor and load it.
+        If you don't do that the world will be empty with a single entrance. </p>
+        <p>
+        A world can contain any numbe rof entrances. These are the starting points for the robots. Everytime a robot
+        enters a world, it is placed at the first free entrance.</p>
+        <p>
+        Worlds are creted and save with the world editor. A robot program can load such worlds. For it work reliably,
+        you have to save your work in the same folder that contains the world.</p>
+        <h2>Methods</h2>
+        <h3>enter(robot:Robot)</h3>
+        Adds a robot to that world. This only works once per entrance,
+        if you use the default world once.
+        <h3>setStone(x:Number, y:Number, z:Number)</h3>
+        Places a stone at the position.
+        <h3>setStoneColor(color:Color)</h3>
+        Sets the <b>color</b> of new stones.
+        <h3>dropStone(x:Number, y:Number)</h3>
+        Drops a stone at the top of the column.
+        <h3>removeStone(x:Number, y:Number, z:Number)</h3>
+        Removes the stone from that position.
+        <h3>pickupStone(x:Number, y:Number)</h3>
+        Picks up the top stone of that column.
+        <h3>load(file:String)</h3>
+        Loads a world from a file, that has been created with the world editor.
+        <h2>Example</h2>
+<code>w:World<br>
+eos:Robot<br>
+w.load(<span style="color:blue">"labyrinth.eow"</span>)<br>
+w.enter(eos)<br>
+eos.step()</code>        
+    </body>
+</html>

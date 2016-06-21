@@ -1,0 +1,26 @@
+erde:Kreis
+mond:Kreis
+sonne:Kreis
+sonnensystem:Gruppe
+erdsystem:Gruppe
+sonne.radiusSetzen(30)
+sonne.füllfarbeSetzen(gelb)
+sonne.randartSetzen(unsichtbar)
+erde.radiusSetzen(10)
+erde.füllfarbeSetzen(blau)
+erde.randartSetzen(unsichtbar)
+mond.radiusSetzen(2)
+mond.füllfarbeSetzen(grau)
+mond.randartSetzen(unsichtbar)
+erdsystem.zentrumSetzen(0,0)
+erdsystem.schlucke(erde)
+mond.verschieben(20,0)
+erdsystem.schlucke(mond)
+erdsystem.verschieben(70,0)
+sonnensystem.zentrumSetzen(0,0)
+sonnensystem.schlucke(erdsystem)
+sonnensystem.schlucke(sonne)
+wiederhole immer
+    sonnensystem.drehen(0.01)
+    erdsystem.drehen(3.65)
+*wiederhole

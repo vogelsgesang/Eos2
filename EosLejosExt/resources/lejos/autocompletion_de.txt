@@ -1,0 +1,11 @@
+#<Type> "." <Maske nach der gesucht wird> "=" ("@" Methode | "%" Attribut | "!" Klasse) <Template>  "#" <Erklärender Text>
+class.AutoEv3             = !AutoEv3#Das Standard Auto des Lego Ev3 edu.
+
+carev3.verbinden           = @verbinden(name)#verbinden(name:Zeichenkette)<br>Stellt die Remoteverbindung zum EV3 her. 
+carev3.linksDrehen         = @linksDrehen(winkel)#linksDrehen(winkel:Zahl)<br>Dreht das Auto nach links.
+carev3.rechtsDrehen        = @rechtsDrehen(winkel)#rechtsDrehen(winkel:Zahl)<br>Dreht das Auto nach rechts.
+carev3.vorwärtsFahren      = @vorwärtsFahren(abstand)#vorwärtsFahren(abstand:Zahl)<br>Bewegt das Auto vorwärts.
+carev3.rückwärtsFahren     = @rückwärtsFahren(abstand)#rückwärtsFahren(abstand:Zahl)<br>Bewegt das Auto rückwärts.
+carev3.hupen               = @hupen()#hupen()<br>Das Auto gibt einen Ton von sich.
+carev3.abstand             = @abstand()#abstand():Integer<br>Gibt die Entfernung an, in der sich das nächste Hindernis befindet.
+carev3.winkel             = @winkel()#winkel():Integer<br>Gibt den Drehwinkel des Auos an.

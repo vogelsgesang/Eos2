@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>    
+  <head>        
+    <title>Expressions</title>        
+    <meta charset="UTF-8">    
+  </head>    
+  <body>        
+    <p>
+      <img src="../../../images/eos2.png" alt="EOS2">
+    </p>	
+    <h1>Expressions</h1>
+    <p>An expression is a value or any other expression that delivers a value if evaluated. 
+    At any place where a value is needed you can use an expression that calculates that value.</p>    
+    <p>In an expression you can use several operations, comparisions and functions.</p>    	
+    <h2>Arithmetic</h2>
+	    The common calculation types combine two numbers into a result.
+    <ul>	
+      <li><b>*</b> multiply
+      </li>	
+      <li><b>/</b> divide
+      </li>	
+      <li><b>+</b> add
+      </li>	
+      <li><b>-</b> substract
+      </li>	
+    </ul>	
+    <h2>Comparison</h2>
+    A comparison is a relation between two numbers. The result is a logical value.
+    It can be <b>true</b> or <b>false</b>. 	
+    <ul>	
+      <li> <b>&gt;</b> greater than
+      </li>	
+      <li> <b>&lt;</b> smaller than
+      </li>	
+      <li> <b>&gt;=</b> greater equals
+      </li>	
+      <li> <b>&lt;=</b> smaller equals
+      </li>	
+      <li> <b>&lt;&gt;</b> unequal
+      </li>	
+      <li> <b>=</b> equal
+      </li>	
+    </ul>	<h2>Logical Operation</h2>
+    The logical operation combines two logical values into one.
+    Allowing complexe logical expressions.   
+    <ul>	
+      <li><b>and</b> true if both values are true
+      </li>	
+      <li><b>or</b> true if at least one value is true
+      </li>	
+      <li><b>not</b> inverts the value
+      </li>  
+    </ul>	
+    <h2>Braces</h2>
+    Every expression can be placed within braces in order to 
+    highlight or change the evaluation order.
+    The evaluation of expressions follows basic algebraic rules. But if you are 
+    not sure in which order an expression is evaluated use brakets.    
+    <br>	
+    <b>Remark:</b> squared and curly braces have a totally different meaning. 	
+    <h2>Example</h2>	
+    <code>
+    c:Circle<b><br>	
+    repeat</b><b>&nbsp;while</b>&nbsp;c.x&nbsp;&lt;<span style="color:blue">&nbsp;500</span>&nbsp;und&nbsp;c.y&nbsp;&gt;
+      <span style="color:blue">&nbsp;100
+      </span>
+      <br>	&nbsp;&nbsp;&nbsp;c.x&nbsp;:=&nbsp;c.x&nbsp;*
+      <span style="color:blue">&nbsp;2
+      </span>&nbsp;+
+      <span style="color:blue">&nbsp;1
+      </span><b>
+        <br>*repeat</b>
+    </code>
+    <h2>BNF</h2>
+    The following rules have been simplified and while no longer 
+    guarantee operation precedence.
+    <br>	Eos uses complexer rules that enforce operation precedence.
+    <br>	Expression := 
+    <br>	&nbsp;&nbsp;&nbsp;Expression "or" Expression |
+    <br>	&nbsp;&nbsp;&nbsp;Expression "and" Expression |
+    <br>	&nbsp;&nbsp;&nbsp;Expression ("=" | "
+    <>") Expression |
+      <br>	&nbsp;&nbsp;&nbsp;Expression ("
+      <" | ">" | "
+        <=" | ">=") Ausdruck |
+          <br>	&nbsp;&nbsp;&nbsp;Expression ("+" | "-") Expression |
+          <br>	&nbsp;&nbsp;&nbsp;Expression ("*" | "/") Expression |
+          <br>	&nbsp;&nbsp;&nbsp; ("not" | "-" | &epsilon; ) Expression |
+          <br>	&nbsp;&nbsp;&nbsp; "(" Expression ")" |
+          <br>	&nbsp;&nbsp;&nbsp; Function |
+          <br>	&nbsp;&nbsp;&nbsp; Property |
+          <br>	&nbsp;&nbsp;&nbsp; Method |
+          <br>	&nbsp;&nbsp;&nbsp; Number | Color | LogicalValue | LineStyle | FillStyle | Alignment | String
+          <br>	Explanation: 
+          <br>	[] optional part
+          <br>	()* any amount
+          <br>	&epsilon; empty
+          <br>    
+  </body>
+</html>

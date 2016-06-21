@@ -1,0 +1,27 @@
+// EOS 1.5 - Programm
+sterne:GRUPPE
+stern:KREIS
+stern.füllfarbe:= gelb
+stern.radius := 1
+sterne.zentrumsetzen(0,0)
+
+wiederhole immer
+   wiederhole 20 mal
+      stern.mittex := zufall(-200,200)
+      stern.mittey := zufall(-200,200)
+      sterne.kopiere(stern)
+   *wiederhole
+   sterne.strecken(1.2)
+*wiederhole
+
+
+
+
+
+
+
+
+
+
+
+

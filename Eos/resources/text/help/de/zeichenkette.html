@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Texte</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Texte</h1>
+        <p>Zeichenketten dienen dazu Texte abzuspeichern. Der Begriff dr&uuml;ckt aus, da&szlig; ein Text 
+        eine Ketten von aneinandergereiten Zeichen ist.
+        </p>
+        <h2>Schreibweise</h2>
+        <p>Alle Zeichenketten m&uuml;ssen begrenzt werden. In EOS kann dies entweder durch "Text" oder 'Text' geschehen.
+        </p>
+        <p>"Ich bin eine Zeichenkette"<br>
+        'Ich auch'<br>
+        </p>  
+<h2> Beispiel</h2>
+<code>t:Textfeld<br>
+t.zeileHinzuf&uuml;gen(<span style="color:blue">"Hallo"</span>)</code>              
+        <h2>BNF</h2>
+Zeichenkette := """ (Zeichen)* """ | "'" (Zeichen)* "'"<br>
+Zeichen := beliebiges Zeichen au&szlig;er " bzw. '<br>
+Legende:<br>
+()* beliebig oft<br>
+    </body>
+</html>

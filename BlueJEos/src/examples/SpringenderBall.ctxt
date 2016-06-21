@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.params=args
+comment0.target=void\ main(java.lang.String[])
+comment1.params=
+comment1.target=SpringenderBall()
+comment2.params=x\ y\ g
+comment2.target=SpringenderBall(double,\ double,\ double)
+comment3.params=
+comment3.target=void\ schritt()
+numComments=4

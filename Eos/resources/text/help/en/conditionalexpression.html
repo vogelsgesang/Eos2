@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>    
+  <head>        
+    <title>Conditional Statement
+    </title>        
+    <meta charset="UTF-8">    
+  </head>    
+  <body>        
+    <p>
+      <img src="../../../images/eos2.png" alt="EOS2">
+    </p>        <h1>Conditional Statement</h1>        
+    <p>
+    Conditional statements are used to execute command if certain conditions are met or
+    to choose between two alternatives.
+    </p>        
+    <h2>Syntax</h2> 
+    <h3>Conditional statement</h3>        
+    <p>
+      <b>if</b> condition <b>then</b><br>
+      &nbsp;&nbsp;sequence<br>
+      <b>*if</b>
+    </p>
+    <h3>Alternative statement</h3>        
+    <p>
+      <b>if</b> condition <b>then</b><br>
+      &nbsp;&nbsp;sequence<br>
+      <b>else</b><br>
+      &nbsp;&nbsp;sequence<br>
+      <b>*if</b>
+    </p>
+    <h2>Example</h2>
+    <code>c:Circle<b>
+        <br>if</b>&nbsp;c.x&nbsp;&gt;
+      <span style="color:blue">&nbsp;10
+      </span><b>&nbsp;then</b>
+      <br>&nbsp;&nbsp;c.move(
+      <span style="color:blue">1
+      </span>,
+      <span style="color:blue">2
+      </span>)<b>
+        <br>*if</b><b>
+        <br>if</b>&nbsp;k.x&nbsp;&lt;
+      <span style="color:blue">&nbsp;100
+      </span><b>&nbsp;then</b>
+      <br>&nbsp;&nbsp;c.move(
+      <span style="color:blue">1
+      </span>,
+      <span style="color:blue">&nbsp;0
+      </span>)<b>
+        <br>else</b>
+      <br>&nbsp;&nbsp;c.move(-
+      <span style="color:blue">1
+      </span>,
+      <span style="color:blue">&nbsp;0
+      </span>)<b>
+        <br>*if</b>
+    </code>                       
+    <h2>BNF</h2>ConditionalStatement := 
+    <br>	&nbsp;&nbsp;&nbsp;"if" condition "then" sequence "*if" |
+    <br>	&nbsp;&nbsp;&nbsp;"if" condition "then" sequence "else" sequence "*if" |
+    <br>sequence := A sequence of statements
+    <br>        
+  </body>
+</html>

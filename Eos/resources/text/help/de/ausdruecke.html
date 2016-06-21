@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>       
+  <head>             
+    <title>Ausdr&uuml;cke     
+    </title>             
+    <meta charset="UTF-8">       
+  </head>       
+  <body>             
+    <p>      
+      <img src="../../../images/eos2.png" alt="EOS2">    
+    </p>	<h1>Ausdr&uuml;cke</h1>	     
+    <p>Immer wenn beim Programmieren von einem Ausdruck gesprochen wird, ist gemeint dass hier ein Wert in irgendeiner Form ben&ouml;tigt wird.   Dies sind sehr oft schlichte Konstanten, also Zahlen, Zeichenketten, Farben, Wahrheitswerte, ... .   Beim Programmieren kann aber an jeder Stelle an der ein Wert erwartet wird auch ein Term stehen, der diesen erst berechnet.   Dh. Ausdr&uuml;cke k&ouml;nnen sowohl Werte wie auch Terme (Berechnungsvorschriften) sein.     
+    </p>	     
+    <p>In diesen Termen k&ouml;nnen verschiedene Rechenarten verwendet werden, sowie 	Vergleiche und Funktionen.     
+    </p>	     <h2>Rechenarten</h2>	Die standard Rechenarten berechnen aus zwei Zahlen eine neue. 	     
+    <ul>	       
+      <li><b>*</b> Multiplizieren       
+      </li>	       
+      <li><b>/</b> Dividieren       
+      </li>	       
+      <li><b>+</b> Addieren       
+      </li>	       
+      <li><b>-</b> Subtrahieren       
+      </li>	     
+    </ul>	<h2>Vergleiche</h2>	Die Vergleiche pr&uuml;fen eine Beziehung zwischen zwei Zahlen. 	Das Ergebnis ist ein Wahrheitswert. Also <b>wahr</b> oder <b>falsch</b>. 	     
+    <ul>	       
+      <li> <b>&gt;</b> Gr&ouml;&szlig;er als Vergleich.       
+      </li>	       
+      <li> <b>&lt;</b> Kleiner als Vergleich.       
+      </li>	       
+      <li> <b>&gt;=</b> Gr&ouml;&szlig;er gleich Vergleich.       
+      </li>	       
+      <li> <b>&lt;=</b> Kleiner gleich Vergleich.       
+      </li>	       
+      <li> <b>&lt;&gt;</b> Test auf Ungleichheit       
+      </li>	       
+      <li> <b>=</b> Test auf Gleichheit       
+      </li>	     
+    </ul>	<h2>Logische Operationen</h2>	Die logischen Operationen verkn&uuml;pfen ein oder zwei Wahrheitswerte. 	Das Ergebnis ist wiederrum ein Wahrheitswert. Auf diese Weise k&ouml;nnen komplexe 	logische Ausdr&uuml;cke aufgebaut werden.        
+    <ul>	       
+      <li><b>und</b> liefert wahr, wenn beide wahr sind.       
+      </li>	       
+      <li><b>oder</b> liefert wahr, wenn mindestens einer der beiden wahr ist.       
+      </li>	       
+      <li><b>nicht</b> dreht die Aussage um. Also aus wahr wird falsch und aus falsch wird wahr.       
+      </li>       
+    </ul>	<h2>Klammern</h2>	Jeder Ausdruck kann in runde Klammern gesetzt werden, um die Berechnung eindeutig zu machen. 	Im Zweifel sollte man Klammern verwenden, da die Reihenfolge beim Programieren nicht so einfach ist, 	wie das Punkt vor Strich in der Mathematik.     
+    <br>	<b>Hinweis:</b> eckige oder geschweifte Klammern haben eine v&ouml;llig andere Bedeutung. 	<h2> Beispiel</h2>	     
+    <code>k:Kreis<b>        
+        <br>	         
+        <br>	wiederhole</b><b>&nbsp;solange</b>&nbsp;k.x&nbsp;&lt;       
+      <span style="color:blue">&nbsp;500       
+      </span>&nbsp;und&nbsp;k.y&nbsp;&gt;       
+      <span style="color:blue">&nbsp;100       
+      </span>      
+      <br>	&nbsp;&nbsp;&nbsp;k.x&nbsp;:=&nbsp;k.x&nbsp;*       
+      <span style="color:blue">&nbsp;2       
+      </span>&nbsp;+       
+      <span style="color:blue">&nbsp;1       
+      </span><b>        
+        <br>	*wiederhole</b>    
+    </code>		                        <h2>BNF</h2>	Die folgenden Regeln wurden der Verst&auml;ndlichkeit halber vereinfacht.  	Diese Vereinfachung macht die Regeln mehrdeutig, sodass Punkt vor Strich nicht mehr beachtet wird.     
+    <br>	ZB. Ist 5 * 5 + 1 mehrdeutig und kann als 5 * (5 + 1) oder (5 * 5) + 1 interpretiert werden     
+    <br>	Eos verwendet die komplexeren Regeln und beachtet Punkt vor Strich. St&auml;rker bindende 	Rechenzeichen stehen weiter unten.     
+    <br>	Ausdruck:=      
+    <br>	&nbsp;&nbsp;&nbsp;Ausdruck "oder" Ausdruck |     
+    <br>	&nbsp;&nbsp;&nbsp;Ausdruck "und" Ausdruck |     
+    <br>	&nbsp;&nbsp;&nbsp;Ausdruck ("=" | "     
+    <>") Ausdruck |       
+      <br>	&nbsp;&nbsp;&nbsp;Ausdruck ("       
+      <" | ">" | "         
+        <=" | ">=") Ausdruck |           
+          <br>	&nbsp;&nbsp;&nbsp;Ausdruck ("+" | "-") Ausdruck |           
+          <br>	&nbsp;&nbsp;&nbsp;Ausdruck ("*" | "/") Ausdruck |           
+          <br>	&nbsp;&nbsp;&nbsp; ("nicht" | "-" | &epsilon; ) Ausdruck |           
+          <br>	&nbsp;&nbsp;&nbsp; "(" Ausdruck ")" |           
+          <br>	&nbsp;&nbsp;&nbsp; Funktion |           
+          <br>	&nbsp;&nbsp;&nbsp; Attribut |           
+          <br>	&nbsp;&nbsp;&nbsp; Methode |           
+          <br>	&nbsp;&nbsp;&nbsp; Zahl | Farbe | Wahrheitswert | LinienStil | F&uuml;llstil | Ausrichtung | Zeichenkette           
+          <br>	 	 	Legende:            
+          <br>	[] optionaler Teil           
+          <br>	()* beliebig oft           
+          <br>	&epsilon; nichts           
+          <br>       
+  </body>
+</html>

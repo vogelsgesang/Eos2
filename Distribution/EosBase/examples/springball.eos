@@ -1,0 +1,23 @@
+ball:Kreis
+ball.radiusSetzen(10)
+vx:Real
+vy:Real
+vx = 1
+wiederhole immer
+    ball.verschieben(vx,vy)
+    wenn ball.x > 90 dann
+        vx = -abs(vx)
+    *wenn
+    wenn ball.x < -90 dann
+        vx = abs(vx)
+    *wenn
+    wenn ball.y < -90 dann
+        vy = abs(vy)
+    sonst
+        vy = vy - 0.03
+    *wenn
+    spur:Kreis
+    spur.radiusSetzen(2)
+    spur.füllfarbeSetzen(#00000055)
+    spur.verschiebenNach(ball.x,ball.y)
+*wiederhole

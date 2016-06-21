@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>    
+  <head>        
+    <title>Fenster
+    </title>        
+    <meta charset="UTF-8">    
+  </head>    
+  <body>        
+    <p>
+      <img src="../../../images/eos2.png" alt="EOS2">
+    </p>        <h1>Fenster</h1>        
+    <p>Das Fenster dient dazu Figuren anzuzeigen. Wenn man kein Fenster definiert, wird         
+    sobald man die erste Figur erzeugt, automatisch auch ein Fenster erstellt und die Figur hinzugef&uuml;gt.         
+    Explizit selbst ein Fenster zu erzeugen ist nur dann notwendig, wenn man die Methoden des Fensters aufrufen will.         
+    Dann muss man jedoch alle Figuren manuell dem Fenster hinzuf&uuml;gen.
+    </p>        
+    <p>Die Ma&szlig;e aller Abst&auml;nde sind in mm. Hierbei wird dem Betriebssystem vertraut.         
+    Liefert dieses einen falsch dpi (dots per inch) Wert so stimmen die Abst&auml;nde leider nicht.         
+    In der Regel stimmen die Werte &plusmn;10%.         
+    </p>        
+    <h2>Setter- und Getter-Methoden</h2>        
+    Zu jedem Attribut gibt es in der Regel zwei Methoden zum Setzen und Lesen des Attributwertes.<br>        
+    ZB. x:Zahl &harr; xLesen():Zahl &harr; xSetzen(x:Zahl)<br>        
+    Diese werden nicht separat dokumentiert.          
+    <h2>Methoden</h2>        
+    <h3>verschiebe(dx:Zahl,dy:Zahl)</h3>        
+    Verschiebt das Fenster um <b>dx</b> in x-Richtung und <b>dy</b> in y-Richtung.         
+    <h3>gitterein()</h3>        
+    Aktiviert das Koordinatengitter. Dieses ist am Anfang an.         
+    <h3>gitteraus()</h3>        
+    Deaktiviert das Koordinatengitter.         
+    <h3>zeichne(figur:Figur)</h3>        
+    Die <b>figur</b> wird dem Fenster hinzugef&uuml;gt und ab diesem Zeitpunkt gezeichnet.         
+    Wir eine Figur einem zweiten Fenster hinzugef&uuml;gt wechselt die Figur r&uuml;ber.         
+    Sie wird also immer nur in einem Fenster sichtbar sein.          
+    <h2>Attribute</h2>        
+    <h3>gitterfarbe:Farbe</h3>        
+    Farbe des Koordinatengitters.         
+    <h3>hintergrundfarbe:Farbe</h3>        
+    Farbe des Hintergrunds.         
+    <h3>h&ouml;he:Zahl</h3>        
+    H&ouml;he des Fensters in mm.         
+    <h3>breite:Zahl</h3>        
+    Breite des Fensters in mm.         
+    <h3>oben:Zahl</h3>        
+    Abstand zum oberen Rand des Bildschirms in mm.         
+    <h3>links:Zahl</h3>        
+    Abstand zum linken Rand des Bildschirms in mm.         
+    <h3>name:Zeichenkette</h3>        
+    Text in der Titelleiste des Fensters.         
+    <h3>strichabstand:Zahl</h3>        
+    Abstand der Linien des Koordinatengitters.         
+    <h2> Beispiel</h2>
+    <code>f:Fenster
+      <br>f.gitterFarbeSetzen(
+      <span style="color:blue">blau
+      </span>)
+      <br>f.hintergrundFarbeSetzen(
+      <span style="color:blue">rot
+      </span>)
+      <br>f.verschiebe(-
+      <span style="color:blue">50
+      </span>,
+      <span style="color:blue">0
+      </span>)
+      <br>f.breiteSetzen(
+      <span style="color:blue">100
+      </span>)
+      <br>f.h&#246;heSetzen(
+      <span style="color:blue">100
+      </span>)
+      <br>r:Rechteck
+      <br>f.zeichne(r)
+    </code>                     
+  </body>
+</html>

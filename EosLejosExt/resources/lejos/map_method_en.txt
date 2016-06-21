@@ -1,0 +1,8 @@
+carev3.connect(1)          = connect,string
+carev3.turnleft(1)         = turnLeft,integer
+carev3.turnright(1)        = turnRight,integer
+carev3.moveforward(1)      = driveForward,integer
+carev3.movebackward(1)     = driveBackward,integer
+carev3.honk(0)             = honk
+carev3.distance(0)         = readDistanceSensor,integer
+carev3.angle(0)            = readAngleSensor,integer

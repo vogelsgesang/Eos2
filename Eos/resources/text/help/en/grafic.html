@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Grafic</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Grafic</h1>
+        Grafics own all properties and methods of the classes
+        <a href = "figure.html">Figure</a>, <a href = "linefigure.html">LineFigure</a>
+        , <a href = "filledfigure.html">FilledFigure</a> and <a href = "rectangle.html">Rectangle</a>.
+        A grafics object paints, after filling the area, an image into the rectangle.
+        If the rectangle has different proportions as the image, you hvae to decide which 
+        tradeoff you want.
+        Either the image is stretched , cut off or the rectangle isn't covered entirly.
+        <h2>Methods</h2>
+        <h3>loadImage(filename:String)</h3>
+          Loads the file as image. The image is searched relative to the location of the Eos file.
+          Therefore you have to save your file once or you did load it.
+        <h3>stretchImage()</h3>
+          The image is stretched or shrinked to fit the size of the rectangle.
+          The proportions of the image are changed.
+        <h3>cutImage()</h3>
+          The image is stretched (or shrinked) until it covers the whole rectangle area.
+          Unused parts of the image are cut off.
+        <h3>fitImage()</h3>
+          The image is strechted (or shrinked) until the whole image is visible.
+          Parts of the rectangle may stay empty as the proportions of the image are kept.
+          That behaviour is similar to the black columns on a 16:9 tv showing a 4:3 show.
+          Only the black columns here are transparent.
+        <h2>Example</h2>
+        <code>image:Grafic<br>
+image.loadImage(<span style="color:blue">"reifen.png"</span>)<br>
+image.setWidth(<span style="color:blue">40</span>)<br>
+image.cutImage()<br>
+image.fitImage()<br>
+image.stretchImage()<br>
+image.setHeight(<span style="color:blue">80</span>)<br>
+image.cutImage()<br>
+image.fitImage()<br>
+image.stretchImage()<br>
+image.setHeight(<span style="color:blue">40</span>)<br>
+image.loadImage(<span style="color:blue">"blume.png"</span>)<br>
+image.cutImage()<br>
+image.fitImage()<br>
+image.stretchImage()<b><br>
+repeat</b><span style="color:blue">&nbsp;360</span><b>&nbsp;times</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;image.rotate(<span style="color:blue">1</span>)<b><br>
+*repeat</b></code> 
+    </body>
+</html>

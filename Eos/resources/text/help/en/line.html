@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Line</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Line</h1>
+        The line is a segment. Lines own all properties and methods of the classes
+        <a href = "figure.html">Figure</a> and <a href = "linefigure.html">LineFigure</a>.
+        <h2>Setter- and Getter-Methods</h2>
+        For every property generally there are two methods for setting and getting 
+        the property value.<br>
+        eg x:Number &harr; getX():Number &harr; setX(x:Number)<br>
+        They are not extra documented. 
+        <h2>Methods</h2>
+        <h3>setPoint1(x:Number,y:Number)</h3>
+        Sets the first point to (<b>x</b>,<b>y</b>).
+        <h3>setPoint2(x:Number,y:Number)</h3>
+        Sets the second point to (<b>x</b>,<b>y</b>).
+        <h3>setPoints(x1:Number,y1:Number,x2:Number,y2:Number)</h3>
+        Sets both points to (<b>x1</b>,<b>y1</b>) and (<b>x2</b>,<b>y2</b>).  
+        <h2>Properties</h2>
+        <h3>linewidth:Number</h3>
+        Width of the line (thickness).
+        <h3>linestyle:LineStyle</h3>
+        The style the line is drawn in.
+        <h3>linecolor:Color</h3>
+        The color the line is drawn in.
+        <h3>x1:Number</h3>
+        The x coordinate of the first point.
+        <h3>y1:Number</h3>
+        The y coordingate of the first point.
+        <h3>x2:Number</h3>
+        The x coordinate of the second point.
+        <h3>y2:Number</h3>
+        The y coordinate of the second point.
+        <h2>Example</h2>
+<code>l:Line<br>
+l.setPoints(<span style="color:blue">20</span>,<span style="color:blue">20</span>,<span style="color:blue">30</span>,<span style="color:blue">10</span>)<br>
+l.setLineStyle(<span style="color:blue">dashed</span>)<br>
+l.setLineWidth(<span style="color:blue">4</span>)<br>
+l.x1&nbsp;=<span style="color:blue">&nbsp;5</span></code>        
+    </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CarEv3</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>CarEv3</h1>
+        <p>Objects of this class serve as remote control of a Lego Ev3 robot.
+        The objects have no attributs. Calls to methods are redirected to the robot.
+        Therefore it is crucial to call the connect method as first. 
+        </p>
+        <p>
+        Before to can use this class the first time you have to prepare the Lego Ev 3 robot.
+        <ol>
+        <li>The robot should be built after the basic Lego Ev3 edu modell.
+        <li>The robot needs to have a connection with the ultrasonic sensor at port 4 and the gyro sensor connect at port 1.
+        <li>The robot must be booted with a Lejos sd card.
+        <li>The robot must be connected to the same network as the computer running eos.
+        <li>The program EosServer.jar has to run on the robot.
+        </ol>
+        </p>
+        <p>
+        In order to create the sd card, you need the lejos image and the lego jvm from Oracle.
+        The flash program can be started by starting the EosLejosExt.jar file.
+        A detailed description how to create the sd card can be found on the lejos homepage. 
+        </p>
+        <p>
+        A wifi dongle allows to connect the robot to a wifi.
+        You can use the really compact ones. After the robot was booted from the lejos sd card,
+        it can easily be connected to your wifi.
+        In theory it would be possilbe to use bluetooth, but wifi is the much better choice.
+        </p>
+        <p>
+        The program EosServer.jar can be directly transfered and started using the lejos control program.
+        The server waits for commands from eos and translates them to motor control commands.
+        If you want to use a different robot model you have to write your server or adapt the EosServer program.
+        Depending on the used wheels, wheel distance, sensor configuration you need different motor and sensor commands.
+        If you want to use a completly different modell, eg a cran, you have to modify EosLejosExt.jar as well.
+        </p>
+        <h2>Methods</h2>
+        <h3>connect(name:String)</h3>
+        Eos 2 establishes a tcp/ip connection to the robot. If it is successful the robot changes its color
+        and plays a sound. The connection will automatically be terminated when the program ends.
+        <h3>turnLeft(angle:Integer)</h3>
+        The robot turns to the left. It tries to turn the given angle, but the
+        exact angle depends on many external conditions like the surface.
+        Therefore the angle will not be really exact.
+        <h3>turnRight(angle:Integer)</h3>
+        The robot turn to the right.
+        <h3>moveForward(distance:Integer)</h3>
+        The robot moves the given distance in milimeter forward.
+        Depending on the battery level, the surface, the motor the robot will not exactly drive forward.
+        It can't be avoides that it will always drive a little curve. The wheels
+        will never be exactly adjusted.
+        <h3>moveBackward(distance:Integer)</h3>
+        The robot drives backwards.
+        <h3>distance()</h3>
+        This methods read out the ultra sonic sensor. The distance to the next obstacle is
+        in millimeter with an accurasity of about 2 centimeter.
+        <h3>angle()</h3>
+        Reads the value from the gyro sensor. 0 degree is the starting orientation. 
+        The angle has a precision of about 3 degrees
+        <h3>honk()</h3>
+        The robot plays a sound.   
+    </body>
+</html>

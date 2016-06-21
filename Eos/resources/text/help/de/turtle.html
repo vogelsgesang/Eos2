@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Turtle</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Turtle</h1>         
+        <p>Turtles haben alle Attribute und Methoden der Klassen 
+        <a href = "figur.html">Figur</a>.</p>
+        <p>Eine Turtle (Schildkr&ouml;te) kann mit verschiedenen Befehlen man&ouml;vriert werden.
+        Bei jeder Bewegung hinterl&auml;sst sie eine Spur.
+        Dies erlaubt es zu Zeichnen.</p>
+        <p>Die Turtle zeichnet im Grunde Polygone. Immer wenn man die Zeicheneigenschaften &auml;ndert wird ein neues Polygon begonnen. 
+        Dies ist wichtig, wenn man die F&uuml;llart umstellt. W&auml;hrend man ein ausgemaltes Polygon zeichnet,
+         darf man die Zeicheneigenschaften nur 
+        &auml;ndern, wenn die Teilfl&auml;che fertig ist.</p>
+        <h2>Setter- und Getter-Methoden</h2>
+        Zu jedem Attribut gibt es in der Regel zwei Methoden zum Setzen und Lesen des Attributwertes.<br>
+        ZB. x:Zahl &harr; xLesen():Zahl &harr; xSetzen(x:Zahl)<br>
+        Diese werden nicht separat dokumentiert. 
+        <h2>Methoden</h2>
+        <h3>stiftAb()</h3>
+        Beginnt den Zeichenvorgang. Jede Bewegung der Turtle hinterl&auml;sst eine Linie. Implizit wird ein neues Polygon begonnen.
+        <h3>stiftAuf()</h3>
+        Solange bis stiftAb() aufgerufen wird, wird nicht gezeichnet.
+        <h3>linksdrehen(winkel:Zahl)</h3>
+        Dreht die Turtle um <b>winkel</b> Grad nach links.
+        <h3>rechtsdrehen(winkel:Zahl)</h3>
+        Dreht die Turtle um <b>winkel</b> Grad nach rechts.        
+        <h3>links(winkel:Zahl)</h3>
+        Dreht die Turtle um <b>winkel</b> Grad nach links.
+        <h3>rechts(winkel:Zahl)</h3>
+        Dreht die Turtle um <b>winkel</b> Grad nach rechts.
+        <h3>setzeTurtleXY(x:Zahl, y:Zahl)</h3>
+        Setzt die Turtle auf eine neue Position.
+        <h3>zur&uuml;ck(abstand:Zahl)</h3>
+        Bewegt die Turtle um <b>abstand</b> zur&uuml;ck.
+        <h3>vor(abstand:Zahl)</h3>
+        Bewegt die Turtle um <b>abstand</b> vor. 
+        <h2>Attribute</h2>
+        <h3>turtleX:Zahl</h3>
+        Die x-Koordinate der Turtle.
+        <h3>turtleY:Zahl</h3>
+        Die y-Koordinate der Turtle.
+        <h3>kurs:Zahl</h3>
+        Die Bewegungsrichtung als Winkel der Turtle.
+        <h3>turtleSichtbar:Wahrheitswert</h3>
+        Gibt an, ob die Turtle (kleines Dreieck) angezeigt wird oder nur die Spur die sie hinterl&auml;sst.
+        <h2>Beispiel</h2>
+<code>t:Turtle<br>
+t.vor(<span style="color:blue">10</span>)<br>
+t.f&#252;llfarbeSetzen(<span style="color:blue">rot</span>)<br>
+t.f&#252;llartSetzen(<span style="color:blue">ausgemalt</span>)<br>
+t.rechtsDrehen(<span style="color:blue">60</span>)<b><br>
+wiederhole</b><span style="color:blue">&nbsp;6</span><b>&nbsp;mal</b><br>
+&nbsp;&nbsp;t.vor(<span style="color:blue">5</span>)<br>
+&nbsp;&nbsp;t.linksDrehen(<span style="color:blue">60</span>)<b><br>
+*wiederhole</b><br>
+t.turtleSichtbarSetzen(<span style="color:blue">falsch</span>)<br>
+g:Gruppe<b><br>
+wiederhole</b><span style="color:blue">&nbsp;5</span><b>&nbsp;mal</b><br>
+&nbsp;&nbsp;g.kopiere(t)<br>
+&nbsp;&nbsp;g.drehen(<span style="color:blue">60</span>)<b><br>
+*wiederhole</b><br>
+g.schlucke(t)<b><br>
+wiederhole</b><b>&nbsp;immer</b><br>
+&nbsp;&nbsp;g.drehen(<span style="color:blue">1</span>)<b><br>
+*wiederhole</b></code>        
+    </body>
+</html>

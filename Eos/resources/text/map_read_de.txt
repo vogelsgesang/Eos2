@@ -1,0 +1,58 @@
+ellipse.mittex            = getCenterX,real
+ellipse.mittey            = getCenterY,real
+ellipse.radiusx           = getRadiusX,real
+ellipse.radiusy           = getRadiusY,real
+
+window.gitterfarbe       = getGridColor,color
+window.hintergrundfarbe  = getBackgroundColor,color
+window.h\u00f6he         = getHeight,real
+window.breite            = getWidth,real
+window.oben              = getTop,real
+window.links             = getLeft,real
+window.name              = getTitle,string
+window.strichabstand     = getGridWidth,real
+
+filledfigure.f\u00fcllart     = getFillStyle,fillstyle
+filledfigure.f\u00fcllfarbe   = getFillColor,color
+
+circle.mittex              = getCenterX,real
+circle.mittey              = getCenterY,real
+circle.radius              = getRadius,real
+
+line.linienst\u00e4rke   = getLineWidth,real
+line.linienart           = getLineStyle,linestyle
+line.farbe               = getLineColor,color
+line.x1                  = getX1,real
+line.y1                  = getY1,real
+line.x2                  = getX2,real
+line.y2                  = getY2,real
+
+square.seitenl\u00e4nge  = getSide,real
+
+rectangle.h\u00f6he        = getHeight,real
+rectangle.breite           = getWidth,real
+rectangle.oben             = getTop,real
+rectangle.links            = getLeft,real
+rectangle.unten            = getBottom,real
+rectangle.rechts           = getRight,real
+
+linefigure.randfarbe     = getLineColor,color
+linefigure.randart       = getLineStyle,linestyle
+linefigure.randst\u00e4rke    = getLineWidth,real
+
+textfield.schriftfarbe            = getTextColor,color
+textfield.schriftgr\u00f6\u00dfe  = getTextSize,integer
+textfield.schriftart              = getFont,string
+textfield.ausrichtungvertikal     = getAlignmentVertical,alignment
+textfield.ausrichtungHorizontal   = getAlignmentHorizontal,alignment
+textfield.gr\u00f6\u00dfeautomatischanpassen = getAutoAdjust,boolean
+textfield.durchsichtig            = getHideBorder,boolean
+
+plotter.turtlex            = getPenX,real
+plotter.turtley            = getPenY,real
+plotter.kurs               = getAngle,real
+plotter.turtlesichtbar     = getPenVisible,boolean
+
+figure.x                  = getX,real
+figure.y                  = getY,real
+figure.sichtbar           = getVisible,real

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Welt</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Welt</h1>
+        <p>Eine Welt ist die Voraussetzung, um einen Roboter zu verwenden. Um eine Welt sinnvoll zu verwenden sollte man zuerst eine Welt mit dem 
+        Welteditor erstellen und diese laden. Tut man dies nicht ist die Welt leer und enth&auml;lt einen einzelnen Eingang.</p>
+        <p>Eine Welt kann beliebig viele Eing&auml;nge enthalten. Diese dienen als Platzhalter f&uuml;r zuk&uuml;nftige Roboter. Immer wenn ein Roboter
+        eine Welt betritt, wird er an der Stelle des n&auml;chsten freien Eingangs platziert.</p>
+        <p>Welten werden mit dem Welteditor erstellt und gespeichert. Ein Roboter-Programm kann diese Welt nun laden. Damit dies zuverl&auml;ssig funktioniert,
+        sollte die Datei vorher gespeichert werden, damit EOS wei&szlig;, wo es suchen muss.</p>
+        <h2>Methoden</h2>
+        <h3>betreten(roboter:Roboter)</h3>
+        F&uuml;gt einen Roboter zur Welt hinzu. Dies geht je Eingang nur einmal.
+        Bei der Standardwelt also nur einmal.
+        <h3>steinSetzen(x:Zahl, y:Zahl, z:Zahl)</h3>
+        Platziert einen Stein an der Position.
+        <h3>steinfarbeSetzen(farbe:Farbe)</h3>
+        Legt die <b>farbe</b> neuer Steine fest.
+        <h3>steinHinlegen(x:Zahl, y:Zahl)</h3>
+        Legt einen Stein oben auf den Stapel.
+        <h3>steinEntfernen(x:Zahl, y:Zahl, z:Zahl)</h3>
+        Entfernt den Stein an der Position.
+        <h3>steinAufheben(x:Zahl, y:Zahl)</h3>
+        Hebt den obersten Stein des Stapels auf.
+        <h3>laden(datei:Zeichenkette)</h3>
+        L&auml;dt eine vorher erstellte Welt.
+        <h2>Beispiel</h2>
+<code>w:Welt<br>
+eos:Roboter<br>
+w.laden(<span style="color:blue">"labyrinth.eow"</span>)<br>
+w.betreten(eos)<br>
+eos.schritt()</code>        
+    </body>
+</html>

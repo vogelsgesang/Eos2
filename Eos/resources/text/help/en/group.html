@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Group</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Group</h1>  
+        <p>Groups own all properties and methods of the class
+        <a href = "figure.html">Figure</a>.</p>
+        <p>Groups have the purpose to assemble multiply object to one. 
+        Every call to group will influence every part of it. For example
+        you could build a car using multiple circles and rectangles and add them to a
+        group. That way you can move the car as a whole.</p>
+        <p><b>Remark:</b> It is possible to change objects that are part of a group,
+        but the results may be confusing. A figure outside a group moves relative to the containing window.
+        A figure that is part of a group will move relativ to that group.       
+        </p>
+        <h2>Methods</h2> 
+        <h3>setBorderColor(color:Color)</h3>
+        Changes the border color of all figures within the group.
+        <h3>setBorderStyle(style:LineStyle)</h3>
+        Changes the border style of all figures within the group.
+        <h3>setBorderWidth(width:Number)</h3>
+        Changes the border width of all figures within the group.
+        <h3>setFillStyle(style:FillStyle)</h3>
+        Changes the fill style of all figures within the group.
+        <h3>setFillColor(color:Color)</h3>
+        Changes the fill color of all figures within the group.
+        <h3>consume(figure:Figure)</h3>
+        The <b>figure</b> is added to the group.        
+        <h3>setCenter(x:Number,y:Number)</h3>
+        Sets the center of the group to the position (<b>x</b>, <b>y</b>).
+        Every method using the center (rotate, strech, ...) will now use that point.
+        Before calling that method the center of a group is the gravity center of all
+        figures within the group.  
+        <h3>copy(figure:Figure)</h3>
+        This call makes a copy of the figure and adds the copy to the group.
+        <h3>mirrorX()</h3>
+        Mirrors the group at the y axis.
+        <h3>mirrorY()</h3>
+        Mirrors the group at the x axis.
+        <h2>Example</h2>
+<code>c:Circle<br>
+g:Group<br>
+g.setCenter(<span style="color:blue">0</span>,<span style="color:blue">0</span>)<br>
+c.move(<span style="color:blue">50</span>,<span style="color:blue">0</span>)<b><br>
+repeat</b><span style="color:blue">&nbsp;11</span><b>&nbsp;times</b><br>
+&nbsp;&nbsp;&nbsp;g.copy(c)<br>
+&nbsp;&nbsp;&nbsp;g.rotate(<span style="color:blue">30</span>)<b><br>
+*repeat</b><br>
+g.cosume(c)<br>
+g.setBorderColor(<span style="color:blue">blue</span>)<b><br>
+repeat</b><span style="color:blue">&nbsp;1000</span><b>&nbsp;times</b><br>
+&nbsp;&nbsp;&nbsp;g.rotate(<span style="color:blue">1</span>)<br>
+&nbsp;&nbsp;&nbsp;g.setFillColor(<span style="color:blue">red</span>)<br>
+&nbsp;&nbsp;&nbsp;g.setFillColor(<span style="color:blue">yellow</span>)<b><br>
+*repeat</b></code>        
+    </body>
+</html>

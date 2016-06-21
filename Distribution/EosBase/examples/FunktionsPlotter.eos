@@ -1,0 +1,14 @@
+x:Real
+t:Turtle
+t.linienstärkeSetzen(1)
+t.stiftAuf()
+x = -100
+t.setzeTurtleXY(x,10*f(x/10))
+t.stiftAb()
+wiederhole 200 mal
+    x = x + 1
+    t.setzeTurtleXY(x,10*f(x/10))
+*wiederhole
+anweisung f(x:Real):Real
+    ergebnis = 5*sin(50*x)
+*anweisung

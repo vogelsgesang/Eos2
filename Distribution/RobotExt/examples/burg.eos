@@ -1,0 +1,21 @@
+lisa:Roboter
+w:Welt
+w.betreten(lisa)
+lisa.steinFarbeSetzen(grau)
+wiederhole 10 mal
+    wiederhole 4 mal
+        wiederhole 8 mal
+            lisa.hinlegen()
+            lisa.schritt()
+        *wiederhole
+        lisa.linksdrehen()
+    *wiederhole
+*wiederhole
+lisa.steinFarbeSetzen(weiß)
+wiederhole 4 mal
+    wiederhole 4 mal
+        lisa.hinlegen()
+        lisa.schritt(2)
+    *wiederhole
+    lisa.linksdrehen()
+*wiederhole

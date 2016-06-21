@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Methoden</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Eigene Methoden</h1>
+        <p>Eine eigene Methode ist eine Anweisungssequenz, welche man immer wieder aufrufen kann.
+        Man spart sich auf diese Weise wiederkehrende Sequenzen immer wieder tippen zu m&uuml;ssen.
+        EOS kennt Methoden und Anweisungen. Methoden k&ouml;nnen auf alle definierten Objekte zugreifen. 
+        Anweisungen k&ouml;nnen ausschliesslich Parameter verwenden.</p>
+        <p>
+           Mehrere Methoden m&uuml;ssen sich zumindest im Namen oder in ihrer Anzahl der Parameter unterscheiden.
+        </p>         
+        <h2>Schreibweise</h2>
+        <h3>Methode ohne Parameter</h3>
+        <p><b>methode</b> Name<br>
+        &nbsp;&nbsp;Sequenz<br>
+        <b>*methode</b></p>
+        <h3>Methode mit Parameter</h3>
+        <p><b>methode</b> Name( Parameter )<br>
+        &nbsp;&nbsp;Sequenz<br>
+        <b>*methode</b></p>
+        <h3>Methode mit Parameter und Ergebnis</h3>
+        <p><b>methode</b> Name( Parameter ):Typ<br>
+        &nbsp;&nbsp;Sequenz<br>
+            &nbsp;&nbsp;ergebnis = ...<br>   
+        <b>*methode</b></p>
+        <h3>Parameter</h3>
+        Parameter schreibt man in der Form <br>
+        <p>
+            Name : Typ, Name : Typ , ... , Name : Typ 
+        </p>
+        Hat man mehrere Parameter die den selben Typ haben, kann man folgende abk&uuml;rzende Schreibweise verwenden.
+        <p>
+            Name, Name, ... , Name : Typ 
+        </p>
+        <h3>Verwenden</h3>
+        Um eine Anweisung oder Methode aufzurufen schreibt man
+        <p>
+            Name( Argumente ) 
+        </p>
+<h2> Beispiel</h2>
+<code>
+<b>methode</b>&nbsp;bewegen(r:RECHTECK,&nbsp;grad:real)<br>
+&nbsp;&nbsp;&nbsp;r.Verschieben(cos(grad),&nbsp;sin(grad))<b><br>
+*methode</b><br>
+r1:RECHTECK<br>
+r2:RECHTECK<br>
+bewegen(r1,<span style="color:blue">&nbsp;10</span>)<br>
+bewegen(r2,<span style="color:blue">&nbsp;20</span>)
+</code>                
+        <h2>BNF</h2>
+Methode := "methode" Name [ Parameter ] [ ":" Typ ] Sequence "*methode" <br>
+Parameter := "(" [ Name ( "," Name )* ":" Typ ( "," Name ( "," Name )* ":" Typ )* ] ")" <br>
+Name := Ein beliebiger Name der mit einem Buchstaben beginnt und keine Leerzeichen enth&auml;lt <br>
+Sequenz := Eine Anweisungssequenz<br> 
+Legende: <br>
+[] optionaler Teil<br>
+()* beliebig oft<br>
+
+
+
+    </body>
+</html>

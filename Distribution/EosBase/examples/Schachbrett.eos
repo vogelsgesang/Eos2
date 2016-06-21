@@ -1,0 +1,24 @@
+x:Integer
+y:Integer
+
+wiederhole 8 mal
+    y = y + 1
+    wiederhole 8 mal
+        x = x + 1
+        r:Quadrat
+        r.seitenlängeSetzen(10)
+        r.verschiebenNach(10*x-45,10*y-45)
+{Bemerkung: 
+  2 ist eine ganze Zahl. Die linke Seite ergibt also
+  1,   1, 2,   2, 3,   3, 4,   4, 5,   5
+  2.0 ist eine Kommazahl. Die rechte Seite ergibt also
+  1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5
+}
+        wenn (x + y) / 2 = (x + y) / 2.0 dann
+            r.füllfarbeSetzen(schwarz)
+        sonst
+            r.füllfarbeSetzen(weiß)
+        *wenn
+    *wiederhole
+    x = 0
+*wiederhole

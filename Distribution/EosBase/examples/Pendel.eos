@@ -1,0 +1,35 @@
+x, y, g, D_m, vx, vy, n:Real
+gewicht:Kreis
+feder:Linie
+//Optik
+feder.linienartSetzen(gestrichelt)
+feder.linienstärkeSetzen(2)
+gewicht.füllfarbeSetzen(grau)
+//Gewicht startet bei
+gewicht.verschiebenNach(20,-70)
+//Feder hängt bei
+x = 0
+y = 30
+//Federhärte durch Gewicht
+D_m = 0.007
+//Erdbeschleunigung
+g = -0.1
+//Neutrale Länge der Feder
+n = 30
+
+//Simulation
+dx, dy, l, alpha, F:Real
+wiederhole immer
+    dx = gewicht.mitteXLesen() - x
+    dy = gewicht.mitteYLesen() - y
+    //Federdehnung
+    l = r(dx,dy) - n
+    //Federwinkel
+    alpha = phi(dx, dy)
+    //Kraft der Feder
+    F = l * D_m
+    vx = vx - cos(alpha) * F
+    vy = vy - sin(alpha) * F + g
+    gewicht.verschieben(vx,vy)
+    feder.endpunkteSetzen(gewicht.mitteXLesen(), gewicht.mitteYLesen(),x,y)
+*wiederhole

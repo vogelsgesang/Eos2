@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>    
+  <head>        
+    <title>Figure
+    </title>        
+    <meta charset="UTF-8">    
+  </head>    
+  <body>        
+    <p>
+      <img src="../../../images/eos2.png" alt="EOS2">
+    </p>        
+    <h1>Figure</h1>
+    The figure is the base class for all geometric classes. That means every geometric class owns all
+    methods and properties figure does.
+    A circle and a rectangle are both figures therefore both can be moved, streched and so on.
+    <h2>Setter- and Getter-Methods</h2>
+        For every property generally there are two methods for setting and getting 
+        the property value.<br>
+        eg x:Number &harr; getX():Number &harr; setX(x:Number)<br>
+        They are not extra documented.         
+    <h2>Methods</h2>        
+    <h3>move(dx:Number,dy:Number)</h3>
+    Moves the figure <b>dx</b> in x direction and <b>dy</b> in y direction.        
+    <h3>stretch(factor:Number)</h3>
+    Stretches the figure at its center with the stretching <b>factor</b>.         
+    <h3>moveTo(x:Number,y:Number)</h3>
+    Moves the figure to the position (<b>x</b>,<b>y</b>).        
+    <h3>rotate(angle:Number)</h3>
+    Rotates the figure around its center counter clockwise for <b>angle</b> degrees.       
+    <h3>rotateAround(x:Number,y:Number,angle:Number)</h3>        
+    Rotates the figure around the point (<b>x</b>,<b>y</b>) counter clockwise for <b>angle</b> degrees.
+    <h2>Properties</h2>        
+    <h3>visible:Boolean</h3>        
+    Stores if the figure shall be drawn.         
+    <h3>x:Number</h3>        
+    The x coordinate of the figure (center).         
+    <h3>y:Number</h3>        
+    The y coordinate of the figure (center).         
+    <h2>Example</h2>
+    <code>r:Rectangle
+      <br>c:Circle
+      <br>c.move(
+      <span style="color:blue">10
+      </span>,
+      <span style="color:blue">10
+      </span>)
+      <br>r.moveTo(-
+      <span style="color:blue">20
+      </span>,
+      <span style="color:blue">0
+      </span>)<b>
+        <br>repeat</b>
+      <span style="color:blue">&nbsp;10
+      </span><b>&nbsp;times</b>
+      <br>&nbsp;&nbsp;&nbsp;c.rotateAround(
+      <span style="color:blue">20
+      </span>,
+      <span style="color:blue">0
+      </span>,
+      <span style="color:blue">10
+      </span>)
+      <br>&nbsp;&nbsp;&nbsp;r.rotateAround(
+      <span style="color:blue">20
+      </span>,
+      <span style="color:blue">0
+      </span>,
+      <span style="color:blue">10
+      </span>)<b>
+        <br>*repeat</b>
+      <br>c.stretch(
+      <span style="color:blue">2
+      </span>)
+      <br>r.stretchAt(
+      <span style="color:blue">0
+      </span>,
+      <span style="color:blue">0
+      </span>,
+      <span style="color:blue">2
+      </span>)
+    </code>             
+  </body>
+</html>

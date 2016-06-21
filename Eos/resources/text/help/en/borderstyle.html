@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Borderstyle/Linestyle</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Borderstyle/Linestyle</h1>
+        <p>
+        The border style determines how the border line of a figure is drawn.
+        There are the following values: 
+        </p>    
+        <ul>
+        <li>dashed</li>
+        <li>solid</li>
+        <li>dotted</li>
+        <li>dasheddotted</li>
+        <li>invisible</li>
+        </ul>       
+        <h2>Usage</h2>
+        The BorderStyle/LineStyle is needed for the following methods and properties.
+        <ul>
+        <li>Group.setBorderStyle(style:LineStyle)</li>
+        <li>LineFigure.setBorderStyle(style:BorderStyle)</li>
+        <li>LineFigure.getBorderStyle():BorderStyle</li>
+        <li>LineFigure.borderStyle:BorderStyle</li>
+        <li>Line.getLineStyle():LineStyle</li>
+        <li>Line.setLineStyle(style:LineStyle)</li>
+        <li>Line.linestyle:LineStyle</li>
+        </ul>
+<h2>Example</h2>
+<code>c:Circle<br>
+c.setBorderStyle(<span style="color:blue">dotted</span>)</code>               
+        <h2>BNF</h2>
+BorderStyle :=  "dashed" | "solid" | "dotted" | "dasheddotted" | "invisible" <br>
+    </body>
+</html>

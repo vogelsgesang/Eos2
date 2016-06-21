@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fillstyle</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Fillstyle</h1>
+        <p>The fillstyle determines the style and technic that is used to fill areas. There are several values. 
+        </p>    
+        <ul>
+        <li>filled</li> <p>The area is filled.</p>
+        <li>ruled</li> <p>The area is ruled.</p>
+        <li>checked</li> <p>The area is checked.</p>
+        <li>transparent</li> <p>The area is empty.</p>
+        </ul>
+        <h2>Usage</h2>
+        The fillstyle is needed for the following properties and methods.        
+        <ul>
+        <li>FilledFigure.setFillStyle(style:FillStyle)</li>
+        <li>FilledFigure.getFillStyle(style:FillStyle)</li>
+        <li>FilledFigure.fillstyle:FillStyle</li>
+        </ul>
+<h2>Example</h2>
+<code>c:Circle<br>
+c.setFillStyle(<span style="color:blue">checked</span>)</code>               
+        <h2>BNF</h2>
+Fillstyle :=  "filled" | "ruled" | "checked" | "transparent" <br>
+    </body>
+</html>

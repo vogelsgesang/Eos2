@@ -1,0 +1,14 @@
+d:Dreieck
+d.eckenSetzen(-20,-10,20,-10,20,30)
+d.füllartSetzen(schraffiert)
+a:Integer
+a = 100
+wiederhole
+    d.drehen(1)
+    d.verschieben(1,0)
+    a = a -1
+*wiederhole solange a> 0
+d.randartSetzen(gepunktelt)
+d.spiegeleX()
+d.spiegeleY()
+d.streckenAn(20,-10,0.5)

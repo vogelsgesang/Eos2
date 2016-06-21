@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Robot</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Robot</h1>
+        <p>
+        A robot can change stones within a world by placing new stone or removing existing ones.
+        Before it can start, the robot must enter a world.</p>
+        <h2>Methods</h2>
+        <h3>step()</h3>
+        The robot tries to do a step forward. 
+        <h3>step(nr:Integer)</h3>
+        The robot tries tod o <b>nr</b> steps forward.
+        <h3>stepBack()</h3>
+        The robot tries to do a step backward.        
+        <h3>stepLeft()</h3>
+        The robot tries to do a side step to the left.        
+        <h3>stepRight()</h3>
+        The robot tries todo a side step to the right.
+        <h3>isObstacle()</h3>
+        Checks, if a step forwrad is impossible.
+        <h3>isLeftObstacle()</h3>
+        Checks, if a side step left is impossible.
+        <h3>isRightObstacle()</h3>
+        Checks, if a side step right is impossible.
+        <h3>isBackObstacle()</h3>
+        Checks, if a step backward is impossible.
+        <h3>fly()</h3>
+        The robot tries to fly forward.
+        <h3>flyBack()</h3>
+        The robot tries to fly backward.
+        <h3>flyLeft()</h3>
+        The robot tries to side fly to the left.
+        <h3>flyRight()</h3>
+        The robot tries to side fly to the right.
+        <h3>flyDown()</h3>
+        The robot tries to fly down.
+        <h3>flyUp()</h3>
+        The robot tries to fly up.
+        <h3>isFree()</h3>
+        Checks, if the robot can fly forward.
+        <h3>isLeftFree()</h3>
+        Checks, if the robot can fly to the left.
+        <h3>isRightFree()</h3>
+        Checks, if the robot can fly to the right.
+        <h3>isBackFree()</h3>
+        Checks, if the robot can fly backward.
+        <h3>isUpFree()</h3>
+        Checks if the robot can fly up.
+        <h3>isDownFree()</h3>
+        Checks if the robot can fly down.
+        <h3>turnLeft()</h3>
+        The robot turns 90 degrees to the left.
+        <h3>turnRight()</h3>
+        The robot turns 90 degrees to the right.
+        <h3>turnAround()</h3>
+        The robot turns around 180 degree.
+        <h3>drop()</h3>
+        The robot drops a stone on the column before her.
+        <h3>pickup()</h3>
+        The robot picks up the top stone from the column in front of her.
+        <h3>pickup(nr:Integer)</h3>
+        The robot picks up <b>nr</b> stones from the column in front of her.
+        <h3>placeStone(n:Integer)</h3>
+        The robot places a stone in the column in front of her. The argument n defines the relative height.
+        n = 0 in front of her feet. n=2 in front of her head.
+        <h3>removeStone(n:Integer)</h3>
+        The robot removes a stone from the column in front of her. The argument n defines the relative height.
+        n = 0 in front of her feet. n=2 in front of her head.
+        <h3>setStoneColor(color:Color)</h3>
+        Defines the color of new placed stones.
+        <h3>setMark()</h3>
+        Marks the column the robot stand in.
+        <h3>removeMark()</h3>
+        Removes the mark from the column the  robot stands in.
+        <h3>isMarked()</h3>
+        Checks, if the robot stands in a marked column.
+        <h3>isStone()</h3>
+        Checks, if there is a stone in front of the robot.
+        <h3>isStone(nr:Integer)</h3>
+        Checks, if there are <b>nr</b> stones in front of the robot.
+        <h3>isSouth()</h3>
+        Checks, if the robot faces south.
+        <h3>isWest()</h3>
+        Checks, if the robot faces west.
+        <h3>isNorth()</h3>
+        Checks, if the robot faces north.
+        <h3>isEast()</h3>
+        Checks, if the robot faces east.
+        <h2>Example</h2>
+<code>world:World<br>
+world.load(<span style="color:blue">"labyrinth.eow"</span>)<br>
+cute:Robot<br>
+world.enter(cute)<b><br>
+repeat</b><b>&nbsp;while</b>&nbsp;not&nbsp;cute.isMarked()<br>
+&nbsp;&nbsp;cute.turnLeft()<b><br>
+&nbsp;&nbsp;repeat</b><b>&nbsp;solange</b>&nbsp;cute.isObstacle()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cute.turnRight()<b><br>
+&nbsp;&nbsp;*repeat</b><br>
+&nbsp;&nbsp;cute.step()<b><br>
+*repeat</b></code>        
+    </body>
+</html>

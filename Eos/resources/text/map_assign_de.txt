@@ -1,0 +1,58 @@
+ellipse.mittex            = setCenterX,real
+ellipse.mittey            = setCenterY,real
+ellipse.radiusx           = setRadiusX,real
+ellipse.radiusy           = setRadiusY,real
+
+window.gitterfarbe       = setGridColor,color
+window.hintergrundfarbe  = setBackgroundColor,color
+window.h\u00f6he         = setHeight,real
+window.breite            = setWidth,real
+window.oben              = setTop,real
+window.links             = setLeft,real
+window.name              = setTitle,string
+window.strichabstand     = setGridWidth,real
+
+filledfigure.f\u00fcllart     = setFillStyle,fillstyle
+filledfigure.f\u00fcllfarbe   = setFillColor,color
+
+circle.mittex              = setCenterX,real
+circle.mittey              = setCenterY,real
+circle.radius              = setRadius,real
+
+line.linienst\u00e4rke   = setLineWidth,real
+line.linienart           = setLineStyle,linestyle
+line.farbe               = setLineColor,color
+line.x1                  = setX1,real
+line.y1                  = setY1,real
+line.x2                  = setX2,real
+line.y2                  = setY2,real
+
+square.seitenl\u00e4nge  = setSide,real
+
+rectangle.h\u00f6he        = setHeight,real
+rectangle.breite           = setWidth,real
+rectangle.oben             = setTop,real
+rectangle.links            = setLeft,real
+rectangle.unten            = setBottom,real
+rectangle.rechts           = setRight,real
+
+linefigure.randfarbe       = setLineColor,color
+linefigure.randart         = setLineStyle,linestyle
+linefigure.randst\u00e4rke = setLineWidth,real
+
+textfield.schriftfarbe            = setTextColor,color
+textfield.schriftgr\u00f6\u00dfe  = setTextSize,integer
+textfield.schriftart              = setFont,string
+textfield.ausrichtungvertikal     = setAlignmentVertical,alignment
+textfield.ausrichtungHorizontal   = setAlignmentHorizontal,alignment
+textfield.gr\u00f6\u00dfeautomatischanpassen = setAutoAdjust,boolean
+textfield.durchsichtig            = setHideBorder,boolean
+
+plotter.turtlex            = setPenX,real
+plotter.turtley            = setPenY,real
+plotter.kurs               = setAngle,real
+plotter.turtlesichtbar     = setPenVisible,boolean
+
+figure.x                  = setX,real
+figure.y                  = setY,real
+figure.sichtbar           = setVisible,boolean

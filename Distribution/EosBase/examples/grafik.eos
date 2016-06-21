@@ -1,0 +1,18 @@
+bild:Grafik
+bild.ladeBild("reifen.png")
+bild.breiteSetzen(40)
+bild.bildAbschneiden()
+bild.bildEinpassen()
+bild.bildStrecken()
+bild.höheSetzen(80)
+bild.bildAbschneiden()
+bild.bildEinpassen()
+bild.bildStrecken()
+bild.höheSetzen(40)
+bild.ladeBild("blume.png")
+bild.bildAbschneiden()
+bild.bildEinpassen()
+bild.bildStrecken()
+wiederhole 360 mal
+    bild.drehen(1)
+*wiederhole

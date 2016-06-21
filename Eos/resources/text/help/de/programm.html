@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Programm</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Hauptprogramm</h1>
+        <p>Der Befehl Programm dient dazu das Hauptprogramm optisch von Anweisungen und Methoden zu trennen. 
+        Wird ein Befehl ausserhalb gefunden wird dieser automatisch dem Hauptprogramm zugeschrieben.
+        Der Program-Befehl ist damit rein optional.</p>
+        <h2>Schreibweise</h2>
+        <p><b>programm</b><br>
+        &nbsp;&nbsp;Anweisungssequenz<br>
+        <b>*programm</b></p>
+        <h2> Beispiel</h2>
+        <code>
+        <b>programm</b><br>
+        &nbsp;&nbsp;k:Kreis<br>
+        &nbsp;&nbsp;k.verschieben(<span style="color:blue">3</span>,<span style="color:blue">2</span>)<br>
+        <b>*programm</b><br>
+</code>
+         <h2>BNF</h2>
+Programm := "programm" Sequenz "*programm" <br>
+Sequenz := Eine Anweisungssequenz<br>       
+    </body>
+</html>

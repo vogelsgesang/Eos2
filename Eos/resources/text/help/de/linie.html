@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Linie</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Linie</h1>
+        Die Linie stellt eine Strecke dar. Linien haben alle Attribute und Methoden der Klassen 
+        <a href = "figur.html">Figur</a> und <a href = "strichfigur.html">StrichFigur</a>.
+        <h2>Setter- und Getter-Methoden</h2>
+        Zu jedem Attribut gibt es in der Regel zwei Methoden zum Setzen und Lesen des Attributwertes.<br>
+        ZB. x:Zahl &harr; xLesen():Zahl &harr; xSetzen(x:Zahl)<br>
+        Diese werden nicht separat dokumentiert.
+        <h2>Methoden</h2>
+        <h3>punkt1setzen(x:Zahl,y:Zahl)</h3>
+        Setzt den ersten Punkt auf den Punkt (<b>x</b>,<b>y</b>).
+        <h3>punkt2setzen(x:Zahl,y:Zahl)</h3>
+        Setzt den zweiten Punkt auf den Punkt (<b>x</b>,<b>y</b>).
+        <h3>endpunktesetzen(x1:Zahl,y1:Zahl,x2:Zahl,y2:Zahl)</h3>
+        Setzt beide Punkte auf die Punkte (<b>x1</b>,<b>y1</b>) und (<b>x2</b>,<b>y2</b>).  
+        <h2>Attribute</h2>
+        <h3>linienst&auml;rke:Zahl</h3>
+        St&auml;rke (dicke) der Strecke.
+        <h3>linienart:Linienart</h3>
+        Art wie die Strecke gezeichent wird.
+        <h3>farbe:Farbe</h3>
+        Farbe mit der die Linie gezeichnet wird.
+        <h3>x1:Zahl</h3>
+        Die x-Koordinate des ersten Punkts.
+        <h3>y1:Zahl</h3>
+        Die y-Koordinate des ersten Punkts.
+        <h3>x2:Zahl</h3>
+        Die x-Koordinate des zweiten Punkts.
+        <h3>y2:Zahl</h3>
+        Die y-Koordinate des zweiten Punkts.
+        <h2>Beispiel</h2>
+<code>l:Linie<br>
+l.endpunkteSetzen(<span style="color:blue">20</span>,<span style="color:blue">20</span>,<span style="color:blue">30</span>,<span style="color:blue">10</span>)<br>
+l.linienartSetzen(<span style="color:blue">gestrichelt</span>)<br>
+l.linienst&#228;rkeSetzen(<span style="color:blue">4</span>)<br>
+l.x1&nbsp;=<span style="color:blue">&nbsp;5</span></code>        
+    </body>
+</html>

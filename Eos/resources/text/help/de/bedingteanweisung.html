@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>    
+  <head>        
+    <title>Bedingte Anweisung
+    </title>        
+    <meta charset="UTF-8">    
+  </head>    
+  <body>        
+    <p>
+      <img src="../../../images/eos2.png" alt="EOS2">
+    </p>        <h1>Bedingte Anweisung</h1>        
+    <p>Bedingte Anweisungen dienen dazu Befehle nur unter bestimmten Bedingungen auszuf&uuml;hren oder          zwischen zwei Alternativen zu w&auml;hlen.
+    </p>        <h2>Schreibweise</h2>        <h3>Bedingte Anweisung</h3>        
+    <p><b>wenn</b> Bedingung <b>dann</b>
+      <br>        &nbsp;&nbsp;Sequenz
+      <br>        <b>*wenn</b>
+    </p>        <h3>Alternative Anweisung</h3>        
+    <p><b>wenn</b> Bedingung <b>dann</b>
+      <br>        &nbsp;&nbsp;Sequenz
+      <br>        <b>sonst</b>
+      <br>        &nbsp;&nbsp;Sequenz
+      <br>        <b>*wenn</b>
+    </p><h2> Beispiel</h2>
+    <code>k:Kreis<b>
+        <br>wenn</b>&nbsp;k.x&nbsp;&gt;
+      <span style="color:blue">&nbsp;10
+      </span><b>&nbsp;dann</b>
+      <br>&nbsp;&nbsp;k.verschieben(
+      <span style="color:blue">1
+      </span>,
+      <span style="color:blue">2
+      </span>)<b>
+        <br>*wenn</b><b>
+        <br>wenn</b>&nbsp;k.x&nbsp;&lt;
+      <span style="color:blue">&nbsp;100
+      </span><b>&nbsp;dann</b>
+      <br>&nbsp;&nbsp;k.verschieben(
+      <span style="color:blue">1
+      </span>,
+      <span style="color:blue">&nbsp;0
+      </span>)<b>
+        <br>sonst</b>
+      <br>&nbsp;&nbsp;k.verschieben(-
+      <span style="color:blue">1
+      </span>,
+      <span style="color:blue">&nbsp;0
+      </span>)<b>
+        <br>*wenn</b>
+    </code>                       <h2>BNF</h2>BedingteAnweisung := 
+    <br>	&nbsp;&nbsp;&nbsp;"wenn" Bedingung "dann" Sequenz "*wenn" |
+    <br>	&nbsp;&nbsp;&nbsp;"wenn" Bedingung "dann" Sequenz "sonst" Sequenz "*wenn" |
+    <br>Sequenz := Eine Anweisungssequenz
+    <br>        
+  </body>
+</html>

@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: EosLib.jar EosBaseLib.jar ext/* ext/EosRobotExt.jar ext/EosLejosExt.jar
+Main-Class: de.lathanda.eos.Start
+

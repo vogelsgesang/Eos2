@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Plotter</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Plotter</h1>         
+        <p>Plotters own all properties and methods of the class
+        <a href = "figure.html">Figure</a>.</p>
+        
+        <p>A plotter can be controlled with several methods.
+        Every time it moves it draws a line, which allows to draw freely.
+        </p>
+        <p>
+        In principal a plotter draws polygons. Everytime a drawing property is changed a new polygon starts.
+        This is important to know, in the case you change the filling style to none transparent. As every change will start a
+        new polygon, you have to set all properties at the beginning of an area.</p> 
+        <h2>Setter- and Getter-Methods</h2>
+        For every property generally there are two methods for setting and getting 
+        the property value.<br>
+        eg x:Number &harr; getX():Number &harr; setX(x:Number)<br>
+        They are not extra documented. 
+        <h2>Methods</h2> 
+        <h3>penDown()</h3>
+        Starts drawinw. From now on every movement will create a line segment. Implicitly it will start a new polygon.
+        <h3>penUp()</h3>
+        Stops drawing until penDown() is called.
+        <h3>turnLeft(angle:Number)</h3>
+        Turns the plotter <b>angle</b> degree to the left.
+        <h3>turnRight(angle:Number)</h3>
+        Turns the plotter <b>angle</b> degree to the right.
+        <h3>left(angle:Number)</h3>
+        Turns the plotter <b>angle</b> degree to the left.
+        <h3>right(angle:Number)</h3>
+        Turns the plotter <b>angle</b> degree to the right.
+        <h3>setPenXY(x:Number,y:Number)</h3>
+        Moves the plotter to that position.
+        <h3>back(abstand:Number)</h3>
+        Moves the plotter backward.
+        <h3>forward(abstand:Number)</h3>
+        Moves the plotter forward.
+        <h2>Properties</h2>
+        <h3>x:Number</h3>
+        The x coordinate of the plotter.
+        <h3>y:Number</h3>
+        The y coordinate of the plotter.
+        <h3>course:Number</h3>
+        The course of the plotter as angle in degree.
+        <h3>penVisible:Boolean</h3>
+        Tells if the pen is visible (littel triangle) or not.
+        <h2>Example</h2>
+<code>p.Plotter<br>
+p.forward(<span style="color:blue">10</span>)<br>
+p.setColor(<span style="color:blue">red</span>)<br>
+p.setFillStyle(<span style="color:blue">filled</span>)<br>
+p.turnRight(<span style="color:blue">60</span>)<b><br>
+repeat</b><span style="color:blue">&nbsp;6</span><b>&nbsp;times</b><br>
+&nbsp;&nbsp;p.forward(<span style="color:blue">5</span>)<br>
+&nbsp;&nbsp;p.turnLeft(<span style="color:blue">60</span>)<b><br>
+*repeat</b><br>
+p.setPenVisible(<span style="color:blue">false</span>)<br>
+g:Group<b><br>
+repeat</b><span style="color:blue">&nbsp;5</span><b>&nbsp;times</b><br>
+&nbsp;&nbsp;g.copy(p)<br>
+&nbsp;&nbsp;g.turn(<span style="color:blue">60</span>)<b><br>
+*repeat</b><br>
+g.consume(t)<b><br>
+repeat</b><b>&nbsp;forever</b><br>
+&nbsp;&nbsp;g.turn(<span style="color:blue">1</span>)<b><br>
+*repeat</b></code>        
+    </body>
+</html>

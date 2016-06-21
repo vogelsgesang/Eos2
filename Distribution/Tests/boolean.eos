@@ -1,0 +1,12 @@
+a:Boolean
+r:Rechteck
+a = falsch
+wiederhole 1000 mal
+   wenn a dann
+      a = falsch
+      r.drehen(-1)
+   sonst
+      a= nicht a
+      r.drehen(1)
+   *wenn
+*wiederhole

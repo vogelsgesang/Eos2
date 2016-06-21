@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>    
+  <head>        
+    <title>Einf&uuml;gen
+    </title>        
+    <meta charset="UTF-8">    
+  </head>    
+  <body>        
+    <p>
+      <img src="../../../images/eos2.png" alt="EOS2">
+    </p>        <h1>Einf&uuml;gen</h1>        
+    <p>Der Befehl Einf&uuml;gen erlaubt es andere EOS-Programme zu verwenden ohne sie abzuschreiben.         
+    Der Befehl kopiert quasi den kompletten Inhalt des angegebenen Programms in das eigene.
+    </p>        
+    <p>Hierbei gibt es jedoch folgende Einschr&auml;nkungen:
+    </p>        
+    <ol>        
+      <li>Der Einf&uuml;gen Befehl funktioniert erst mit relativen Pfaden, wenn das eigene Programm ge&ouml;ffnet oder gespeichert wurde.          
+      Wurde das Programm direkt im Editor geschrieben, ohne auf der Festplatte zu existieren, kann der Rechner leider nicht wissen, wo er suchen soll.
+      </li>        
+      <li>Das eingef&uuml;gte Programm muss f&uuml;r sich selber genommen syntaktisch (Syntax = Schreibweise) korrekt sein. Das bedeutet alle Wortpaare wie
+      zB. wiederhole&nbsp;*wiederhole m&uuml;ssen abgeschlossen sein. Variablenverweise m&uuml;ssen lediglich im Gesamtprogramm korrekt sein.
+      </li>        
+    </ol>        <h2>Schreibweise</h2>        
+    <p><b>einf&uuml;gen</b>
+      <br>        &nbsp;&nbsp;Dateinamen
+      <br>        <b>*einf&uuml;gen</b>
+    </p>        <h2> Beispiel</h2>
+    <code><b>einf&#252;gen</b>
+      <span style="color:blue">
+        <br>&nbsp;&nbsp;"a.eos"
+      </span><b>
+        <br>*einf&#252;gen</b>
+      <br>g:Gruppe
+      <br>a(g)
+      <br>g.verschieben(
+      <span style="color:blue">50
+      </span>,
+      <span style="color:blue">0
+      </span>)
+    </code>         
+    <h2>BNF</h2>Einf&uuml;gen := "einf&uuml;gen" Dateiname ("," Dateiname)* "*einf&uuml;gen" 
+    <br>Dateiname := Ein Dateiname zwischen ""
+    <br>  Legende: 
+    <br>()* beliebig oft
+    <br>              
+  </body>
+</html>

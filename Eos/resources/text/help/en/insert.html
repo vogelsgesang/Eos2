@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>    
+  <head>        
+    <title>Insert
+    </title>        
+    <meta charset="UTF-8">    
+  </head>    
+  <body>        
+    <p>
+      <img src="../../../images/eos2.png" alt="EOS2">
+    </p>        <h1>Insert</h1>        
+    <p>
+    The command insert allows to include other eos programs with out copying them.
+    The command includes the whole text of the referred program into this program. 
+    </p>        
+    <p>
+    There are some limitations:
+    </p>        
+    <ol>        
+      <li>
+      The insert command can only use relative pathes if the including program was opened or saved.
+      If the program was directly written within the ditor without saving it, the computer cannot know where to search for the include.
+      </li>        
+      <li>
+      The included program must we syntactically correct. That mean word pairs like repeat *repeat must be closed.
+      Variables and other semantic requirements only have to be correct for the whole program.
+      </li>        
+    </ol>        
+    <h2>Syntax</h2>        
+    <p><b>insert</b>
+      <br>        &nbsp;&nbsp;filename
+      <br>        <b>*insert</b>
+    </p>        
+    <h2>Example</h2>
+    <code><b>insert</b>
+      <span style="color:blue">
+        <br>&nbsp;&nbsp;"a.eos"
+      </span><b>
+        <br>*insert</b>
+      <br>g:Group
+      <br>a(g)
+      <br>g.move(
+      <span style="color:blue">50
+      </span>,
+      <span style="color:blue">0
+      </span>)
+    </code>         
+    <h2>BNF</h2>
+    Insert := "insert" filename ("," filename)* "*insert" 
+    <br>filename := a filename between "" or ''
+    <br>Explanation: 
+    <br>()* any number of
+    <br>              
+  </body>
+</html>

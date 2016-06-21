@@ -1,0 +1,13 @@
+welt:Welt
+karol:Roboter
+welt.betreten(karol)
+wiederhole immer
+   karol.schritt()
+   wenn karol.istMarke() dann
+      karol.markeLöschen()
+      karol.linksDrehen()
+   sonst
+      karol.markeSetzen()
+      karol.rechtsDrehen()
+   *wenn
+*wiederhole

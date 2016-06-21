@@ -1,0 +1,30 @@
+/*! \mainpage 
+
+ \section Aufbau	
+ Das Programm besteht aus mehreren Bibliotheken die aufeinander aufbauen.
+ <ul>
+ <li>EosBaseLib.jar, eine sehr einfache Spiele-Engine, welche dazu verwendet werden kann Projekte zu realisieren.
+ <li>EosLib.jar, EOS-Klassen.
+ <li>EosRobotLib.jar, Klassen für einen Roboter und seine Welt.
+ <li>EosRobotExt.jar, Plugin um ExtRobotLib.jar in Eos zu verwenden.
+ <li>EosLejosExt.jar, Plugin um einen Ev3 Edu Roboter fernzusteuern.
+ <li>BlueJEos-Projekt, Wrapperklassen für den BlueJ-Einsatz
+ <li>Eos.jar, Grafische Oberfläche von Eos2.
+ </ul>
+ 
+ Die anderen Dateien sind externe Bibliotheken und Dateien.
+   
+ \section Download
+ <a href="http://eos.lathanda.de/eos_src.zip">Quellcode</a> (Eclipse Projekt)<br>
+ Um nur das Programm herrunterzuladen, verwenden Sie bitte meine Homepage <a href="http://www.lathanda.de">Lathanda</a>.
+ Alle ausführbaren Dateien befinden sich jedoch auch im Unterordner Distribution des Quellcodes.
+ \section Copyright
+  <p>Autor: Peter (Lathanda) Schneider, schneidp@lathanda.de</p>
+  <p>Das Projekt Eos2 unterliegt Creative Commons <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a>.</p>
+  <p>Die Bibliotheken und Resourcen unterliegen teilweise anderen Lizenzen, welche sich
+  in voller Länge jeweils im Unterordner licenses innerhalb jeder Bibliothek befinden. 
+  Die Kurzfassung können Sie auch den Hilfeseiten entnehmen. Es wurde nach bestem Wissen und Gewissen geprüft,
+  ob alle Lizenzen eine nicht kommerzielle Nutzung erlauben. Sollte dennoch eine Datei Lizenzrechte verletzen,
+  so teilen Sie mir dies bitte mit, die entsprechende Datei wird dann zeitnah ersetzt.
+  </p>
+*/

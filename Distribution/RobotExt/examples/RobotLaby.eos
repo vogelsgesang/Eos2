@@ -1,0 +1,11 @@
+welt:Welt
+welt.laden("labyrinth.eow")
+karl:Roboter
+welt.betreten(karl)
+wiederhole solange nicht karl.istMarke()
+  karl.linksDrehen()
+  wiederhole solange karl.istHindernis()
+    karl.rechtsDrehen()
+  *wiederhole
+  karl.schritt()
+*wiederhole

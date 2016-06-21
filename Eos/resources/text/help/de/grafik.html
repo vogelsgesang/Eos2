@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Grafik</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Grafik</h1>         
+        Grafiken haben alle Attribute und Methoden der Klassen 
+        <a href = "figur.html">Figur</a>, <a href = "strichfigur.html">StrichFigur</a>,
+        <a href = "gefuelltefigur.html">Gef&uuml;llteFigur</a> und <a href = "rechteck.html">Rechteck</a>.
+        Ein Grafik-Objekt malt nach der F&uuml;llung zus&auml;tzlich ein Bild in das Rechteck.
+        Wenn das Rechteck nicht dasselbe Verh&auml;ltnis wie das Bild hat, muss man festlegen,
+        welchen Kompromiss man eingehen will. Entweder wird das Bild verzerrt, abgeschnitten 
+        oder nicht vollst&auml;ndig dargestellt. Jeder kennt dieses Problem von 4:3 Bildern auf einem
+        16:9 Fernseher.
+        <h2>Methoden</h2>
+        <h3>bildLaden(dateiname:Zeichenkette)</h3>
+          L&auml;dt die Datei als Bild. Das Bild wird relativ zum Ort der Eos-Datei gesucht. Dies funktioniert nat&uuml;rlich erst,
+          wenn die Datei bereits gespeichert oder geladen wurde.
+        <h3>bildStrecken()</h3>
+          Das Bild wird auf die Ma&szlig;e des Rechtecks ausgedehnt. Hierbei wird das Bild verzerrt.
+        <h3>bildAbschneiden()</h3>
+          Das Bild wird ohne Verzerrung so stark vergr&ouml;&szlig;ert, bis es das Rechteck abdeckt. 
+          &Uuml;berstehende Teile des Bildes werden abgeschnitten.
+        <h3>bildEinpassen()</h3>
+          Das Bild wird ohne Verzerrrung an das Rechteck angepasst, hierbei wird so viel wie m&ouml;glich des Rechtecks abgedeckt, ohne Teile des Bildes zu verlieren.
+          Dieses Verhalten entspricht den schwarzen Balken beim Fernsehen. Solange man keine F&uuml;llung oder Rand festlegt ist hier der schwarze Balken jedoch unsichtbar.
+        <h2>Beispiel</h2>
+        <code>bild:Grafik<br>
+bild.ladeBild(<span style="color:blue">"reifen.png"</span>)<br>
+bild.breiteSetzen(<span style="color:blue">40</span>)<br>
+bild.bildAbschneiden()<br>
+bild.bildEinpassen()<br>
+bild.bildStrecken()<br>
+bild.h&ouml;heSetzen(<span style="color:blue">80</span>)<br>
+bild.bildAbschneiden()<br>
+bild.bildEinpassen()<br>
+bild.bildStrecken()<br>
+bild.h&ouml;heSetzen(<span style="color:blue">40</span>)<br>
+bild.ladeBild(<span style="color:blue">"blume.png"</span>)<br>
+bild.bildAbschneiden()<br>
+bild.bildEinpassen()<br>
+bild.bildStrecken()<b><br>
+wiederhole</b><span style="color:blue">&nbsp;360</span><b>&nbsp;mal</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;bild.drehen(<span style="color:blue">1</span>)<b><br>
+*wiederhole</b></code> 
+    </body>
+</html>

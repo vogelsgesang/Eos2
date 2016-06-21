@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>    
+  <head>        
+    <title>Window
+    </title>        
+    <meta charset="UTF-8">    
+  </head>    
+  <body>        
+    <p>
+      <img src="../../../images/eos2.png" alt="EOS2">
+    </p>        
+    <h1>Window</h1>
+    <p>The window is needed to show figures. If you do not create a window object by yourself, the
+    system will create own for you atm you create any figure object. Every figure object will be automatically 
+    added to that window. You only have to create your own window if you want to call window methods.
+    But then you have to add every figure by yourself.</p>
+    <p>Every unit is millimeter (mm) (25.4mm = 1 inch). EOS will trust you operation system.
+    If your os delivers wrong dpi (dots per inch) values, the figures will have the wrong size.
+    You can assume the values will be accurate with an error of about 10%.</p>            
+    <h2>Setter- and Getter-Methods</h2>
+        For every property generally there are two methods for setting and getting 
+        the property value.<br>
+        eg x:Number &harr; getX():Number &harr; setX(x:Number)<br>
+        They are not extra documented. 
+    <h2>Methods</h2>        
+    <h3>move(dx:Number,dy:Number)</h3>        
+    Moves the Window.         
+    <h3>gridOn()</h3>        
+    Activates the grid. By default the grid is active with 10mm per line.         
+    <h3>gridOff()</h3>        
+    Deactivates the grid.         
+    <h3>draw(figure:Figure)</h3>        
+    The figure is added to that window and will now be draw.
+    If a figure is added to another window it will change to the second.
+    It will no longer be visible in the first window.
+    <h2>Properties</h2>        
+    <h3>gridColor:Color</h3>
+    Color of the grid.        
+    <h3>backgroundcolor:Color</h3>        
+    Color of the background.         
+    <h3>height:Number</h3>        
+    Height of the widnow in mm.         
+    <h3>width:Number</h3>        
+    Width of the window in mm.         
+    <h3>top:Number</h3>        
+    Distance between the upper border to upper border of the screen in mm.         
+    <h3>left:Number</h3>        
+    Distance between the left border of the window to the left border of the screen in mm.         
+    <h3>name:String</h3>        
+    Title of the window.         
+    <h3>gridwidth:Number</h3>
+    Distance between two gridlines. Default is 10mm.        
+    <h2>Example</h2>
+    <code>w:Window
+      <br>w.setGridColor(
+      <span style="color:blue">blue
+      </span>)
+      <br>w.setBackgroundColor(
+      <span style="color:blue">red
+      </span>)
+      <br>w.move(-
+      <span style="color:blue">50
+      </span>,
+      <span style="color:blue">0
+      </span>)
+      <br>w.setWidth(
+      <span style="color:blue">100
+      </span>)
+      <br>w.setHeight(
+      <span style="color:blue">100
+      </span>)
+      <br>r:Rectangle
+      <br>w.draw(r)
+    </code>                     
+  </body>
+</html>

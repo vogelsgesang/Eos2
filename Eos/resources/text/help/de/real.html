@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Kommazahlen</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Kommazahlen</h1>
+        <p>Der Datentyp Real entspricht ungef&auml;hr den reelen Zahlen aus der Mathematik. Es gibt jedoch einen entscheidenden Unterschied.
+        Ein Real wird nach etwa 17 Ziffern gerundet, wodurch Ergebnisse nie exakt sind. Der maximale Wert ist hingegen so gro&szlig;, 
+        da&szlig; er nie ein Rolle spielen wird (Eine Zahl mit 308 Stellen).
+        </p>
+        <p>
+        Der Begriff Real kommt von der Programmiersprache Pascal, in anderen Programmiersprachen hat sich eher der Begriff <b>double</b> etabliert. 
+        </p>  
+        <h2>Schreibweise</h2>
+        <p>Beim Programmieren muss man bei Kommazahlen in nahezu allen Programmiersprachen die englische Notation verwenden. 
+        Also einen Punkt statt dem Komma. Der Buchstabe "E" steht f&uuml;r "mal 10 hoch"</p>
+        <p>3.1415<br>
+        1.235E2 = 123.5<br>
+        </p>  
+<h2> Beispiel</h2>
+<code>k:Kreis<br>
+k.verschieben(<span style="color:blue">4.2</span>,<span style="color:blue">3.1</span>)<br>
+</code>              
+        <h2>BNF</h2>
+Real := (Ziffer)* ["."] (Ziffer)* [Exponent]<br>
+Exponent := ("e"|"E") [("+"|"-")] (Ziffer)+<br>
+Ziffer := "1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9"|"0" <br>
+Legende:<br>
+[] optionaler Teil<br>
+()* beliebig oft<br>
+()+ mindestens einmal<br>
+    </body>
+</html>
+
+

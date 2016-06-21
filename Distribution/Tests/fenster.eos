@@ -1,0 +1,5 @@
+f:Fenster
+f.nameSetzen("Test")
+f.strichAbstandSetzen(20)
+f.hintergrundFarbeSetzen(weiß)
+f.breite = 300

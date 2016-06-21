@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>    
+  <head>        
+    <title>Ausrichtung
+    </title>        
+    <meta charset="UTF-8">    
+  </head>    
+  <body>        
+    <p>
+      <img src="../../../images/eos2.png" alt="EOS2">
+    </p>        <h1>Ausrichtung</h1>        
+    <p>Die Ausrichtung gibt an wie Text innerhalb eines Rechtecks platziert wird.           Es gibt folgende vordefinierte Werte:          
+    </p>        
+    <ul>        
+      <li>zentriert
+      </li> 
+      <p>Der Text steht in der Mitte.
+      </p>        
+      <li>linksb&uuml;ndig
+      </li> 
+      <p>Der Text steht am linken Rand.
+      </p>        
+      <li>rechtsb&uuml;ndig
+      </li> 
+      <p>Der Text steht am rechten Rand.
+      </p>        
+      <li>obenb&uuml;ndig
+      </li> 
+      <p>Der Text steht am oberen Rand.
+      </p>        
+      <li>untenb&uuml;ndig
+      </li> 
+      <p>Der Text steht am unteren Rand.
+      </p>        
+    </ul>        <h2>Verwendung</h2>        Die Ausrichtung wird f&uuml;r folgende Methoden und Attribute ben&ouml;tigt.         
+    <ul>        
+      <li>Textfeld.ausrichtungVertikalLesen():Ausrichtung
+      </li>        
+      <li>Textfeld.ausrichtungHorizontalLesen():Ausrichtung
+      </li>        
+      <li>Textfeld.ausrichtungVertikalSetzen(ausrichtung:Ausrichtung)
+      </li>        
+      <li>Textfeld.ausrichtungHorizontalSetzen(ausrichtung:Ausrichtung)
+      </li>        
+      <li>Textfeld.ausrichtungVertikal:Ausrichtung
+      </li>        
+      <li>Textfeld.ausrichtungHorizontal:Ausrichtung
+      </li>        
+    </ul><h2> Beispiel</h2>
+    <code>text:Textfeld
+      <br>text.ausrichtungHorizontalSetzen(
+      <span style="color:blue">zentriert
+      </span>)
+      <br>text.ausrichtungVertikalSetzen(
+      <span style="color:blue">linksb&uuml;ndig
+      </span>)
+    </code>                        <h2>BNF</h2>Ausrichtung :=  "zentriert" | "linksb&uuml;ndig" | "rechtsb&uuml;ndig" | "obenb&uuml;ndig" | "untenb&uuml;ndig" 
+    <br>    
+  </body>
+</html>

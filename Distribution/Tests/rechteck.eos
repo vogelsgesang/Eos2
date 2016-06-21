@@ -1,0 +1,22 @@
+links:Real
+rechts:Real
+links = -30
+rechts = 30
+r:Rechteck
+r.eckenSetzen(links, 10, rechts, -10)
+wiederhole 9 mal
+  r.drehen(10)
+  r.eckenSetzen(links, 10, rechts, -10)
+*wiederhole
+wiederhole 9 mal
+  r.drehen(10)
+  links = links -5
+  rechts = -links
+  r.eckenSetzen(links, 10, rechts, -10)
+*wiederhole
+wiederhole 9 mal
+  r.drehen(10)
+  links = links +5
+  rechts = -links
+  r.eckenSetzen(links, 10, rechts, -10)
+*wiederhole

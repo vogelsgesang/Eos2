@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rechteck</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Rechteck</h1>         
+        Rechtecke haben alle Attribute und Methoden der Klassen 
+        <a href = "figur.html">Figur</a>, <a href = "strichfigur.html">StrichFigur</a>
+        und <a href = "gefuelltefigur.html">Gef&uuml;llteFigur</a>.
+        <h2>Setter- und Getter-Methoden</h2>
+        Zu jedem Attribut gibt es in der Regel zwei Methoden zum Setzen und Lesen des Attributwertes.<br>
+        ZB. x:Zahl &harr; xLesen():Zahl &harr; xSetzen(x:Zahl)<br>
+        Diese werden nicht separat dokumentiert. 
+        <h2>Methoden</h2>
+        <h3>linksObenSetzen(x:Zahl, y:Zahl)</h3>
+        Setzt die obere linke Ecke des Rechtecks auf die Position (<b>x</b>,<b>y</b>).
+        <h3>rechtsUntenSetzen(x:Zahl, y:Zahl)</h3>
+        Setzt die untere rechte Ecke des Rechtecks auf die Position (<b>x</b>,<b>y</b>).
+        <h3>eckenSetzen(links:Zahl, oben:Zahl, rechts:Zahl, unten:Zahl)</h3>
+        &Auml;ndert die R&auml;nder des Rechtecks. 
+        Die Parameter <b>links</b> und <b>rechts</b> legen implizit die Breite fest.
+        Die Parameter <b>oben</b> und <b>unten</b> legen implizit die H&ouml;he fest. 
+        <h2>Attribute</h2>
+        <h3>h&ouml;he:Zahl</h3>
+        Die H&ouml;he des Rechtecks.
+        <h3>breite:Zahl</h3>
+        Die Breite des Rechtecks.
+        <h3>oben:Zahl</h3>
+        Die y-Koordinate des oberen Randes.
+        <h3>links:Zahl</h3>
+        Die x-Koordinate des linken Randes.
+        <h3>unten:Zahl</h3>
+        Die y-Koordinate des unteren Randes.
+        <h3>rechts:Zahl</h3>
+        Die x-Koordinate des rechten Randes
+        <h2>Beispiel</h2>
+<code>kasten:Rechteck<br>
+kasten.links&nbsp;=<span style="color:blue">&nbsp;0</span><br>
+kasten.rechts&nbsp;=<span style="color:blue">&nbsp;40</span><br>
+kasten.oben&nbsp;=<span style="color:blue">&nbsp;60</span><br>
+kasten.unten&nbsp;=&nbsp;-<span style="color:blue">20</span></code>        
+    </body>
+</html>

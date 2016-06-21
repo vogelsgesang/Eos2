@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Wiederholungen</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Wiederholungen</h1>
+        <p>Wiederholungen dienen dazu eine Anweisungssequenz mehrfach auszuf&uuml;hren. 
+        Dies ist jedoch etwas mehr als ein Weg Copy & Paste zu vermeiden, denn die Wiederholungen k&ouml;nnen auch &uuml;ber
+        Bedingungen gesteuert werden. Etwa solange wiederholen bis der Rand erreicht wurde.</p>
+        <p>Schleife ist der umgangssprachliche Begriff f&uuml;r eine Wiederholung.</p>
+        <h2>Schreibweise</h2>
+        <h3>Endlosschleife</h3>
+        <p><b>wiederole immer</b><br>
+        &nbsp;&nbsp;Sequenz<br>
+        <b>*wiederhole</b></p>
+        <h3>Z&auml;hlschleife</h3>
+        <p><b>wiederhole</b> Anzahl <b>mal</b><br>
+        &nbsp;&nbsp;Sequenz<br>
+        <b>*wiederhole</b></p>
+        <h3>Bedingte Schleife</h3>
+        <p><b>wiederhole</b> <b>solange</b> Bedingung<br>
+        &nbsp;&nbsp;Sequenz<br>
+        <b>*wiederhole</b></p>
+        <p>Alternative Schreibweise</p>
+        <p><b>solange</b> Bedingung <b>tue</b><br>
+        &nbsp;&nbsp;Sequenz<br>
+        <b>*solange</b></p>      
+        <h3>Bedingte Schleife, welche mindestens einmal durchlaufen wird</h3>
+        <p><b>wiederhole</b><br>
+        &nbsp;&nbsp;Sequenz<br>
+        <b>*wiederhole solange</b> Bedingung</p>
+        <h3>Bedingte Schleife mit inverser Bedingung</h3>
+        <p><b>wiederhole</b> <b>bis</b> Bedingung<br>
+        &nbsp;&nbsp;Sequenz<br>
+        <b>*wiederhole</b></p>
+<h2> Beispiel</h2>
+<code>k:Kreis<b><br>
+wiederhole</b><span style="color:blue">&nbsp;5</span><b>&nbsp;mal</b><br>
+&nbsp;&nbsp;k.drehen(<span style="color:blue">1</span>)<b><br>
+*wiederhole</b><b><br>
+wiederhole</b><b>&nbsp;solange</b>&nbsp;k.x&nbsp;<<span style="color:blue">&nbsp;5</span><br>
+&nbsp;&nbsp;k.drehen(-<span style="color:blue">1</span>)<b><br>
+*wiederhole</b><b><br>
+wiederhole</b><br>
+&nbsp;&nbsp;k.drehen(<span style="color:blue">1</span>)<b>&nbsp;&nbsp;&nbsp;&nbsp;<br>
+*wiederhole</b><b>&nbsp;solange</b>&nbsp;k.y&nbsp;><span style="color:blue">&nbsp;10</span><b><br>
+solange</b>&nbsp;k.x&nbsp;<<span style="color:blue">&nbsp;5</span><b>&nbsp;tue</b><br>
+&nbsp;&nbsp;k.drehen(<span style="color:blue">1</span>)<b><br>
+*solange</b><b><br>
+wiederhole</b><b>&nbsp;immer</b>&nbsp;<br>
+&nbsp;&nbsp;k.drehen(<span style="color:blue">2</span>)<b><br>
+*wiederhole</b><b><br>
+wiederhole</b><b>&nbsp;bis</b>&nbsp;k.x&nbsp;<<span style="color:blue">&nbsp;15</span><br>
+&nbsp;&nbsp;k.drehen(<span style="color:blue">3</span>)<b><br>
+*wiederhole</b><br>
+</code>               
+        <h2>BNF</h2>
+Schleife := <br>
+	&nbsp;&nbsp;&nbsp;"wiederhole" "immer" Sequenz "*wiederhole" |<br>
+	&nbsp;&nbsp;&nbsp;"wiederhole" "solange" Bedingung Sequenz "*wiederhole" |<br>
+	&nbsp;&nbsp;&nbsp;"wiederhole" "bis" Bedingung Sequenz "*wiederhole" |<br>
+	&nbsp;&nbsp;&nbsp;"wiederhole" Sequenz "*wiederhole" "solange" Bedingung |<br>
+	&nbsp;&nbsp;&nbsp;"wiederhole" Ausdruck "mal" Sequenz "*wiederhole" |<br>
+	&nbsp;&nbsp;&nbsp;"solange" Bedingung "tue" Sequenz "*solange" |<br>
+Sequenz := Eine Anweisungssequenz<br>   
+
+
+
+    </body>
+</html>

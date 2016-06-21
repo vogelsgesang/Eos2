@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>    
+  <head>        
+    <title>Procedures
+    </title>        
+    <meta charset="UTF-8">    
+  </head>    
+  <body>        
+    <p>
+      <img src="../../../images/eos2.png" alt="EOS2">
+    </p>        
+    <h1>Userdefined Procedure</h1>        
+    <p>
+    A userdefined procedure is a command sequence, that can be invoked multiple times.
+    That way you can avoid to copy and paste command sequences you need multiple times.
+    EOS differs between methods and procedures. Methods can access all variables,
+     but procedurs can only access local variables and parameters.
+    As a consequence the automatically generated window is not available within procedures.
+    Figures created within a procedure have to be added to a window or group by hand
+    or they stay invisible.
+    </p>
+    <p>
+    If you define more than one procedures they must differ in either the name or the number of parameters.
+    </p>        
+    <h2>Syntax</h2>        
+    <h3>Procedure without parameters</h3>        
+    <p><b>procedure</b> name
+      <br>        
+      &nbsp;&nbsp;sequence
+      <br>        
+      <b>*procedure</b>
+    </p>        
+    <h3>Procedure with parameters</h3>        
+    <p><b>procedure</b> name( parameters )
+      <br>        
+      &nbsp;&nbsp;sequence
+      <br>        
+      <b>*procedure</b>
+    </p>        
+    <h3>Procedure with parameter and return value</h3>        
+    <p>
+    <b>procedure</b> name( parameter ):type<br>        
+    &nbsp;&nbsp;sequence<br>
+    &nbsp;&nbsp;result = ...<br>        
+    <b>*procedure</b>
+    </p>                 
+    <h3>Parameters</h3>        
+    Parameters are written like 
+    <br>        
+    <p>            
+    name : type, name : type , ... , name : type          
+    </p>
+    If you have multiple parameters with the same type, you can use the short form.        
+    <p>            
+    name, name, ... , name : type          
+    </p>        
+    <h3>Usage</h3>
+    In order to invoke a procedure you write        
+    <p>            
+    name( arguments )          
+    </p>
+    <h2>Example</h2>
+    <code><b>procedure</b>&nbsp;move(r:Rectangle,&nbsp;angle:real)
+      <br>&nbsp;&nbsp;r.move(
+      <span style="color:blue">100
+      </span>*cos(grad),
+      <span style="color:blue">&nbsp;100
+      </span>*sin(angle))
+      <br>&nbsp;&nbsp;r.rotate(angle)<b>
+        <br>*procedure</b>
+      <br>i:Integer<b>
+        <br>repeat</b>
+      <span style="color:blue">&nbsp;36
+      </span><b>&nbsp;times</b>
+      <br>&nbsp;&nbsp;r:Rectangle
+      <br>&nbsp;&nbsp;move(r,
+      <span style="color:blue">&nbsp;10
+      </span>*i)
+      <br>&nbsp;&nbsp;i&nbsp;=&nbsp;i&nbsp;+
+      <span style="color:blue">&nbsp;1
+      </span><b>
+        <br>*repeat</b>
+    </code>                         
+    <h2>BNF</h2>Procedure := "procedure" name [ parameter ] [ ":" type ] sequence "*procedure" 
+    <br>Method := "method" name [ parameter ] [ ":" type ] sequence "*method" 
+    <br>parameter := "(" [ name ( "," name )* ":" type ( "," name ( "," name )* ":" type )* ] ")" 
+    <br>name := Any name starting with a letter without white spaces. 
+    <br>sequenz := A sequence of commands
+    <br>Explanation: 
+    <br>[] optional part
+    <br>()* any amout of
+    <br>    
+  </body>
+</html>

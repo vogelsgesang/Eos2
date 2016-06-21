@@ -1,0 +1,13 @@
+k:Kreis
+r:Rechteck
+nautilus:Gruppe
+r.eckenSetzen(5, 5, 30, -5)
+r.füllfarbeSetzen(#FF59BC)
+k.füllfarbeSetzen(#FF59BC)
+k.radiusSetzen(20)
+nautilus.zentrumSetzen(0,0)
+wiederhole 30 mal
+    nautilus.kopiere(r)
+    nautilus.drehen(15)
+    nautilus.strecken(1.03)
+*wiederhole

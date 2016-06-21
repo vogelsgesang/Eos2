@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+author Peter (Lathanda) Schneider
+creative commons
+-->
+
+
+<help title = "Hilfethemen">
+    <node title = "EOS" html = "text/help/de/default.html">
+        <node title = "Klassen">
+            <node title = "Fenster" html = "text/help/de/fenster.html"/>
+            <node title = "Figur" html = "text/help/de/figur.html"/>
+            <node title = "StrichFigur" html = "text/help/de/strichfigur.html"/>
+            <node title = "Linie" html = "text/help/de/linie.html"/>
+            <node title = "GefüllteFigur" html = "text/help/de/gefuelltefigur.html"/>
+            <node title = "Kreis" html = "text/help/de/kreis.html"/>
+            <node title = "Ellipse" html = "text/help/de/ellipse.html"/>
+            <node title = "Dreieck" html = "text/help/de/dreieck.html"/>
+            <node title = "Quadrat" html = "text/help/de/quadrat.html"/>
+            <node title = "Rechteck" html = "text/help/de/rechteck.html"/>
+            <node title = "Textfeld" html = "text/help/de/textfeld.html"/>
+            <node title = "Grafik" html = "text/help/de/grafik.html"/>
+            <node title = "Gruppe" html = "text/help/de/gruppe.html"/>
+            <node title = "Turtle" html = "text/help/de/turtle.html"/>
+            <classes>
+        </node>
+        <node title = "Datentypen">
+            <node title = "Boolean" html = "text/help/de/boolean.html"/>
+            <node title = "Integer" html = "text/help/de/integer.html"/>
+            <node title = "Real" html = "text/help/de/real.html"/>
+            <node title = "Zeichenkette" html = "text/help/de/zeichenkette.html"/>
+        </node>
+        <node title = "Konstanten">
+            <node title = "Ausrichtung" html = "text/help/de/ausrichtung.html"/>
+            <node title = "Randart" html = "text/help/de/randart.html"/>
+            <node title = "Farbe" html = "text/help/de/farbe.html"/>        
+            <node title = "Füllart" html = "text/help/de/fuellart.html"/>
+        </node>
+        <node title = "Sprache">
+            <node title = "Deklaration" html = "text/help/de/deklaration.html"/>
+            <node title = "Anweisungen" html = "text/help/de/anweisungen.html"/>
+            <node title = "Funktionen" html = "text/help/de/funktionen.html"/>
+            <node title = "Ausdrücke" html = "text/help/de/ausdruecke.html"/>
+            <node title = "Variablen" html = "text/help/de/variablen.html"/>
+            <node title = "Bedingte Anweisung" html = "text/help/de/bedingteanweisung.html"/>            
+            <node title = "Wiederholungen" html = "text/help/de/wiederholungen.html"/>
+            <node title = "Kommentare" html = "text/help/de/kommentare.html"/>
+            <node title = "Für" html = "text/help/de/fuer.html"/>
+            <node title = "Methoden" html = "text/help/de/methoden.html"/>
+            <node title = "Programm" html = "text/help/de/programm.html"/>
+            <node title = "Einfügen" html = "text/help/de/einfuegen.html"/>
+            <node title = "Grammatik" html = "text/help/de/bnf.html"/>
+        </node>
+    </node>
+    <node title = "Informationen">
+        <node title = "Software" html = "text/help/de/software.html"/>
+        <node title = "Eos 2" html = "text/help/de/info.html"/>
+        <info>     
+    </node>
+</help>

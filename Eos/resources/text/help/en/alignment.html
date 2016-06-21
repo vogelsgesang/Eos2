@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>    
+  <head>        
+    <title>Alignment
+    </title>        
+    <meta charset="UTF-8">    
+  </head>    
+  <body>        
+    <p>
+      <img src="../../../images/eos2.png" alt="EOS2">
+    </p>        <h1>Alignment</h1>        
+    <p>The alignment defines how a text is placed within a rectangle.
+       There are the following values:          
+    </p>        
+    <ul>        
+      <li>centered</li> 
+      <p>The text is central.</p>        
+      <li>leftaligned</li> 
+      <p>The text is placed at the left border.</p>        
+      <li>rightaligned</li> 
+      <p>The text is placed at the right border.</p>        
+      <li>topaligned</li> 
+      <p>The text is placed at the upper border.</p>        
+      <li>bottomaligned</li> 
+      <p>The text is placed at bottom border.</p>        
+    </ul>
+    <h2>Usage</h2>
+       The alignment is needed for the following methods and properties.         
+    <ul>        
+      <li>Textfield.getAlignmentVertical():Alignment
+      </li>        
+      <li>Textfield.getAlignmentHorizontal():Ausrichtung
+      </li>        
+      <li>Textfield.setAlignmentVertical(alignment:Alignment)
+      </li>        
+      <li>Textfield.setAlignmentHorizontal(alignment:Alignment)
+      </li>        
+      <li>Textfield.alignmentVertical:Alignment
+      </li>        
+      <li>Textfield.alignmentHorizontal:Alignment
+      </li>        
+    </ul><h2>Example</h2>
+    <code>text:Textfield
+      <br>text.setAlignmentHorizontal(
+      <span style="color:blue">centered
+      </span>)
+      <br>text.setAlignmentVertical(
+      <span style="color:blue">leftaligned
+      </span>)
+    </code>                        
+    <h2>BNF</h2>Alignment :=  "centered" | "leftaligned" | "rightaligned" | "topaligned" | "bottomaligned"
+    <br>    
+  </body>
+</html>

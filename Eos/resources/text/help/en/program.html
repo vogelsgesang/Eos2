@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Program</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Main program</h1>
+        <p>
+        The statement program is useful to separate the main program from the procedure and method declaration parts.
+        Every command outside will automatically be added to the main program.
+        Therfore the program statement has only optical purpose.</p>
+        <h2>Syntax</h2>
+        <p><b>program</b><br>
+        &nbsp;&nbsp;command sequence<br>
+        <b>*program</b></p>
+        <h2>Example</h2>
+        <code>
+        <b>program</b><br>
+        &nbsp;&nbsp;c:Circle<br>
+        &nbsp;&nbsp;c.move(<span style="color:blue">3</span>,<span style="color:blue">2</span>)<br>
+        <b>*program</b><br>
+</code>
+         <h2>BNF</h2>
+Program := "program" sequence "*program" <br>
+sequence := A sequence of commands<br>       
+    </body>
+</html>

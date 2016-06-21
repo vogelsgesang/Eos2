@@ -1,0 +1,14 @@
+t:Textfeld
+x:Integer
+x = 0
+wiederhole 10 mal
+    t.zeileHinzufügen("fib("+x+") = "+fib(x))
+    x = x + 1
+*wiederhole
+anweisung fib(n:Integer):Integer
+    wenn n = 0 oder n = 1 dann
+        ergebnis = 1
+    sonst
+        ergebnis = fib(n-1) + fib(n-2)
+    *wenn
+*anweisung
