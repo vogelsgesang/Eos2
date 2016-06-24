@@ -26,6 +26,7 @@ Distribution/doc
 !jsch-0.1.50.jar
 !gluegen*.jar
 !jogl*.jar
+!javacc.jar
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
