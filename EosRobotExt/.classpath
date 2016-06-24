@@ -5,7 +5,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Eos"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EosBaseLib"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/EosLejosExt"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EosLib"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EosRobotLib"/>
 	<classpathentry kind="lib" path="/Distribution/RobotExt/gluegen-rt.jar"/>

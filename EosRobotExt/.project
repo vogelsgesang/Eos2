@@ -5,6 +5,7 @@
 	<projects>
 		<project>Eos</project>
 		<project>EosBaseLib</project>
+		<project>EosRobotLib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
