@@ -3,6 +3,7 @@
 	<name>GameLibExamples</name>
 	<comment></comment>
 	<projects>
+		<project>EosBaseLib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

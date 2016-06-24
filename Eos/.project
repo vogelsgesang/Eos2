@@ -3,6 +3,8 @@
 	<name>Eos</name>
 	<comment></comment>
 	<projects>
+		<project>EosBaseLib</project>
+		<project>EosLib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -3,6 +3,8 @@
 	<name>EosLejosExt</name>
 	<comment></comment>
 	<projects>
+		<project>Eos</project>
+		<project>EosBaseLib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

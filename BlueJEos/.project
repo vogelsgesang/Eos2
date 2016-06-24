@@ -3,6 +3,9 @@
 	<name>BlueJEos</name>
 	<comment></comment>
 	<projects>
+		<project>EosBaseLib</project>
+		<project>EosLib</project>
+		<project>EosRobotLib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
