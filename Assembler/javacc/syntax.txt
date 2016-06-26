@@ -1,19 +1,27 @@
 Adressierung
+Register direkt
+R
 
-Indirekt
-(<Adresse>)
+Register indirekt
+(R)
+
+Register indirekt mit Postinkrement
+(R)+
+
+Register indirekt mit Predekrement
+-(R)
+
+Register indirekt mit Index
+(R, R)
 
 Absolut
 $<Nummer>
 
-Relativ
+Konstante
 #<Nummer>
 
 Indiziert
-<Adresse>,<Register>
-
-Unmittelbar
-#$<Nummer>
+<Adresse>,R
 
 Label
 <Name>
@@ -21,3 +29,52 @@ Label
 Befehlszeile
 
 <Label>: <Befehl> <Adresse>* 
+
+Register:
+A,B accumulator, secondary accumulator (multiplication and division)
+R0-R15 any purpose register
+
+Befehle:
+I immediate
+S signed
+
+ADD(I)
+SUB(I)
+MUL(I,S,SI)
+DIV(I,S,SI)
+FADD(I)
+FSUB(I)
+FMUL(I,S,SI)
+FDIV(I,S,SI)
+NEG
+FNEG
+AND(I)
+OR(I)
+EOR(I)
+NOT
+ASL arithmetic shift left
+ASR arithmetic shift right
+LSL logical shift left
+LSR logical shift right
+ROL rotate left
+ROR rotate right
+Bcc branch conditional  
+  -CC(HI) Carry Clear 
+  -CS(LO) Carry Set 
+  -LS Low or Same 
+  -LT Less Than 
+  -LE Less or Equal 
+  -EQ Equal 
+  -GE Greater or Equal 
+  -NE Not Equal 
+  -GT Greater Than 
+  -PL Plus 
+  -MI Minus 
+CMP(I) compare
+FCMP(I) compare
+EXG exchange
+JMP
+JSR
+RTS
+MOVE
+NOP
