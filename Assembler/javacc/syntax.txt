@@ -34,6 +34,30 @@ Register:
 A,B accumulator, secondary accumulator (multiplication and division)
 R0-R15 any purpose register
 
+Befehlscodierung
+Bit      Bedeutung
+0-7      Operation
+8-11     Adressmodus Quelle
+12-15    Register
+16-19    Index Register
+20-23    Adressmodus Ziel
+24-27    Register
+28-31    Index Register
+
+Absolute und Direkte Werte in Reihenfolge 
+
+Adressemodus
+0000 Direkt Register
+0001 Indirekt Register
+0010 Indirekt Register Postinkrement
+0011 Indirekt Register Predekrement
+0100 Indirekt Register + Displacement
+0101 Indirekt + Index
+0111 Absolut
+1000 Direkt
+1001 Absolut + Index
+
+
 Befehle:
 I immediate
 S signed
@@ -46,6 +70,8 @@ FADD(I)
 FSUB(I)
 FMUL(I)
 FDIV(I)
+INC
+DEC
 NEG
 FNEG
 AND(I)
@@ -61,7 +87,6 @@ ROR rotate right
 Bcc branch conditional  
   -CC(HI) Carry Clear 
   -CS(LO) Carry Set 
-  -LS Low or Same 
   -LT Less Than 
   -LE Less or Equal 
   -EQ Equal 
