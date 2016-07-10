@@ -1,15 +1,26 @@
 package de.lathanda.assembler.cpu;
 
 public class Register {
-
-	public void setValue(int address) {
-		// TODO Auto-generated method stub
-		
+	private Cell mem;
+	public Cell getCell() {
+		return mem;
 	}
-
-	public int getInteger() {
-		// TODO Auto-generated method stub
-		return 0;
+	public void setValue(int value) {
+		mem.setInt(value);		
 	}
-
+	public void setValue(float value) {
+		mem.setFloat(value);
+	}
+	public int getInt() {
+		return mem.getInt();
+	}
+	public float getFloat() {
+		return mem.getFloat();
+	}
+	public void increment() {
+		mem.increment();
+	}
+	public void decrement() {
+		mem.decrement();
+	}
 }
