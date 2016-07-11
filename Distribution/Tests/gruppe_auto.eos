@@ -1,0 +1,29 @@
+Auto:GRUPPE
+r1:KREIS
+r2:KREIS
+Rumpf:RECHTECK
+Scheibe:DREIECK
+Auto.schlucke(r1)
+Auto.schlucke(r2)
+Auto.schlucke(Rumpf)
+Auto.schlucke(Scheibe)
+r1.mittelpunktSetzen(-40,0)
+r2.mittelpunktSetzen(40,0)
+Rumpf.eckenSetzen(-50,20,50,10)
+Scheibe.eckenSetzen(40,20,20,20,20,40)
+r1.füllfarbeSetzen(schwarz)
+r2.füllfarbeSetzen(schwarz)
+Rumpf.füllfarbeSetzen(rot)
+Scheibe.füllfarbeSetzen(hellblau)
+r1.radiusSetzen(9)
+r2.radiusSetzen(9)
+wiederhole immer
+    wiederhole 150 mal
+        Auto.verschieben(1,0)
+    *wiederhole
+    Auto.spiegleX()
+    wiederhole 150 mal
+        Auto.verschieben(-1,0)
+    *wiederhole
+    Auto.spiegleX()
+*wiederhole

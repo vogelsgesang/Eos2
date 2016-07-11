@@ -60,7 +60,7 @@ public class ConcurrentLinkedList<T>  implements Iterable<T> {
 			} else {
 				root = root.next;
 			}
-		} else if (last.t == t) {
+		} else  {
 			Node<T> prev = root;
 			Node<T> act = root.next;
 			while (act != null) {
