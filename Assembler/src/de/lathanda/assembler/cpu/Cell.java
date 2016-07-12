@@ -11,6 +11,12 @@ public class Cell {
 	public void setInt(int value) {
 		this.content = value;
 	}
+	public long getLong() {
+		return (long)content;
+	}
+	public void setLong(long value) {
+		this.content = (int)value;
+	}
 	public float getFloat() {
 		return Float.intBitsToFloat(content);
 	}
@@ -34,6 +40,16 @@ public class Cell {
 	}
 	public void setBit(int index) {
 		this.content = this.content | (1 << index);
+	}
+	public void clearBit(int index) {
+		this.content = this.content & ~(1 << index);
+	}
+	public void setBit(int index, boolean value) {
+		if (value) {
+			setBit(index);
+		} else {
+			clearBit(index);
+		}
 	}
 	public void toggleBit(int index) {
 		this.content = this.content ^ (1 << index);

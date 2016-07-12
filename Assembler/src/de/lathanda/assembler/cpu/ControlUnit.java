@@ -6,6 +6,9 @@ public class ControlUnit {
 	private Register ir;
 	private Register mar;
 	private Register[] r;
+	private Cell eaSource;
+	private Cell eaDestination;
+	private OpCode opcode;
 	public ControlUnit(Memory mem, ALU alu) {
 		super();
 		this.mem = mem;
@@ -16,6 +19,8 @@ public class ControlUnit {
 		}
 		ir = new Register();
 		mar = new Register();
+		eaSource      = mem.getMemoryCell(0);
+		eaDestination = mem.getMemoryCell(0);
 	}
 	public void init(int address) {
 		mar.setValue(address);
@@ -26,19 +31,67 @@ public class ControlUnit {
 		execute();
 	}
 	private void execute() {
-		// TODO Auto-generated method stub
+		if (opcode.alu) {
+			alu.setSource(eaSource);
+			alu.setDestination(eaDestination);
+		}
+		switch (opcode) {
+		case NOP: // no operation
+			break;
+		case ADD: // integer addition
+			alu.add();
+			break;
+		case SUB: // integer subtraction
+			alu.subtract();
+			break;
+			/*
+		case MUL(3),   // unsigned integer multiplication
+		case MULS(4),  // signed integer multiplication
+		case DIV(5),   // unsigned integer division
+		case DIVS(6),  // signed integer division
+		case FADD(7),  // floating point addition
+		case FSUB(8),  // floating point subtraction
+		case FMUL(9),  // floating point multiplication
+		case FDIV(10), // floating point division
+		case INC(11),  // integer increment
+		case DEC(12),  // integer decrement
+		case NEG(13),  // signed integer negative
+		case FNEG(14), // floating point negative
+		case AND(15),  // logical and
+		case OR(16),   // logical or
+		case XOR(17),  // logical exclusive or
+		case NOT(18),  // logical not
+		case ASL(19),  // arithmetic shift left
+		case ASR(20),  // arithmetic shift right
+		case LSL(21),  // logical shift left
+		case LSR(22),  // logical shift right
+		case ROL(23),  // rotate left
+		case ROR(24),  // rotate right
+		case BCC(25),  // branch carry clear  
+		case BCS(26),  // branch carry set
+		case BLT(27),  // branch less than 
+		case BLE(28),  // branch less than or equal 
+		case BEQ(29),  // branch equal 
+		case BGE(30),  // branch greater than or equal 
+		case BNE(31),  // branch not equal 
+		case BGT(32),  // branch greater than 
+		case BPL(33),  // branch positive (plus)
+		case BMI(34),  // branch negative (minus) 
+		case CMP(35),  // compare
+		case FCMP(36), // compare float
+		case EXG(37),  // exchange
+		case JMP(38),  // jump
+		case JSR(39),  // jump subroutine
+		case RTS(40),  // return from subroutine
+		case MOVE(41)*/
+		}
 		
 	}
 	private void decode() {
-		Cell code = ir.getCell();
-		
-		int opcode = code.getBits(0, 8);
-		Cell eaSrc  = getEffectiveAddress(code.getBits( 8, 4), code.getBits(12, 4), code.getBits(16, 4));
-		Cell eaDest = getEffectiveAddress(code.getBits(20, 4), code.getBits(24, 4), code.getBits(28, 4));
-		switch(opcode) {
-		
-		}
-		
+		Cell code = ir.getCell();	
+		opcode        = OpCode.getOpCode(code.getBits(0, 8));
+		eaSource      = getEffectiveAddress(code.getBits( 8, 4), code.getBits(12, 4), code.getBits(16, 4));
+		eaDestination = getEffectiveAddress(code.getBits(20, 4), code.getBits(24, 4), code.getBits(28, 4));
 	}
 	private Cell getEffectiveAddress(int addrMode, int register, int index) {
 		switch (addrMode) {
@@ -59,7 +112,7 @@ public class ControlUnit {
 			return mem.getMemoryCell(r[register].getInt() + r[index].getInt());
 		case 0b0111: //absolute
 			return mem.getMemoryCell(nextCell().getInt());
-		case 0b1000: //direct
+		case 0b1000: //direct, intermediate
 			return nextCell();
 		case 0b1001: //absolut + index
 			return mem.getMemoryCell(nextCell().getInt() + r[index].getInt());

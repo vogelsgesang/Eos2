@@ -6,7 +6,7 @@ public class Machine {
 	private ALU alu;
 	public Machine() {
 		memory = new Memory();
-		alu = new ALU();
+		alu = new ALU(memory.getMemoryCell(0), memory.getMemoryCell(0));
 		cu = new ControlUnit(memory, alu);
 		
 	}
