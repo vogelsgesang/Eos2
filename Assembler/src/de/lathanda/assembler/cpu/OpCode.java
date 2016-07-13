@@ -4,32 +4,32 @@ import java.util.TreeMap;
 
 public enum OpCode {
 	NOP(0, false),   // no operation  
-	ADD(1, true),    // integer addition
-	SUB(2, true),    // integer subtraction
-	MUL(3, true),    // unsigned integer multiplication
-	MULS(4, true),   // signed integer multiplication
-	DIV(5, true),    // unsigned integer division
-	DIVS(6, true),   // signed integer division
-	FADD(7, true),   // floating point addition
-	FSUB(8, true),   // floating point subtraction
-	FMUL(9, true),   // floating point multiplication
-	FDIV(10, true),  // floating point division
-	INC(11, true),   // integer increment
-	DEC(12, true),   // integer decrement
-	NEG(13, true),   // signed integer negative
-	FNEG(14, true),  // floating point negative
-	AND(15, true),   // logical and
-	OR(16, true),    // logical or
-	XOR(17, true),   // logical exclusive or
-	NOT(18, true),   // logical not
-	ASL(19, true),   // arithmetic shift left
-	ASR(20, true),   // arithmetic shift right
-	LSL(21, true),   // logical shift left
-	LSR(22, true),   // logical shift right
-	ROL(23, true),   // rotate left
-	ROR(24, true),   // rotate right
-	BCC(25, false),  // branch carry clear  
-	BCS(26, false),  // branch carry set
+	ADD(1, true),    // signed integer addition
+	FADD(2, true),   // floating point addition
+	SUB(3, true),    // signed integer subtraction
+	FSUB(4, true),   // floating point  subtraction
+	MUL(5, true),    // signed integer multiplication
+	FMUL(6, true),   // signed integer multiplication
+	DIV(7, true),    // signed integer division
+	FDIV(8, true),   // floating point division
+	INC(9, true),    // integer increment
+	DEC(10, true),   // integer decrement
+	NEG(11, true),   // signed integer negative
+	FNEG(12, true),  // floating point negative
+	AND(13, true),   // logical and
+	OR(14, true),    // logical or
+	XOR(15, true),   // logical exclusive or
+	NOT(16, true),   // logical not
+	ASL(17, true),   // arithmetic shift left
+	ASR(18, true),   // arithmetic shift right
+	LSL(19, true),   // logical shift left
+	LSR(20, true),   // logical shift right
+	ROL(21, true),   // rotate left
+	ROR(22, true),   // rotate right
+	BCC(23, false),  // branch carry clear  
+	BCS(24, false),  // branch carry set
+	BVC(25, false),  // branch overflow clear  
+	BVS(26, false),  // branch overflow set
 	BLT(27, false),  // branch less than 
 	BLE(28, false),  // branch less than or equal 
 	BEQ(29, false),  // branch equal 
@@ -38,13 +38,14 @@ public enum OpCode {
 	BGT(32, false),  // branch greater than 
 	BPL(33, false),  // branch positive (plus)
 	BMI(34, false),  // branch negative (minus) 
-	CMP(35, true),   // compare
-	FCMP(36, true),  // compare float
+	CMP(35, true),   // signed integer compare
+	CMPF(36, true),  // floating point compare
 	EXG(37, false),  // exchange
 	JMP(38, false),  // jump
 	JSR(39, false),  // jump subroutine
 	RTS(40, false),  // return from subroutine
-	MOVE(41, false); // move
+	MOVE(41, false), // move
+	ADC(42, false);  // signed integer add with carry
 	public final int opcode;
 	public final boolean alu;
 	private static final TreeMap<Integer,OpCode> codeMap = new TreeMap<>();

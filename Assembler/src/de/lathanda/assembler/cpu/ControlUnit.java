@@ -6,6 +6,8 @@ public class ControlUnit {
 	private Register ir;
 	private Register mar;
 	private Register[] r;
+	private Register a;
+	private Register b;
 	private Cell eaSource;
 	private Cell eaDestination;
 	private OpCode opcode;
@@ -17,6 +19,8 @@ public class ControlUnit {
 		for(int i = 0; i < r.length; i++) {
 			r[i] = new Register();
 		}
+		a = new Register();
+		b = new Register();
 		ir = new Register();
 		mar = new Register();
 		eaSource      = mem.getMemoryCell(0);
@@ -32,8 +36,8 @@ public class ControlUnit {
 	}
 	private void execute() {
 		if (opcode.alu) {
-			alu.setSource(eaSource);
-			alu.setDestination(eaDestination);
+			alu.setSource(eaDestination, eaSource);
+			alu.setDestination(eaDestination, b.getCell());
 		}
 		switch (opcode) {
 		case NOP: // no operation
@@ -78,12 +82,13 @@ public class ControlUnit {
 		case BPL(33),  // branch positive (plus)
 		case BMI(34),  // branch negative (minus) 
 		case CMP(35),  // compare
-		case FCMP(36), // compare float
-		case EXG(37),  // exchange
-		case JMP(38),  // jump
-		case JSR(39),  // jump subroutine
-		case RTS(40),  // return from subroutine
-		case MOVE(41)*/
+		case CMPS(36)
+		case FCMP(37), // compare float
+		case EXG(38),  // exchange
+		case JMP(39),  // jump
+		case JSR(40),  // jump subroutine
+		case RTS(41),  // return from subroutine
+		case MOVE(42)*/
 		}
 		
 	}
@@ -116,6 +121,10 @@ public class ControlUnit {
 			return nextCell();
 		case 0b1001: //absolut + index
 			return mem.getMemoryCell(nextCell().getInt() + r[index].getInt());
+		case 0b1010: //accumulator
+			return a.getCell();
+		case 0b1011: //overflow
+			return b.getCell();
 		default:
 			throw new IllegalOperationException();
 		}

@@ -2,9 +2,10 @@ package de.lathanda.assembler.cpu;
 
 public class ConditionCodeRegister extends Register {
 	private Cell mem;
-	private static final int ZERO = 0;
+	private static final int ZERO     = 0;
 	private static final int NEGATIVE = 1;
-	private static final int CARRY = 2;
+	private static final int CARRY    = 2;
+	private static final int OVERFLOW = 3;
 	public boolean getCarry() {
 		return mem.getBit(CARRY) == 0b1;
 	}
@@ -16,6 +17,18 @@ public class ConditionCodeRegister extends Register {
 	}
 	public void clearCarry() {
 		mem.clearBit(CARRY);
+	}
+	public boolean getOverflow() {
+		return mem.getBit(OVERFLOW) == 0b1;
+	}
+	public void setOverflow() {
+		mem.setBit(OVERFLOW);
+	}
+	public void setOverflow(boolean carry) {
+		mem.setBit(OVERFLOW, carry);
+	}
+	public void clearOverflow() {
+		mem.clearBit(OVERFLOW);
 	}
 	public boolean getZero() {
 		return mem.getBit(ZERO) == 0b1;

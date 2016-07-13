@@ -14,8 +14,11 @@ public class Cell {
 	public long getLong() {
 		return (long)content;
 	}
-	public void setLong(long value) {
+	public void setLongLow(long value) {
 		this.content = (int)value;
+	}
+	public void setLongHigh(long value) {
+		this.content = (int)(value >> 32);
 	}
 	public float getFloat() {
 		return Float.intBitsToFloat(content);
