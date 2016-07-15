@@ -1,2 +1,3 @@
 Manifest-Version: 1.0
 Class-Path: ../EosLib.jar ../Eos.jar ../EosBaseLib.jar ev3classes.jar ev3tools.jar
+Main-Class: de.lathanda.eos.ev3.Start
