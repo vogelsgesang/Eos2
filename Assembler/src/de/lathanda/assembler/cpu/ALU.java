@@ -6,7 +6,8 @@ public class ALU {
 	private Cell destination;
 	private Cell destinationOverflow;
 	private Cell nil;
-	private long result = 0l;
+	private long result = 0L;
+	private float fresult = 0F;
 	private ConditionCodeRegister ccr;
 	public ALU() {
 		this.ccr = new ConditionCodeRegister();
@@ -37,26 +38,173 @@ public class ALU {
 		source2 = nil;
 		destinationOverflow = nil;
 	}
-	public void add() {
-		result = source1.getLong() + source2.getLong();
-		defaultIntegerCCR();
-		storeResult();
-	}
-	public void subtract() {
-		long temp = source1.getLong() - source2.getLong();
-		defaultIntegerCCR();
-		storeResult();
-	}
 	private void defaultIntegerCCR() {
-		ccr.setCarry((result & (1<<32)) != 0);
-		ccr.setZero(result == 0);
-		ccr.setNegative(result < 0);		
+		ccr.setCarry(result < Integer.MIN_VALUE || result > Integer.MAX_VALUE);
+		ccr.setZero(result == 0L);
+		ccr.setNegative(result < 0L);		
 	}
-	private void storeResult() {
+	private void storeIntegerResult() {
 		destination.setLongLow(result);
 		destinationOverflow.setLongHigh(result);		
 	}
+	private void defaultFloatCCR() {
+		ccr.setZero(fresult == 0F);
+		ccr.setNegative(fresult < 0F);		
+	}
+	private void storeFloatResult() {
+		destination.setFloat(fresult);
+	}
+	
 	public ConditionCodeRegister getCCR() {
 		return ccr;
+	}
+	public void add() {
+		result = source1.getLong() + source2.getLong();
+		defaultIntegerCCR();
+		storeIntegerResult();
+	}
+	public void fadd() {
+		fresult = source1.getFloat() + source2.getFloat();
+		defaultFloatCCR();
+		storeFloatResult();
+	}
+	public void subtract() {
+		result = source1.getLong() - source2.getLong();
+		defaultIntegerCCR();
+		storeIntegerResult();
+	}
+	public void fsubtract() {
+		fresult = source1.getFloat() - source2.getFloat();
+		defaultFloatCCR();
+		storeFloatResult();
+	}
+
+
+	public void mul() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void fmul() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void div() {
+		
+	}
+	
+	public void fdiv() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void inc() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void dec() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void neg() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void fneg() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void and() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void or() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void xor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void not() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void asl() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void asr() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void lsl() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void lsr() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void rol() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void ror() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void cmp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void fcmp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void adc() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void move() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -40,56 +40,199 @@ public class ControlUnit {
 			alu.setDestination(eaDestination, b.getCell());
 		}
 		switch (opcode) {
-		case NOP: // no operation
+		case NOP:
 			break;
-		case ADD: // integer addition
+		case ADD:
 			alu.add();
 			break;
-		case SUB: // integer subtraction
+		case FADD: 
+			alu.fadd();
+			break;
+		case SUB:
 			alu.subtract();
 			break;
-			/*
-		case MUL(3),   // unsigned integer multiplication
-		case MULS(4),  // signed integer multiplication
-		case DIV(5),   // unsigned integer division
-		case DIVS(6),  // signed integer division
-		case FADD(7),  // floating point addition
-		case FSUB(8),  // floating point subtraction
-		case FMUL(9),  // floating point multiplication
-		case FDIV(10), // floating point division
-		case INC(11),  // integer increment
-		case DEC(12),  // integer decrement
-		case NEG(13),  // signed integer negative
-		case FNEG(14), // floating point negative
-		case AND(15),  // logical and
-		case OR(16),   // logical or
-		case XOR(17),  // logical exclusive or
-		case NOT(18),  // logical not
-		case ASL(19),  // arithmetic shift left
-		case ASR(20),  // arithmetic shift right
-		case LSL(21),  // logical shift left
-		case LSR(22),  // logical shift right
-		case ROL(23),  // rotate left
-		case ROR(24),  // rotate right
-		case BCC(25),  // branch carry clear  
-		case BCS(26),  // branch carry set
-		case BLT(27),  // branch less than 
-		case BLE(28),  // branch less than or equal 
-		case BEQ(29),  // branch equal 
-		case BGE(30),  // branch greater than or equal 
-		case BNE(31),  // branch not equal 
-		case BGT(32),  // branch greater than 
-		case BPL(33),  // branch positive (plus)
-		case BMI(34),  // branch negative (minus) 
-		case CMP(35),  // compare
-		case CMPS(36)
-		case FCMP(37), // compare float
-		case EXG(38),  // exchange
-		case JMP(39),  // jump
-		case JSR(40),  // jump subroutine
-		case RTS(41),  // return from subroutine
-		case MOVE(42)*/
+		case FSUB:
+			alu.fsubtract();
+			break;
+		case MUL:
+			alu.mul();
+			break;
+		case FMUL:
+			alu.fmul();
+			break;
+		case DIV:
+			alu.div();
+			break;
+		case FDIV:
+			alu.fdiv();
+			break;
+		case INC:
+			alu.inc();
+			break;
+		case DEC:
+			alu.dec();
+			break;
+		case NEG:
+			alu.neg();
+			break;
+		case FNEG:
+			alu.fneg();
+			break;
+		case AND:
+			alu.and();
+			break;
+		case OR:
+			alu.or();
+			break;
+		case XOR:
+			alu.xor();
+			break;
+		case NOT:
+			alu.not();
+			break;
+		case ASL:
+			alu.asl();
+			break;
+		case ASR:
+			alu.asr();
+			break;
+		case LSL:
+			alu.lsl();
+			break;
+		case LSR:
+			alu.lsr();
+			break;
+		case ROL:
+			alu.rol();
+			break;
+		case ROR:
+			alu.ror();
+			break;
+		case BCC:
+			bcc();
+			break;
+		case BCS:
+			bcs();
+			break;
+		case BVC:
+			bvc();
+			break;
+		case BVS:
+			bvs();
+			break;
+		case BLT:
+			blt();
+			break;
+		case BLE:
+			ble();
+			break;
+		case BEQ:
+			beq();
+			break;
+		case BGE:
+			bge();
+			break;
+		case BNE:
+			bne();
+			break;
+		case BGT:
+			bgt();
+			break;
+		case BPL:
+			bpl();
+			break;
+		case BMI:
+			bmi();
+			break;
+		case CMP:
+			alu.cmp();
+			break;
+		case FCMP:
+			alu.fcmp();
+			break;
+		case EXG:
+			exg();
+			break;
+		case JMP:
+			jmp();
+			break;
+		case JSR:
+			jsr();
+			break;
+		case RTS:
+			rts();
+			break;
+		case ADC:
+			alu.adc();
+			break;
+		case MOVE:
+			alu.move();
+			break;
 		}
+		
+	}
+	private void rts() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void jsr() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void jmp() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void exg() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void bmi() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void bpl() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void bgt() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void bne() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void bge() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void beq() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void ble() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void blt() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void bvs() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void bvc() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void bcs() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void bcc() {
+		// TODO Auto-generated method stub
 		
 	}
 	private void decode() {

@@ -39,7 +39,7 @@ public enum OpCode {
 	BPL(33, false),  // branch positive (plus)
 	BMI(34, false),  // branch negative (minus) 
 	CMP(35, true),   // signed integer compare
-	CMPF(36, true),  // floating point compare
+	FCMP(36, true),  // floating point compare
 	EXG(37, false),  // exchange
 	JMP(38, false),  // jump
 	JSR(39, false),  // jump subroutine
