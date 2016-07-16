@@ -1,16 +1,17 @@
 package de.lathanda.assembler.cpu;
 
 public class ControlUnit {
-	private Memory mem;
-	private ALU alu;
-	private Register ir;
-	private Register mar;
-	private Register[] r;
-	private Register a;
-	private Register b;
-	private Cell eaSource;
-	private Cell eaDestination;
-	private OpCode opcode;
+	private Memory mem;         // memory 
+	private ALU alu;            // arithmetic logical unit
+	private Register ir;        // instruction register
+	private Register mar;       // memory address register
+	private Register[] r;       // universal registers
+	private Register a;         // accumulator
+	private Register b;         // overflow register
+	private Register sr;        // stack register
+	private Cell eaSource;      // effective address source
+	private Cell eaDestination; // effective address destination
+	private OpCode opcode;      // operation code
 	public ControlUnit(Memory mem, ALU alu) {
 		super();
 		this.mem = mem;
@@ -22,9 +23,10 @@ public class ControlUnit {
 		a = new Register();
 		b = new Register();
 		ir = new Register();
+		sr = new Register();
 		mar = new Register();
-		eaSource      = mem.getMemoryCell(0);
-		eaDestination = mem.getMemoryCell(0);
+		eaSource      = new Cell();
+		eaDestination = new Cell();
 	}
 	public void init(int address) {
 		mar.setValue(address);
@@ -175,68 +177,83 @@ public class ControlUnit {
 		
 	}
 	private void rts() {
-		// TODO Auto-generated method stub
+		sr.decrement();
+		mar.set(mem.getMemoryCell(sr));
 		
 	}
 	private void jsr() {
-		// TODO Auto-generated method stub
-		
+		mem.getMemoryCell(sr).set(mar);
+		sr.increment();
+		mar.set(eaSource);
 	}
 	private void jmp() {
-		// TODO Auto-generated method stub
-		
+		mar.set(eaSource);
 	}
 	private void exg() {
-		// TODO Auto-generated method stub
-		
+		int temp = eaSource.getInt();
+		eaSource.set(eaDestination);
+		eaDestination.setInt(temp);		
 	}
 	private void bmi() {
-		// TODO Auto-generated method stub
-		
+		if (alu.getCCR().getNegative()) {
+			mar.set(eaSource);
+		}
 	}
 	private void bpl() {
-		// TODO Auto-generated method stub
-		
+		if (!(alu.getCCR().getNegative() || alu.getCCR().getZero())) {
+			mar.set(eaSource);
+		}
 	}
 	private void bgt() {
-		// TODO Auto-generated method stub
+		if (alu.getCCR().getNegative()) {
+			mar.set(eaSource);
+		}
 		
 	}
 	private void bne() {
-		// TODO Auto-generated method stub
-		
+		if (!alu.getCCR().getZero()) {
+			mar.set(eaSource);
+		}
 	}
 	private void bge() {
-		// TODO Auto-generated method stub
-		
+		if (alu.getCCR().getZero() || alu.getCCR().getNegative()) {
+			mar.set(eaSource);
+		}
 	}
 	private void beq() {
-		// TODO Auto-generated method stub
-		
+		if (alu.getCCR().getZero()) {
+			mar.set(eaSource);
+		}
 	}
 	private void ble() {
-		// TODO Auto-generated method stub
-		
+		if (!alu.getCCR().getNegative()) {
+			mar.set(eaSource);
+		}
 	}
 	private void blt() {
-		// TODO Auto-generated method stub
-		
+		if (!(alu.getCCR().getNegative() || alu.getCCR().getZero())) {
+			mar.set(eaSource);
+		}
 	}
 	private void bvs() {
-		// TODO Auto-generated method stub
-		
+		if (alu.getCCR().getOverflow()) {
+			mar.set(eaSource);
+		}
 	}
 	private void bvc() {
-		// TODO Auto-generated method stub
-		
+		if (!alu.getCCR().getOverflow()) {
+			mar.set(eaSource);
+		}
 	}
 	private void bcs() {
-		// TODO Auto-generated method stub
-		
+		if (alu.getCCR().getCarry()) {
+			mar.set(eaSource);
+		}
 	}
 	private void bcc() {
-		// TODO Auto-generated method stub
-		
+		if (!alu.getCCR().getCarry()) {
+			mar.set(eaSource);
+		}
 	}
 	private void decode() {
 		Cell code = ir.getCell();	

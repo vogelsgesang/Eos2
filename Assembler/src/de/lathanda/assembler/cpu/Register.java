@@ -8,6 +8,12 @@ public class Register {
 	public void setValue(int value) {
 		mem.setInt(value);		
 	}
+	public void set(Cell c) {
+		mem.set(c);
+	}
+	public void set(Register r) {	
+		mem.set(r);
+	}
 	public void setValue(float value) {
 		mem.setFloat(value);
 	}

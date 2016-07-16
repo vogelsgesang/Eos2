@@ -47,4 +47,10 @@ public class Memory {
 			return cell;
 		}
 	}
+	public Cell getMemoryCell(Cell c) {
+		return getMemoryCell(c.getInt());
+	}
+	public Cell getMemoryCell(Register r) {
+		return getMemoryCell(r.getInt());
+	}
 }

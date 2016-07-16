@@ -11,6 +11,12 @@ public class Cell {
 	public void setInt(int value) {
 		this.content = value;
 	}
+	public void set(Register r) {
+		this.content = r.getInt();
+	}
+	public void set(Cell c) {
+		this.content = c.getInt();
+	}
 	public long getSignedLong() {
 		return (long)content;
 	}
