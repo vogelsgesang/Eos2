@@ -63,6 +63,9 @@ public class ControlUnit {
 		case DIV:
 			alu.div();
 			break;
+		case MOD:
+			alu.mod();
+			break;
 		case FDIV:
 			alu.fdiv();
 			break;

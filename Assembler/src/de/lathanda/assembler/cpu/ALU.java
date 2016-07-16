@@ -6,7 +6,7 @@ public class ALU {
 	private Cell destination;
 	private Cell destinationOverflow;
 	private Cell nil;
-	private long result = 0L;
+	private int  result = 0;
 	private float fresult = 0F;
 	private ConditionCodeRegister ccr;
 	public ALU() {
@@ -17,194 +17,227 @@ public class ALU {
 		this.destination = nil;
 		this.destinationOverflow = nil;
 	}
-
 	
 	public void setSource(Cell source1, Cell source2) {
 		this.source1 = source1;
 		this.source2 = source2;
 		
 	}
+	
 	public void setDestination(Cell destination, Cell destinationOverflow) {
 		this.destination = destination;
 		this.destinationOverflow = destinationOverflow;
 	}
+	
 	public void setDestination(Cell destination) {
 		this.destination = destination;
 		destinationOverflow = nil;
 	}
+	
 	public void setTarget(Cell target) {
 		source1 = target;
 		destination = target;
 		source2 = nil;
 		destinationOverflow = nil;
 	}
+	
 	private void defaultIntegerCCR() {
-		ccr.setCarry(result < Integer.MIN_VALUE || result > Integer.MAX_VALUE);
 		ccr.setZero(result == 0L);
-		ccr.setNegative(result < 0L);		
+		ccr.setNegative(result < 0);		
 	}
-	private void storeIntegerResult() {
-		destination.setLongLow(result);
-		destinationOverflow.setLongHigh(result);		
-	}
+	
 	private void defaultFloatCCR() {
 		ccr.setZero(fresult == 0F);
 		ccr.setNegative(fresult < 0F);		
-	}
-	private void storeFloatResult() {
-		destination.setFloat(fresult);
 	}
 	
 	public ConditionCodeRegister getCCR() {
 		return ccr;
 	}
+	
 	public void add() {
-		result = source1.getLong() + source2.getLong();
+		int a = source1.getInt();
+		int b = source2.getInt();
+		long al = source1.getUnsignedLong();
+		long bl = source2.getUnsignedLong();
+		result = a + b;
 		defaultIntegerCCR();
-		storeIntegerResult();
+		boolean signa = a < 0;
+		boolean signb = b < 0;
+		boolean signr = result < 0;
+		ccr.setOverflow((signa == signb) && (signa != signr));
+		ccr.setCarry((al + bl) > 0xFFFFFFFFL);
+		destination.setInt(result);
 	}
+	
 	public void fadd() {
 		fresult = source1.getFloat() + source2.getFloat();
 		defaultFloatCCR();
-		storeFloatResult();
+		destination.setFloat(fresult);
 	}
+	
 	public void subtract() {
-		result = source1.getLong() - source2.getLong();
+		int a = source1.getInt();
+		int b = source2.getInt();
+		long al = source1.getUnsignedLong();
+		long bl = source2.getUnsignedLong();
+		result = a - b;
 		defaultIntegerCCR();
-		storeIntegerResult();
+		boolean signa = a < 0;
+		boolean signb = b < 0;
+		boolean signr = result < 0;
+		ccr.setOverflow((signa == !signb) && (signa != signr));
+		ccr.setCarry((al - bl) < 0L);
+		destination.setInt(result);
 	}
+	
 	public void fsubtract() {
 		fresult = source1.getFloat() - source2.getFloat();
 		defaultFloatCCR();
-		storeFloatResult();
+		destination.setFloat(fresult);
 	}
-
 
 	public void mul() {
-		// TODO Auto-generated method stub
-		
+		long uresult = source1.getUnsignedLong() * source2.getUnsignedLong();
+		ccr.setOverflow(uresult > Integer.MAX_VALUE || uresult < Integer.MIN_VALUE);
+		result = (int)uresult;
+		defaultIntegerCCR();
+		destination.setLongLow(uresult);
+		destinationOverflow.setLongHigh(uresult);
 	}
 
-
 	public void fmul() {
-		// TODO Auto-generated method stub
-		
+		fresult = source1.getFloat() * source2.getFloat();
+		defaultFloatCCR();
+		destination.setFloat(fresult);		
 	}
 
 	public void div() {
-		
+		result = source1.getInt() / source2.getInt();
+		defaultIntegerCCR();
+		destination.setInt(result);
+	}
+
+	public void mod() {
+		result = source1.getInt() % source2.getInt();
+		defaultIntegerCCR();
+		destination.setInt(result);
 	}
 	
 	public void fdiv() {
-		// TODO Auto-generated method stub
-		
+		fresult = source1.getFloat() / source2.getFloat();
+		defaultFloatCCR();
+		destination.setFloat(fresult);
 	}
-
 
 	public void inc() {
-		// TODO Auto-generated method stub
-		
+	    result = destination.getInt() + 1;
+	    ccr.setCarry(result == 0);
+	    ccr.setOverflow(result == 0x10000000);
+	    defaultIntegerCCR();
+	    destination.setInt(result);		
 	}
-
 
 	public void dec() {
-		// TODO Auto-generated method stub
-		
+	    result = destination.getInt() - 1;
+	    ccr.setCarry(result == -1);
+	    ccr.setOverflow(result == 0x0FFFFFFF);
+	    defaultIntegerCCR();
+	    destination.setInt(result);		
 	}
-
 
 	public void neg() {
-		// TODO Auto-generated method stub
-		
+		result = -destination.getInt();
+		defaultIntegerCCR();
+		destination.setInt(result);
 	}
-
 
 	public void fneg() {
-		// TODO Auto-generated method stub
-		
+		fresult = -destination.getFloat();
+		defaultFloatCCR();
+		destination.setFloat(result);		
 	}
-
 
 	public void and() {
-		// TODO Auto-generated method stub
-		
+		result = source1.getInt() & source2.getInt();
+		defaultIntegerCCR();
+		destination.setInt(result);
 	}
-
 
 	public void or() {
-		// TODO Auto-generated method stub
-		
+		result = source1.getInt() | source2.getInt();
+		defaultIntegerCCR();
+		destination.setInt(result);
 	}
-
 
 	public void xor() {
-		// TODO Auto-generated method stub
-		
+		result = source1.getInt() ^ source2.getInt();
+		defaultIntegerCCR();
+		destination.setInt(result);
 	}
-
 
 	public void not() {
-		// TODO Auto-generated method stub
-		
+		result = ~source2.getInt();
+		defaultIntegerCCR();
+		destination.setInt(result);
 	}
-
 
 	public void asl() {
-		// TODO Auto-generated method stub
-		
+		result = source2.getInt() << source1.getInt();
+		defaultIntegerCCR();
+		destination.setInt(result);	
 	}
-
 
 	public void asr() {
-		// TODO Auto-generated method stub
-		
+		result = source2.getInt() >> source1.getInt();
+		defaultIntegerCCR();
+		destination.setInt(result);	
 	}
-
 
 	public void lsl() {
-		// TODO Auto-generated method stub
-		
+		result = source2.getInt() << source1.getInt();
+		defaultIntegerCCR();
+		destination.setInt(result);	
 	}
-
 
 	public void lsr() {
-		// TODO Auto-generated method stub
-		
+		result = source2.getInt() >>> source1.getInt();
+		defaultIntegerCCR();
+		destination.setInt(result);	
 	}
-
 
 	public void rol() {
-		// TODO Auto-generated method stub
-		
+		result = Integer.rotateLeft(source2.getInt(), source1.getInt());
+		defaultIntegerCCR();
+		destination.setInt(result);	
 	}
-
 
 	public void ror() {
-		// TODO Auto-generated method stub
-		
+		result = Integer.rotateRight(source2.getInt(), source1.getInt());
+		defaultIntegerCCR();
+		destination.setInt(result);	
 	}
-
 
 	public void cmp() {
-		// TODO Auto-generated method stub
-		
+		result = source1.getInt() - source2.getInt();
+		defaultIntegerCCR();
 	}
-
 
 	public void fcmp() {
-		// TODO Auto-generated method stub
-		
+		fresult = source1.getFloat() - source2.getFloat();
+		defaultFloatCCR();
 	}
-
 
 	public void adc() {
-		// TODO Auto-generated method stub
-		
+		long al = source1.getUnsignedLong();
+		long bl = source2.getUnsignedLong();
+		result = (int)(al + bl + ((ccr.getCarry())?1:0));
+		defaultIntegerCCR();
+		ccr.setCarry((al + bl + ((ccr.getCarry())?1:0)) > 0xFFFFFFFFL);
+		destination.setInt(result);
 	}
 
-
 	public void move() {
-		// TODO Auto-generated method stub
-		
+		destination.setInt(source1.getInt());
 	}
 }

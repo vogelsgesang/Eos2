@@ -11,41 +11,42 @@ public enum OpCode {
 	MUL(5, true),    // signed integer multiplication
 	FMUL(6, true),   // signed integer multiplication
 	DIV(7, true),    // signed integer division
-	FDIV(8, true),   // floating point division
-	INC(9, true),    // integer increment
-	DEC(10, true),   // integer decrement
-	NEG(11, true),   // signed integer negative
-	FNEG(12, true),  // floating point negative
-	AND(13, true),   // logical and
-	OR(14, true),    // logical or
-	XOR(15, true),   // logical exclusive or
-	NOT(16, true),   // logical not
-	ASL(17, true),   // arithmetic shift left
-	ASR(18, true),   // arithmetic shift right
-	LSL(19, true),   // logical shift left
-	LSR(20, true),   // logical shift right
-	ROL(21, true),   // rotate left
-	ROR(22, true),   // rotate right
-	BCC(23, false),  // branch carry clear  
-	BCS(24, false),  // branch carry set
-	BVC(25, false),  // branch overflow clear  
-	BVS(26, false),  // branch overflow set
-	BLT(27, false),  // branch less than 
-	BLE(28, false),  // branch less than or equal 
-	BEQ(29, false),  // branch equal 
-	BGE(30, false),  // branch greater than or equal 
-	BNE(31, false),  // branch not equal 
-	BGT(32, false),  // branch greater than 
-	BPL(33, false),  // branch positive (plus)
-	BMI(34, false),  // branch negative (minus) 
-	CMP(35, true),   // signed integer compare
-	FCMP(36, true),  // floating point compare
-	EXG(37, false),  // exchange
-	JMP(38, false),  // jump
-	JSR(39, false),  // jump subroutine
-	RTS(40, false),  // return from subroutine
-	MOVE(41, false), // move
-	ADC(42, false);  // signed integer add with carry
+	MOD(8, true),    // signed integer modulo
+	FDIV(9, true),   // floating point division
+	INC(10, true),   // integer increment
+	DEC(11, true),   // integer decrement
+	NEG(12, true),   // signed integer negative
+	FNEG(13, true),  // floating point negative
+	AND(14, true),   // logical and
+	OR(15, true),    // logical or
+	XOR(16, true),   // logical exclusive or
+	NOT(17, true),   // logical not
+	ASL(18, true),   // arithmetic shift left
+	ASR(19, true),   // arithmetic shift right
+	LSL(20, true),   // logical shift left
+	LSR(21, true),   // logical shift right
+	ROL(22, true),   // rotate left
+	ROR(23, true),   // rotate right
+	BCC(24, false),  // branch carry clear  
+	BCS(25, false),  // branch carry set
+	BVC(26, false),  // branch overflow clear  
+	BVS(27, false),  // branch overflow set
+	BLT(28, false),  // branch less than 
+	BLE(29, false),  // branch less than or equal 
+	BEQ(30, false),  // branch equal 
+	BGE(31, false),  // branch greater than or equal 
+	BNE(32, false),  // branch not equal 
+	BGT(33, false),  // branch greater than 
+	BPL(34, false),  // branch positive (plus)
+	BMI(35, false),  // branch negative (minus) 
+	CMP(36, true),   // signed integer compare
+	FCMP(37, true),  // floating point compare
+	EXG(38, false),  // exchange
+	JMP(39, false),  // jump
+	JSR(40, false),  // jump subroutine
+	RTS(41, false),  // return from subroutine
+	MOVE(42, false), // move
+	ADC(43, false);  // signed integer add with carry
 	public final int opcode;
 	public final boolean alu;
 	private static final TreeMap<Integer,OpCode> codeMap = new TreeMap<>();

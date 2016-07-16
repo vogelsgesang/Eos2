@@ -11,8 +11,11 @@ public class Cell {
 	public void setInt(int value) {
 		this.content = value;
 	}
-	public long getLong() {
+	public long getSignedLong() {
 		return (long)content;
+	}
+	public long getUnsignedLong() {
+		return Integer.toUnsignedLong(content);
 	}
 	public void setLongLow(long value) {
 		this.content = (int)value;
