@@ -177,13 +177,12 @@ public class ControlUnit {
 		
 	}
 	private void rts() {
-		sr.decrement();
 		mar.set(mem.getMemoryCell(sr));
-		
+		sr.increment();		
 	}
 	private void jsr() {
+		sr.decrement();
 		mem.getMemoryCell(sr).set(mar);
-		sr.increment();
 		mar.set(eaSource);
 	}
 	private void jmp() {
