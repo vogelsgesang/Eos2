@@ -181,10 +181,25 @@ void Parse(Program program ) :
 void Data() :
 {}
 {
+  Label() ":" Value() ("," (Value())* 
 }
 void Instruction() :
 {}
 {
+  [Label() ":"] Opcode() [Param()["," Param()]]
+}
+void Label() :
+{}
+{
+  <IDENTIFIER>
+}
+void Opcode() :
+{}
+{
+  <IDENTIFIER>
+}
+void Param() {
+  <IDENTIFIER>
 }
 String TextRaw() : 
 {Token t; String text; }
