@@ -46,6 +46,24 @@ TOKEN:
 { 
   < DATA:        "data" >
 | < CODE:        "code" >
+| < R0:          "r0" >
+| < R1:          "r1" >
+| < R2:          "r2" >
+| < R3:          "r3" >
+| < R4:          "r4" >
+| < R5:          "r5" >
+| < R6:          "r6" >
+| < R7:          "r7" >
+| < R8:          "r8" >
+| < R9:          "r9" >
+| < R10:         "r10" >
+| < R11:         "r11" >
+| < R12:         "r12" >
+| < R13:         "r13" >
+| < R14:         "r14" >
+| < R15:         "r15" >
+| < A:           "a" >
+| < B:           "b" >
 }
 
 /** separators */
@@ -198,8 +216,45 @@ void Opcode() :
 {
   <IDENTIFIER>
 }
-void Param() {
-  <IDENTIFIER>
+void Param() :
+{}
+{
+  Register() |
+  "(" Register() ")" |
+  "-" "(" Register() ")" |
+  "(" Register() ")" "+"|
+  Register() "," Register() |
+  Value() "," Register() |
+  Value()
+}
+Register Register() :
+{Reister r = null;}
+{
+	("r0" {r = Register.R0;}  |
+	"r1" {r = Register.R1;}  |
+	"r2" {r = Register.R2;}  |
+	"r3" {r = Register.R3;}  |
+	"r4" {r = Register.R4;}  |
+	"r5" {r = Register.R5;}  |
+	"r6" {r = Register.R6;}  |
+	"r7" {r = Register.R7;}  |
+	"r8" {r = Register.R8;}  |
+	"r9" {r = Register.R9;}  |
+	"r10" {r = Register.R10;} |
+	"r11" {r = Register.R11;} |
+	"r12" {r = Register.R12;} |
+	"r13" {r = Register.R13;} |
+	"r14" {r = Register.R14;} |
+	"r15" {r = Register.R15;} |
+	"a" {r = Register.A;} |
+	"b" {r = Register.B;})
+	{return r;}
+} 
+int Value() : 
+{int val}
+{
+	<INTEGER_LITERAL> |
+	Label()
 }
 String TextRaw() : 
 {Token t; String text; }
