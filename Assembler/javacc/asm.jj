@@ -22,14 +22,15 @@ options {
   BUILD_TOKEN_MANAGER = true;
   SANITY_CHECK        = true;
   FORCE_LA_CHECK      = false;
-  COMMON_TOKEN_ACTION = true;
+  COMMON_TOKEN_ACTION = false;
   CACHE_TOKENS        = false;
-  OUTPUT_DIRECTORY    = "../../src/de/lathanda/asm/interpreter/javacc";
+  OUTPUT_DIRECTORY    = "../src/de/lathanda/assembler/interpreter/javacc";
 }
 
 PARSER_BEGIN(Parser)
 
-package de.lathanda.asm.interpreter.javacc;
+package de.lathanda.assembler.interpreter.javacc;
+import de.lathanda.assembler.interpreter.*; 
 @SuppressWarnings("unused")
 public class Parser {  
 	Program program;
@@ -93,16 +94,17 @@ TOKEN :
 |
   < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* >
 |
+  < HEXADECIMAL_LITERAL: (["0"-"9"] | ["A"-"F"])* >
+|
   < FLOATING_POINT_LITERAL:
         (["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)?
       | "." (["0"-"9"])+ (<EXPONENT>)?
       | (["0"-"9"])+ <EXPONENT>
-      | (["0"-"9"])+ (<EXPONENT>)?
   >
 |
   < #EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ >
 |
-  < STRING_LITERAL1:
+  < STRING_LITERAL:
       "\""
       (   (~["\"","\\","\n","\r"])
         | ("\\"
@@ -111,16 +113,6 @@ TOKEN :
           )
       )*
       "\""
-  >
-|  < STRING_LITERAL2:
-      "\'"
-      (   (~["\'","\\","\n","\r"])
-        | ("\\"
-            ( ["n","t","r","\\","\'"]
-            )
-          )
-      )*
-      "\'"
   >
 }
 /** Bezeichner */
@@ -181,7 +173,7 @@ void Parse(Program program ) :
 void Data() :
 {}
 {
-  Label() ":" Value() ("," (Value())* 
+  Label() ":" Value() ("," Value())* 
 }
 void Instruction() :
 {}
@@ -198,15 +190,24 @@ void Opcode() :
 {
   <IDENTIFIER>
 }
-void Param() {
+void Param() : 
+{}
+{
   <IDENTIFIER>
+}
+void Value() :
+{}
+{
+  <INTEGER_LITERAL> |
+  TextRaw() |
+  "$" <HEXADECIMAL_LITERAL> |
+  <FLOATING_POINT_LITERAL>
 }
 String TextRaw() : 
 {Token t; String text; }
 {
   (
-  t = <STRING_LITERAL1> |
-  t = <STRING_LITERAL2>
+  t = <STRING_LITERAL>
   )
   {
     text = t.image;
@@ -219,13 +220,13 @@ String TextRaw() :
     return text.substring(1, text.length() - 1);
   }
 }
-Constant IntNumber() :
+Integer IntNumber() :
 {Token number;}
 {
   number = <INTEGER_LITERAL>
   {
     try {
-      return new Constant(new Integer(number.image), Type.INTEGER, number.image);
+      return new Integer(number.image);
     } catch (NumberFormatException nfe) {
       //shouldn't be possible, crash if it does
       nfe.printStackTrace();
@@ -234,13 +235,13 @@ Constant IntNumber() :
   }
 }
 
-Constant FloatNumber() :
+Float FloatNumber() :
 {Token number;}
 {
   number = <FLOATING_POINT_LITERAL>
   {
     try {     
-      return new Constant(new Double(number.image), Type.DOUBLE, number.image);
+      return new Float(number.image);
     } catch (NumberFormatException nfe) {
       //shouldn't be possible, crash if it does
       nfe.printStackTrace();
