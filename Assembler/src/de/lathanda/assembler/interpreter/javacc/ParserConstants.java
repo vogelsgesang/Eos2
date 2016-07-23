@@ -15,45 +15,81 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int CODE = 2;
   /** RegularExpression Id. */
-  int LPAREN = 3;
+  int R0 = 3;
   /** RegularExpression Id. */
-  int RPAREN = 4;
+  int R1 = 4;
   /** RegularExpression Id. */
-  int COLON = 5;
+  int R2 = 5;
   /** RegularExpression Id. */
-  int SEPARATOR = 6;
+  int R3 = 6;
   /** RegularExpression Id. */
-  int NUMBER = 7;
+  int R4 = 7;
   /** RegularExpression Id. */
-  int ADDRESS = 8;
+  int R5 = 8;
   /** RegularExpression Id. */
-  int INC = 9;
+  int R6 = 9;
   /** RegularExpression Id. */
-  int DEC = 10;
+  int R7 = 10;
   /** RegularExpression Id. */
-  int SINGLE_LINE_COMMENT = 16;
+  int R8 = 11;
   /** RegularExpression Id. */
-  int MULTI_LINE_COMMENT = 17;
+  int R9 = 12;
   /** RegularExpression Id. */
-  int MULTI_LINE_COMMENT2 = 18;
+  int R10 = 13;
   /** RegularExpression Id. */
-  int INTEGER_LITERAL = 19;
+  int R11 = 14;
   /** RegularExpression Id. */
-  int DECIMAL_LITERAL = 20;
+  int R12 = 15;
   /** RegularExpression Id. */
-  int HEXADECIMAL_LITERAL = 21;
+  int R13 = 16;
   /** RegularExpression Id. */
-  int FLOATING_POINT_LITERAL = 22;
+  int R14 = 17;
   /** RegularExpression Id. */
-  int EXPONENT = 23;
+  int R15 = 18;
   /** RegularExpression Id. */
-  int STRING_LITERAL = 24;
+  int A = 19;
   /** RegularExpression Id. */
-  int IDENTIFIER = 25;
+  int B = 20;
   /** RegularExpression Id. */
-  int LETTER = 26;
+  int LPAREN = 21;
   /** RegularExpression Id. */
-  int DIGIT = 27;
+  int RPAREN = 22;
+  /** RegularExpression Id. */
+  int COLON = 23;
+  /** RegularExpression Id. */
+  int SEPARATOR = 24;
+  /** RegularExpression Id. */
+  int NUMBER = 25;
+  /** RegularExpression Id. */
+  int ADDRESS = 26;
+  /** RegularExpression Id. */
+  int INC = 27;
+  /** RegularExpression Id. */
+  int DEC = 28;
+  /** RegularExpression Id. */
+  int SINGLE_LINE_COMMENT = 34;
+  /** RegularExpression Id. */
+  int MULTI_LINE_COMMENT = 35;
+  /** RegularExpression Id. */
+  int MULTI_LINE_COMMENT2 = 36;
+  /** RegularExpression Id. */
+  int INTEGER_LITERAL = 37;
+  /** RegularExpression Id. */
+  int DECIMAL_LITERAL = 38;
+  /** RegularExpression Id. */
+  int HEXADECIMAL_LITERAL = 39;
+  /** RegularExpression Id. */
+  int FLOATING_POINT_LITERAL = 40;
+  /** RegularExpression Id. */
+  int EXPONENT = 41;
+  /** RegularExpression Id. */
+  int STRING_LITERAL = 42;
+  /** RegularExpression Id. */
+  int IDENTIFIER = 43;
+  /** RegularExpression Id. */
+  int LETTER = 44;
+  /** RegularExpression Id. */
+  int DIGIT = 45;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -63,6 +99,24 @@ public interface ParserConstants {
     "<EOF>",
     "\"data\"",
     "\"code\"",
+    "\"r0\"",
+    "\"r1\"",
+    "\"r2\"",
+    "\"r3\"",
+    "\"r4\"",
+    "\"r5\"",
+    "\"r6\"",
+    "\"r7\"",
+    "\"r8\"",
+    "\"r9\"",
+    "\"r10\"",
+    "\"r11\"",
+    "\"r12\"",
+    "\"r13\"",
+    "\"r14\"",
+    "\"r15\"",
+    "\"a\"",
+    "\"b\"",
     "\"(\"",
     "\")\"",
     "\":\"",

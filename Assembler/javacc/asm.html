@@ -21,6 +21,24 @@
 &lt;DEFAULT&gt; TOKEN : {
 &lt;DATA: "data"&gt;
 | &lt;CODE: "code"&gt;
+| &lt;R0: "r0"&gt;
+| &lt;R1: "r1"&gt;
+| &lt;R2: "r2"&gt;
+| &lt;R3: "r3"&gt;
+| &lt;R4: "r4"&gt;
+| &lt;R5: "r5"&gt;
+| &lt;R6: "r6"&gt;
+| &lt;R7: "r7"&gt;
+| &lt;R8: "r8"&gt;
+| &lt;R9: "r9"&gt;
+| &lt;R10: "r10"&gt;
+| &lt;R11: "r11"&gt;
+| &lt;R12: "r12"&gt;
+| &lt;R13: "r13"&gt;
+| &lt;R14: "r14"&gt;
+| &lt;R15: "r15"&gt;
+| &lt;A: "a"&gt;
+| &lt;B: "b"&gt;
 }
 
    </PRE>
@@ -124,7 +142,7 @@
 &lt;DEFAULT&gt; TOKEN : {
 &lt;INTEGER_LITERAL: &lt;DECIMAL_LITERAL&gt;&gt;
 | &lt;#DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])*&gt;
-| &lt;#HEXADECIMAL_LITERAL: (["0"-"9"] | ["A"-"F"])*&gt;
+| &lt;HEXADECIMAL_LITERAL: (["0"-"9"] | ["A"-"F"])*&gt;
 | &lt;FLOATING_POINT_LITERAL: (["0"-"9"])+ "." (["0"-"9"])* (&lt;EXPONENT&gt;)? | "." (["0"-"9"])+ (&lt;EXPONENT&gt;)? | (["0"-"9"])+ &lt;EXPONENT&gt;&gt;
 | &lt;#EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+&gt;
 | &lt;STRING_LITERAL: "\"" (~["\"","\\","\n","\r"] | "\\" ["n","t","r","\\","\""])* "\""&gt;
@@ -196,7 +214,42 @@
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod7">Param</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>&lt;IDENTIFIER&gt;</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod8">Register</A></TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>|</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>"(" <A HREF="#prod8">Register</A> ")"</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>|</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>"-" "(" <A HREF="#prod8">Register</A> ")"</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>|</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>"(" <A HREF="#prod8">Register</A> ")" "+"</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>|</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod8">Register</A> "," <A HREF="#prod8">Register</A></TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>|</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod5">Value</A> "," <A HREF="#prod8">Register</A></TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>|</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod5">Value</A></TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod8">Register</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( "r0" | "r1" | "r2" | "r3" | "r4" | "r5" | "r6" | "r7" | "r8" | "r9" | "r10" | "r11" | "r12" | "r13" | "r14" | "r15" | "a" | "b" )</TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod5">Value</A></TD>
@@ -206,7 +259,7 @@
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>|</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod8">TextRaw</A></TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod9">TextRaw</A></TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE></TD>
@@ -219,17 +272,17 @@
 <TD ALIGN=LEFT VALIGN=BASELINE>&lt;FLOATING_POINT_LITERAL&gt;</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod8">TextRaw</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod9">TextRaw</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>( &lt;STRING_LITERAL&gt; )</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod9">IntNumber</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod10">IntNumber</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>&lt;INTEGER_LITERAL&gt;</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod10">FloatNumber</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod11">FloatNumber</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>&lt;FLOATING_POINT_LITERAL&gt;</TD>
 </TR>

@@ -107,7 +107,30 @@ public class Parser implements ParserConstants {
     }
     Opcode();
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-    case IDENTIFIER:{
+    case R0:
+    case R1:
+    case R2:
+    case R3:
+    case R4:
+    case R5:
+    case R6:
+    case R7:
+    case R8:
+    case R9:
+    case R10:
+    case R11:
+    case R12:
+    case R13:
+    case R14:
+    case R15:
+    case A:
+    case B:
+    case LPAREN:
+    case ADDRESS:
+    case DEC:
+    case INTEGER_LITERAL:
+    case FLOATING_POINT_LITERAL:
+    case STRING_LITERAL:{
       Param();
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case SEPARATOR:{
@@ -136,7 +159,176 @@ public class Parser implements ParserConstants {
   }
 
   final public void Param() throws ParseException {
-    jj_consume_token(IDENTIFIER);
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case R0:
+    case R1:
+    case R2:
+    case R3:
+    case R4:
+    case R5:
+    case R6:
+    case R7:
+    case R8:
+    case R9:
+    case R10:
+    case R11:
+    case R12:
+    case R13:
+    case R14:
+    case R15:
+    case A:
+    case B:{
+      Register();
+      break;
+      }
+    case LPAREN:{
+      jj_consume_token(LPAREN);
+      Register();
+      jj_consume_token(RPAREN);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case INC:{
+        jj_consume_token(INC);
+        break;
+        }
+      default:
+        jj_la1[9] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case DEC:{
+      jj_consume_token(DEC);
+      jj_consume_token(LPAREN);
+      Register();
+      jj_consume_token(RPAREN);
+      Register();
+      jj_consume_token(SEPARATOR);
+      Register();
+      break;
+      }
+    case ADDRESS:
+    case INTEGER_LITERAL:
+    case FLOATING_POINT_LITERAL:
+    case STRING_LITERAL:{
+      Value();
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case SEPARATOR:{
+        jj_consume_token(SEPARATOR);
+        Register();
+        break;
+        }
+      default:
+        jj_la1[10] = jj_gen;
+        ;
+      }
+      break;
+      }
+    default:
+      jj_la1[11] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+  }
+
+  final public Register Register() throws ParseException {Register r = null;
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case R0:{
+      jj_consume_token(R0);
+r = Register.R0;
+      break;
+      }
+    case R1:{
+      jj_consume_token(R1);
+r = Register.R1;
+      break;
+      }
+    case R2:{
+      jj_consume_token(R2);
+r = Register.R2;
+      break;
+      }
+    case R3:{
+      jj_consume_token(R3);
+r = Register.R3;
+      break;
+      }
+    case R4:{
+      jj_consume_token(R4);
+r = Register.R4;
+      break;
+      }
+    case R5:{
+      jj_consume_token(R5);
+r = Register.R5;
+      break;
+      }
+    case R6:{
+      jj_consume_token(R6);
+r = Register.R6;
+      break;
+      }
+    case R7:{
+      jj_consume_token(R7);
+r = Register.R7;
+      break;
+      }
+    case R8:{
+      jj_consume_token(R8);
+r = Register.R8;
+      break;
+      }
+    case R9:{
+      jj_consume_token(R9);
+r = Register.R9;
+      break;
+      }
+    case R10:{
+      jj_consume_token(R10);
+r = Register.R10;
+      break;
+      }
+    case R11:{
+      jj_consume_token(R11);
+r = Register.R11;
+      break;
+      }
+    case R12:{
+      jj_consume_token(R12);
+r = Register.R12;
+      break;
+      }
+    case R13:{
+      jj_consume_token(R13);
+r = Register.R13;
+      break;
+      }
+    case R14:{
+      jj_consume_token(R14);
+r = Register.R14;
+      break;
+      }
+    case R15:{
+      jj_consume_token(R15);
+r = Register.R15;
+      break;
+      }
+    case A:{
+      jj_consume_token(A);
+r = Register.A;
+      break;
+      }
+    case B:{
+      jj_consume_token(B);
+r = Register.B;
+      break;
+      }
+    default:
+      jj_la1[12] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+{if ("" != null) return r;}
+    throw new Error("Missing return statement in function");
   }
 
   final public void Value() throws ParseException {
@@ -159,7 +351,7 @@ public class Parser implements ParserConstants {
       break;
       }
     default:
-      jj_la1[9] = jj_gen;
+      jj_la1[13] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -210,13 +402,18 @@ try {
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[10];
+  final private int[] jj_la1 = new int[14];
   static private int[] jj_la1_0;
+  static private int[] jj_la1_1;
   static {
       jj_la1_init_0();
+      jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x2000000,0x2,0x2000000,0x2000000,0x2000007,0x40,0x2000000,0x40,0x2000000,0x1480100,};
+      jj_la1_0 = new int[] {0x0,0x2,0x0,0x0,0x7,0x1000000,0x0,0x1000000,0x143ffff8,0x8000000,0x1000000,0x143ffff8,0x1ffff8,0x4000000,};
+   }
+   private static void jj_la1_init_1() {
+      jj_la1_1 = new int[] {0x800,0x0,0x800,0x800,0x800,0x0,0x800,0x0,0x520,0x0,0x0,0x520,0x0,0x520,};
    }
 
   /** Constructor with user supplied CharStream. */
@@ -225,7 +422,7 @@ try {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 14; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -234,7 +431,7 @@ try {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 14; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -243,7 +440,7 @@ try {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 14; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -252,7 +449,7 @@ try {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 14; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -303,21 +500,24 @@ try {
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[28];
+    boolean[] la1tokens = new boolean[46];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 14; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
             la1tokens[j] = true;
           }
+          if ((jj_la1_1[i] & (1<<j)) != 0) {
+            la1tokens[32+j] = true;
+          }
         }
       }
     }
-    for (int i = 0; i < 28; i++) {
+    for (int i = 0; i < 46; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
