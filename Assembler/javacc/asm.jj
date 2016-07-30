@@ -79,9 +79,7 @@ TOKEN :
 /** prefixes and postfixes */
 TOKEN : 
 {
-  < NUMBER:  "#" >
-| < ADDRESS: "$" >
-| < INC:     "+" >
+  < INC:     "+" >
 | < DEC:     "-" >
 }
 
@@ -112,7 +110,7 @@ TOKEN :
 |
   < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* >
 |
-  < HEXADECIMAL_LITERAL: (["0"-"9"] | ["A"-"F"])* >
+  < HEXADECIMAL_LITERAL: "0" "x" (["0"-"9"] | ["A"-"F"])* >
 |
   < FLOATING_POINT_LITERAL:
         (["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)?
@@ -184,39 +182,45 @@ void Parse(Program program ) :
 }
 {
 	["data" (Data())*]
-	"code" (Instruction())* |
-	(Instruction())*
+	"code" Instructions() |
+	Instructions()
   <EOF>
 }
 void Data() :
 {}
 {
-  Label() ":" Value() ("," Value())* 
+  Label() ":" DataValue() ("," DataValue())* 
 }
-void Instruction() :
+void Instructions() :
 {}
 {
-  [Label() ":"] Opcode() [Param()["," Param()]]
+
+  (LOOKAHEAD(<IDENTIFIER> ":") Label() ":" |
+  OpcodeOrLabel() |
+  Param() )*
 }
 void Label() :
-{}
+{Token id = null;}
 {
-  <IDENTIFIER>
+  id = <IDENTIFIER> {program.pushLabel(id.image);}
 }
-void Opcode() :
-{}
+void OpcodeOrLabel() :
+{Token id = null;}
 {
-  <IDENTIFIER>
+  id = <IDENTIFIER> {program.pushOpcodeOrLabel(id.image);}
 }
 void Param() :
-{}
+{Register r = null; Token value;}
 {
-  Register() |
-  "(" Register() ")" ["+"] |
-  "-" "(" Register() ")"
-  Register() "," Register() |
-  Value() ["," Register()]
+  r = Register() {program.pushRegister(r);} |
+  "(" r = Register() ")" {program.pushIndirectRegister(r);} ["+" {program.pushInc();}]  |
+  "-" "(" r = Register() ")" {program.pushIndirectRegister(r); program.pushDec();}
+  r = Register() {program.pushRegister(r);} "," r = Register() {program.pushIndexRegister(r);}  |
+  (value = <INTEGER_LITERAL> { program.pushInt(Integer.parseInt(value.image));}|
+  value = <HEXADECIMAL_LITERAL> {program.pushInt(Integer.parseInt(value.image, 16));} ) |
+  value = <FLOATING_POINT_LITERAL> {program.pushFloat(Float.floatToIntBits(Float.parseFloat(value.image)));}      
 }
+ 
 Register Register() :
 {Register r = null;}
 {
@@ -240,13 +244,12 @@ Register Register() :
 	"b" {r = Register.B;})
 	{return r;}
 } 
-
-void Value() :
+void DataValue() :
 {}
 {
   <INTEGER_LITERAL> |
   TextRaw() |
-  "$" <HEXADECIMAL_LITERAL> |
+  <HEXADECIMAL_LITERAL> |
   <FLOATING_POINT_LITERAL>
 }
 String TextRaw() : 

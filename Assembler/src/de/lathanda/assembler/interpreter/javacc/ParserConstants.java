@@ -59,37 +59,33 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int SEPARATOR = 24;
   /** RegularExpression Id. */
-  int NUMBER = 25;
+  int INC = 25;
   /** RegularExpression Id. */
-  int ADDRESS = 26;
+  int DEC = 26;
   /** RegularExpression Id. */
-  int INC = 27;
+  int SINGLE_LINE_COMMENT = 32;
   /** RegularExpression Id. */
-  int DEC = 28;
+  int MULTI_LINE_COMMENT = 33;
   /** RegularExpression Id. */
-  int SINGLE_LINE_COMMENT = 34;
+  int MULTI_LINE_COMMENT2 = 34;
   /** RegularExpression Id. */
-  int MULTI_LINE_COMMENT = 35;
+  int INTEGER_LITERAL = 35;
   /** RegularExpression Id. */
-  int MULTI_LINE_COMMENT2 = 36;
+  int DECIMAL_LITERAL = 36;
   /** RegularExpression Id. */
-  int INTEGER_LITERAL = 37;
+  int HEXADECIMAL_LITERAL = 37;
   /** RegularExpression Id. */
-  int DECIMAL_LITERAL = 38;
+  int FLOATING_POINT_LITERAL = 38;
   /** RegularExpression Id. */
-  int HEXADECIMAL_LITERAL = 39;
+  int EXPONENT = 39;
   /** RegularExpression Id. */
-  int FLOATING_POINT_LITERAL = 40;
+  int STRING_LITERAL = 40;
   /** RegularExpression Id. */
-  int EXPONENT = 41;
+  int IDENTIFIER = 41;
   /** RegularExpression Id. */
-  int STRING_LITERAL = 42;
+  int LETTER = 42;
   /** RegularExpression Id. */
-  int IDENTIFIER = 43;
-  /** RegularExpression Id. */
-  int LETTER = 44;
-  /** RegularExpression Id. */
-  int DIGIT = 45;
+  int DIGIT = 43;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -121,8 +117,6 @@ public interface ParserConstants {
     "\")\"",
     "\":\"",
     "\",\"",
-    "\"#\"",
-    "\"$\"",
     "\"+\"",
     "\"-\"",
     "\" \"",
