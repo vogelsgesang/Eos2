@@ -5,6 +5,7 @@ world.steinhinlegen(2)       = dropStone,integer,integer
 world.steinentfernen(3)      = removeStone,integer,integer,integer
 world.steinaufheben(2)       = pickupStone,integer,integer
 world.laden(1)               = load,string
+world.ziegelverstreuen(5)    = fillRandom,integer,integer,integer,integer,real
 
 robot.schritt(0)             = step
 robot.schritt(1)             = step,integer
@@ -19,7 +20,7 @@ robot.runterfliegen(0)       = flyDown
 robot.hochfliegen(0)         = flyUp
 robot.linksfliegen(0)        = flyLeft
 robot.rechtsfliegen(0)       = flyRight
-robot.zurückfliegen(0)       = flyBack
+robot.zurÃ¼ckfliegen(0)       = flyBack
 robot.fliegen(0)             = fly
 robot.istfrei(0)             = isFree,boolean
 robot.istlinksfrei(0)        = isLeftFree,boolean

@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.TreeMap;
 
 import javax.swing.JFrame;
@@ -78,6 +79,7 @@ public class World implements CleanupListener, Readout {
 	private int cursorZ;
 	private Direction cursorD; 
 	private boolean showCursor = false;
+	private Random random = new Random();
 	/**
 	 * Erzeugt eine neue Welt inklusive eines Fensters.
 	 */
@@ -255,7 +257,23 @@ public class World implements CleanupListener, Readout {
 		}
 		return doc;
 	}
-
+	/**
+	 * Füllt den Bereich der Welt zufällig mit Steinen.
+	 * @param left Linke Grenze
+	 * @param top Obere Grenze
+	 * @param right Rechte Grenze
+	 * @param bottom Untere Grenze
+	 * @param density Wahrscheinlichkeit einen Stein zu setzen. 0 Nie 1 Immer 
+	 */
+	public void fillRandom(int left, int top, int right, int bottom, double density) {
+		for (int x = left; x <= right; x++) {
+			for (int y = bottom; y <= top; y++) {
+				if (random.nextDouble() <= density) {
+					dropStone(x, y);
+				}
+			}
+		}
+	}
 	/**
 	 * Liefert die Säule.
 	 * @param x

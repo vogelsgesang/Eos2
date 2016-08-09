@@ -9,6 +9,7 @@ world.dropstone           = @dropStone(x,y)#dropStone(x:Number, y:Number)<br>Dro
 world.removestone         = @removeStone(x,y,z)#removeStone(x:Number, y:Number, z:Number)<br>Removes a stone from that position.
 world.pickupstone         = @pickupStone(x,y)#pickupStone(x:Number, y:Number)<br>Picks up the top stone ffrom that field.
 world.load                = @load(file)#load(file:String)<br>Loads a world created by the world editor.
+world.litterstones        = @litterStones(left,top,right,bottom,density)#litterStones(left:Integer,top:Integer,right:Integer,bottom:Integer,density:Real)<br>Litters the rectangle randomly with stones.
 
 robot.stepA               = @step()#step()<br>The robot makes a step forward.
 robot.stepB               = @step(nr)#step(nr:Integer)<br>The robot makes multiple steps forward.
@@ -30,7 +31,7 @@ robot.isleftfree          = @isLeftFree()#isLeftFree():Boolean<br>Checks if flyi
 robot.isrightfree         = @isRightFree()#isRightFree():Boolean<br>Checks if flying to the right side is possible.
 robot.isbackfree          = @isBackFree()#isBackFree():Boolean<br>Checks if flying backwards is possible.
 robot.isupfree            = @isUpFree()#isUpFree():Boolean<br>Checks if flying up is possible.
-robot.isdownfree          = @isDownFree()#isDownFree():Boolean<br>Prüft ob nach down fliegen möglich ist.
+robot.isdownfree          = @isDownFree()#isDownFree():Boolean<br>Prï¿½ft ob nach down fliegen mï¿½glich ist.
 robot.turnleft            = @turnLeft()#turnLeft()<br>Turns the robot to the left.
 robot.turnright           = @turnRight()#turnRight()<br>Turns the robot to the right.
 robot.turnaround          = @turnAround()#turnAround()<br>Turns the robot around.

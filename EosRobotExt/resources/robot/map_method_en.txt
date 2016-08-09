@@ -5,6 +5,7 @@ world.dropstone(2)           = dropStone,integer,integer
 world.removestone(3)         = removeStone,integer,integer,integer
 world.pickupstone(2)         = pickupStone,integer,integer
 world.load(1)                = load,string
+world.litterstones(5)        = fillRandom,integer,integer,integer,integer,real
 
 robot.step(0)                = step
 robot.step(1)                = step,integer
