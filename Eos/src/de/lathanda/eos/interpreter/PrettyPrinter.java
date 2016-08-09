@@ -22,7 +22,10 @@ public class PrettyPrinter {
 		String linetext;
 		StringBuilder pretty = new StringBuilder();
 		for (Newline line: newlines) {
-			linetext = source.substring(index, line.position).trim();
+			linetext = source.substring(index, line.position);
+			int crs = linetext.replaceAll("\n", "xx").length() - linetext.length();
+			linetext = linetext.trim();
+
 			index = line.position;
 			if (!linetext.isEmpty()) {
 				for(int i = level; i --> 0; ) {
@@ -30,6 +33,9 @@ public class PrettyPrinter {
 				}
 				pretty.append(linetext);
 				pretty.append("\n");
+				for(int i = 1; i < crs; i++) {
+					pretty.append("\n");
+				}
 			}
 			level = line.level;
 		}
