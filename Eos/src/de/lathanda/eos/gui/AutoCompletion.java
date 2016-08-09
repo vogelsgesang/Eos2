@@ -176,6 +176,10 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 		if (choice != null) {
 			try {
 				((AbstractDocument)text).replace(startPosition, lastPosition - startPosition, choice.template, null);
+				int openBracket = startPosition + choice.template.indexOf("(") + 1;
+				if (openBracket != startPosition) {
+					component.setCaretPosition(openBracket);
+				}
 			} catch (BadLocationException e) {
 				//we can't do anything useful, but nothing
 			}
