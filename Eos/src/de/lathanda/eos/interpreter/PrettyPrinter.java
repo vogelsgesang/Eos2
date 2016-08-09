@@ -25,7 +25,7 @@ public class PrettyPrinter {
 			linetext = source.substring(index, line.position);
 			int crs = linetext.replaceAll("\n", "xx").length() - linetext.length();
 			linetext = linetext.trim();
-
+			crs -= linetext.replaceAll("\n", "xx").length() - linetext.length();
 			index = line.position;
 			if (!linetext.isEmpty()) {
 				for(int i = level; i --> 0; ) {
