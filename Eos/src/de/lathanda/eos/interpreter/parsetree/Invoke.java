@@ -124,6 +124,7 @@ public class Invoke extends Expression {
         if (methodType == null) {
             env.addError(marker, "UnknownInvoke",
                     methodname,
+                    arguments.getTypes().length,
                     tartype
             );
         } else if (!methodType.checkType(arguments.getTypes())) {
@@ -131,8 +132,7 @@ public class Invoke extends Expression {
                     methodType,
                     arguments
             );
-        }
-        if (methodType != null) {
+        } else if (methodType != null) {
         	type = methodType.getReturnType();
         } else {
         	env.addError(marker, "MethodNotFound", methodname);
