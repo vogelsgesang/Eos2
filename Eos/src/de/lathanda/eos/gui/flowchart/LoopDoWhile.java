@@ -1,7 +1,7 @@
 package de.lathanda.eos.gui.flowchart;
 
 import de.lathanda.eos.gui.diagram.Drawing;
-import de.lathanda.eos.interpreter.parsetree.DoWhile;
+import de.lathanda.eos.gui.diagram.LoopUnit;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -24,9 +24,10 @@ public class LoopDoWhile extends Unit {
     private float nox;
     private float noy;     
     
-    LoopDoWhile(DoWhile loop) {
-        diam = new Diamond(loop.getCondition().getLabel());
-        sequence = new Sequence(loop.getSequence());
+    LoopDoWhile(LoopUnit lu) {
+    	this.needsIncomingArrow = false;
+        diam = new Diamond(lu.getLabel());
+        sequence = new Sequence(lu.getSequence());
     }
 
     @Override
@@ -34,10 +35,10 @@ public class LoopDoWhile extends Unit {
         sequence.layout(d);
         diam.layout(d);
         
-        sequence.setOffsetX(SPACEX);
-        sequence.setOffsetY(SPACE);
                 
         width = (float)Math.max(sequence.getWidth(), diam.getWidth()) + 2 * SPACEX;
+        sequence.center(width);;
+        sequence.setOffsetY(SPACE);
         diam.center(width);
         diam.setOffsetY(2 * SPACE + sequence.getHeight());
                 
@@ -59,7 +60,7 @@ public class LoopDoWhile extends Unit {
         d.setFont(FONT);                       
         //false arrow
         d.drawString(no, nox, noy);    
-        d.drawArrow(diam.getX(3), diam.getY(3), diam.getX(3), diam.getY(3) + SPACE, 3);
+        d.drawLine(diam.getX(3), diam.getY(3), diam.getX(3), diam.getY(3) + SPACE);
         
         //true jump start arrow
         d.drawString(yes, yesx, yesy);
@@ -69,7 +70,7 @@ public class LoopDoWhile extends Unit {
         d.drawArrow(width / 2, 0, width / 2, SPACE, 3);
         
         //body -> diamond            
-        d.drawArrow(diam.getX(1), diam.getY(1), diam.getX(1), diam.getY(1) - SPACE, 3);
+        d.drawArrow(diam.getX(1), diam.getY(1) - SPACE, diam.getX(1), diam.getY(1),  3);
         
         //loop body
         sequence.draw(d);

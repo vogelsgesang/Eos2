@@ -1,7 +1,7 @@
 package de.lathanda.eos.gui.structogram;
 
+import de.lathanda.eos.gui.diagram.AlternativeUnit;
 import de.lathanda.eos.gui.diagram.Drawing;
-import de.lathanda.eos.interpreter.parsetree.IfElse;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -27,10 +27,10 @@ public class Alternative extends Unit {
     private float yesy;     
     private float nox;
     private float noy;     
-    Alternative(IfElse ifelse) {
-        label = ifelse.getLabel();
-        A = new Sequence(ifelse.getThen());
-        B = new Sequence(ifelse.getElse());
+    Alternative(AlternativeUnit au) {
+        label = au.getLabel();
+        A = new Sequence(au.getThen());
+        B = new Sequence(au.getElse());
     }
 
     @Override

@@ -2,7 +2,7 @@ package de.lathanda.eos.gui;
 
 import static de.lathanda.eos.gui.GuiConstants.GUI;
 
-import de.lathanda.eos.interpreter.Program;
+import de.lathanda.eos.common.AbstractProgram;
 import de.lathanda.eos.interpreter.javacc.SourceToken;
 import de.lathanda.eos.interpreter.javacc.TokenFormat;
 
@@ -35,7 +35,7 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
 	private static final long serialVersionUID = -6226144081255555607L;
 	private PageFormat pageFormat;
     private int pageIndex = 0;
-    private Program program;
+    private AbstractProgram program;
 //******** layout *******
     private final ArrayList<LinkedList<Text>> pages = new ArrayList<>();
 //******** fonts ********
@@ -88,8 +88,8 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
         repaint();
     }
 
-    void init(Program program) {
-        this.program = program;
+    void init(AbstractProgram abstractProgram) {
+        this.program = abstractProgram;
         parse(getGraphics());
     }
 

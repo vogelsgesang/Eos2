@@ -1,5 +1,6 @@
 package de.lathanda.eos.interpreter;
 
+import de.lathanda.eos.common.AbstractType;
 import de.lathanda.eos.interpreter.exceptions.TypeMissMatchException;
 import de.lathanda.eos.spi.AutoCompleteEntry;
 import de.lathanda.eos.spi.MissingTypeException;
@@ -15,7 +16,7 @@ import java.util.TreeMap;
  * @author Peter (Lathanda) Schneider
  * @since 0.4
  */
-public class Type implements Comparable<Type> {
+public class Type implements Comparable<Type>, AbstractType {
 	// type maps
 	private static final TreeMap<String, Type> nameType = new TreeMap<>();
 	private static final TreeMap<String, Type> idType = new TreeMap<>();
@@ -178,7 +179,7 @@ public class Type implements Comparable<Type> {
 		return WINDOW;
 	}
 
-	public static Type getClassType() {
+	public static AbstractType getClassType() {
 		return CLASS;
 	}
 

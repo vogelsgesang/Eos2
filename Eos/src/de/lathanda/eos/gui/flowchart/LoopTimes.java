@@ -1,7 +1,7 @@
 package de.lathanda.eos.gui.flowchart;
 
 import de.lathanda.eos.gui.diagram.Drawing;
-import de.lathanda.eos.interpreter.parsetree.RepeatTimes;
+import de.lathanda.eos.gui.diagram.LoopTimesUnit;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.MessageFormat;
@@ -29,11 +29,11 @@ public class LoopTimes extends Unit {
     private float noy;     
  
     private float center;
-    LoopTimes(RepeatTimes loop) {
-        sequence = new Sequence(loop.getSequence());
-        var = MessageFormat.format(lm.getLabel("RepeatTimes.Var"), loop.getIndexId(), loop.getTimes().getLabel());
-        diam = new Diamond(MessageFormat.format(lm.getLabel("RepeatTimes.Cond"), loop.getIndexId()));
-        step = MessageFormat.format(lm.getLabel("RepeatTimes.Step"), loop.getIndexId());
+    LoopTimes(LoopTimesUnit n) {
+        sequence = new Sequence(n.getSequence());
+        var = MessageFormat.format(lm.getLabel("RepeatTimes.Var"), n.getIndexId(), n.getTimes().getLabel());
+        diam = new Diamond(MessageFormat.format(lm.getLabel("RepeatTimes.Cond"), n.getIndexId()));
+        step = MessageFormat.format(lm.getLabel("RepeatTimes.Step"), n.getIndexId());
         init = new Statement(var);
         inc = new Statement(step);
     }

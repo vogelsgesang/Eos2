@@ -1,8 +1,9 @@
 package de.lathanda.eos.gui.structogram;
 
+import de.lathanda.eos.gui.diagram.AlternativeUnit;
 import de.lathanda.eos.gui.diagram.Drawing;
-import de.lathanda.eos.interpreter.Node;
-import de.lathanda.eos.interpreter.parsetree.IfElse;
+import de.lathanda.eos.gui.diagram.LoopUnit;
+import de.lathanda.eos.gui.diagram.ProgramNode;
 import de.lathanda.eos.spi.LanguageManager;
 
 /**
@@ -51,11 +52,11 @@ public abstract class Unit {
         return height;
     }
 
-    public static Unit create(Node n) {
-        if (n instanceof IfElse) {
-            return new Alternative((IfElse) n);
-        } else if (n instanceof de.lathanda.eos.interpreter.parsetree.Loop) {
-            return new Loop((de.lathanda.eos.interpreter.parsetree.Loop)n);
+    public static Unit create(ProgramNode n) {
+        if (n instanceof AlternativeUnit) {
+            return new Alternative((AlternativeUnit) n);
+        } else if (n instanceof LoopUnit) {
+            return new Loop((LoopUnit)n);
         } else {
             return new Statement(n);
         }

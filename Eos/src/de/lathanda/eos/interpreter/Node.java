@@ -1,5 +1,7 @@
 package de.lathanda.eos.interpreter;
 
+import de.lathanda.eos.common.Marker;
+import de.lathanda.eos.gui.diagram.ProgramNode;
 import de.lathanda.eos.interpreter.parsetree.Expression;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import java.util.ResourceBundle;
  * @author Peter (Lathanda) Schneider
  * @since 0.2
  */
-public abstract class Node {
+public abstract class Node implements ProgramNode {
     protected static final ResourceBundle LABEL = ResourceBundle.getBundle("text.label");
     protected Type type = Type.getVoid();
     protected Marker marker;

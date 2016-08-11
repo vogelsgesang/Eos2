@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 import de.lathanda.eos.gui.diagram.Drawing;
+import de.lathanda.eos.gui.diagram.ProgramSequence;
 
 /**
  * Unterprogramm.
@@ -17,9 +18,9 @@ public class Procedure extends Unit {
     private final static Font FONT = new Font(Font.SANS_SERIF, Font.BOLD, 14);
     private float textx;
     private float texty;
-    public Procedure(String title, de.lathanda.eos.interpreter.parsetree.Sequence s) {
+    public Procedure(String title, ProgramSequence programSequence) {
         this.title = title;
-        sequence = new Sequence(s);
+        sequence = new Sequence(programSequence);
     }
 
     @Override

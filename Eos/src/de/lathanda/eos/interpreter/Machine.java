@@ -1,7 +1,12 @@
 package de.lathanda.eos.interpreter;
 
 import de.lathanda.eos.base.event.CleanupListener;
+import de.lathanda.eos.common.AbstractMachine;
+import de.lathanda.eos.common.DebugInfo;
+import de.lathanda.eos.common.DebugListener;
+import de.lathanda.eos.common.Marker;
 import de.lathanda.eos.gui.MessageHandler;
+import de.lathanda.eos.gui.diagram.MemoryEntry;
 import de.lathanda.eos.interpreter.commands.DebugPoint;
 import de.lathanda.eos.interpreter.exceptions.MemoryAccessViolation;
 import de.lathanda.eos.interpreter.exceptions.ProgramTerminationException;
@@ -17,7 +22,7 @@ import java.util.TreeMap;
  * @author Peter (Lathanda) Schneider
  * @since 0.3
  */
-public class Machine {
+public class Machine implements AbstractMachine {
 
     private final LinkedList<Object> stack;
     private final LinkedList<Context> callstack;
@@ -136,14 +141,16 @@ public class Machine {
             throw new MemoryAccessViolation(variable);
         }
     }
-    public TreeMap<String, Variable> getMemoryDump() {
-    	TreeMap<String, Variable> result = new TreeMap<>();	
+    public LinkedList<MemoryEntry> getMemory() {
+    	LinkedList<MemoryEntry> result = new LinkedList<>();	
     	for (Entry<String, Variable> entry : global.memory.entrySet()) {
-    		result.put(entry.getKey(), entry.getValue());
+    		Variable v = entry.getValue();
+    		result.add(new MemoryEntry(entry.getKey(), v.get(), v.type.getName()));
     	}
     	if (context != global) {
     		for (Entry<String, Variable> entry : context.memory.entrySet()) {
-    			result.put(entry.getKey(), entry.getValue());
+    			Variable v = entry.getValue();
+    			result.add(new MemoryEntry(entry.getKey(), v.get(), v.type.getName()));
     		}    	
     	}
     	return result;   	

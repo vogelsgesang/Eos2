@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import javax.swing.JPanel;
 
 import de.lathanda.eos.gui.diagram.Drawing;
-import de.lathanda.eos.interpreter.Variable;
+import de.lathanda.eos.gui.diagram.MemoryEntry;
 
 /**
  * Diese Komponente zeigt eine Liste von Objekten und Variablen an.
@@ -76,9 +76,9 @@ public class ObjectDiagram extends JPanel {
 		d.popTransform();
 	}
 
-	public void setData(LinkedList<Variable> data) {
+	public void setData(LinkedList<MemoryEntry> data) {
 		units.clear();
-		for (Variable v : data) {
+		for (MemoryEntry v : data) {
 			units.add(Unit.create(v));
 		}
 		setPreferredSize(layout(d));

@@ -1,8 +1,10 @@
 package de.lathanda.eos.interpreter.parsetree;
 
+import de.lathanda.eos.common.Marker;
+import de.lathanda.eos.gui.diagram.ProgramNode;
+import de.lathanda.eos.gui.diagram.ProgramSequence;
 import de.lathanda.eos.interpreter.Command;
 import de.lathanda.eos.interpreter.Environment;
-import de.lathanda.eos.interpreter.Marker;
 import de.lathanda.eos.interpreter.Node;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
  * @author Peter (Lathanda) Schneider
  * @since 0.4
  */
-public class Sequence extends Node {
+public class Sequence extends Node implements ProgramSequence {
 
     private final ArrayList<Node> sequence;
     int index = 0;
@@ -42,8 +44,10 @@ public class Sequence extends Node {
         }
     }
 
-    public ArrayList<Node> getInstructions() {
-        return sequence;
+    public ArrayList<ProgramNode> getInstructions() {
+    	ArrayList<ProgramNode> temp = new ArrayList<ProgramNode>(sequence.size());
+    	sequence.forEach(i -> temp.add(i));
+        return temp;
     }
 
     @Override

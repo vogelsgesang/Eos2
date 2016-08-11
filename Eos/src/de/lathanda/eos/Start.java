@@ -11,10 +11,10 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import de.lathanda.eos.common.AbstractProgram;
+import de.lathanda.eos.common.Factory;
 import de.lathanda.eos.gui.MainWindow;
-import de.lathanda.eos.interpreter.Machine;
 import de.lathanda.eos.interpreter.Program;
-import de.lathanda.eos.interpreter.javacc.EosParser;
 import de.lathanda.eos.spi.LanguageManager;
 /**
  * \brief Startklasse
@@ -43,6 +43,7 @@ public class Start {
     	} catch (Exception e) {
     	    // use default
     	}
+    	Factory.setProgram(Program.class);
     	for(String arg:args) {
     		apply(arg);
     	}
@@ -131,12 +132,10 @@ public class Start {
             }
             br.close();
             
-            Machine machine = new Machine();
-            Program program = new Program(src.toString());            
-            EosParser parser = EosParser.create(src.toString());
-            parser.Parse(program, path);
-			program.compile(machine);
-			machine.skip();
+            AbstractProgram program =  Factory.createProgram(src.toString());
+            program.parse(path);
+			program.compile();
+			program.getMachine().skip();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, GUI.getString("Export.Error.Title"),
                     e.getLocalizedMessage(),

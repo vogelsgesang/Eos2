@@ -1,5 +1,6 @@
 package de.lathanda.eos.interpreter.parsetree;
 
+import de.lathanda.eos.gui.diagram.LoopUnit;
 import de.lathanda.eos.interpreter.Node;
 
 /**
@@ -8,7 +9,7 @@ import de.lathanda.eos.interpreter.Node;
  * @author Peter (Lathanda) Schneider
  * @since 0.8
  */
-public abstract class Loop  extends Node {
+public abstract class Loop  extends Node implements LoopUnit {
     protected final Sequence sequence;
     protected final Expression condition;
     public Loop(Sequence sequence, Expression condition) {
@@ -21,5 +22,4 @@ public abstract class Loop  extends Node {
     public Expression getCondition() {
         return condition;
     }
-    public abstract boolean isPre();
 }

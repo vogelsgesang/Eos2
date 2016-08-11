@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import de.lathanda.eos.gui.diagram.Drawing;
+import de.lathanda.eos.gui.diagram.ProgramSequence;
 
 /**
  * Sequenz von Kontrollflusselementen.
@@ -13,10 +14,10 @@ import de.lathanda.eos.gui.diagram.Drawing;
  */
 public class Sequence extends Unit {
     private ArrayList<Unit> units;
-    Sequence(de.lathanda.eos.interpreter.parsetree.Sequence s) {
+    Sequence(ProgramSequence programSequence) {
         units = new ArrayList<>();
-        if (s != null) {
-            s.getInstructions().stream().forEachOrdered((n) -> {
+        if (programSequence != null) {
+            programSequence.getInstructions().stream().forEachOrdered((n) -> {
                 units.add(Unit.create(n));
             });
         }

@@ -4,6 +4,7 @@ package de.lathanda.eos.interpreter.javacc;
 import de.lathanda.eos.interpreter.parsetree.*;
 import de.lathanda.eos.interpreter.*;
 import de.lathanda.eos.base.*;
+import de.lathanda.eos.common.*;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
@@ -1546,12 +1547,6 @@ try {
     finally { jj_save(6, xla); }
   }
 
-  private boolean jj_3R_102()
- {
-    if (jj_scan_token(FILLED)) return true;
-    return false;
-  }
-
   private boolean jj_3R_78()
  {
     Token xsp;
@@ -2463,6 +2458,12 @@ try {
   private boolean jj_3R_103()
  {
     if (jj_scan_token(SHADED)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_102()
+ {
+    if (jj_scan_token(FILLED)) return true;
     return false;
   }
 

@@ -1,14 +1,13 @@
 package de.lathanda.eos.gui.flowchart;
 
+import de.lathanda.eos.common.AbstractProgram;
+import de.lathanda.eos.common.BackgroundCompiler;
+import de.lathanda.eos.common.CompilerListener;
+import de.lathanda.eos.common.ErrorInformation;
 import de.lathanda.eos.gui.GuiConstants;
 import de.lathanda.eos.gui.diagram.Diagram;
 import de.lathanda.eos.gui.diagram.Drawing;
-import de.lathanda.eos.interpreter.BackgroundCompiler;
-import de.lathanda.eos.interpreter.CompilerError;
-import de.lathanda.eos.interpreter.CompilerListener;
-import de.lathanda.eos.interpreter.Machine;
-import de.lathanda.eos.interpreter.Program;
-import de.lathanda.eos.interpreter.parsetree.SubRoutine;
+import de.lathanda.eos.gui.diagram.ProgramUnit;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -45,16 +44,16 @@ public class FlowChart extends Diagram implements CompilerListener {
 
     @Override
     public void deinit(BackgroundCompiler bc) {
-        bc.removeCompilerListener(this);
+        bc.addCompilerListener(this);
     }
 
     @Override
-    public void compileComplete(Machine machine, LinkedList<CompilerError> errors, Program program) {
+    public void compileComplete(LinkedList<ErrorInformation> errors, AbstractProgram program) {
         procedures.clear();
         //create units
         procedures.add(new Procedure(Unit.lm.getLabel("Main"), program.getProgram()));
-        for (SubRoutine sub : program.getSub()) {
-            procedures.add(new Procedure(sub.getName(), sub.getSequence()));
+        for (ProgramUnit pu : program.getSubPrograms()) {
+            procedures.add(new Procedure(pu.getName(), pu.getSequence()));
         }
 
         this.setPreferredSize(layout(d));
@@ -102,5 +101,4 @@ public class FlowChart extends Diagram implements CompilerListener {
         d.init(g);
         render(d);
     }
-
 }

@@ -1,6 +1,6 @@
 package de.lathanda.eos.interpreter.commands;
 
-import de.lathanda.eos.interpreter.Marker;
+import de.lathanda.eos.common.Marker;
 import de.lathanda.eos.interpreter.Command;
 import de.lathanda.eos.interpreter.Machine;
 

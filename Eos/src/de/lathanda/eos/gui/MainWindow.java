@@ -39,11 +39,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.undo.UndoManager;
 
 import de.lathanda.eos.base.ResourceLoader;
+import de.lathanda.eos.common.BackgroundCompiler;
 import de.lathanda.eos.gui.diagram.DiagramFrame;
 import de.lathanda.eos.gui.flowchart.FlowChart;
 import de.lathanda.eos.gui.objectchart.ObjectChart;
 import de.lathanda.eos.gui.structogram.Structogram;
-import de.lathanda.eos.interpreter.BackgroundCompiler;
 import de.lathanda.eos.spi.LanguageManager;
 
 /**

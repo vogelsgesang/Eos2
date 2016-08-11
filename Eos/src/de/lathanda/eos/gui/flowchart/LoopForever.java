@@ -1,7 +1,7 @@
 package de.lathanda.eos.gui.flowchart;
 
 import de.lathanda.eos.gui.diagram.Drawing;
-import de.lathanda.eos.interpreter.parsetree.RepeatForever;
+import de.lathanda.eos.gui.diagram.LoopForeverUnit;
 import java.awt.Color;
 
 /**
@@ -13,8 +13,8 @@ import java.awt.Color;
 public class LoopForever extends Unit {
     private final Sequence sequence;    
     private float center;
-    LoopForever(RepeatForever loop) {
-        sequence = new Sequence(loop.getSequence());
+    LoopForever(LoopForeverUnit n) {
+        sequence = new Sequence(n.getSequence());
         neverEnds = true;
         needsIncomingArrow = false;
     }

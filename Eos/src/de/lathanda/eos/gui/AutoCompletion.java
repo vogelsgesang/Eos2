@@ -29,7 +29,7 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.JTextComponent;
 
 import de.lathanda.eos.base.ResourceLoader;
-import de.lathanda.eos.interpreter.Type;
+import de.lathanda.eos.common.AbstractType;
 import de.lathanda.eos.spi.AutoCompleteEntry;
 import de.lathanda.eos.spi.LanguageManager;
 /**
@@ -96,7 +96,7 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 	 * @param position Position im Text für die die Auswahl gestart wurde.
 	 * @throws BadLocationException
 	 */
-	public void start(Type base, int position) throws BadLocationException {
+	public void start(AbstractType base, int position) throws BadLocationException {
 		if (base.isUnknown()) {
 			stop();
 			return;

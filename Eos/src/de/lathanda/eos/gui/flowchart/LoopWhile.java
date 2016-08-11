@@ -1,7 +1,7 @@
 package de.lathanda.eos.gui.flowchart;
 
 import de.lathanda.eos.gui.diagram.Drawing;
-import de.lathanda.eos.interpreter.parsetree.WhileDo;
+import de.lathanda.eos.gui.diagram.LoopUnit;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -23,9 +23,9 @@ public class LoopWhile extends Unit {
     private float nox;
     private float noy;     
     
-    LoopWhile(WhileDo loop) {
-        diam = new Diamond(loop.getCondition().getLabel());
-        sequence = new Sequence(loop.getSequence());
+    LoopWhile(LoopUnit lu) {
+        diam = new Diamond(lu.getLabel());
+        sequence = new Sequence(lu.getSequence());
     }
 
     @Override
@@ -37,11 +37,11 @@ public class LoopWhile extends Unit {
         
         width = Math.max(sequence.getWidth(), diam.getWidth()) + 2 * SPACEX;
         diam.center(width);
-        sequence.setOffsetX(SPACEX);
+        sequence.center(width);
         sequence.setOffsetY(diam.getHeight() + SPACE);
         
         yesx = diam.getX(3) + BORDER;
-        yesy = diam.getY(3) + BORDER + d.getAscent();
+        yesy = diam.getY(3) + d.getAscent();
         nox = diam.getX(0) - d.stringWidth(no) - BORDER;
         noy = diam.getY(0) - BORDER;
         height = diam.getHeight() + SPACE + sequence.getHeight() + SPACE + SPACE;
@@ -69,7 +69,7 @@ public class LoopWhile extends Unit {
 
         //true arrow
         d.drawString(yes, yesx, yesy);    
-        d.drawArrow(diam.getX(3), diam.getY(3), diam.getX(3), diam.getX(3) + SPACE, 3);
+        d.drawArrow(diam.getX(3), diam.getY(3), diam.getX(3), diam.getY(3) + SPACE, 3);
         
         //loop body
         sequence.draw(d);

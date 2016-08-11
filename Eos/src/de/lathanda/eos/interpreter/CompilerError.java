@@ -3,13 +3,16 @@ package de.lathanda.eos.interpreter;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
+import de.lathanda.eos.common.ErrorInformation;
+import de.lathanda.eos.common.Marker;
+
 /**
  * Übersetzungsfehler.
  *
  * @author Peter (Lathanda) Schneider
  * @since 0.5
  */
-public class CompilerError {
+public class CompilerError implements ErrorInformation {
     private static final ResourceBundle error = ResourceBundle.getBundle("text.error");
     private Marker code;
     private String message;

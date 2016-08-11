@@ -7,7 +7,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
-import de.lathanda.eos.interpreter.Marker;
+import de.lathanda.eos.common.Marker;
 import de.lathanda.eos.interpreter.javacc.SourceToken;
 
 /**

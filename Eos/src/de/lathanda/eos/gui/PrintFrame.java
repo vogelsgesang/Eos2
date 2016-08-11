@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
-import de.lathanda.eos.interpreter.Program;
+import de.lathanda.eos.common.AbstractProgram;
 
 
 /**
@@ -29,8 +29,8 @@ public class PrintFrame extends javax.swing.JFrame {
     public PrintFrame() {
         initComponents();
     }
-    public void init(Program program) {
-        printview.init(program);
+    public void init(AbstractProgram abstractProgram) {
+        printview.init(abstractProgram);
     }
 
     private void initComponents() {

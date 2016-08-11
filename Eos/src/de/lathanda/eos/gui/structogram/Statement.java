@@ -1,7 +1,7 @@
 package de.lathanda.eos.gui.structogram;
 
 import de.lathanda.eos.gui.diagram.Drawing;
-import de.lathanda.eos.interpreter.Node;
+import de.lathanda.eos.gui.diagram.ProgramNode;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -19,7 +19,7 @@ public class Statement extends Unit {
     private final String label;
     private final static Font FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
 
-    Statement(Node n) {
+    Statement(ProgramNode n) {
         label = n.getLabel();
     }
     @Override

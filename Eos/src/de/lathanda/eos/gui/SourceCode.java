@@ -21,17 +21,18 @@ import javax.swing.text.Element;
 
 import de.lathanda.eos.Stop;
 import de.lathanda.eos.base.event.CleanupListener;
+import de.lathanda.eos.common.AbstractMachine;
+import de.lathanda.eos.common.AbstractProgram;
+import de.lathanda.eos.common.AbstractType;
+import de.lathanda.eos.common.CompilerListener;
+import de.lathanda.eos.common.DebugInfo;
+import de.lathanda.eos.common.DebugListener;
+import de.lathanda.eos.common.ErrorInformation;
+import de.lathanda.eos.common.Marker;
+import de.lathanda.eos.common.Source;
 import de.lathanda.eos.gui.GuiConfiguration.GuiConfigurationListener;
 import de.lathanda.eos.gui.MessageHandler.ErrorLevel;
 import de.lathanda.eos.gui.MessageHandler.LogListener;
-import de.lathanda.eos.interpreter.CompilerError;
-import de.lathanda.eos.interpreter.CompilerListener;
-import de.lathanda.eos.interpreter.DebugInfo;
-import de.lathanda.eos.interpreter.DebugListener;
-import de.lathanda.eos.interpreter.Machine;
-import de.lathanda.eos.interpreter.Marker;
-import de.lathanda.eos.interpreter.Program;
-import de.lathanda.eos.interpreter.Source;
 import de.lathanda.eos.interpreter.Type;
 
 /**
@@ -48,13 +49,13 @@ public class SourceCode extends DefaultStyledDocument
 
 	private static final Object COMPILE_LOCK = new Object();
 	private final OutputStyle message;
-	private Machine machine;
+	private AbstractMachine machine;
 	private CodeColoring codeColoring;
 	private boolean compileNeeded = false;
 	private boolean sourceDirty = false;
 	private String path = "";
 	private int delay = 0;
-	private Program program;
+	private AbstractProgram program;
 	private AutoCompletion autoCompletion;
 	private TreeSet<Integer> breakpoints = new TreeSet<Integer>();
 	private TreeSet<Integer> errors      = new TreeSet<Integer>();
@@ -116,7 +117,7 @@ public class SourceCode extends DefaultStyledDocument
 		}
 	}
 
-	public Program getProgram() {
+	public AbstractProgram getProgram() {
 		return program;
 	}
 
@@ -212,7 +213,7 @@ public class SourceCode extends DefaultStyledDocument
 	@Override
 	public void insertString(int pos, String text, AttributeSet attributeSet) throws BadLocationException {
 		if (text.equals(".")) {
-			Type base = program.seekType(pos);
+			AbstractType base = program.seekType(pos);
 			autoCompletion.start(base, pos + 1);
 		} else if (text.equals(":")) {
 			autoCompletion.start(Type.getClassType(), pos + 1);
@@ -234,11 +235,11 @@ public class SourceCode extends DefaultStyledDocument
 		}		
 	}
 	@Override
-	public void compileComplete(Machine machine, LinkedList<CompilerError> errors, Program program) {
+	public void compileComplete(LinkedList<ErrorInformation> errors, AbstractProgram program) {
 		stop();
 		this.program = program;
+		this.machine = program.getMachine();
 		machine.removeDebugListener(this);
-		this.machine = machine;
 		machine.setDelay(delay);
 		machine.addDebugListener(this);
 		this.errors.clear();
@@ -249,7 +250,7 @@ public class SourceCode extends DefaultStyledDocument
 		message.clear();
 		if (errors.size() > 0) {
 			errors.forEach(err -> message.println(err.getMessage()));
-			for (CompilerError err : errors) {
+			for (ErrorInformation err : errors) {
 				if (err.getCode() != null) {
 					this.errors.add(err.getCode().getBeginLine());
 					codeColoring.markError(err.getCode());

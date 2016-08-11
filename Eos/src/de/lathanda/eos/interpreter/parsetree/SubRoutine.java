@@ -1,5 +1,6 @@
 package de.lathanda.eos.interpreter.parsetree;
 
+import de.lathanda.eos.gui.diagram.ProgramUnit;
 import de.lathanda.eos.interpreter.Command;
 import de.lathanda.eos.interpreter.Environment;
 import de.lathanda.eos.interpreter.MethodType;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
  * @author Peter (Lathanda) Schneider
  * @since 0.4
  */
-public class SubRoutine extends Node {
+public class SubRoutine extends Node implements ProgramUnit{
 	private final String name;
 	private final Sequence sequence;
 	private final Parameters parameters;

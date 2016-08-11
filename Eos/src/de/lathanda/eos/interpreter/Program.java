@@ -3,9 +3,22 @@ package de.lathanda.eos.interpreter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
+import de.lathanda.eos.common.AbstractMachine;
+import de.lathanda.eos.common.AbstractProgram;
+import de.lathanda.eos.common.ErrorInformation;
+import de.lathanda.eos.common.Marker;
+import de.lathanda.eos.common.TranslationException;
+import de.lathanda.eos.gui.diagram.ProgramSequence;
+import de.lathanda.eos.gui.diagram.ProgramUnit;
 import de.lathanda.eos.interpreter.commands.CreateVariable;
+import de.lathanda.eos.interpreter.javacc.CommonParserConstants;
+import de.lathanda.eos.interpreter.javacc.EosParser;
+import de.lathanda.eos.interpreter.javacc.ParseException;
 import de.lathanda.eos.interpreter.javacc.SourceToken;
+import de.lathanda.eos.interpreter.javacc.Token;
+import de.lathanda.eos.interpreter.javacc.TokenMgrError;
 import de.lathanda.eos.interpreter.parsetree.Expression;
 import de.lathanda.eos.interpreter.parsetree.ReservedVariables;
 import de.lathanda.eos.interpreter.parsetree.Sequence;
@@ -17,7 +30,7 @@ import de.lathanda.eos.interpreter.parsetree.SubRoutine;
  * @author Peter (Lathanda) Schneider
  * @since 0.4
  */
-public class Program {
+public class Program implements AbstractProgram {
     private final static TreeMap<String, Type> guessTable = new TreeMap<>();
     private final Sequence program;
     private final LinkedList<SubRoutine> sub;
@@ -26,7 +39,9 @@ public class Program {
     private final Environment env;
     private final String source;
     private final PrettyPrinter prettyPrinter;
+    private final Machine machine;
     public Program() {
+    	this.machine = new Machine();
         this.program = new Sequence();
         this.prettyPrinter = new PrettyPrinter("");    	
         this.source = "";
@@ -36,6 +51,7 @@ public class Program {
         tokenList = new LinkedList<>();
     }
     public Program(String source) {
+    	this.machine = new Machine();
         this.program = new Sequence();
         this.prettyPrinter = new PrettyPrinter(source);    	
         this.source = source;
@@ -43,6 +59,17 @@ public class Program {
         env = new Environment();
         nodeList = new LinkedList<>();
         tokenList = new LinkedList<>();
+    }
+    @Override
+    public void parse(String path) throws TranslationException {
+		EosParser parser = EosParser.create(source);
+		try {
+			parser.Parse(this, path);
+		} catch (ParseException pe) {
+			throw new TranslationException(handleParseException(pe));
+		} catch (TokenMgrError ex) {
+			throw new TranslationException(new CompilerError("Token.Error", ex.getLocalizedMessage()));
+		}
     }
     public void add(Sequence s) {
         program.append(s);
@@ -63,7 +90,7 @@ public class Program {
         return tokenList;
     }
  
-    public Sequence getProgram() {
+    public ProgramSequence getProgram() {
         return program;
     }
     public void merge(Program subprogram, Marker marker) {
@@ -75,8 +102,10 @@ public class Program {
     	this.sub.addAll(subprogram.sub);
     	this.nodeList.addAll(subprogram.nodeList);
     }
-    public LinkedList<SubRoutine> getSub() {
-        return sub;
+    public LinkedList<ProgramUnit> getSubPrograms() {
+    	LinkedList<ProgramUnit> temp = new LinkedList<>();
+    	sub.forEach(s -> temp.add(s));
+        return temp;
     }
     
     public void compile(Machine m) throws Exception {
@@ -113,7 +142,7 @@ public class Program {
             m.createUserFunction(s.getSignature(), s.getParameters(), ops, s.getGlobalAccess());
         }
     }    
-    public LinkedList<CompilerError> getErrors() {
+    public LinkedList<ErrorInformation> getErrors() {
         return env.getErrors();
     }
     
@@ -184,4 +213,76 @@ public class Program {
 	public String prettyPrint() {
 		return prettyPrinter.prettyPrint();
 	}
+	public void compile() throws TranslationException {
+		try {
+			machine.reinit();
+			compile(machine);
+		} catch (Exception e) {
+			throw new TranslationException(new CompilerError("Compile.Error", e.getLocalizedMessage()));
+		}
+	}
+
+	@Override
+	public AbstractMachine getMachine() {
+		return machine;
+	}
+	private ErrorInformation handleParseException(ParseException pe) {
+		if (pe.expectedTokenSequences == null) {
+			return new CompilerError("Compile.Error", pe.getLocalizedMessage());
+		}
+		StringBuilder expected = new StringBuilder();
+		StringBuilder encountered = new StringBuilder();
+		int maxSize = 0;
+		char item = 'a';
+		for (int[] expectedTokenSequence : pe.expectedTokenSequences) {
+			expected.append("\n").append(item++).append(") ");
+			if (maxSize < expectedTokenSequence.length) {
+				maxSize = expectedTokenSequence.length;
+			}
+			for (int j = 0; j < expectedTokenSequence.length; j++) {
+				expected.append(unescape(pe.tokenImage[expectedTokenSequence[j]])).append(' ');
+			}
+			if (expectedTokenSequence[expectedTokenSequence.length - 1] != 0) {
+				expected.append("...");
+			}
+		}
+		Token tok = pe.currentToken.next;
+		TreeSet<String> alreadyUsed = new TreeSet<>();
+		for (int i = 0; i < maxSize; i++) {
+			if (!alreadyUsed.add(pe.tokenImage[i])) {
+				continue;
+			}
+			if (i != 0) {
+				encountered.append(" ");
+			}
+			if (tok.kind == CommonParserConstants.EOF) {
+				encountered.append(pe.tokenImage[0]);
+				break;
+			}
+
+			encountered.append(unescape(pe.tokenImage[tok.kind]));
+			tok = tok.next;
+
+		}
+		return new CompilerError(new Marker(pe.currentToken.next), "Parser.Error", encountered, expected,
+				pe.currentToken.next.endLine);
+	}
+
+	private String unescape(String text) {
+		int i = text.indexOf("\\u");
+		if (i == -1) {
+			return text;
+		}
+
+		StringBuilder sb = new StringBuilder();
+		int a = 0;
+		while (i != -1) {
+			sb.append(text.substring(a, i));
+			a = i + 6;
+			sb.append((char) Integer.parseInt(text.substring(i + 2, a), 16));
+			i = text.indexOf("\\u", a);
+		}
+		sb.append(text.substring(a));
+		return sb.toString();
+	}	
 }

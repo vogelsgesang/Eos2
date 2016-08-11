@@ -8,7 +8,7 @@ import de.lathanda.eos.base.LineStyle;
 import de.lathanda.eos.base.Readout;
 import de.lathanda.eos.base.Scaling;
 import de.lathanda.eos.gui.diagram.Drawing;
-import de.lathanda.eos.interpreter.Variable;
+import de.lathanda.eos.gui.diagram.MemoryEntry;
 import de.lathanda.eos.interpreter.parsetree.ReservedVariables;
 import de.lathanda.eos.spi.LanguageManager;
 import de.lathanda.eos.util.ConcurrentLinkedList;
@@ -82,17 +82,17 @@ public abstract class Unit {
 			return lm.createUnit(value);			
 		}    	
     }
-    public static Unit create(Variable v) {
+    public static Unit create(MemoryEntry v) {
 		if (v.name.equals(ReservedVariables.RESULT)) {
-			return new Property(lm.getName(ReservedVariables.RESULT), v.get());
+			return new Property(lm.getName(ReservedVariables.RESULT), v.data);
 		} else if (v.name.equals(ReservedVariables.WINDOW)) {
-			return new ObjectCard(lm.getName(ReservedVariables.WINDOW), v.type.getName(), (Readout)v.get());
+			return new ObjectCard(lm.getName(ReservedVariables.WINDOW), v.type, (Readout)v.data);
 		} else if (v.name.startsWith(ReservedVariables.REPEAT_TIMES_INDEX)) {
-			return new Property(lm.getName(ReservedVariables.REPEAT_TIMES_INDEX), v.get());
-		} else if (v.get() instanceof Readout) {
-			return new ObjectCard(v.name, v.type.getName(), (Readout)v.get());
+			return new Property(lm.getName(ReservedVariables.REPEAT_TIMES_INDEX), v.data);
+		} else if (v.data instanceof Readout) {
+			return new ObjectCard(v.name, v.type, (Readout)v.data);
 		} else {
-			return new Property(v.name, v.get());
+			return new Property(v.name, v.data);
 		}
     }
     public class FormattedText {

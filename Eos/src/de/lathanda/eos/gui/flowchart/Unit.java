@@ -1,12 +1,11 @@
 package de.lathanda.eos.gui.flowchart;
 
+import de.lathanda.eos.gui.diagram.AlternativeUnit;
 import de.lathanda.eos.gui.diagram.Drawing;
-import de.lathanda.eos.interpreter.Node;
-import de.lathanda.eos.interpreter.parsetree.DoWhile;
-import de.lathanda.eos.interpreter.parsetree.IfElse;
-import de.lathanda.eos.interpreter.parsetree.RepeatForever;
-import de.lathanda.eos.interpreter.parsetree.RepeatTimes;
-import de.lathanda.eos.interpreter.parsetree.WhileDo;
+import de.lathanda.eos.gui.diagram.LoopForeverUnit;
+import de.lathanda.eos.gui.diagram.LoopTimesUnit;
+import de.lathanda.eos.gui.diagram.LoopUnit;
+import de.lathanda.eos.gui.diagram.ProgramNode;
 import de.lathanda.eos.spi.LanguageManager;
 
 /**
@@ -67,17 +66,20 @@ public abstract class Unit {
         return height;
     }
 
-    public static Unit create(Node n) {
-        if (n instanceof IfElse) {
-            return new Alternative((IfElse) n);
-        } else if (n instanceof RepeatForever) {
-            return new LoopForever((RepeatForever)n);
-        } else if (n instanceof RepeatTimes) {    
-            return new LoopTimes((RepeatTimes)n);
-        } else if (n instanceof WhileDo) {
-            return new LoopWhile((WhileDo)n);
-        } else if (n instanceof DoWhile) {
-            return new LoopDoWhile((DoWhile)n);
+    public static Unit create(ProgramNode n) {
+        if (n instanceof AlternativeUnit) {
+            return new Alternative((AlternativeUnit) n);
+        } else if (n instanceof LoopForeverUnit) {
+            return new LoopForever((LoopForeverUnit)n);
+        } else if (n instanceof LoopTimesUnit) {    
+            return new LoopTimes((LoopTimesUnit)n);
+        } else if (n instanceof LoopUnit) {
+        	LoopUnit lu = (LoopUnit)n;
+        	if (lu.isPre()) {
+        		return new LoopDoWhile(lu);
+        	} else {
+        		return new LoopWhile(lu);
+        	}            
         } else {
             return new Statement(n);
         }

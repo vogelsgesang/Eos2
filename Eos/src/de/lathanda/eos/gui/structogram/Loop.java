@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 import de.lathanda.eos.gui.diagram.Drawing;
+import de.lathanda.eos.gui.diagram.LoopUnit;
 
 /**
  * Schleife.
@@ -19,7 +20,7 @@ public class Loop extends Unit {
     private final static float BAR_WIDTH = 7;
     private float textx;
     private float texty;    
-    Loop(de.lathanda.eos.interpreter.parsetree.Loop loop) {
+    Loop(LoopUnit loop) {
         sequence = new Sequence(loop.getSequence());
         label = loop.getLabel();
         pre = loop.isPre();

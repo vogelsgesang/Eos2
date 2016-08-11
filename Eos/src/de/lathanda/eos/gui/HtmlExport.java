@@ -2,7 +2,7 @@ package de.lathanda.eos.gui;
 
 import java.text.MessageFormat;
 
-import de.lathanda.eos.interpreter.Program;
+import de.lathanda.eos.common.AbstractProgram;
 import de.lathanda.eos.interpreter.javacc.CommonParserConstants;
 import de.lathanda.eos.interpreter.javacc.SourceToken;
 
@@ -26,16 +26,16 @@ public class HtmlExport {
     private static final String SPACE = "&nbsp;";    
     /**
      * Erzeugt aus einem Programm Html-Text.
-     * @param program 
+     * @param abstractProgram 
      * @param name Überschrift
      * @return
      */
-    public static String export2html(Program program, String name) {
+    public static String export2html(AbstractProgram abstractProgram, String name) {
         StringBuilder html = new StringBuilder();
         html.append(MessageFormat.format(HEAD, name));
         int index = 0;
-        String source = program.getSource();
-        for(SourceToken st:program.getTokenList()) {
+        String source = abstractProgram.getSource();
+        for(SourceToken st:abstractProgram.getTokenList()) {
         	if (st.getFormat().ordinal() != CommonParserConstants.EOF) {
         		token2html(source.substring(index, st.getBegin() + st.getLength()), st, html);
         		index = st.getBegin() + st.getLength();

@@ -1,5 +1,6 @@
 package de.lathanda.eos.interpreter.parsetree;
 
+import de.lathanda.eos.gui.diagram.LoopTimesUnit;
 import de.lathanda.eos.interpreter.Command;
 import de.lathanda.eos.interpreter.Environment;
 import de.lathanda.eos.interpreter.Type;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
  * @author Peter (Lathanda) Schneider
  * @since 0.4
  */
-public class RepeatTimes extends Loop {
+public class RepeatTimes extends Loop implements LoopTimesUnit {
 
     private final Expression timesE;
     private String varName;

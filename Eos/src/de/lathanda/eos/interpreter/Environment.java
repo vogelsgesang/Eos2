@@ -4,6 +4,9 @@ import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import de.lathanda.eos.common.ErrorInformation;
+import de.lathanda.eos.common.Marker;
+
 /**
  * Umgebung für die semantische Übersetzung.
  * Sie enthält alle Variablen und Funktionen die gerade bekannt bzw. gültig sind.
@@ -16,7 +19,7 @@ public class Environment {
     /**
      * semantic errors
      */
-    private final LinkedList<CompilerError> errors = new LinkedList<>();
+    private final LinkedList<ErrorInformation> errors = new LinkedList<>();
     /*
      * currently valid local variables
      */
@@ -49,7 +52,7 @@ public class Environment {
     public void addError(Marker marker, String errorId, Object ... data) {
         errors.add(new CompilerError(marker, errorId, data));
     }
-    public LinkedList<CompilerError> getErrors() {
+    public LinkedList<ErrorInformation> getErrors() {
         return errors;
     }
 

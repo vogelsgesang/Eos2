@@ -1,9 +1,10 @@
 package de.lathanda.eos.gui.diagram;
 
-import de.lathanda.eos.interpreter.BackgroundCompiler;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
+
+import de.lathanda.eos.common.BackgroundCompiler;
 
 /**
  * Basisklasse für alle Diagramme.

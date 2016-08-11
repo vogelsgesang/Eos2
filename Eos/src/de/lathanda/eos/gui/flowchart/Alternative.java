@@ -1,7 +1,7 @@
 package de.lathanda.eos.gui.flowchart;
 
+import de.lathanda.eos.gui.diagram.AlternativeUnit;
 import de.lathanda.eos.gui.diagram.Drawing;
-import de.lathanda.eos.interpreter.parsetree.IfElse;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -29,10 +29,10 @@ public class Alternative extends Unit {
     private float BendY;
     private float AcenterX;
     private float BcenterX;
-    Alternative(IfElse ifelse) {
-        A = new Sequence(ifelse.getThen());
-        B = new Sequence(ifelse.getElse());
-        diam = new Diamond(ifelse.getLabel());
+    Alternative(AlternativeUnit au) {
+        A = new Sequence(au.getThen());
+        B = new Sequence(au.getElse());
+        diam = new Diamond(au.getLabel());
     }
 
     @Override
