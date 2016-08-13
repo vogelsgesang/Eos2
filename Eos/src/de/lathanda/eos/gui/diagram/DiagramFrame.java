@@ -8,7 +8,7 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 
 import de.lathanda.eos.common.BackgroundCompiler;
-import de.lathanda.eos.gui.ClipBoard;
+import de.lathanda.eos.common.ClipBoard;
 
 /**
  * Fenster für Diagramme.

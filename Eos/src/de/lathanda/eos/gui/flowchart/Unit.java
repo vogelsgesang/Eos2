@@ -1,11 +1,11 @@
 package de.lathanda.eos.gui.flowchart;
 
+import de.lathanda.eos.common.ProgramNode;
 import de.lathanda.eos.gui.diagram.AlternativeUnit;
 import de.lathanda.eos.gui.diagram.Drawing;
 import de.lathanda.eos.gui.diagram.LoopForeverUnit;
 import de.lathanda.eos.gui.diagram.LoopTimesUnit;
 import de.lathanda.eos.gui.diagram.LoopUnit;
-import de.lathanda.eos.gui.diagram.ProgramNode;
 import de.lathanda.eos.spi.LanguageManager;
 
 /**

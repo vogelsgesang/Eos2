@@ -1,4 +1,4 @@
-package de.lathanda.eos.gui;
+package de.lathanda.assembler.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -51,7 +51,6 @@ import de.lathanda.eos.gui.diagram.DiagramFrame;
 import de.lathanda.eos.gui.flowchart.FlowChart;
 import de.lathanda.eos.gui.objectchart.ObjectChart;
 import de.lathanda.eos.gui.structogram.Structogram;
-import de.lathanda.eos.spi.LanguageManager;
 
 /**
  * Das Hauptfenster.
@@ -410,9 +409,7 @@ public class MainWindow extends JFrame implements GuiConstants, WindowListener {
         diagramMenu.add(mitObjectChart);
 
         mainMenu.add(diagramMenu);
-        
-        LanguageManager.getInstance().addPluginMenues(mainMenu);
-        
+               
         helpMenu.setText(GUI.getString("Menu.Help"));
 
         mitHelp.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));

@@ -1,6 +1,6 @@
 package de.lathanda.eos.interpreter.exceptions;
 
-import de.lathanda.eos.gui.Messages;
+import de.lathanda.eos.common.Messages;
 
 /**
  * Die Ausführung musste abgebrochen werden, da sich der Interpreter in einem

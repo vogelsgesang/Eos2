@@ -1,6 +1,6 @@
 package de.lathanda.eos.spi;
 
-import static de.lathanda.eos.gui.GuiConstants.GUI;
+import static de.lathanda.eos.common.GuiConstants.GUI;
 
 import java.awt.Color;
 import java.io.IOException;

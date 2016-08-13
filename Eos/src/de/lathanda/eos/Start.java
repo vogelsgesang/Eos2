@@ -1,6 +1,6 @@
 package de.lathanda.eos;
 
-import static de.lathanda.eos.gui.GuiConstants.GUI;
+import static de.lathanda.eos.common.GuiConstants.GUI;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,6 +13,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import de.lathanda.eos.common.AbstractProgram;
 import de.lathanda.eos.common.Factory;
+import de.lathanda.eos.common.Stop;
 import de.lathanda.eos.gui.MainWindow;
 import de.lathanda.eos.interpreter.Program;
 import de.lathanda.eos.spi.LanguageManager;

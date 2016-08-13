@@ -17,16 +17,17 @@ public class Parser implements EosParser, ParserConstants {
     void open() {
         markerStack.push(new Marker());
         Token old = token;
-        markerStack.peek().begin(getNextToken());
+        getNextToken();
+        markerStack.peek().begin(token.beginColumn, token.beginLine);
         token = old;
     }
     void close(Node node) {
-        markerStack.peek().end(token);
+        markerStack.peek().end(token.endColumn, token.endLine);
         node.setMarker(markerStack.pop());
         program.addNode(node);
     }
     void setCode(Node node) {
-        node.setMarker(new Marker(token));
+        node.setMarker(new Marker(token.beginColumn, token.beginLine, token.endColumn, token.endLine));
         program.addNode(node);
     }
     void newlineInc() {
@@ -245,7 +246,7 @@ try {
         subprogram = new Program();
         Parser parser = new Parser(new StringCharStream(file));
         parser.Parse(subprogram, file.getParent());
-        program.merge(subprogram, new Marker(token));
+        program.merge(subprogram, new Marker(token.beginColumn, token.beginLine, token.endColumn, token.endLine));
       } catch (IOException ioe) {
         {if (true) throw new ParseException(ioe.getLocalizedMessage());}
       }
@@ -267,7 +268,7 @@ try {
           subprogram = new Program();
           Parser parser = new Parser(new StringCharStream(file));
           parser.Parse(subprogram, file.getParent());
-          program.merge(subprogram, new Marker(token));
+          program.merge(subprogram, new Marker(token.beginColumn, token.beginLine, token.endColumn, token.endLine));
         } catch (IOException ioe) {
           {if (true) throw new ParseException(ioe.getLocalizedMessage());}
         }
@@ -1547,23 +1548,6 @@ try {
     finally { jj_save(6, xla); }
   }
 
-  private boolean jj_3R_78()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_102()) {
-    jj_scanpos = xsp;
-    if (jj_3R_103()) {
-    jj_scanpos = xsp;
-    if (jj_3R_104()) {
-    jj_scanpos = xsp;
-    if (jj_3R_105()) return true;
-    }
-    }
-    }
-    return false;
-  }
-
   private boolean jj_3R_50()
  {
     if (jj_3R_51()) return true;
@@ -2464,6 +2448,23 @@ try {
   private boolean jj_3R_102()
  {
     if (jj_scan_token(FILLED)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_78()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_102()) {
+    jj_scanpos = xsp;
+    if (jj_3R_103()) {
+    jj_scanpos = xsp;
+    if (jj_3R_104()) {
+    jj_scanpos = xsp;
+    if (jj_3R_105()) return true;
+    }
+    }
+    }
     return false;
   }
 

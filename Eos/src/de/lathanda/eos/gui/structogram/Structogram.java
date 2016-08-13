@@ -4,10 +4,11 @@ import de.lathanda.eos.common.AbstractProgram;
 import de.lathanda.eos.common.BackgroundCompiler;
 import de.lathanda.eos.common.CompilerListener;
 import de.lathanda.eos.common.ErrorInformation;
-import de.lathanda.eos.gui.GuiConstants;
+import de.lathanda.eos.common.GuiConstants;
+import de.lathanda.eos.common.ProgramUnit;
 import de.lathanda.eos.gui.diagram.Diagram;
 import de.lathanda.eos.gui.diagram.Drawing;
-import de.lathanda.eos.gui.diagram.ProgramUnit;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;

@@ -1,4 +1,4 @@
-package de.lathanda.eos.gui.diagram;
+package de.lathanda.eos.common;
 
 import java.util.ArrayList;
 

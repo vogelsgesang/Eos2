@@ -1,6 +1,6 @@
-package de.lathanda.eos.gui;
+package de.lathanda.eos.common;
 
-import static de.lathanda.eos.gui.GuiConstants.GUI;
+import static de.lathanda.eos.common.GuiConstants.GUI;
 
 import java.awt.GridLayout;
 
@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import de.lathanda.eos.base.ResourceLoader;
-import de.lathanda.eos.gui.GuiConfiguration.ErrorBehavior;;
+import de.lathanda.eos.common.GuiConfiguration.ErrorBehavior;
 
 /**
  * Einstellungsfenster

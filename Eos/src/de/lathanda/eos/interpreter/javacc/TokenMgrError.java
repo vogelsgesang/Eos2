@@ -2,7 +2,7 @@
 /* JavaCCOptions: */
 package de.lathanda.eos.interpreter.javacc;
 
-import de.lathanda.eos.gui.Messages;
+import de.lathanda.eos.common.Messages;
 
 /** Token Manager Error. */
 public class TokenMgrError extends Error

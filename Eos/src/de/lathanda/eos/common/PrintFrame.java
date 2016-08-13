@@ -1,6 +1,6 @@
-package de.lathanda.eos.gui;
+package de.lathanda.eos.common;
 
-import static de.lathanda.eos.gui.GuiConstants.GUI;
+import static de.lathanda.eos.common.GuiConstants.GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -10,8 +10,6 @@ import java.awt.print.PrinterJob;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
-
-import de.lathanda.eos.common.AbstractProgram;
 
 
 /**
@@ -41,7 +39,7 @@ public class PrintFrame extends javax.swing.JFrame {
         space1 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
         btnPrint = new javax.swing.JButton();
         printScroll = new javax.swing.JScrollPane();
-        printview = new de.lathanda.eos.gui.PrintPanel();
+        printview = new de.lathanda.eos.common.PrintPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         ResourceBundle bundle = ResourceBundle.getBundle("text.gui");
@@ -109,6 +107,6 @@ public class PrintFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnRight;
     private javax.swing.JToolBar controlToolbar;
     private javax.swing.JScrollPane printScroll;
-    private de.lathanda.eos.gui.PrintPanel printview;
+    private de.lathanda.eos.common.PrintPanel printview;
     private javax.swing.Box.Filler space1;
 }

@@ -2,8 +2,6 @@ package de.lathanda.eos.common;
 
 import java.util.LinkedList;
 
-import de.lathanda.eos.gui.diagram.ProgramSequence;
-import de.lathanda.eos.gui.diagram.ProgramUnit;
 import de.lathanda.eos.interpreter.javacc.SourceToken;
 
 /**

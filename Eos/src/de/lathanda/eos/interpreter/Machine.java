@@ -5,7 +5,7 @@ import de.lathanda.eos.common.AbstractMachine;
 import de.lathanda.eos.common.DebugInfo;
 import de.lathanda.eos.common.DebugListener;
 import de.lathanda.eos.common.Marker;
-import de.lathanda.eos.gui.MessageHandler;
+import de.lathanda.eos.common.MessageHandler;
 import de.lathanda.eos.gui.diagram.MemoryEntry;
 import de.lathanda.eos.interpreter.commands.DebugPoint;
 import de.lathanda.eos.interpreter.exceptions.MemoryAccessViolation;

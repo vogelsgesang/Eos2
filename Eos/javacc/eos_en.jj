@@ -45,17 +45,18 @@ public class EnParser implements EosParser {
     private int level;
     void open() {
         markerStack.push(new Marker());
-        Token old = token;
-        markerStack.peek().begin(getNextToken());
+        Token old = token;     
+        getNextToken();  
+        markerStack.peek().begin(token.beginColumn, token.beginLine);
         token = old;
     }
     void close(Node node) {
-        markerStack.peek().end(token);
+        markerStack.peek().end(token.endColumn, token.endLine);
         node.setMarker(markerStack.pop());
         program.addNode(node);
     }
     void setCode(Node node) {
-        node.setMarker(new Marker(token));
+        node.setMarker(new Marker(token.beginColumn, token.beginLine, token.endColumn, token.endLine));
         program.addNode(node);
     }
     void newlineInc() {
@@ -398,7 +399,7 @@ void Import( ) :
         subprogram = new Program();
         Parser parser = new Parser(new StringCharStream(file));
         parser.Parse(subprogram, file.getParent());
-        program.merge(subprogram, new Marker(token));
+        program.merge(subprogram, new Marker(token.beginColumn, token.beginLine, token.endColumn, token.endLine));
       } catch (IOException ioe) {
         throw new ParseException(ioe.getLocalizedMessage());
       }
@@ -410,7 +411,7 @@ void Import( ) :
           subprogram = new Program();
           Parser parser = new Parser(new StringCharStream(file));
           parser.Parse(subprogram, file.getParent());
-          program.merge(subprogram, new Marker(token));
+          program.merge(subprogram, new Marker(token.beginColumn, token.beginLine, token.endColumn, token.endLine));
         } catch (IOException ioe) {
           throw new ParseException(ioe.getLocalizedMessage());
         }

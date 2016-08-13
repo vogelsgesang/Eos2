@@ -22,7 +22,7 @@ import de.lathanda.eos.common.CompilerListener;
 import de.lathanda.eos.common.DebugInfo;
 import de.lathanda.eos.common.DebugListener;
 import de.lathanda.eos.common.ErrorInformation;
-import de.lathanda.eos.gui.GuiConstants;
+import de.lathanda.eos.common.GuiConstants;
 import de.lathanda.eos.gui.diagram.Diagram;
 import de.lathanda.eos.gui.diagram.MemoryEntry;
 import de.lathanda.eos.interpreter.parsetree.ReservedVariables;

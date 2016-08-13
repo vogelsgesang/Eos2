@@ -7,7 +7,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
+import de.lathanda.eos.common.CodeColorHook;
 import de.lathanda.eos.common.Marker;
+import de.lathanda.eos.common.SourceCode;
 import de.lathanda.eos.interpreter.javacc.SourceToken;
 
 /**
@@ -16,7 +18,7 @@ import de.lathanda.eos.interpreter.javacc.SourceToken;
  * @author Peter (Lathanda) Schneider
  *
  */
-public class CodeColoring {
+public class CodeColoring implements CodeColorHook {
 	/**
 	 * Basisformatierung.
 	 */
@@ -66,8 +68,7 @@ public class CodeColoring {
 	 * Erzeugt ein Quellcodeformatierungsobjekt
 	 * @param sourceCode Der zugeordnete Quellcode
 	 */
-	public CodeColoring(SourceCode sourceCode) {
-		this.sourceCode = sourceCode;
+	public CodeColoring() {
 		this.codePointer = new Marker();
 		StyleConstants.setBackground(attributeSetBase, Color.WHITE);
 		StyleConstants.setForeground(attributeSetBase, Color.BLACK);
@@ -177,5 +178,10 @@ public class CodeColoring {
 			codePointerDirty = true;
 			SwingUtilities.invokeLater(() -> markExecutionPoint());
 		}
+	}
+
+	@Override
+	public void init(SourceCode source) {
+		this.sourceCode = source;
 	}
 }

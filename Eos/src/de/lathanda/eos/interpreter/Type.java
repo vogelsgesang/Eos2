@@ -1,9 +1,10 @@
 package de.lathanda.eos.interpreter;
 
 import de.lathanda.eos.common.AbstractType;
+import de.lathanda.eos.common.AutoCompleteInformation;
+import de.lathanda.eos.common.MissingTypeException;
 import de.lathanda.eos.interpreter.exceptions.TypeMissMatchException;
 import de.lathanda.eos.spi.AutoCompleteEntry;
-import de.lathanda.eos.spi.MissingTypeException;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -366,8 +367,8 @@ public class Type implements Comparable<Type>, AbstractType {
 		return this.id.compareTo(b.id);
 	}
 
-	public List<AutoCompleteEntry> getAutoCompletes() {
-		LinkedList<AutoCompleteEntry> completes = new LinkedList<>();
+	public List<AutoCompleteInformation> getAutoCompletes() {
+		LinkedList<AutoCompleteInformation> completes = new LinkedList<>();
 		for (Type t : inherits) {
 			completes.addAll(t.autocompletes);
 		}

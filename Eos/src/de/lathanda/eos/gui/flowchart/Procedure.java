@@ -3,8 +3,8 @@ package de.lathanda.eos.gui.flowchart;
 import java.awt.Color;
 import java.awt.Font;
 
+import de.lathanda.eos.common.ProgramSequence;
 import de.lathanda.eos.gui.diagram.Drawing;
-import de.lathanda.eos.gui.diagram.ProgramSequence;
 
 /**
  * Unterprogramm.

@@ -1,7 +1,8 @@
 package de.lathanda.eos.gui.structogram;
 
+import de.lathanda.eos.common.ProgramNode;
 import de.lathanda.eos.gui.diagram.Drawing;
-import de.lathanda.eos.gui.diagram.ProgramNode;
+
 import java.awt.Color;
 import java.awt.Font;
 

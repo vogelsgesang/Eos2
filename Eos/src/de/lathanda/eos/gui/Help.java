@@ -3,6 +3,8 @@ package de.lathanda.eos.gui;
 import de.lathanda.eos.base.ResourceLoader;
 import de.lathanda.eos.spi.LanguageManager;
 
+import static de.lathanda.eos.common.GuiConstants.*;
+
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -10,7 +12,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import static de.lathanda.eos.gui.GuiConstants.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -18,6 +19,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Enumeration;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.event.HyperlinkEvent;
@@ -36,7 +38,7 @@ import org.xml.sax.SAXException;
  *
  * @author Peter (Lathanda) Schneider
  */
-public class Help extends javax.swing.JFrame {
+public class Help extends JFrame {
     private static final long serialVersionUID = -5024616463654399568L;
     /**
      * Hilfefenster Singelton

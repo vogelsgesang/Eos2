@@ -1,10 +1,9 @@
-package de.lathanda.eos.gui;
+package de.lathanda.eos.common;
 
-import static de.lathanda.eos.gui.GuiConstants.GUI;
-
-import de.lathanda.eos.common.AbstractProgram;
 import de.lathanda.eos.interpreter.javacc.SourceToken;
 import de.lathanda.eos.interpreter.javacc.TokenFormat;
+
+import static de.lathanda.eos.common.GuiConstants.GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;

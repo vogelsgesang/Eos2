@@ -1,7 +1,7 @@
 package de.lathanda.eos.interpreter;
 
 import de.lathanda.eos.common.Marker;
-import de.lathanda.eos.gui.diagram.ProgramNode;
+import de.lathanda.eos.common.ProgramNode;
 import de.lathanda.eos.interpreter.parsetree.Expression;
 import java.text.MessageFormat;
 import java.util.ArrayList;

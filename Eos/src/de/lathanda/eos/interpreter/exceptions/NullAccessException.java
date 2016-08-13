@@ -1,6 +1,6 @@
 package de.lathanda.eos.interpreter.exceptions;
 
-import de.lathanda.eos.gui.Messages;
+import de.lathanda.eos.common.Messages;
 
 /**
  * Dieser Fehler wird ausgelöst, wenn auf eine Variable zugegriffen wird,

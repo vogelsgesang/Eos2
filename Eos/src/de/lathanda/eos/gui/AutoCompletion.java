@@ -29,7 +29,11 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.JTextComponent;
 
 import de.lathanda.eos.base.ResourceLoader;
+import de.lathanda.eos.common.AbstractProgram;
 import de.lathanda.eos.common.AbstractType;
+import de.lathanda.eos.common.AutoCompleteHook;
+import de.lathanda.eos.common.AutoCompleteInformation;
+import de.lathanda.eos.interpreter.Type;
 import de.lathanda.eos.spi.AutoCompleteEntry;
 import de.lathanda.eos.spi.LanguageManager;
 /**
@@ -39,7 +43,7 @@ import de.lathanda.eos.spi.LanguageManager;
  *
  * @author Peter (Lathanda) Schneider
  */
-public class AutoCompletion implements CaretListener, KeyListener, FocusListener, ComponentListener {
+public class AutoCompletion implements CaretListener, KeyListener, FocusListener, ComponentListener, AutoCompleteHook {
 	private static LanguageManager lm = LanguageManager.getInstance();
 	/**
 	 * Letzte Cursorposition für Filterung, Abbruch, etc. 
@@ -60,7 +64,7 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 	/**
 	 * Mögliche Auswahloptionen.
 	 */
-	private TreeSet<AutoCompleteEntry> choiceItems = new TreeSet<>();
+	private TreeSet<AutoCompleteInformation> choiceItems = new TreeSet<>();
 	/**
 	 * Das Zeichen wurde bereits verwendet und darf nicht getippt werden.
 	 */
@@ -68,7 +72,7 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 	/**
 	 * Auswahlliste
 	 */
-	private final JList<AutoCompleteEntry> choiceList;
+	private final JList<AutoCompleteInformation> choiceList;
 	/**
 	 * Textkomponente in der die Auswahl angezeigt wird.
 	 */
@@ -170,13 +174,13 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 	 * Wendet die aktuell ausgewählte Option im Text an.
 	 */
 	private void complete() {
-		AutoCompleteEntry choice = choiceList.getSelectedValue();
+		AutoCompleteInformation choice = choiceList.getSelectedValue();
 		Document text = component.getDocument();
 		stop(); //stop before changing in order to avoid feedback
 		if (choice != null) {
 			try {
-				((AbstractDocument)text).replace(startPosition, lastPosition - startPosition, choice.template, null);
-				int openBracket = startPosition + choice.template.indexOf("(") + 1;
+				((AbstractDocument)text).replace(startPosition, lastPosition - startPosition, choice.getTemplate(), null);
+				int openBracket = startPosition + choice.getTemplate().indexOf("(") + 1;
 				if (openBracket != startPosition) {
 					component.setCaretPosition(openBracket);
 				}
@@ -191,9 +195,9 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 	private void updateChoices() {
 		Document text = component.getDocument();
 		try {
-			AutoCompleteEntry selected = choiceList.getSelectedValue();
+			AutoCompleteInformation selected = choiceList.getSelectedValue();
 			String prefix = text.getText(startPosition, lastPosition - startPosition).toLowerCase();
-			AutoCompleteEntry[] choices = choiceItems.stream().filter(choice -> choice.scantext.toLowerCase().startsWith(prefix)).toArray(size -> new AutoCompleteEntry[size]);
+			AutoCompleteEntry[] choices = choiceItems.stream().filter(choice -> choice.getScantext().toLowerCase().startsWith(prefix)).toArray(size -> new AutoCompleteEntry[size]);
 			if (choices.length == 0) {
 				stop();
 			} else {
@@ -232,7 +236,7 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 	 * @author Peter (Lathanda) Schneider
 	 *
 	 */
-	private static class ChoiceCellRenderer extends JLabel implements ListCellRenderer<AutoCompleteEntry> {
+	private static class ChoiceCellRenderer extends JLabel implements ListCellRenderer<AutoCompleteInformation> {
 		private static final long serialVersionUID = -6215568900839124763L;
 	     private final static ImageIcon[] ICON = new ImageIcon[]{
 	    		 ResourceLoader.loadIcon("icons/method.png"),
@@ -242,15 +246,15 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 
 	     @Override
 	     public Component getListCellRendererComponent(
-	    		 JList<? extends AutoCompleteEntry> list, 
-	    		 AutoCompleteEntry value, 
+	    		 JList<? extends AutoCompleteInformation> list, 
+	    		 AutoCompleteInformation value, 
 	    		 int index,
 	    		 boolean isSelected, 
 	    		 boolean cellHasFocus)
 	     {
-	         setText(value.label);
-	         if (value.type < ICON.length) {
-	        	 setIcon(ICON[value.type]);
+	         setText(value.getLabel());
+	         if (value.getType() < ICON.length) {
+	        	 setIcon(ICON[value.getType()]);
 	         } else {
 	        	 setIcon(null);
 	         }
@@ -261,7 +265,7 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 	             setBackground(Color.WHITE);
 	             setForeground(Color.BLACK);
 	         }
-	         setToolTipText("<html><p>"+value.tooltip+"</p></html>");
+	         setToolTipText("<html><p>"+value.getTooltip()+"</p></html>");
 	         setEnabled(list.isEnabled());
 	         setFont(list.getFont());
 	         setOpaque(true);
@@ -357,4 +361,17 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 	@Override
 	public void componentShown(ComponentEvent ce) {}
 
+	@Override
+	public void insertString(int pos, String text, AbstractProgram program) {
+		try {
+			if (text.equals(".")) {
+				AbstractType base = program.seekType(pos);
+				start(base, pos + 1);
+			} else if (text.equals(":")) {
+				start(Type.getClassType(), pos + 1);
+			}
+		} catch (BadLocationException e) {
+			//ignore it
+		}
+	}
 }

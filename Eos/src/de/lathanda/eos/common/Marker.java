@@ -1,9 +1,5 @@
 package de.lathanda.eos.common;
 
-import de.lathanda.eos.gui.diagram.ProgramNode;
-import de.lathanda.eos.interpreter.Node;
-import de.lathanda.eos.interpreter.javacc.Token;
-
 /**
  * Bereich im Quellcode. Wird verwendet um einen Befehl
  * im Quellcode zu lokalisieren. 
@@ -21,7 +17,7 @@ public class Marker {
     public Marker() {
     }
     
-    public Marker(Node source, Node target) {
+    public Marker(ProgramNode source, ProgramNode target) {
 		super();
 		Marker marker = source.getMarker();
 		this.beginLine = marker.beginLine;
@@ -31,19 +27,19 @@ public class Marker {
 		this.node = target;
 	}
 
-	public Marker(Token token) {
-        beginPosition = token.beginColumn;
-        beginLine     = token.beginLine;
-        endPosition   = token.endColumn;
-        endLine       = token.endLine;        
+	public Marker(int beginColumn, int beginLine, int endColumn, int endLine) {
+		this.beginPosition = beginColumn;
+		this.beginLine     = beginLine;
+		this.endPosition   = endColumn;
+        this.endLine       = endLine;        
     }
-    public final void begin(Token t) {
-        beginPosition = t.beginColumn;
-        beginLine   = t.beginLine;
+    public final void begin(int beginColumn, int beginLine) {
+    	this.beginPosition = beginColumn;
+    	this.beginLine     = beginLine;
     }
-    public final void end(Token t) {
-        endPosition   = t.endColumn;
-        endLine     = t.endLine;
+    public final void end(int endColumn, int endLine) {
+    	this.endPosition = endColumn;
+    	this.endLine     = endLine;
     }
     
     public int getBeginLine() {

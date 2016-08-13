@@ -9,9 +9,9 @@ import de.lathanda.eos.common.AbstractMachine;
 import de.lathanda.eos.common.AbstractProgram;
 import de.lathanda.eos.common.ErrorInformation;
 import de.lathanda.eos.common.Marker;
+import de.lathanda.eos.common.ProgramSequence;
+import de.lathanda.eos.common.ProgramUnit;
 import de.lathanda.eos.common.TranslationException;
-import de.lathanda.eos.gui.diagram.ProgramSequence;
-import de.lathanda.eos.gui.diagram.ProgramUnit;
 import de.lathanda.eos.interpreter.commands.CreateVariable;
 import de.lathanda.eos.interpreter.javacc.CommonParserConstants;
 import de.lathanda.eos.interpreter.javacc.EosParser;
@@ -264,7 +264,8 @@ public class Program implements AbstractProgram {
 			tok = tok.next;
 
 		}
-		return new CompilerError(new Marker(pe.currentToken.next), "Parser.Error", encountered, expected,
+		Token token = pe.currentToken.next;
+		return new CompilerError(new Marker(token.beginColumn, token.beginLine, token.endColumn, token.endLine), "Parser.Error", encountered, expected,
 				pe.currentToken.next.endLine);
 	}
 
