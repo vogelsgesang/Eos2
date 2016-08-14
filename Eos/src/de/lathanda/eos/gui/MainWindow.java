@@ -42,7 +42,7 @@ import de.lathanda.eos.base.ResourceLoader;
 import de.lathanda.eos.common.BackgroundCompiler;
 import de.lathanda.eos.common.ConfigFrame;
 import de.lathanda.eos.common.GuiConfiguration;
-import de.lathanda.eos.common.GuiConstants;
+import static de.lathanda.eos.common.GuiConstants.GUI;
 import de.lathanda.eos.common.PrintFrame;
 import de.lathanda.eos.common.SideInformation;
 import de.lathanda.eos.common.SourceCode;
@@ -58,7 +58,7 @@ import de.lathanda.eos.spi.LanguageManager;
  *
  * @author Peter (Lathanda) Schneider
  */
-public class MainWindow extends JFrame implements GuiConstants, WindowListener {
+public class MainWindow extends JFrame implements WindowListener {
     private static final long serialVersionUID = -5517007240148560239L;
     /**
      * Der aktuelle Quellcode.

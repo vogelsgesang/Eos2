@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.MessageFormat;
+import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -42,24 +43,23 @@ import de.lathanda.eos.base.ResourceLoader;
 import de.lathanda.eos.common.BackgroundCompiler;
 import de.lathanda.eos.common.ConfigFrame;
 import de.lathanda.eos.common.GuiConfiguration;
-import de.lathanda.eos.common.GuiConstants;
 import de.lathanda.eos.common.PrintFrame;
 import de.lathanda.eos.common.SideInformation;
 import de.lathanda.eos.common.SourceCode;
 import de.lathanda.eos.common.TextUndoManager;
+import static de.lathanda.eos.common.GuiConstants.GUI;
 import de.lathanda.eos.gui.diagram.DiagramFrame;
 import de.lathanda.eos.gui.flowchart.FlowChart;
-import de.lathanda.eos.gui.objectchart.ObjectChart;
-import de.lathanda.eos.gui.structogram.Structogram;
 
 /**
  * Das Hauptfenster.
  *
  * @author Peter (Lathanda) Schneider
  */
-public class MainWindow extends JFrame implements GuiConstants, WindowListener {
-    private static final long serialVersionUID = -5517007240148560239L;
-    /**
+public class MainWindow extends JFrame implements WindowListener {
+	private static final long serialVersionUID = -556406694028221051L;
+	private static ResourceBundle ASM   = ResourceBundle.getBundle("text.asm");
+	/**
      * Der aktuelle Quellcode.
      */
     private final SourceCode data;
@@ -99,7 +99,7 @@ public class MainWindow extends JFrame implements GuiConstants, WindowListener {
         undoManager = new TextUndoManager(data);
         data.addUndoableEditListener(undoManager);
         filechooser = new JFileChooser();
-        filechooser.addChoosableFileFilter(new FileNameExtensionFilter(GUI.getString("File.EOS"), "eos"));
+        filechooser.addChoosableFileFilter(new FileNameExtensionFilter(ASM.getString("File.asm"), "asm"));
         filechooser.setCurrentDirectory(new File("."));
         exportfilechooser = new JFileChooser();
         exportfilechooser.addChoosableFileFilter(new FileNameExtensionFilter(GUI.getString("File.Html"), "html"));
@@ -171,15 +171,13 @@ public class MainWindow extends JFrame implements GuiConstants, WindowListener {
         mitRedo = new JMenuItem();
         mitPretty = new JMenuItem();
         diagramMenu = new JMenu();
-        mitStructogram = new JMenuItem();
         mitFlowChart = new JMenuItem();
-        mitObjectChart = new JMenuItem();   
         helpMenu = new JMenu();
         mitHelp = new JMenuItem();
 
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         
-        setTitle(GUI.getString("Title"));
+        setTitle(ASM.getString("Title"));
         addWindowListener(this);
 
         mainToolbar.setFloatable(false);
@@ -396,17 +394,9 @@ public class MainWindow extends JFrame implements GuiConstants, WindowListener {
 
         diagramMenu.setText(GUI.getString("Menu.Visualization"));
 
-        mitStructogram.setText(GUI.getString("Menu.Structogram"));
-        mitStructogram.addActionListener(evt -> StructogramActionPerformed(evt));
-        diagramMenu.add(mitStructogram);
-
         mitFlowChart.setText(GUI.getString("Menu.Flowchart"));
         mitFlowChart.addActionListener(evt -> FlowChartActionPerformed(evt));
         diagramMenu.add(mitFlowChart);
-
-        mitObjectChart.setText(GUI.getString("Menu.Objectchart"));
-        mitObjectChart.addActionListener(evt -> ObjectChartActionPerformed(evt));        
-        diagramMenu.add(mitObjectChart);
 
         mainMenu.add(diagramMenu);
                
@@ -679,26 +669,13 @@ public class MainWindow extends JFrame implements GuiConstants, WindowListener {
             }
         }
     }
-    /**
-     * Struktogramm ansicht anzeigen.
-     * @param evt
-     */
-    private void StructogramActionPerformed(java.awt.event.ActionEvent evt) {
-        new DiagramFrame(new Structogram(), compiler).setVisible(true);
-    }
+
     /**
      * Kontrollflussansicht anzeigen.
      * @param evt
      */
     private void FlowChartActionPerformed(java.awt.event.ActionEvent evt) {
         new DiagramFrame(new FlowChart(), compiler).setVisible(true);
-    }
-    /**
-     * Objectdiagrammanzeigen.
-     * @param evt
-     */
-    private void ObjectChartActionPerformed(java.awt.event.ActionEvent evt) {
-        new DiagramFrame(new ObjectChart(), compiler).setVisible(true);
     }
     
     /**
@@ -757,7 +734,6 @@ public class MainWindow extends JFrame implements GuiConstants, WindowListener {
     private JMenuItem mitPretty;
     private JMenuItem mitExit;
     private JMenuItem mitFlowChart;
-    private JMenuItem mitObjectChart;
     private JMenuItem mitHelp;
     private JMenuItem mitNew;
     private JMenuItem mitOpen;
@@ -767,7 +743,6 @@ public class MainWindow extends JFrame implements GuiConstants, WindowListener {
     private JMenuItem mitSave;
     private JMenuItem mitSaveAs;
     private JMenuItem mitSaveAsHtml;
-    private JMenuItem mitStructogram;
 
     private JMenuItem mitUndo;
     private JToolBar runToolbar;
