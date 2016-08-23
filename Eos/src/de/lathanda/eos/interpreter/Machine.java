@@ -4,6 +4,7 @@ import de.lathanda.eos.base.event.CleanupListener;
 import de.lathanda.eos.common.AbstractMachine;
 import de.lathanda.eos.common.DebugInfo;
 import de.lathanda.eos.common.DebugListener;
+import de.lathanda.eos.common.DebugMulticaster;
 import de.lathanda.eos.common.Marker;
 import de.lathanda.eos.common.MessageHandler;
 import de.lathanda.eos.gui.diagram.MemoryEntry;
@@ -248,23 +249,24 @@ public class Machine implements AbstractMachine {
        		}
         }
     }
-
+    @Override
     public void setDelay(long delay) {
         this.delay = delay;
     }
 
+    @Override
     public synchronized void stop() {
         //stop continues execution
         pause();
         //set machine back to start
         reset();
     }
-
+    @Override
     public void run() {
         pause();
         new Thread(executer).start();
     }
-
+    @Override
     public synchronized void pause() {
         if (running) {
             running = false;
@@ -376,28 +378,6 @@ public class Machine implements AbstractMachine {
             	MessageHandler.def.handle(e);
                 stop();
             }
-        }
-    }
-    protected static class DebugMulticaster {
-
-        private final LinkedList<DebugListener> debugListener;
-
-        protected DebugMulticaster() {
-            debugListener = new LinkedList<>();
-        }
-
-        void add(DebugListener cl) {
-            debugListener.add(cl);
-        }
-
-        void remove(DebugListener cl) {
-            debugListener.remove(cl);
-        }
-
-        void fireDebugPoint(DebugInfo debug) {
-            debugListener.forEach((dl) -> {
-                dl.debugPointReached(debug);
-            });
         }
     }
 }

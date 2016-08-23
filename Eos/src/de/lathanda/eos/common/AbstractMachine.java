@@ -18,7 +18,7 @@ public interface AbstractMachine {
 	 */
 	void skip();
 	/**
-	 * Einzelnen Programmschritt ausführen.
+	 * Einzelnen Programmschritt ausführen und danach warten.
 	 */
 	void singleStep();
 	/**

@@ -12,6 +12,7 @@ public class ControlUnit {
 	private Cell eaSource;      // effective address source
 	private Cell eaDestination; // effective address destination
 	private OpCode opcode;      // operation code
+	private boolean isFinished;
 	public ControlUnit(Memory mem, ALU alu) {
 		super();
 		this.mem = mem;
@@ -30,6 +31,7 @@ public class ControlUnit {
 	}
 	public void init(int address) {
 		mar.setValue(address);
+		isFinished = false;
 	}
 	public void next() {
 		ir.setValue(nextCell().getInt());
@@ -173,6 +175,9 @@ public class ControlUnit {
 		case MOVE:
 			alu.move();
 			break;
+		case HLT:
+			isFinished = true;
+			break;
 		}
 		
 	}
@@ -295,5 +300,8 @@ public class ControlUnit {
 		Cell cell = mem.getMemoryCell(mar.getInt());
 		mar.increment();
 		return cell;
+	}
+	public boolean isFinished() {
+		return isFinished;
 	}
 }

@@ -19,7 +19,14 @@ public class Rechteck extends GefuellteFigur {
 	public Rechteck() {
 		rectangle = new Rectangle();
 	}
-
+	public Rechteck(double x, double y, double breite, double hoehe) {
+		rectangle = new Rectangle();
+		rectangle.setCorners(x, y, x + breite, y + hoehe);
+	}
+	public Rechteck(double x, double y, double a) {
+		rectangle = new Rectangle();
+		rectangle.setCorners(x, y, x + a, y + a);
+	}
 	@Override
 	protected FilledFigure getFigure() {
 		return rectangle;

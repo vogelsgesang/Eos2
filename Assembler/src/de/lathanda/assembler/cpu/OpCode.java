@@ -33,9 +33,9 @@ public enum OpCode {
 	BVS(27, false),  // branch overflow set
 	BLT(28, false),  // branch less than 
 	BLE(29, false),  // branch less than or equal 
-	BEQ(30, false),  // branch equal 
+	BEQ(30, false),  // branch equal / zero
 	BGE(31, false),  // branch greater than or equal 
-	BNE(32, false),  // branch not equal 
+	BNE(32, false),  // branch not equal / not zero
 	BGT(33, false),  // branch greater than 
 	BPL(34, false),  // branch positive (plus)
 	BMI(35, false),  // branch negative (minus) 
@@ -46,7 +46,8 @@ public enum OpCode {
 	JSR(40, false),  // jump subroutine
 	RTS(41, false),  // return from subroutine
 	MOVE(42, false), // move
-	ADC(43, false);  // signed integer add with carry
+	ADC(43, true),   // signed integer add with carry
+	HLT(44, false);  // stop the machine
 	public final int opcode;
 	public final boolean alu;
 	private static final TreeMap<Integer,OpCode> codeMap = new TreeMap<>();
