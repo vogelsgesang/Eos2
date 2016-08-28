@@ -3,8 +3,8 @@ package de.lathanda.eos.interpreter;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
-import de.lathanda.eos.common.ErrorInformation;
-import de.lathanda.eos.common.Marker;
+import de.lathanda.eos.common.interpreter.ErrorInformation;
+import de.lathanda.eos.common.interpreter.Marker;
 
 /**
  * Übersetzungsfehler.

@@ -1,8 +1,8 @@
 package de.lathanda.assembler.gui;
 
-import de.lathanda.eos.common.CodeColorHook;
-import de.lathanda.eos.common.Marker;
-import de.lathanda.eos.common.SourceCode;
+import de.lathanda.eos.common.gui.CodeColorHook;
+import de.lathanda.eos.common.gui.SourceCode;
+import de.lathanda.eos.common.interpreter.Marker;
 
 public class CodeColoring implements CodeColorHook {
 

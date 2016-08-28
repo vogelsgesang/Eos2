@@ -1,7 +1,7 @@
 package de.lathanda.assembler.interpreter;
 
-import de.lathanda.eos.common.Marker;
-import de.lathanda.eos.common.ProgramNode;
+import de.lathanda.eos.common.interpreter.Marker;
+import de.lathanda.eos.common.interpreter.ProgramNode;
 
 public class Instruction implements ProgramNode {
 

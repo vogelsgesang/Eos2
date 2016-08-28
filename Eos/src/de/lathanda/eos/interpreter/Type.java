@@ -1,8 +1,8 @@
 package de.lathanda.eos.interpreter;
 
-import de.lathanda.eos.common.AbstractType;
-import de.lathanda.eos.common.AutoCompleteInformation;
-import de.lathanda.eos.common.MissingTypeException;
+import de.lathanda.eos.common.interpreter.AbstractType;
+import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
+import de.lathanda.eos.common.interpreter.MissingTypeException;
 import de.lathanda.eos.interpreter.exceptions.TypeMissMatchException;
 import de.lathanda.eos.spi.AutoCompleteEntry;
 

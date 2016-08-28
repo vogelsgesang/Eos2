@@ -3,6 +3,7 @@ package de.lathanda.eos.common;
 import java.util.LinkedList;
 
 import de.lathanda.eos.base.event.CleanupListener;
+import de.lathanda.eos.common.gui.GuiConfiguration;
 /**
  * \brief Aufräumklasse
  * 

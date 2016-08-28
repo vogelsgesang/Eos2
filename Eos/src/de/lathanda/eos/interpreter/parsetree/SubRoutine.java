@@ -1,6 +1,6 @@
 package de.lathanda.eos.interpreter.parsetree;
 
-import de.lathanda.eos.common.ProgramUnit;
+import de.lathanda.eos.common.interpreter.ProgramUnit;
 import de.lathanda.eos.interpreter.Command;
 import de.lathanda.eos.interpreter.Environment;
 import de.lathanda.eos.interpreter.MethodType;

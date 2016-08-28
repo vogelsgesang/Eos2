@@ -1,4 +1,7 @@
 package de.lathanda.eos.common;
+
+import de.lathanda.eos.common.interpreter.AbstractProgram;
+
 /**
  * Fabrik für Programme.
  * @author Peter (Lathanda) Schneider

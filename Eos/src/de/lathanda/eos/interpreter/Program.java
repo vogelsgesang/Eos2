@@ -5,13 +5,14 @@ import java.util.LinkedList;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import de.lathanda.eos.common.AbstractMachine;
-import de.lathanda.eos.common.AbstractProgram;
-import de.lathanda.eos.common.ErrorInformation;
-import de.lathanda.eos.common.Marker;
-import de.lathanda.eos.common.ProgramSequence;
-import de.lathanda.eos.common.ProgramUnit;
-import de.lathanda.eos.common.TranslationException;
+import de.lathanda.eos.common.interpreter.AbstractMachine;
+import de.lathanda.eos.common.interpreter.AbstractProgram;
+import de.lathanda.eos.common.interpreter.ErrorInformation;
+import de.lathanda.eos.common.interpreter.InfoToken;
+import de.lathanda.eos.common.interpreter.Marker;
+import de.lathanda.eos.common.interpreter.ProgramSequence;
+import de.lathanda.eos.common.interpreter.ProgramUnit;
+import de.lathanda.eos.common.interpreter.TranslationException;
 import de.lathanda.eos.interpreter.commands.CreateVariable;
 import de.lathanda.eos.interpreter.javacc.CommonParserConstants;
 import de.lathanda.eos.interpreter.javacc.EosParser;
@@ -35,7 +36,7 @@ public class Program implements AbstractProgram {
     private final Sequence program;
     private final LinkedList<SubRoutine> sub;
     private final LinkedList<Node> nodeList;
-    private final LinkedList<SourceToken> tokenList;
+    private final LinkedList<InfoToken> tokenList;
     private final Environment env;
     private final String source;
     private final PrettyPrinter prettyPrinter;
@@ -86,7 +87,7 @@ public class Program implements AbstractProgram {
     public LinkedList<Node> getNodeList() {
         return nodeList;
     }
-    public LinkedList<SourceToken> getTokenList() {
+    public LinkedList<InfoToken> getTokenList() {
         return tokenList;
     }
  

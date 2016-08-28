@@ -1,11 +1,11 @@
 package de.lathanda.eos.gui.structogram;
 
-import de.lathanda.eos.common.AbstractProgram;
-import de.lathanda.eos.common.BackgroundCompiler;
-import de.lathanda.eos.common.CompilerListener;
-import de.lathanda.eos.common.ErrorInformation;
-import de.lathanda.eos.common.GuiConstants;
-import de.lathanda.eos.common.ProgramUnit;
+import de.lathanda.eos.common.gui.BackgroundCompiler;
+import de.lathanda.eos.common.gui.GuiConstants;
+import de.lathanda.eos.common.interpreter.AbstractProgram;
+import de.lathanda.eos.common.interpreter.CompilerListener;
+import de.lathanda.eos.common.interpreter.ErrorInformation;
+import de.lathanda.eos.common.interpreter.ProgramUnit;
 import de.lathanda.eos.gui.diagram.Diagram;
 import de.lathanda.eos.gui.diagram.Drawing;
 

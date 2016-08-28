@@ -2,7 +2,7 @@ package de.lathanda.eos.interpreter.javacc;
 
 import java.util.LinkedList;
 
-import de.lathanda.eos.common.Marker;
+import de.lathanda.eos.common.interpreter.Marker;
 
 /**
  * Diese Klasse verpackt ein Template, da javacc 

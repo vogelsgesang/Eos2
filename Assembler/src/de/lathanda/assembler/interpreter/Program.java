@@ -5,17 +5,21 @@ import java.util.LinkedList;
 import java.util.TreeMap;
 
 import de.lathanda.assembler.cpu.Machine;
-import de.lathanda.eos.common.AbstractMachine;
-import de.lathanda.eos.common.AbstractProgram;
-import de.lathanda.eos.common.AbstractType;
-import de.lathanda.eos.common.ErrorInformation;
-import de.lathanda.eos.common.ProgramSequence;
-import de.lathanda.eos.common.ProgramUnit;
-import de.lathanda.eos.common.TranslationException;
-import de.lathanda.eos.interpreter.javacc.SourceToken;
+import de.lathanda.assembler.interpreter.javacc.ParseException;
+import de.lathanda.assembler.interpreter.javacc.Parser;
+import de.lathanda.assembler.interpreter.javacc.ParserTokenManager;
+import de.lathanda.assembler.interpreter.javacc.StringCharStream;
+import de.lathanda.eos.common.interpreter.AbstractMachine;
+import de.lathanda.eos.common.interpreter.AbstractProgram;
+import de.lathanda.eos.common.interpreter.AbstractType;
+import de.lathanda.eos.common.interpreter.ErrorInformation;
+import de.lathanda.eos.common.interpreter.InfoToken;
+import de.lathanda.eos.common.interpreter.ProgramSequence;
+import de.lathanda.eos.common.interpreter.ProgramUnit;
+import de.lathanda.eos.common.interpreter.TranslationException;
 
 public class Program implements AbstractProgram {
-    private final LinkedList<SourceToken> tokenList;
+    private final LinkedList<InfoToken> tokenList;
     private final LinkedList<ErrorInformation> errors;
     private final ArrayList<Instruction> program;
     private final TreeMap<String, Integer> labels;
@@ -29,7 +33,7 @@ public class Program implements AbstractProgram {
 		labels = new TreeMap<>();
 		data = new ArrayList<>();
 		machine = new Machine();
-		source = "";
+		this.source = source;
 	}
 	public void pushRegister(de.lathanda.assembler.interpreter.Register r) {
 		// TODO Auto-generated method stub
@@ -77,8 +81,14 @@ public class Program implements AbstractProgram {
 	}
 	@Override
 	public void parse(String path) throws TranslationException {
-		// TODO Auto-generated method stub
-		
+		ParserTokenManager tokenmanager = new ParserTokenManager(new StringCharStream(source));
+		Parser parser = new Parser(tokenmanager);
+		try {
+			parser.Parse(this);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 	@Override
 	public void compile() throws TranslationException {
@@ -90,7 +100,7 @@ public class Program implements AbstractProgram {
 		return errors;
 	}
 	@Override
-	public LinkedList<SourceToken> getTokenList() {
+	public LinkedList<InfoToken> getTokenList() {
 		return tokenList;
 	}
 	@Override

@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
-import de.lathanda.eos.common.BackgroundCompiler;
+import de.lathanda.eos.common.gui.BackgroundCompiler;
 
 /**
  * Basisklasse für alle Diagramme.

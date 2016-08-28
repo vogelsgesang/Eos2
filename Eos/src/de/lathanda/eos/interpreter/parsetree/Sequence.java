@@ -1,8 +1,8 @@
 package de.lathanda.eos.interpreter.parsetree;
 
-import de.lathanda.eos.common.Marker;
-import de.lathanda.eos.common.ProgramNode;
-import de.lathanda.eos.common.ProgramSequence;
+import de.lathanda.eos.common.interpreter.Marker;
+import de.lathanda.eos.common.interpreter.ProgramNode;
+import de.lathanda.eos.common.interpreter.ProgramSequence;
 import de.lathanda.eos.interpreter.Command;
 import de.lathanda.eos.interpreter.Environment;
 import de.lathanda.eos.interpreter.Node;

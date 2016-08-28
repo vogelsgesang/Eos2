@@ -3,7 +3,7 @@ package de.lathanda.eos.gui.flowchart;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import de.lathanda.eos.common.ProgramSequence;
+import de.lathanda.eos.common.interpreter.ProgramSequence;
 import de.lathanda.eos.gui.diagram.Drawing;
 
 /**

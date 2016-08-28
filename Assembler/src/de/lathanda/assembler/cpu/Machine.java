@@ -2,11 +2,11 @@ package de.lathanda.assembler.cpu;
 
 import java.util.LinkedList;
 import de.lathanda.eos.base.event.CleanupListener;
-import de.lathanda.eos.common.AbstractMachine;
-import de.lathanda.eos.common.DebugInfo;
-import de.lathanda.eos.common.DebugListener;
-import de.lathanda.eos.common.DebugMulticaster;
-import de.lathanda.eos.common.MessageHandler;
+import de.lathanda.eos.common.gui.MessageHandler;
+import de.lathanda.eos.common.interpreter.AbstractMachine;
+import de.lathanda.eos.common.interpreter.DebugInfo;
+import de.lathanda.eos.common.interpreter.DebugListener;
+import de.lathanda.eos.common.interpreter.DebugMulticaster;
 import de.lathanda.eos.gui.diagram.MemoryEntry;
 
 public class Machine implements AbstractMachine {

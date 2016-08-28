@@ -22,7 +22,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 
 import de.lathanda.eos.base.ResourceLoader;
-import de.lathanda.eos.common.MissingTypeException;
+import de.lathanda.eos.common.interpreter.MissingTypeException;
 import de.lathanda.eos.gui.objectchart.TextValue;
 import de.lathanda.eos.gui.objectchart.Unit;
 import de.lathanda.eos.gui.objectchart.UnitSource;

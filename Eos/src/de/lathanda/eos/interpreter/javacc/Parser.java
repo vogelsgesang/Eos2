@@ -5,6 +5,8 @@ import de.lathanda.eos.interpreter.parsetree.*;
 import de.lathanda.eos.interpreter.*;
 import de.lathanda.eos.base.*;
 import de.lathanda.eos.common.*;
+import de.lathanda.eos.common.interpreter.Marker;
+
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;

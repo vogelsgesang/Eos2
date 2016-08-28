@@ -1,6 +1,6 @@
 package de.lathanda.eos.interpreter.exceptions;
 
-import de.lathanda.eos.common.Messages;
+import de.lathanda.eos.common.gui.Messages;
 
 /**
  * Es wurde versucht einen Speicher (Variable) auszulesen, der nie angelegt wurde.

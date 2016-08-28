@@ -3,7 +3,7 @@ package de.lathanda.eos.gui;
 import de.lathanda.eos.base.ResourceLoader;
 import de.lathanda.eos.spi.LanguageManager;
 
-import static de.lathanda.eos.common.GuiConstants.*;
+import static de.lathanda.eos.common.gui.GuiConstants.*;
 
 import java.awt.Desktop;
 import java.awt.Dimension;

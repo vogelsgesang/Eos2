@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import de.lathanda.eos.common.ErrorInformation;
-import de.lathanda.eos.common.Marker;
+import de.lathanda.eos.common.interpreter.ErrorInformation;
+import de.lathanda.eos.common.interpreter.Marker;
 
 /**
  * Umgebung für die semantische Übersetzung.

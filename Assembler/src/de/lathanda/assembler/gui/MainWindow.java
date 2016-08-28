@@ -1,5 +1,7 @@
 package de.lathanda.assembler.gui;
 
+import static de.lathanda.eos.common.gui.GuiConstants.GUI;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -40,14 +42,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.undo.UndoManager;
 
 import de.lathanda.eos.base.ResourceLoader;
-import de.lathanda.eos.common.BackgroundCompiler;
-import de.lathanda.eos.common.ConfigFrame;
-import de.lathanda.eos.common.GuiConfiguration;
-import de.lathanda.eos.common.PrintFrame;
-import de.lathanda.eos.common.SideInformation;
-import de.lathanda.eos.common.SourceCode;
-import de.lathanda.eos.common.TextUndoManager;
-import static de.lathanda.eos.common.GuiConstants.GUI;
+import de.lathanda.eos.common.gui.BackgroundCompiler;
+import de.lathanda.eos.common.gui.ConfigFrame;
+import de.lathanda.eos.common.gui.GuiConfiguration;
+import de.lathanda.eos.common.gui.PrintFrame;
+import de.lathanda.eos.common.gui.SideInformation;
+import de.lathanda.eos.common.gui.SourceCode;
+import de.lathanda.eos.common.gui.TextUndoManager;
 import de.lathanda.eos.gui.diagram.DiagramFrame;
 import de.lathanda.eos.gui.flowchart.FlowChart;
 

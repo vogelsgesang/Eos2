@@ -29,10 +29,10 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.JTextComponent;
 
 import de.lathanda.eos.base.ResourceLoader;
-import de.lathanda.eos.common.AbstractProgram;
-import de.lathanda.eos.common.AbstractType;
-import de.lathanda.eos.common.AutoCompleteHook;
-import de.lathanda.eos.common.AutoCompleteInformation;
+import de.lathanda.eos.common.interpreter.AbstractProgram;
+import de.lathanda.eos.common.interpreter.AbstractType;
+import de.lathanda.eos.common.interpreter.AutoCompleteHook;
+import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
 import de.lathanda.eos.interpreter.Type;
 import de.lathanda.eos.spi.AutoCompleteEntry;
 import de.lathanda.eos.spi.LanguageManager;
