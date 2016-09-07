@@ -34,6 +34,7 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
 	private static final long serialVersionUID = -6226144081255555607L;
 	private PageFormat pageFormat;
     private int pageIndex = 0;
+    private boolean linenumbers = false;
     private AbstractProgram program;
 //******** layout *******
     private final ArrayList<LinkedList<Text>> pages = new ArrayList<>();
@@ -41,6 +42,7 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
     private final Font fontLiteral = new Font("monospaced", Font.PLAIN, 12);
     private final Font fontComment = fontLiteral.deriveFont(Font.ITALIC);
     private final Font fontKeyword = fontLiteral.deriveFont(Font.BOLD);
+    private final Font fontLinenumber = fontLiteral;
 
     /**
      * Creates new form PrintPanel
@@ -86,7 +88,10 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
         pageIndex = (pageIndex + 1) % pages.size();
         repaint();
     }
-
+	public void setLinenumberVisible(boolean visible) {
+		linenumbers = visible;	
+		repaint();
+	}
     void init(AbstractProgram abstractProgram) {
         this.program = abstractProgram;
         parse(getGraphics());
@@ -108,11 +113,20 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
         double pageheight = pageFormat.getImageableHeight();
 
         String source = program.getSource();
+        int linenumber = 1;
+        boolean placeLinenumber = true;
         for (InfoToken st : program.getTokenList()) {
         	if (st.getFormat() == InfoToken.IGNORE) continue;
             String token = source.substring(sourceIndex, st.getBegin() + st.getLength());
             tokenIndexBegin = 0;
             while (tokenIndexBegin < token.length()) {
+            	if (placeLinenumber) {
+            		placeLinenumber = false;
+            		Text linenr = new Text(linenumber+": ", fontLinenumber, Color.BLACK, true);
+            		Rectangle2D bounds = linenr.getMetrics(g);
+            		linenr.move((int)(offsetX + x - bounds.getWidth()), offsetY + y);
+            		page.add(linenr);
+            	}
                 Text text;
                 String part;
                 boolean newline;
@@ -129,16 +143,16 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
                 
                 switch (st.getFormat()) {
                     case InfoToken.COMMENT:
-                        text = new Text(part, fontComment, Color.GREEN);
+                        text = new Text(part, fontComment, Color.GREEN, false);
                         break;
                     case InfoToken.LITERAL:
-                        text = new Text(part, fontLiteral, Color.BLACK);
+                        text = new Text(part, fontLiteral, Color.BLACK, false);
                         break;
                     case InfoToken.KEYWORD:
-                        text = new Text(part, fontKeyword, Color.BLACK);
+                        text = new Text(part, fontKeyword, Color.BLACK, false);
                         break;
                     default:
-                        text = new Text(part, fontLiteral, Color.BLACK);
+                        text = new Text(part, fontLiteral, Color.BLACK, false);
                 }
                 Rectangle2D r = text.getMetrics(g);
                 if (x + r.getWidth() > linewidth) {
@@ -156,6 +170,8 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
                 if (newline) {
                     x = 0;
                     y += lineheight;
+                    linenumber++;
+                    placeLinenumber = true;
                     if (y > pageheight) {
                         y = g.getFontMetrics(fontLiteral).getHeight();
                         page = new LinkedList<>();
@@ -194,11 +210,12 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
         private final Color color;
         private int x;
         private int y;
-
-        public Text(String text, Font font, Color color) {
+        private boolean linenumber;
+        public Text(String text, Font font, Color color, boolean linenumber) {
             this.text = text;
             this.font = font;
             this.color = color;
+            this.linenumber = linenumber;
         }
 
         public void move(int x, int y) {
@@ -207,9 +224,11 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
         }
 
         public void print(Graphics g) {
-            g.setColor(color);
-            g.setFont(font);
-            g.drawString(text, x, y);
+        	if (!linenumber || linenumbers) {
+        		g.setColor(color);
+        		g.setFont(font);
+        		g.drawString(text, x, y);
+        	}
         }
 
         public Rectangle2D getMetrics(Graphics g) {
@@ -217,4 +236,5 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
             return fm.getStringBounds(text, g);
         }
     }
+
 }
