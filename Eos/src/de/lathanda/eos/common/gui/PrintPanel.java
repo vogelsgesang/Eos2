@@ -48,8 +48,20 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
      * Creates new form PrintPanel
      */
     public PrintPanel() {
-        PrinterJob job = PrinterJob.getPrinterJob();
-        pageFormat = job.defaultPage();
+    	try {
+    		if (PrinterJob.lookupPrintServices().length > 0) {
+    			PrinterJob job = PrinterJob.getPrinterJob();
+    			pageFormat = job.defaultPage();
+    		} else {
+    			pageFormat = new PageFormat();
+    		}
+    	} catch (Throwable t) {
+            JOptionPane.showMessageDialog(this, GUI.getString("Print.Error.Title"),
+                    t.getLocalizedMessage(),
+                    JOptionPane.ERROR_MESSAGE
+            );    		
+    		pageFormat = new PageFormat();
+    	}
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(400,300));
     }
@@ -100,6 +112,7 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
     private void parse(Graphics g) {
         LinkedList<Text> page = new LinkedList<>();
         pages.add(page);
+
         int sourceIndex = 0; //sourcecode index
         int tokenIndexBegin; //token index
         int tokenIndexEnd; //token index
@@ -112,6 +125,10 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
         double linewidth = pageFormat.getImageableWidth();
         double pageheight = pageFormat.getImageableHeight();
 
+        if (program == null) {
+        	return;
+        }
+        
         String source = program.getSource();
         int linenumber = 1;
         boolean placeLinenumber = true;

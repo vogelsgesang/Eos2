@@ -646,11 +646,9 @@ public class MainWindow extends JFrame implements WindowListener {
      * @param evt
      */
     private void PrintActionPerformed(java.awt.event.ActionEvent evt) {
-    	if (data.getProgram() != null) {
-    		PrintFrame pf = new PrintFrame();
-        	pf.init(data.getProgram());
-        	pf.setVisible(true);
-    	}
+   		PrintFrame pf = new PrintFrame();
+       	pf.init(data.getProgram());
+       	pf.setVisible(true);
     }
     /**
      * Konfigurationsfenster anzeigen.

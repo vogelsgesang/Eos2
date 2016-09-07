@@ -199,7 +199,13 @@ public class Type implements Comparable<Type>, AbstractType {
 			return UNKNOWN;
 		}
 	}
-
+	public static LinkedList<Type> getAll() {
+		LinkedList<Type> allTypes = new LinkedList<>();
+		for(Type t:nameType.values()) {
+			allTypes.add(t);
+		}
+		return allTypes;
+	}
 	public Object newInstance() throws InstantiationException, IllegalAccessException {
 		if (objSrc != null) {
 			return objSrc.createObject();
