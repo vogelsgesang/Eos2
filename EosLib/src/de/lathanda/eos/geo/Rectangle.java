@@ -56,17 +56,11 @@ public class Rectangle extends FilledFigure {
         fireDataChanged();
     }
     public void setLeftTop(double left, double top) {
-        Box b = this.new Box();
-        b.left = left;
-        b.top  = top;
-        b.writeBack();
+        moveTo(left + width / 2, top - height / 2);
         fireLayoutChanged();
     }
     public void setRightBottom(double right, double bottom) {
-        Box b = this.new Box();
-        b.right  = right;
-        b.bottom = bottom;
-        b.writeBack();
+    	moveTo(right - width / 2, bottom + height / 2);
         fireLayoutChanged();
     }
 
@@ -84,38 +78,67 @@ public class Rectangle extends FilledFigure {
     }
     public void setLeft(double left) {
         Box b = this.new Box();
-        b.left  = left;
+        b.setLeft(left);
         b.writeBack();
     }
      public void setRight(double right) {
         Box b = this.new Box();
-        b.right  = right;
+        b.setRight(right);
         b.writeBack();
     }    
     public void setTop(double top) {
         Box b = this.new Box();
-        b.top  = top;
+        b.setTop(top);
         b.writeBack();
     }    
     public void setBottom(double bottom) {
         Box b = this.new Box();
-        b.bottom  = bottom;
+        b.setBottom(bottom);
         b.writeBack();
     }   
    
     private class Box {
-        double left;
-        double right;
-        double top;
-        double bottom;
+        private double left;
+        private double right;
+        private double top;
+        private double bottom;
         Box() {
             left   = getX() - width / 2;
             right  = getX() + width / 2;
             top    = getY() + height / 2;
             bottom = getY() - height /2;
         }
-        public void writeBack() {
-            width  = Math.abs(right - left);
+        
+        public void setLeft(double left) {
+    		this.left = left;
+        	if (left > right) {
+        		right = left + width;
+        	}
+		}
+
+		public void setRight(double right) {
+			this.right = right;
+			if (left > right) {
+				left = right - width;
+			}
+		}
+
+		public void setTop(double top) {
+			this.top = top;
+			if (bottom > top) {
+				bottom = top - height;
+			}
+		}
+
+		public void setBottom(double bottom) {
+			this.bottom = bottom;
+			if (bottom > top) {
+				top = bottom + height;
+			}
+		}
+
+		public void writeBack() {
+    		width  = Math.abs(right - left);
             height = Math.abs(top - bottom);
             Rectangle.this.moveTo((right + left)/2,(top + bottom)/2);
         }

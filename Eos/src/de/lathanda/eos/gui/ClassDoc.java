@@ -16,6 +16,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreePath;
 
+import de.lathanda.eos.base.ResourceLoader;
 import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
 import static de.lathanda.eos.common.gui.GuiConstants.GUI;
 
@@ -38,6 +39,8 @@ public class ClassDoc extends JFrame {
 		}
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		help.setBounds((int) (screen.width * 0.5), 0, (int) (screen.height * 0.9), (int) (screen.width * 0.5));
+        help.setTitle(GUI.getString("Classbook.Title"));
+        help.setIconImage(ResourceLoader.loadImage("icons/eos.png"));		
 		help.setVisible(true);
 	}
 	private static DefaultMutableTreeNode root; 

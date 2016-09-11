@@ -72,7 +72,7 @@ public class CodeColoring implements CodeColorHook {
 		StyleConstants.setForeground(attributeSetBase, Color.BLACK);
 		StyleConstants.setUnderline(attributeSetBase, false);
 		StyleConstants.setBold(attributeSetBase, false);
-		StyleConstants.setForeground(attributeSetComment, Color.GREEN);
+		StyleConstants.setForeground(attributeSetComment, new Color(0, 160, 0));
 		StyleConstants.setForeground(attributeSetLiteral, Color.BLUE);
 		StyleConstants.setForeground(attributeSetKeyword, Color.BLACK);
 		StyleConstants.setForeground(attributeSetError, Color.RED);

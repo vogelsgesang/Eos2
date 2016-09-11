@@ -55,6 +55,8 @@ public class Help extends JFrame {
         }
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         help.setBounds((int) (screen.width * 0.5), 0, (int) (screen.height * 0.9), (int) (screen.width * 0.5));
+        help.setTitle(GUI.getString("Help.Title"));
+        help.setIconImage(ResourceLoader.loadImage("icons/eos.png"));
         help.setVisible(true);
     }
     /**
