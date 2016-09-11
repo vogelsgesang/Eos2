@@ -70,8 +70,8 @@ public class ObjectChart extends Diagram implements CompilerListener, DebugListe
 
 	@Override
 	public void compileComplete(LinkedList<ErrorInformation> errors, AbstractProgram program) {
-		machine.addDebugListener(this);
 		this.machine = program.getMachine();
+		machine.addDebugListener(this);
 		update();
 	}
 

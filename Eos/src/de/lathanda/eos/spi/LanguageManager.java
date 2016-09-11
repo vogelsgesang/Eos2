@@ -95,6 +95,8 @@ public class LanguageManager {
 		try {
 			prepare();
 		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(-1);
 			return null;
 		}
 		return lm;

@@ -10,10 +10,11 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -21,14 +22,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JWindow;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
+import javax.swing.ToolTipManager;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.JTextComponent;
-
-import de.lathanda.eos.base.ResourceLoader;
 import de.lathanda.eos.common.interpreter.AbstractProgram;
 import de.lathanda.eos.common.interpreter.AbstractType;
 import de.lathanda.eos.common.interpreter.AutoCompleteHook;
@@ -72,7 +72,7 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 	/**
 	 * Auswahlliste
 	 */
-	private final JList<AutoCompleteInformation> choiceList;
+	private final TooltipList choiceList;
 	/**
 	 * Textkomponente in der die Auswahl angezeigt wird.
 	 */
@@ -81,10 +81,17 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 		this.component = component;
 		choiceWindow = new JWindow();
 		choiceWindow.setFocusable(false);
-		choiceList = new JList<>();
+		choiceList = new TooltipList();
 		choiceList.setCellRenderer(new ChoiceCellRenderer());
 		choiceList.setEnabled(true);
 		choiceList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		choiceList.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e ) {
+			    if ( e.getClickCount() == 2 ) {
+			        complete();
+			    }
+			}
+		});
 		JScrollPane choiceScroll = new JScrollPane(choiceList,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		choiceWindow.getContentPane().add(choiceScroll);
 		component.addCaretListener(this);
@@ -230,7 +237,23 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 		choiceList.ensureIndexIsVisible(n);
 		
 	}
+	private class TooltipList extends JList<AutoCompleteInformation> {
+		private static final long serialVersionUID = -7313420722740426372L;
 
+		public TooltipList() {
+			ToolTipManager.sharedInstance().registerComponent(this);
+		}
+
+		@Override
+		public String getToolTipText(MouseEvent me) {
+			 int index = locationToIndex(me.getPoint());
+			 if (index >= 0) {
+				 return "<html><p>"+getModel().getElementAt(index).getTooltip()+"</p></html>";
+			 } else {
+				 return null;
+			 }
+		}	
+	}
 	/**
 	 * Anzeige Komponente für eine einzelne Auswahlmöglichkeit.
 	 * @author Peter (Lathanda) Schneider
@@ -238,11 +261,6 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 	 */
 	private static class ChoiceCellRenderer extends JLabel implements ListCellRenderer<AutoCompleteInformation> {
 		private static final long serialVersionUID = -6215568900839124763L;
-	     private final static ImageIcon[] ICON = new ImageIcon[]{
-	    		 ResourceLoader.loadIcon("icons/method.png"),
-	    		 ResourceLoader.loadIcon("icons/attribut.png"),
-	    		 ResourceLoader.loadIcon("icons/class.png")
-	     };
 
 	     @Override
 	     public Component getListCellRendererComponent(
@@ -253,11 +271,7 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 	    		 boolean cellHasFocus)
 	     {
 	         setText(value.getLabel());
-	         if (value.getType() < ICON.length) {
-	        	 setIcon(ICON[value.getType()]);
-	         } else {
-	        	 setIcon(null);
-	         }
+        	 setIcon(AutoCompleteInformation.ICON[value.getType()]);
 	         if (isSelected) {
 	             setBackground(Color.BLUE);
 	             setForeground(Color.WHITE);
@@ -265,7 +279,6 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 	             setBackground(Color.WHITE);
 	             setForeground(Color.BLACK);
 	         }
-	         setToolTipText("<html><p>"+value.getTooltip()+"</p></html>");
 	         setEnabled(list.isEnabled());
 	         setFont(list.getFont());
 	         setOpaque(true);

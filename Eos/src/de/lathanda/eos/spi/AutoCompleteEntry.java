@@ -19,6 +19,10 @@ public class AutoCompleteEntry  implements Comparable<AutoCompleteEntry>, AutoCo
 	 */
 	public final String label;
 	/**
+	 * Signatur
+	 */
+	public final String labelLong;
+	/**
 	 * Sortierkriterium.
 	 */
 	public final String sort;
@@ -56,6 +60,11 @@ public class AutoCompleteEntry  implements Comparable<AutoCompleteEntry>, AutoCo
 		this.tooltip = description.substring(separator+1);
 		this.template = description.substring(1, separator);
 		this.label = template;
+		if (tooltip.indexOf("<br>") >= 0) {
+			this.labelLong = tooltip.substring(0, tooltip.indexOf("<br>"));
+		} else {
+			this.labelLong = label;
+		}
 		switch (description.charAt(0)) {
 		case '@':
 			type = 0;
@@ -82,6 +91,7 @@ public class AutoCompleteEntry  implements Comparable<AutoCompleteEntry>, AutoCo
 		this.sort = String.valueOf(sort);
 		this.template = description.substring(separator+1);
 		this.label = description.substring(0, separator);
+		this.labelLong = label;
 		type = 3;
 		cls = Type.getVoid();
 	}
@@ -114,6 +124,10 @@ public class AutoCompleteEntry  implements Comparable<AutoCompleteEntry>, AutoCo
 	}
 	public int getType() {
 		return type;
+	}
+	@Override
+	public String getLabelLong() {
+		return labelLong;
 	}
 	
 }

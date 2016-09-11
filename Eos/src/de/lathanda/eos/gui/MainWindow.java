@@ -50,6 +50,7 @@ import de.lathanda.eos.common.gui.PrintFrame;
 import de.lathanda.eos.common.gui.SideInformation;
 import de.lathanda.eos.common.gui.SourceCode;
 import de.lathanda.eos.common.gui.TextUndoManager;
+import de.lathanda.eos.gui.classchart.ClassChart;
 import de.lathanda.eos.gui.diagram.DiagramFrame;
 import de.lathanda.eos.gui.flowchart.FlowChart;
 import de.lathanda.eos.gui.objectchart.ObjectChart;
@@ -143,6 +144,7 @@ public class MainWindow extends JFrame implements WindowListener {
         btnBreakpoint = new JButton();
         jSeparator4 = new JToolBar.Separator();
         btnHelp = new JButton();
+        btnClassDoc = new JButton();
         mainSplit = new JSplitPane();
         scrollProgram = new JScrollPane();
         txtProgram = new JTextPane();
@@ -177,9 +179,11 @@ public class MainWindow extends JFrame implements WindowListener {
         diagramMenu = new JMenu();
         mitStructogram = new JMenuItem();
         mitFlowChart = new JMenuItem();
-        mitObjectChart = new JMenuItem();   
+        mitObjectChart = new JMenuItem();
+        mitClassChart = new JMenuItem();
         helpMenu = new JMenu();
         mitHelp = new JMenuItem();
+        mitClassDoc = new JMenuItem();
 
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         
@@ -245,7 +249,13 @@ public class MainWindow extends JFrame implements WindowListener {
         mainToolbar.add(btnBreakpoint);
         
         mainToolbar.add(jSeparator4);
-
+        
+        btnClassDoc.setIcon(new ImageIcon(getClass().getResource("/icons/books.png")));
+        btnClassDoc.setFocusable(false);
+        btnClassDoc.addActionListener(evt -> ClassDocActionPerformed(evt));
+        
+        mainToolbar.add(btnClassDoc);
+        
         btnHelp.setIcon(new ImageIcon(getClass().getResource("/icons/help-3.png")));
         btnHelp.setFocusable(false);
         btnHelp.addActionListener(evt -> HelpActionPerformed(evt));
@@ -412,11 +422,20 @@ public class MainWindow extends JFrame implements WindowListener {
         mitObjectChart.addActionListener(evt -> ObjectChartActionPerformed(evt));        
         diagramMenu.add(mitObjectChart);
 
+        mitClassChart.setText(GUI.getString("Menu.Classchart"));
+        mitClassChart.addActionListener(evt -> ClassChartActionPerformed(evt));        
+        diagramMenu.add(mitClassChart);
+        
         mainMenu.add(diagramMenu);
         
         LanguageManager.getInstance().addPluginMenues(mainMenu);
         
         helpMenu.setText(GUI.getString("Menu.Help"));
+
+        mitClassDoc.setText(GUI.getString("Menu.Classbook"));
+        mitClassDoc.addActionListener(evt -> ClassDocActionPerformed(evt));
+
+        helpMenu.add(mitClassDoc);
 
         mitHelp.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         mitHelp.setText(GUI.getString("Menu.Handbook"));
@@ -591,6 +610,13 @@ public class MainWindow extends JFrame implements WindowListener {
         Help.showHelp();
     }
     /**
+     * Klassenhilfe anzeigen.
+     * @param evt
+     */
+    private void ClassDocActionPerformed(java.awt.event.ActionEvent evt) {
+       ClassDoc.showDoc();
+    }    
+    /**
      * Einzelschritt.
      * @param evt
      */
@@ -698,13 +724,19 @@ public class MainWindow extends JFrame implements WindowListener {
         new DiagramFrame(new FlowChart(), compiler).setVisible(true);
     }
     /**
-     * Objectdiagrammanzeigen.
+     * Objectdiagramm anzeigen.
      * @param evt
      */
     private void ObjectChartActionPerformed(java.awt.event.ActionEvent evt) {
         new DiagramFrame(new ObjectChart(), compiler).setVisible(true);
     }
-    
+    /**
+     * Klassendiagramm anzeigen.
+     * @param evt
+     */
+    private void ClassChartActionPerformed(java.awt.event.ActionEvent evt) {
+        new DiagramFrame(new ClassChart(), compiler).setVisible(true);
+    }   
     /**
      * Anwendung schliessen.
      */
@@ -732,6 +764,7 @@ public class MainWindow extends JFrame implements WindowListener {
     private JButton btnCopy;
     private JButton btnCut;
     private JButton btnHelp;
+    private JButton btnClassDoc;
     private JButton btnOpen;
     private JButton btnPaste;
     private JButton btnPause;
@@ -762,7 +795,9 @@ public class MainWindow extends JFrame implements WindowListener {
     private JMenuItem mitExit;
     private JMenuItem mitFlowChart;
     private JMenuItem mitObjectChart;
+    private JMenuItem mitClassChart;
     private JMenuItem mitHelp;
+    private JMenuItem mitClassDoc;
     private JMenuItem mitNew;
     private JMenuItem mitOpen;
     private JMenuItem mitPaste;
