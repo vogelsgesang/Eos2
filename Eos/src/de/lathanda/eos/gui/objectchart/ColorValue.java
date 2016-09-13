@@ -2,6 +2,7 @@ package de.lathanda.eos.gui.objectchart;
 
 import java.awt.Color;
 
+import de.lathanda.eos.gui.diagram.Unit;
 import de.lathanda.eos.gui.diagram.Drawing;
 /**
  * Zeichnet die Farbe.
@@ -28,7 +29,7 @@ public class ColorValue extends Unit {
 	}
 
 	@Override
-	public void layout(Drawing d) {
+	public void layoutUnit(Drawing d) {
 		width = 5;
 		height = 6;
 	}

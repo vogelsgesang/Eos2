@@ -114,8 +114,11 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 		}
 		startPosition = position;
 		lastPosition = position;
-
-		choiceItems.addAll(base.getAutoCompletes());
+		for(AutoCompleteInformation aci:base.getAutoCompletes()) {
+			if (aci.getType() != AutoCompleteInformation.PRIVATE) {
+				choiceItems.add(aci);
+			}
+		}
 		showMenue();
 	}
 	/**

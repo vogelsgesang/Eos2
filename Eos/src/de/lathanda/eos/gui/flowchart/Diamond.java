@@ -1,7 +1,5 @@
 package de.lathanda.eos.gui.flowchart;
 
-import java.awt.Font;
-
 import de.lathanda.eos.gui.diagram.Drawing;
 
 /**
@@ -15,8 +13,7 @@ import de.lathanda.eos.gui.diagram.Drawing;
  * @author Peter (Lathanda) Schneider
  * @since 0.8
  */
-public class Diamond extends Unit {
-    private final static Font FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
+public class Diamond extends ConnectedUnit {
     private float textx;
     private float texty;
     private final String label;
@@ -25,16 +22,16 @@ public class Diamond extends Unit {
     
     public Diamond(String label) {
         this.label = label;
+        font = STANDARD_FONT;
     }
     @Override
-    protected void drawUnit(Drawing d) {
+	public void drawUnit(Drawing d) {
         d.drawPolygon(borderX, borderY, 4);
         d.drawString(label, textx, texty);
     }
 
     @Override
-    protected void layout(Drawing d) {
-        d.setFont(FONT);
+	public void layoutUnit(Drawing d) {
         float labelwidth = d.stringWidth(label);
         
         width = (labelwidth + 2 * BORDER) * 1.5f;

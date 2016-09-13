@@ -1,7 +1,6 @@
 package de.lathanda.eos.gui.objectchart;
 
-import java.awt.Font;
-
+import de.lathanda.eos.gui.diagram.Unit;
 import de.lathanda.eos.gui.diagram.Drawing;
 /**
  * Zeichnet eine Variable oder ein Attribut.
@@ -10,15 +9,14 @@ import de.lathanda.eos.gui.diagram.Drawing;
  * @since 0.9.4
  */
 public class Property extends Unit {
-
-    private final static Font FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
     private String name;
     private Unit value;
 	private float xEquals;
 	private float yLine;
 
 	public Property(String name, Object data) {
-		value = formatValue(data);
+		font = STANDARD_FONT;
+		value = Toolkit.formatValue(data);
 		this.name = name;
 	}
 	@Override
@@ -29,21 +27,20 @@ public class Property extends Unit {
 	}
 
 	@Override
-	public void layout(Drawing d) {
-        d.setFont(FONT);
+	public void layoutUnit(Drawing d) {
         xEquals = d.stringWidth(name) + INDENT;
         value.layout(d);
         value.setOffsetX(xEquals + d.stringWidth("=") + INDENT);
         yLine = d.getAscent();
-        this.height = Math.max(d.getHeight(), value.height);
+        this.height = Math.max(d.getHeight(), value.getHeight());
         this.width = xEquals + INDENT + value.getWidth();
 	}
 	public static float align(Drawing d, Iterable<Property> properties) {
 		float alignedValueWidth = 0;
 		float alignedXEquals = 0;
 		for (Property property : properties) {
-			if (alignedValueWidth < property.value.width) {
-				alignedValueWidth = property.value.width;
+			if (alignedValueWidth < property.value.getWidth()) {
+				alignedValueWidth = property.value.getWidth();
 			}
 			if (alignedXEquals < property.xEquals) {
 				alignedXEquals = property.xEquals;

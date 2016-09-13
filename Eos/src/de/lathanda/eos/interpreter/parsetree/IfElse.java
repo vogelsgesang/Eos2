@@ -1,5 +1,6 @@
 package de.lathanda.eos.interpreter.parsetree;
 
+import de.lathanda.eos.gui.diagram.AlternativeUnit;
 import de.lathanda.eos.interpreter.Command;
 import de.lathanda.eos.interpreter.Environment;
 import de.lathanda.eos.interpreter.Node;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  * @author Peter (Lathanda) Schneider
  * @since 0.4
  */
-public class IfElse extends Node {
+public class IfElse extends Node implements AlternativeUnit {
 
     Expression condition;
     Sequence a;

@@ -9,6 +9,7 @@ import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
+import de.lathanda.eos.gui.diagram.Unit;
 import de.lathanda.eos.gui.diagram.Drawing;
 import de.lathanda.eos.gui.diagram.MemoryEntry;
 
@@ -79,7 +80,7 @@ public class ObjectDiagram extends JPanel {
 	public void setData(LinkedList<MemoryEntry> data) {
 		units.clear();
 		for (MemoryEntry v : data) {
-			units.add(Unit.create(v));
+			units.add(Toolkit.create(v));
 		}
 		setPreferredSize(layout(d));
 		revalidate();

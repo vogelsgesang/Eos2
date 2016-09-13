@@ -8,6 +8,7 @@ import de.lathanda.eos.common.interpreter.ErrorInformation;
 import de.lathanda.eos.common.interpreter.ProgramUnit;
 import de.lathanda.eos.gui.diagram.Diagram;
 import de.lathanda.eos.gui.diagram.Drawing;
+import de.lathanda.eos.gui.diagram.Unit;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -55,7 +56,7 @@ public class Structogram extends Diagram implements CompilerListener {
 	public void compileComplete(LinkedList<ErrorInformation> errors, AbstractProgram program) { 
         procedures.clear();
         //create units
-        procedures.add(new Procedure(Unit.lm.getLabel("Main"), program.getProgram()));
+        procedures.add(new Procedure(Unit.getLabel("Main"), program.getProgram()));
         for (ProgramUnit pu : program.getSubPrograms()) {
             procedures.add(new Procedure(pu.getName(), pu.getSequence()));
         }

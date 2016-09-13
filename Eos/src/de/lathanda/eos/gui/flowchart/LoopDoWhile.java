@@ -2,8 +2,6 @@ package de.lathanda.eos.gui.flowchart;
 
 import de.lathanda.eos.gui.diagram.Drawing;
 import de.lathanda.eos.gui.diagram.LoopUnit;
-import java.awt.Color;
-import java.awt.Font;
 
 /**
  * Schleife mit Endbedingung.
@@ -11,14 +9,12 @@ import java.awt.Font;
  * @author Peter (Lathanda) Schneider
  * @since 0.8
  */
-public class LoopDoWhile extends Unit {
+public class LoopDoWhile extends ConnectedUnit {
     private final Sequence sequence;
     private final Diamond diam;
     private final String yes = lm.getLabel("Yes");
     private final String no = lm.getLabel("No");
 
-    private final static Font FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
-     
     private float yesx;
     private float yesy;     
     private float nox;
@@ -28,21 +24,21 @@ public class LoopDoWhile extends Unit {
     	this.needsIncomingArrow = false;
         diam = new Diamond(lu.getLabel());
         sequence = new Sequence(lu.getSequence());
+        font = STANDARD_FONT;
     }
 
     @Override
-    protected void layout(Drawing d) {
+	public void layoutUnit(Drawing d) {
         sequence.layout(d);
         diam.layout(d);
         
                 
         width = (float)Math.max(sequence.getWidth(), diam.getWidth()) + 2 * SPACEX;
-        sequence.center(width);;
+        sequence.centerX(width);;
         sequence.setOffsetY(SPACE);
-        diam.center(width);
+        diam.centerX(width);
         diam.setOffsetY(2 * SPACE + sequence.getHeight());
                 
-        d.setFont(FONT);
         yesx = diam.getX(0) - d.stringWidth(yes) - BORDER;
         yesy = diam.getY(0) - BORDER;
         nox = diam.getX(3) + BORDER;
@@ -52,12 +48,10 @@ public class LoopDoWhile extends Unit {
     }
 
     @Override
-    protected void drawUnit(Drawing d) {
+	public void drawUnit(Drawing d) {
         //condition diamond
         diam.draw(d);
-        
-        d.setColor(Color.BLACK);
-        d.setFont(FONT);                       
+                      
         //false arrow
         d.drawString(no, nox, noy);    
         d.drawLine(diam.getX(3), diam.getY(3), diam.getX(3), diam.getY(3) + SPACE);

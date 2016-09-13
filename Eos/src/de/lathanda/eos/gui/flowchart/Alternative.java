@@ -2,8 +2,6 @@ package de.lathanda.eos.gui.flowchart;
 
 import de.lathanda.eos.gui.diagram.AlternativeUnit;
 import de.lathanda.eos.gui.diagram.Drawing;
-import java.awt.Color;
-import java.awt.Font;
 
 /**
  * Bedingte Anweisung
@@ -11,14 +9,12 @@ import java.awt.Font;
  * @author Peter (Lathanda) Schneider
  * @since 0.8
  */
-public class Alternative extends Unit {
+public class Alternative extends ConnectedUnit {
     private final Sequence A; //true
     private final Sequence B; //false
     private final Diamond diam;
     private final String yes = lm.getLabel("Yes");
     private final String no = lm.getLabel("No");
-
-    private final static Font FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 12);     
     private float yesx;
     private float yesy;     
     private float nox;
@@ -33,22 +29,22 @@ public class Alternative extends Unit {
         A = new Sequence(au.getThen());
         B = new Sequence(au.getElse());
         diam = new Diamond(au.getLabel());
+        font = STANDARD_FONT;
     }
 
     @Override
-    protected void layout(Drawing d) {
+	public void layoutUnit(Drawing d) {
         A.layout(d);
         B.layout(d);
         diam.layout(d);
-        d.setFont(FONT);
         
         float sideWidth = Math.max(A.getWidth(), B.getWidth());
         width = Math.max(sideWidth * 2 + SPACEX, diam.getWidth() + sideWidth);
 
-        diam.center(width);
+        diam.centerX(width);
         
         ABbeginY = diam.getHeight() + SPACE;
-        A.center(sideWidth);
+        A.centerX(sideWidth);
         B.setOffsetX(width - (sideWidth - B.getWidth()) / 2 - B.getWidth());
         AcenterX = A.getOffsetX() + A.getWidth() / 2;
         BcenterX = B.getOffsetX() + B.getWidth() / 2;
@@ -64,10 +60,8 @@ public class Alternative extends Unit {
         height = diam.getHeight() + SPACE + Math.max(A.getHeight(), B.getHeight()) + SPACE;
     }
     @Override
-    protected void drawUnit(Drawing d) {
+	public void drawUnit(Drawing d) {
         //condition diamond
-        d.setColor(Color.BLACK);
-        d.setFont(FONT);
         diam.draw(d);
                
         //left side arrow

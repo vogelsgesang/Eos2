@@ -2,8 +2,6 @@ package de.lathanda.eos.gui.flowchart;
 
 import de.lathanda.eos.gui.diagram.Drawing;
 import de.lathanda.eos.gui.diagram.LoopTimesUnit;
-import java.awt.Color;
-import java.awt.Font;
 import java.text.MessageFormat;
 
 /**
@@ -12,7 +10,7 @@ import java.text.MessageFormat;
  * @author Peter (Lathanda) Schneider
  * @since 0.8
  */
-public class LoopTimes extends Unit {
+public class LoopTimes extends ConnectedUnit {
     private final Sequence sequence;
     private final Statement init;
     private final Statement inc;
@@ -22,7 +20,6 @@ public class LoopTimes extends Unit {
     private final String var;
     private final String step;
     
-    private final static Font FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
     private float yesx;
     private float yesy;     
     private float nox;
@@ -36,15 +33,14 @@ public class LoopTimes extends Unit {
         step = MessageFormat.format(lm.getLabel("RepeatTimes.Step"), n.getIndexId());
         init = new Statement(var);
         inc = new Statement(step);
+        font = STANDARD_FONT;
     }
     @Override
-    protected void layout(Drawing d) {
+	public void layoutUnit(Drawing d) {
         sequence.layout(d);
         init.layout(d);
         inc.layout(d);
         diam.layout(d);
-
-        d.setFont(FONT);
 
         width = (float)Math.max(
             Math.max(sequence.getWidth(), diam.getWidth()),
@@ -58,7 +54,7 @@ public class LoopTimes extends Unit {
         //build diamond
         float h = init.getHeight() + SPACE;
         diam.setOffsetY(h);
-        diam.center(width);
+        diam.centerX(width);
         
         yesx = diam.getX(3) + 1.5f*BORDER;
         yesy = diam.getY(3) + d.getAscent()- BORDER;
@@ -66,7 +62,7 @@ public class LoopTimes extends Unit {
         noy = diam.getY(0) - BORDER;
         
         //place loop body
-        h = diam.getBottomY() + SPACE;      
+        h = diam.getBottom() + SPACE;      
         sequence.setOffsetX((width - sequence.getWidth()) / 2);
         sequence.setOffsetY(h);
         
@@ -79,8 +75,7 @@ public class LoopTimes extends Unit {
     }
 
     @Override
-    protected void drawUnit(Drawing d) {    
-        d.setColor(Color.BLACK);
+	public void drawUnit(Drawing d) {    
         //draw init
         init.draw(d);
         

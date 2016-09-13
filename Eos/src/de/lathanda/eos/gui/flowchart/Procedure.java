@@ -1,8 +1,5 @@
 package de.lathanda.eos.gui.flowchart;
 
-import java.awt.Color;
-import java.awt.Font;
-
 import de.lathanda.eos.common.interpreter.ProgramSequence;
 import de.lathanda.eos.gui.diagram.Drawing;
 
@@ -12,10 +9,9 @@ import de.lathanda.eos.gui.diagram.Drawing;
  * @author Peter (Lathanda) Schneider
  * @since 0.8
  */
-public class Procedure extends Unit {
+public class Procedure extends ConnectedUnit {
     private final Sequence sequence;
     private final String title;
-    private final static Font FONT = new Font(Font.SANS_SERIF, Font.BOLD, 14);
     private float textx;
     private float texty;
     private float arrowxE;
@@ -25,12 +21,12 @@ public class Procedure extends Unit {
     public Procedure(String title, ProgramSequence programSequence) {
         this.title = title;
         sequence = new Sequence(programSequence);
+        font = HEADER_FONT;
     }
 
     @Override
-    protected void layout(Drawing d) {
+	public void layoutUnit(Drawing d) {
         sequence.layout(d);
-        d.setFont(FONT);
         float textwidth = d.stringWidth(title);
         float textheight = d.getHeight();
         if (textwidth + 2*BORDER > sequence.getWidth()) {
@@ -50,9 +46,7 @@ public class Procedure extends Unit {
     }
 
     @Override
-    protected void drawUnit(Drawing d) {
-        d.setColor(Color.BLACK);
-        d.setFont(FONT);
+	public void drawUnit(Drawing d) {
         d.drawString(title, textx, texty);    
         sequence.draw(d);
         

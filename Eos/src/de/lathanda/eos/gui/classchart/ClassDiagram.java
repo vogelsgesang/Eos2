@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
+import javax.swing.ToolTipManager;
 
 import de.lathanda.eos.gui.diagram.Drawing;
 import de.lathanda.eos.interpreter.Type;
@@ -19,13 +21,19 @@ public class ClassDiagram extends JPanel {
 	public ClassDiagram() {
 		super();
 		setBackground(Color.WHITE);
-		d = new Drawing();		
+		d = new Drawing();
+		ToolTipManager.sharedInstance().registerComponent(this);
 	}
 	public void setData(Type data) {
 		unit = new ClassUnit(data);
 		setPreferredSize(layout(d));	
 		revalidate();
 		repaint();
+	}
+	
+	@Override
+	public String getToolTipText(MouseEvent me) {
+		return unit.getToolTipText(d.convertpixel2mm(me.getX())- SPACE, d.convertpixel2mm(me.getY()) - SPACE);
 	}
 	@Override
 	protected void paintComponent(Graphics g) {

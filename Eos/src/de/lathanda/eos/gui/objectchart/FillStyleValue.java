@@ -1,6 +1,7 @@
 package de.lathanda.eos.gui.objectchart;
 
 import de.lathanda.eos.base.FillStyle;
+import de.lathanda.eos.gui.diagram.Unit;
 import de.lathanda.eos.gui.diagram.Drawing;
 /**
  * Zeichnet Symbol für die Füllart.
@@ -42,7 +43,7 @@ public class FillStyleValue extends Unit {
 	}
 
 	@Override
-	public void layout(Drawing d) {
+	public void layoutUnit(Drawing d) {
 		width = 8;
 		height = 8;
 	}

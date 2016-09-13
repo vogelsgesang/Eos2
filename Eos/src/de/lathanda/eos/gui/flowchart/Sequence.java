@@ -1,6 +1,4 @@
 package de.lathanda.eos.gui.flowchart;
-
-import java.awt.Color;
 import java.util.ArrayList;
 
 import de.lathanda.eos.common.interpreter.ProgramSequence;
@@ -12,23 +10,22 @@ import de.lathanda.eos.gui.diagram.Drawing;
  * @author Peter (Lathanda) Schneider
  * @since 0.8
  */
-public class Sequence extends Unit {
-    private ArrayList<Unit> units;
+public class Sequence extends ConnectedUnit {
+    private ArrayList<ConnectedUnit> units;
     Sequence(ProgramSequence programSequence) {
         units = new ArrayList<>();
         if (programSequence != null) {
             programSequence.getInstructions().stream().forEachOrdered((n) -> {
-                units.add(Unit.create(n));
+                units.add(Toolkit.create(n));
             });
         }
     }
     @Override
-    protected void drawUnit(Drawing d) {
+	public void drawUnit(Drawing d) {
         float cx = width / 2;
-        d.setColor(Color.BLACK);  
         float cy = 0;
-        Unit previous = null;
-        for(Unit u: units) {
+        ConnectedUnit previous = null;
+        for(ConnectedUnit u: units) {
             if (previous == null) {
                 needsIncomingArrow = u.needsIncomingArrow;
             } else if (!previous.neverEnds) {
@@ -49,11 +46,11 @@ public class Sequence extends Unit {
     }
 
     @Override
-    protected void layout(Drawing d) {
+	public void layoutUnit(Drawing d) {
         units.forEach(p -> p.layout(d));
         float maxw = 0;
         float h = 0;
-        for(Unit u: units) {            
+        for(ConnectedUnit u: units) {            
             if (maxw < u.getWidth()) {
                 maxw = u.getWidth();
             }
@@ -63,7 +60,7 @@ public class Sequence extends Unit {
         height = h - SPACE;
         width = maxw;
         units.stream().forEach((u) -> {
-            u.center(width);
+            u.centerX(width);
         });
     }
 }

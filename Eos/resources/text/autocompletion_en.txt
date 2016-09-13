@@ -1,4 +1,4 @@
-#<type> "." <pattern that is matched> "=" ("@" method | "%" property | "!" class) <template>  "#" <explanation>
+#<type> "." <pattern that is matched> "=" ("@" method | "%" property | "!" class | "#" private property) <template>  "#" <explanation>
 class.Boolean             = !Boolean#A logical value.
 class.Color               = !Color#A Color.
 class.Real                = !Real#A floating point number. 
@@ -221,8 +221,8 @@ plotter.setpenvisible  = @setPenVisible(visible)#setPenVisible(visible:Boolean)<
 plotter.getpenvisible  = @getPenVisible()#getPenVisible():Boolean<br>Returns if the pen is shown.
 plotter.setlinewidth   = @setLineWidth(width)#setLineWidth(width:Number)<br>Sets the width of the line that will be drawn.
 plotter.setlinestyle   = @setLineStyle(style)#setLineStyle(style:LineStyle)<br>Sets the style of the line that will be drawn.
-plotter.setfillstyle   = @setFillStyle(style)#füllartSetzen(art:FillStyle)<br>Sets the style that is used to fill the drawn polygon.
-plotter.setfillcolor   = @setFillColor(color)#füllfarbeSetzen(color:Color)<br>Sets the color used to fill the drawn polygon
+plotter.setfillstyle   = @setFillStyle(style)#fï¿½llartSetzen(art:FillStyle)<br>Sets the style that is used to fill the drawn polygon.
+plotter.setfillcolor   = @setFillColor(color)#fï¿½llfarbeSetzen(color:Color)<br>Sets the color used to fill the drawn polygon
 plotter.setcenter      = @setCenter(x,y)#setCenter(x:Number,y:Number)<br>Sets the center of the polygon group that is drawn without moving it.
 plotter.penx           = %x#x:Number<br>x coordinate of the pen.
 plotter.peny           = %y#y:Number<br>y coordinate of the pen.

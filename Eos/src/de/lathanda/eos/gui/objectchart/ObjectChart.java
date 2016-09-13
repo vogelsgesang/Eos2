@@ -25,6 +25,7 @@ import de.lathanda.eos.common.interpreter.DebugListener;
 import de.lathanda.eos.common.interpreter.ErrorInformation;
 import de.lathanda.eos.gui.diagram.Diagram;
 import de.lathanda.eos.gui.diagram.MemoryEntry;
+import de.lathanda.eos.gui.diagram.Unit;
 import de.lathanda.eos.interpreter.parsetree.ReservedVariables;
 /**
  * Objektdiagramm
@@ -93,11 +94,11 @@ public class ObjectChart extends Diagram implements CompilerListener, DebugListe
 		variableList.clear();
 		for(MemoryEntry mem : memory) {
 			if (mem.name.equals(ReservedVariables.RESULT)) {
-				memoryModel.addElement(Unit.lm.getName(ReservedVariables.RESULT));
+				memoryModel.addElement(Unit.getName(ReservedVariables.RESULT));
 			} else if (mem.name.equals(ReservedVariables.WINDOW)) {
-				memoryModel.addElement(Unit.lm.getName(ReservedVariables.WINDOW));
+				memoryModel.addElement(Unit.getName(ReservedVariables.WINDOW));
 			} else if (mem.name.startsWith(ReservedVariables.REPEAT_TIMES_INDEX)) {	
-				memoryModel.addElement(Unit.lm.getName(ReservedVariables.REPEAT_TIMES_INDEX));
+				memoryModel.addElement(Unit.getName(ReservedVariables.REPEAT_TIMES_INDEX));
 			} else {
 				memoryModel.addElement(mem.name);
 			}

@@ -8,6 +8,7 @@ import de.lathanda.eos.common.interpreter.ErrorInformation;
 import de.lathanda.eos.common.interpreter.ProgramUnit;
 import de.lathanda.eos.gui.diagram.Diagram;
 import de.lathanda.eos.gui.diagram.Drawing;
+import de.lathanda.eos.gui.diagram.Unit;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -52,7 +53,7 @@ public class FlowChart extends Diagram implements CompilerListener {
     public void compileComplete(LinkedList<ErrorInformation> errors, AbstractProgram program) {
         procedures.clear();
         //create units
-        procedures.add(new Procedure(Unit.lm.getLabel("Main"), program.getProgram()));
+        procedures.add(new Procedure(Unit.getLabel("Main"), program.getProgram()));
         for (ProgramUnit pu : program.getSubPrograms()) {
             procedures.add(new Procedure(pu.getName(), pu.getSequence()));
         }
@@ -78,7 +79,7 @@ public class FlowChart extends Diagram implements CompilerListener {
         procedures.forEach(p -> p.layout(d));
         float h = 0;
         float w = 0;        
-        for (Unit u : procedures) {
+        for (ConnectedUnit u : procedures) {
             u.setOffsetY(h);
             h = h + u.getHeight() + SPACE;
             if (w < u.getWidth()) {

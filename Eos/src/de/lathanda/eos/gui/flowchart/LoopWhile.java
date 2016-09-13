@@ -2,8 +2,6 @@ package de.lathanda.eos.gui.flowchart;
 
 import de.lathanda.eos.gui.diagram.Drawing;
 import de.lathanda.eos.gui.diagram.LoopUnit;
-import java.awt.Color;
-import java.awt.Font;
 
 /**
  * Bedingte Schleife.
@@ -11,13 +9,12 @@ import java.awt.Font;
  * @author Peter (Lathanda) Schneider
  * @since 0.8
  */
-public class LoopWhile extends Unit {
+public class LoopWhile extends ConnectedUnit {
     private final Diamond diam;
     private final Sequence sequence;
     private final String yes = lm.getLabel("Yes");
     private final String no = lm.getLabel("No");
 
-    private final static Font FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
     private float yesx;
     private float yesy;     
     private float nox;
@@ -26,18 +23,17 @@ public class LoopWhile extends Unit {
     LoopWhile(LoopUnit lu) {
         diam = new Diamond(lu.getLabel());
         sequence = new Sequence(lu.getSequence());
+        font = STANDARD_FONT;
     }
 
     @Override
-    protected void layout(Drawing d) {
+	public void layoutUnit(Drawing d) {
         sequence.layout(d);
         diam.layout(d);
-
-        d.setFont(FONT);
         
         width = Math.max(sequence.getWidth(), diam.getWidth()) + 2 * SPACEX;
-        diam.center(width);
-        sequence.center(width);
+        diam.centerX(width);
+        sequence.centerX(width);
         sequence.setOffsetY(diam.getHeight() + SPACE);
         
         yesx = diam.getX(3) + BORDER;
@@ -48,12 +44,9 @@ public class LoopWhile extends Unit {
     }
 
     @Override
-    protected void drawUnit(Drawing d) {
+	public void drawUnit(Drawing d) {
         //condition diamond
         diam.draw(d);
-        
-        d.setColor(Color.BLACK);
-        d.setFont(FONT);
                
         //false skip line
         d.drawString(no, nox, noy);    

@@ -1,6 +1,7 @@
 package de.lathanda.eos.gui.objectchart;
 
 import de.lathanda.eos.base.Scaling;
+import de.lathanda.eos.gui.diagram.Unit;
 import de.lathanda.eos.gui.diagram.Drawing;
 /**
  * Zeichnet Symbol für die Skalierung.
@@ -33,7 +34,7 @@ public class ScalingValue extends Unit {
 	}
 
 	@Override
-	public void layout(Drawing d) {
+	public void layoutUnit(Drawing d) {
 		width = 8;
 		height = 8;
 	}

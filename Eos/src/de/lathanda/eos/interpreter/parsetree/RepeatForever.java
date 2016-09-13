@@ -2,6 +2,7 @@ package de.lathanda.eos.interpreter.parsetree;
 
 import java.util.ArrayList;
 
+import de.lathanda.eos.gui.diagram.LoopForeverUnit;
 import de.lathanda.eos.interpreter.Command;
 import de.lathanda.eos.interpreter.Environment;
 import de.lathanda.eos.interpreter.commands.Jump;
@@ -12,7 +13,7 @@ import de.lathanda.eos.interpreter.commands.Jump;
  * @author Peter (Lathanda) Schneider
  * @since 0.4
  */
-public class RepeatForever extends Loop {
+public class RepeatForever extends Loop implements LoopForeverUnit {
     public RepeatForever(Sequence sequence) {
         super(sequence, null);
     }  

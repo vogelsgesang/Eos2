@@ -1,10 +1,8 @@
 package de.lathanda.eos.gui.structogram;
 
-import java.awt.Color;
-import java.awt.Font;
-
 import de.lathanda.eos.common.interpreter.ProgramSequence;
 import de.lathanda.eos.gui.diagram.Drawing;
+import de.lathanda.eos.gui.diagram.Unit;
 
 /**
  * Unterprogramm.
@@ -15,18 +13,19 @@ import de.lathanda.eos.gui.diagram.Drawing;
 public class Procedure extends Unit {
     private final Sequence sequence;
     private final String title;
-    private final static Font FONT = new Font(Font.SANS_SERIF, Font.BOLD, 14);
+
     private float textx;
     private float texty;
     public Procedure(String title, ProgramSequence programSequence) {
         this.title = title;
         sequence = new Sequence(programSequence);
+        font = HEADER_FONT;
     }
 
     @Override
-    protected void layout(Drawing d) {
+	public void layoutUnit(Drawing d) {
         sequence.layout(d);
-        d.setFont(FONT);
+
         float textwidth = d.stringWidth(title);
         float textheight = d.getHeight();
         if (textwidth + 2*BORDER > sequence.getWidth()) {
@@ -42,9 +41,7 @@ public class Procedure extends Unit {
     }
 
     @Override
-    protected void drawUnit(Drawing d) {
-        d.setColor(Color.BLACK);
-        d.setFont(FONT);
+	public void drawUnit(Drawing d) {
         d.drawString(title, textx, texty);    
         sequence.draw(d);
     }

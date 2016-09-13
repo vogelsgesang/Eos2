@@ -3,38 +3,32 @@ package de.lathanda.eos.gui.flowchart;
 import de.lathanda.eos.common.interpreter.ProgramNode;
 import de.lathanda.eos.gui.diagram.Drawing;
 
-import java.awt.Color;
-import java.awt.Font;
-
 /**
  * Befehlskasten.
  *
  * @author Peter (Lathanda) Schneider
  * @since 0.8
  */
-public class Statement extends Unit {
+public class Statement extends ConnectedUnit {
     private float textheight;
     private float textwidth;
     private float textx;
     private float texty;
     private final String label;
-    private final static Font FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
     Statement(ProgramNode n) {
         label = n.getLabel();
+        font = STANDARD_FONT;
     }
     Statement(String label) {
         this.label = label;
     }
     @Override
-    protected void drawUnit(Drawing d) {
-        d.setColor(Color.BLACK);
-        d.setFont(FONT);
+	public void drawUnit(Drawing d) {
         d.drawRect(0, 0, width, height);
         d.drawString(label, textx, texty);
     };
     @Override
-    protected void layout(Drawing d) {
-        d.setFont(FONT);
+	public void layoutUnit(Drawing d) {
         textwidth = d.stringWidth(label);
         textheight = d.getHeight();
         width = textwidth + 2 * BORDER;

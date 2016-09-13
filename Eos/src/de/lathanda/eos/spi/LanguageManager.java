@@ -23,8 +23,8 @@ import javax.swing.JOptionPane;
 
 import de.lathanda.eos.base.ResourceLoader;
 import de.lathanda.eos.common.interpreter.MissingTypeException;
-import de.lathanda.eos.gui.objectchart.TextValue;
-import de.lathanda.eos.gui.objectchart.Unit;
+import de.lathanda.eos.gui.diagram.TextUnit;
+import de.lathanda.eos.gui.diagram.Unit;
 import de.lathanda.eos.gui.objectchart.UnitSource;
 import de.lathanda.eos.interpreter.MethodType;
 import de.lathanda.eos.interpreter.Type;
@@ -165,7 +165,7 @@ public class LanguageManager {
 		if (units.containsKey(value.getClass().getName())) {
 			return units.get(value.getClass().getName()).createUnit(value);
 		} else {
-			return new TextValue(value.toString());
+			return new TextUnit(value.toString());
 		}
 	}
 
@@ -390,32 +390,32 @@ public class LanguageManager {
 		String name = "";
 		name = lc.getString("map_method");
 		if (name != null && !name.isEmpty()) {
-			map_method.load(ResourceLoader.getResourceAsStream(name));
+			map_method.load(new InputStreamReader(ResourceLoader.getResourceAsStream(name),"UTF-8"));
 			lm.registerMethods(map_method);
 		}
 		name = lc.getString("map_function");
 		if (name != null && !name.isEmpty()) {
-			map_function.load(ResourceLoader.getResourceAsStream(name));
+			map_function.load(new InputStreamReader(ResourceLoader.getResourceAsStream(name),"UTF-8"));
 			lm.registerFunctions(lp.getFunctionTarget(), map_function);
 		}
 		name = lc.getString("map_assign");
 		if (name != null && !name.isEmpty()) {
-			map_assign.load(ResourceLoader.getResourceAsStream(name));
+			map_assign.load(new InputStreamReader(ResourceLoader.getResourceAsStream(name),"UTF-8"));
 			lm.registerAssigns(map_assign);
 		}
 		name = lc.getString("map_read");
 		if (name != null && !name.isEmpty()) {
-			map_read.load(ResourceLoader.getResourceAsStream(name));
+			map_read.load(new InputStreamReader(ResourceLoader.getResourceAsStream(name),"UTF-8"));
 			lm.registerReads(map_read);
 		}
 		name = lc.getString("autocompletion");
 		if (name != null && !name.isEmpty()) {
-			autocompletion.load(ResourceLoader.getResourceAsStream(name));
+			autocompletion.load(new InputStreamReader(ResourceLoader.getResourceAsStream(name),"UTF-8"));
 			lm.registerAutoComplete(autocompletion);
 		}
 		name = lc.getString("templates");
 		if (name != null && !name.isEmpty()) {
-			templates.load(ResourceLoader.getResourceAsStream(name));
+			templates.load(new InputStreamReader(ResourceLoader.getResourceAsStream(name),"UTF-8"));
 			lm.registerTemplates(templates);
 		}
 	}

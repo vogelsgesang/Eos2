@@ -1,14 +1,16 @@
 package de.lathanda.eos.gui.classchart;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
 import de.lathanda.eos.gui.diagram.Drawing;
+import de.lathanda.eos.gui.diagram.TextUnit;
+import de.lathanda.eos.gui.diagram.Unit;
 import de.lathanda.eos.interpreter.Type;
 
-public class ClassUnit {
-	private float width;
-	private float height;
+public class ClassUnit extends Unit {
+	
     private float yLabel;
     private float yProperties;
     
@@ -16,7 +18,8 @@ public class ClassUnit {
     String name;
 	LinkedList<AutoCompleteInformation> methods = new LinkedList<>();
 	LinkedList<AutoCompleteInformation> properties = new LinkedList<>();
-	LinkedList<TextBlock> text = new LinkedList<>();
+	LinkedList<TextUnit> text = new LinkedList<>();
+	ArrayList<String> tooltip = new ArrayList<>();
 	public ClassUnit(Type t) {
 		name = t.getName();
 		for(AutoCompleteInformation aci:t.getAutoCompletes()) {
@@ -25,6 +28,7 @@ public class ClassUnit {
 				methods.add(aci);
 				break;
 			case AutoCompleteInformation.PROPERTY:
+			case AutoCompleteInformation.PRIVATE:
 				properties.add(aci);
 				break;
 			}			
@@ -33,88 +37,68 @@ public class ClassUnit {
 		Collections.sort(properties, (a,b) -> {return a.getLabel().compareTo(b.getLabel());});		
 	}
 
-	
+	@Override
 	public void drawUnit(Drawing d) {
 		d.drawRect(0, 0, width, height);
-		d.drawRect(0, yLabel, width, yProperties);
-		for(TextBlock t:text) {
-			t.drawUnit(d);
+		d.drawRect(0, yLabel, width, yProperties - yLabel);
+		for(TextUnit t:text) {
+			t.draw(d);
 		}
 	}
 
-
-	public void layout(Drawing d) {
+	@Override
+	public void layoutUnit(Drawing d) {
 		//header
-		TextBlock header = new TextBlock(name);
+		TextUnit header = new TextUnit(name);
+		header.setFont(HEADER_FONT);
 		header.layout(d);
-		width = header.width;
-		height = header.height + BORDER * 2;
+		header.setOffsetX(INDENT);
+		header.setOffsetY(INDENT);
+		width = header.getWidth();
+		height = header.getHeight() + INDENT * 2;
 		text.add(header);
+		tooltip.add(null);
 		yLabel = height;
 		//properties
-		height += BORDER;
+		height += INDENT;
 		for(AutoCompleteInformation aci:properties) {
-			TextBlock prop = new TextBlock(aci.getLabelLong());
+			TextUnit prop = new TextUnit(aci.getLabelLong());
 			prop.layout(d);
-			prop.move(BORDER, height);
-			height += prop.height + BORDER;
-			if (prop.width > width) {
-				width = prop.width;
+			prop.setOffsetX(INDENT);
+			prop.setOffsetY(height);
+			height += prop.getHeight() + INDENT;
+			if (prop.getWidth() > width) {
+				width = prop.getWidth();
 			}
 			text.add(prop);
+			tooltip.add("<html><p>"+aci.getTooltip()+"</p></html>");
 		}
 		yProperties = height;
-		height += BORDER;
+		height += INDENT;
 		for(AutoCompleteInformation aci:methods) {
-			TextBlock meth = new TextBlock(aci.getLabelLong());
+			TextUnit meth = new TextUnit(aci.getLabelLong());
 			meth.layout(d);
-			meth.move(BORDER, height);
-			height += meth.height + BORDER;
+			meth.setOffsetX(INDENT);
+			meth.setOffsetY(height);
+			height += meth.getHeight() + INDENT;
 			text.add(meth);
-			if (meth.width > width) {
-				width = meth.width;
+			tooltip.add("<html><p>"+aci.getTooltip()+"</p></html>");
+			if (meth.getWidth() > width) {
+				width = meth.getWidth();
 			}
 		}
 		//adjust width
 		width += 2*BORDER;
-		header.move((width - header.width) / 2, 0);		
 	}
-    public final void draw(Drawing d) {
-        d.pushTransform();
-        drawUnit(d);
-        d.popTransform();
-    }
-    public float getWidth() {
-        return width;
-    }
 
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    public float getHeight() {
-        return height;
-    }
-    class TextBlock {
-    	float width;
-    	float height;
-    	float x;
-    	float y;
-    	String text;
-    	public TextBlock(String text) {
-    		this.text = text;
-    	}
-    	public void drawUnit(Drawing d) {
-    		d.drawString(text, x, y);
-    	}
-    	public void layout(Drawing d) {
-    		this.height = d.getHeight();
-    		this.width = d.stringWidth(text);
-    		this.y = d.getAscent();
-    	}    	
-    	public void move(float dx, float dy) {
-    		x += dx;
-    		y += dy;
-    	}
-    }
+	public String getToolTipText(float x, float y) {
+		int i = 0;
+		for(TextUnit tu : text ) {
+			if (tu.getOffsetX() < x && x < tu.getRight() && tu.getOffsetY() < y && y < tu.getBottom()) {
+				return tooltip.get(i);
+			}
+			i++;
+		}
+		return null;
+	}
 }

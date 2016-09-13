@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import de.lathanda.eos.common.interpreter.ProgramSequence;
 import de.lathanda.eos.gui.diagram.Drawing;
+import de.lathanda.eos.gui.diagram.Unit;
 
 /**
  * Befehlssequenz.
@@ -18,19 +19,19 @@ public class Sequence extends Unit {
         units = new ArrayList<>();
         if (programSequence != null) {
         	programSequence.getInstructions().stream().forEachOrdered((n) -> {
-                units.add(Unit.create(n));
+                units.add(Toolkit.create(n));
             });
         }
     }
     @Override
-    protected void drawUnit(Drawing d) {
+	public void drawUnit(Drawing d) {
         d.setColor(Color.BLACK);
         d.drawRect(0, 0, width, height);  
         units.stream().forEachOrdered(p -> p.draw(d));
     }
 
     @Override
-    protected void layout(Drawing d) {
+	public void layoutUnit(Drawing d) {
         units.forEach(p -> p.layout(d));
         float maxw = 0;
         float h = 0;

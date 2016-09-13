@@ -2,7 +2,6 @@ package de.lathanda.eos.gui.flowchart;
 
 import de.lathanda.eos.gui.diagram.Drawing;
 import de.lathanda.eos.gui.diagram.LoopForeverUnit;
-import java.awt.Color;
 
 /**
  * Endlosschleife.
@@ -10,16 +9,17 @@ import java.awt.Color;
  * @author Peter (Lathanda) Schneider
  * @since 0.8
  */
-public class LoopForever extends Unit {
+public class LoopForever extends ConnectedUnit {
     private final Sequence sequence;    
     private float center;
     LoopForever(LoopForeverUnit n) {
         sequence = new Sequence(n.getSequence());
         neverEnds = true;
         needsIncomingArrow = false;
+        font = STANDARD_FONT;        
     }
     @Override
-    protected void layout(Drawing d) {
+	public void layoutUnit(Drawing d) {
         sequence.layout(d);
         sequence.setOffsetY(SPACE);
         sequence.setOffsetX(SPACE);
@@ -29,12 +29,10 @@ public class LoopForever extends Unit {
     }
 
     @Override
-    protected void drawUnit(Drawing d) {
+	public void drawUnit(Drawing d) {
         sequence.draw(d);
-        d.setColor(Color.BLACK);
                
         //draw back jump
-        d.setColor(Color.BLACK);
         d.drawLine(center, height - SPACE, center, height);
         d.drawLine(center, height, width, height);
         d.drawLine(width, height, width, 0);

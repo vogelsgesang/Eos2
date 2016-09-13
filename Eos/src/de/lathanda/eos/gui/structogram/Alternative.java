@@ -2,8 +2,7 @@ package de.lathanda.eos.gui.structogram;
 
 import de.lathanda.eos.gui.diagram.AlternativeUnit;
 import de.lathanda.eos.gui.diagram.Drawing;
-import java.awt.Color;
-import java.awt.Font;
+import de.lathanda.eos.gui.diagram.Unit;
 
 /**
  * Alternativebefehlssequenzen.
@@ -16,11 +15,10 @@ public class Alternative extends Unit {
     private final Sequence A; //true
     private final Sequence B; //false
     private final String label;
-    private final String yes = lm.getLabel("Yes");
-    private final String no = lm.getLabel("No");
+    private final String yes = Unit.getLabel("Yes");
+    private final String no = Unit.getLabel("No");
     private float condy;
     private float condx;
-    private final static Font FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
     private float textx;
     private float texty;     
     private float yesx;
@@ -31,13 +29,13 @@ public class Alternative extends Unit {
         label = au.getLabel();
         A = new Sequence(au.getThen());
         B = new Sequence(au.getElse());
+        font = STANDARD_FONT;
     }
 
     @Override
-    protected void layout(Drawing d) {
+	public void layoutUnit(Drawing d) {
         A.layout(d);
         B.layout(d);
-        d.setFont(FONT);
         float textwidth = d.stringWidth(label);
         float textheight = d.getHeight();
         if (2 * textwidth > A.getWidth() + B.getWidth()) {
@@ -62,9 +60,7 @@ public class Alternative extends Unit {
         height = condy + Math.max(A.getHeight(), B.getHeight());
     }
     @Override
-    protected void drawUnit(Drawing d) {
-        d.setColor(Color.BLACK);
-        d.setFont(FONT);
+	public void drawUnit(Drawing d) {
         d.drawRect(0, 0, width, height);
         d.drawString(label, textx, texty);    
         d.drawString(yes, yesx, yesy);    

@@ -1,6 +1,7 @@
 package de.lathanda.eos.gui.objectchart;
 
 import de.lathanda.eos.gui.diagram.Drawing;
+import de.lathanda.eos.gui.diagram.Unit;
 import de.lathanda.eos.robot.Direction;
 /**
  * Zeichnet Symbol für die Richtung.
@@ -35,7 +36,7 @@ public class DirectionValue extends Unit {
 	}
 
 	@Override
-	public void layout(Drawing d) {
+	public void layoutUnit(Drawing d) {
 		width = 6;
 		height = 5;
 	}

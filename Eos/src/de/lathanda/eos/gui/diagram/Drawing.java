@@ -36,9 +36,13 @@ public class Drawing {
      */
     private final float fontScale2pixel;
     /**
-     * Zeichenfont.
+     * Zeichen Schriftart.
      */
-    private Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
+    private Font font;
+    /**
+     * Original Schriftart
+     */
+    private Font originalFont;
     /**
      * Verschiebungsstack.
      */
@@ -76,6 +80,7 @@ public class Drawing {
         scale = dpi / 25.4f;
         fontScale2pixel = dpi / 72f; 
         this.g = g;
+        setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON); 
 
@@ -143,8 +148,16 @@ public class Drawing {
      * @param font
      */
     public void setFont(Font font) {
+    	originalFont = font;
         this.font = font.deriveFont(font.getSize2D() * fontScale2pixel);
         g.setFont(this.font);
+    }
+    /**
+     * Liefert aktuelle Schriftart
+     * @return
+     */
+    public Font getFont() {
+    	return originalFont;
     }
     /**
      * Setzt die Breite gezeichneter Linien.
@@ -272,6 +285,14 @@ public class Drawing {
     public int convertmm2pixel(float mm) {
         return (int)(mm * scale);
     }
+    /**
+     * Rechnet Pixel in mm um.
+     * @param Pixel
+     * @return
+     */
+    public float convertpixel2mm(int pixel) {
+        return pixel / scale;
+    }    
     private static class Translation {
     	float x;
     	float y;
