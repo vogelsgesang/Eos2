@@ -84,7 +84,7 @@ public class Machine implements AbstractMachine {
     	}
     }
     private DebugPoint getDebugPoint(int linenumber) {
-    	if (!breakpoints.containsKey(linenumber)) {
+    	if (breakpoints.containsKey(linenumber)) {
     		return breakpoints.get(linenumber);
     	} else {
     		Map.Entry<Integer,DebugPoint> entry = breakpoints.higherEntry(linenumber);
