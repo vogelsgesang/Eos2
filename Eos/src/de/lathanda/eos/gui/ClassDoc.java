@@ -100,7 +100,22 @@ public class ClassDoc extends JFrame {
 		}
 
 		TreeEntry(de.lathanda.eos.interpreter.Type type) {
-			this.text = type.getName();
+			StringBuffer title = new StringBuffer();
+			boolean first = true;
+			title.append("<html><p>");
+			for(de.lathanda.eos.interpreter.Type sup : type.getTypeList()) {
+				if (!first) {
+					title.append("\u2192");
+					title.append(sup.getName());
+				} else {
+					title.append("<b>");
+					title.append(sup.getName());
+					title.append("</b>");
+					first = false;
+				}
+			}
+			title.append("</p></html>");
+			this.text = title.toString();
 			this.type = AutoCompleteInformation.CLASS;
 			this.tooltip = "";
 		}
