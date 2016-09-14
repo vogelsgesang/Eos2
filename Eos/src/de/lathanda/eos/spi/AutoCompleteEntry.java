@@ -67,16 +67,19 @@ public class AutoCompleteEntry  implements Comparable<AutoCompleteEntry>, AutoCo
 		}
 		switch (description.charAt(0)) {
 		case '@':
-			type = 0;
+			type = AutoCompleteInformation.METHOD;
 			break;
 		case '%':
-			type = 1;
+			type = AutoCompleteInformation.PROPERTY;
 			break;
 		case '!':
-			type = 2;
+			type = AutoCompleteInformation.CLASS;
+			break;
+		case '$':
+			type = AutoCompleteInformation.PRIVATE;
 			break;
 		default:
-			type = 0;
+			type = AutoCompleteInformation.METHOD;
 		}
 	}	
 	/**

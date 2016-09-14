@@ -1,4 +1,4 @@
-#<Type> "." <Maske nach der gesucht wird> "=" ("@" Methode | "%" Attribut | "!" Klasse | "#" Privates Attribut) <Template>  "#" <Erkl�render Text>
+#<Type> "." <Maske nach der gesucht wird> "=" ("@" Methode | "%" Attribut | "!" Klasse | "$" Privates Attribut) <Template>  "#" <Erkl�render Text>
 class.Boolean             = !Boolean#Ein Wahrheitswert.
 class.Farbe               = !Farbe#Eine Farbe.
 class.Real                = !Real#Eine Kommazahl. zB 6.17 (Punkt statt Komma!). 
@@ -19,6 +19,9 @@ class.Fenster             = !Fenster#Ein Fenster.
 triangle.eckensetzen         = @eckenSetzen(x1,y1,x2,y2,x3,y3)#eckenSetzen(x1:Zahl,y1:Zahl,x2:Zahl,y2:Zahl,x3:Zahl,y3:Zahl)<br>Setzt alle drei Ecken des Dreiecks.
 triangle.spiegelex           = @spiegeleX()#spiegeleX()<br>Spiegelt das Dreieck an der y-Achse.
 triangle.spiegeley           = @spiegeleY()#spiegeleY()<br>Spiegelt das Dreieck an der x-Achse.
+triangle.a                   = $a#a:Punkt<br>Ecke des Dreiecks.
+triangle.b                   = $b#b:Punkt<br>Ecke des Dreiecks.
+triangle.c                   = $c#c:Punkt<br>Ecke des Dreiecks.
 
 ellipse.mitteysetzen        = @mitteYSetzen(y)#mitteYSetzen(y:Zahl)<br>Setzt die y-Koordinate des Mittelpunktes.
 ellipse.mittexsetzen        = @mitteXSetzen(x)#mitteXSetzen(x:Zahl)<br>Setzt die x-Koordinate des Mittelpunktes.
@@ -62,6 +65,7 @@ window.oben                = %oben#oben:Zahl<br>Oberer Abstand des Fensters zum 
 window.links               = %links#links:Zahl<br>Linker Abstand des Fensters zum Bildschirmrand.
 window.name                = %name#name:Zeichenkette<br>Titel des Fensters.
 window.strichabstand       = %strichAbstand#strichAbstand:Zahl<br>Gitterabstand des Koordinatensystems.
+window.gridvisible         = $gitterSichtbar#gitterSichtbar:Wahrheitswert<br>Ist das Koordinatengitter sichtbar?
 
 figure.verschieben         = @verschieben(dx,dy)#verschieben(dx:Zahl,dy:Zahl)<br>Verschiebt die Figur.
 figure.strecken            = @strecken(faktor)#strecken(faktor:Zahl)<br>Streckt die Figur.
@@ -78,7 +82,8 @@ figure.ylesen              = @yLesen()#yLesen():Zahl<br>Liefert die y-Koordinate
 figure.sichtbar            = %sichtbar#sichtbar:Wahrheitswert<br>Ist die Figur sichtbar? 
 figure.x                   = %x#x:Zahl<br>Die x-Koordinate der Figur (Mittelpunkt)
 figure.y                   = %y#y:Zahl<br>Die y-Koordinate der Figur (Mittelpunkt)
-
+figure.angle               = $winkel#winkel:Zahl<br>Winkel um den die Figur gedreht wurde.
+figure.mirrored            = $gespiegelt#gespiegelt:Wahrheitswert<br>Ist die Figur gespiegelt?
 
 filledfigure.f\u00fcllartsetzen  = @f�llartSetzen(art)#f\u00fcllartSetzen(art:F\u00fcllart)<br>Setzt die Art wie die Figur gef\u00fcllt wird.
 filledfigure.f\u00fcllfarbesetzen = @f\u00fcllfarbeSetzen(farbe)#f\u00fcllfarbeSetzen(farbe:Farbe)<br>Setzt die Farbe mit der die Figur gef\u00fcllt wird.
@@ -97,6 +102,8 @@ group.zentrumsetzen       = @zentrumSetzen(x,y)#zentrumSetzen(x:Zahl,y:Zahl)<br>
 group.kopiere             = @kopiere(figur)#kopiere(figur:Figur)<br>Erzeugt eine Kopie der Figur und f\u00fcgt die Kopie der Gruppe hinzu.
 group.spieglex            = @spiegleX()#spiegleX()<br>Spiegelt die Gruppe an der y-Achse.
 group.spiegley            = @spiegleY()#spiegleY()<br>Spiegelt die Gruppe an der x-Achse.
+group.autocenter           = $zentrieren#zentrieren:Wahrheitswert<br>Verschiebt die Gruppe ihr Zentrum automatisch zum Schwerpunkt? 
+group.members              = $teile#teile:Zahl<br>Anzahl der Figuren innerhalb der Gruppe.
 
 circle.mitteysetzen        = @mitteYSetzen(y)#mitteYSetzen(y:Zahl)<br>Setzt die y-Koordinate des Mittelpunktes.
 circle.mittexsetzen        = @mitteXSetzen(x)#mitteXSetzen(x:Zahl)<br>Setzt die x-Koordinate des Mittelpunktes.
@@ -194,11 +201,14 @@ textfield.ausrichtungvertikal = %ausrichtungVertikal#ausrichtungVertikal:Ausrich
 textfield.ausrichtungHorizontal = %ausrichtungHorizontal#ausrichtungHorizontal:Ausrichtung<br>Horizontale Ausrichtung des Textes.
 textfield.gr\u00f6\u00dfeautomatischanpassen = %gr\u00f6\u00dfeAutomatischAnpassen#gr\u00f6\u00dfeAutomatischAnpassen:Wahrheitswert<br>Automatische Anpassung des Rechtecks an den Text.
 textfield.durchsichtig        = %durchsichtig#durchsichtig:Wahrheitswert<br>Ist das Textfeld durchsichtig?
+textfield.text                = $text#text:Zeichenkette<br>Text.
 
 grafic.ladebild            = @ladeBild(dateiname)#ladeBild(dateiname:Zeichenkette)<br>L\u00e4dt das Hintergrundbild.
 grafic.bildstrecken        = @bildStrecken()#bildStrecken()<br>Das Bild wird auf das Rechteck gestreckt. Das Bild wird verzerrt.
 grafic.bildabschneiden     = @bildAbschneiden()#bildAbschneiden()<br>Das Bild wird \u00fcber das Rechteck gelegt. Wobei Teile des Bildes nicht genutzt werden. 
 grafic.bildeinpassen       = @bildEinpassen()#bildEinpassen()<br> Das Bild wird so gro\u00dfe wie m\u00f6glich bis es den Rand erreicht. Das Rechteck wird nicht vollst\u00e4ndig bedeckt.
+grafic.skalierung          = $skalierung#skalierung:F\u00fc"llmodus<br>Legt fest wie das Rechteck mit dem Bild gef\u00fcllt wird. 
+grafic.bild                = $bild#bild:Zeichenkette<br>Name des Bilddatei.
 
 plotter.stiftab             = @stiftAb()#stiftAb()<br>Startet einen Zeichenvorgang.
 plotter.stiftauf            = @stiftAuf()#stiftAuf()<br>Beendet einen Zeichenvorgang.
@@ -228,4 +238,5 @@ plotter.turtlex             = %x#x:Zahl<br>x-Koordinate des Stiftes
 plotter.turtley             = %y#y:Zahl<br>y-Koordinate des Stiftes
 plotter.kurs                = %kurs#kurs:Zahl<br>Bewegungsrichtung des Stiftes in Grad.
 plotter.turtlesichtbar      = %turtleSichtbar#turtleSichtbar:Wahrheitswert<br>Ist der Stift sichtbar?
-
+plotter.stiftunten          = $stiftunten#stiftunten:Wahrheitswert<br>Wird gerade gezeichnet?
+plotter.stiftfarbe          = $stiftfarbe#stiftfarbe:Farbe<br>Zeichenfarbe.

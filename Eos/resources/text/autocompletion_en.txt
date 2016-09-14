@@ -1,4 +1,4 @@
-#<type> "." <pattern that is matched> "=" ("@" method | "%" property | "!" class | "#" private property) <template>  "#" <explanation>
+#<type> "." <pattern that is matched> "=" ("@" method | "%" property | "!" class | "$" private property) <template>  "#" <explanation>
 class.Boolean             = !Boolean#A logical value.
 class.Color               = !Color#A Color.
 class.Real                = !Real#A floating point number. 
@@ -19,6 +19,9 @@ class.Window              = !Window#A window.
 triangle.setcorners       = @setCorners(x1,y1,x2,y2,x3,y3)#setCorners(x1:Number,y1:Number,x2:Number,y2:Number,x3:Number,y3:Number)<br>Sets all three corners of the triangle.
 triangle.mirrorx          = @mirrorX()#mirrorX()<br>Mirrors the triangle at the y axis.
 triangle.mirrory          = @mirrorY()#mirrorY()<br>Mirrors the triangle at the x axis.
+triangle.a                   = $a#a:Point<br>Vertice of the triangle.
+triangle.b                   = $b#b:Point<br>Vertice of the triangle.
+triangle.c                   = $c#c:Point<br>Vertice of the triangle.
 
 ellipse.setcentery          = @setCenterY(y)#setCenterY(y:Number)<br>Sets the y-coordinate of the center.
 ellipse.setcenterx          = @setCenterX(x)#cetCenterX(x:Number)<br>Sets the x-xoordinate of the center.
@@ -62,6 +65,7 @@ window.top                = %top#top:Number<br>The distance between the window a
 window.left               = %left#left:Number<br>The distance between the window and the left screen border.
 window.name               = %name#name:String<br>The title of the window.
 window.gridwidth          = %gridwidth#gridwidth:Number<br>The grid width of the coordinate system.
+window.gridvisible        = $gridvisible#gridvisible:Boolean<br>Is the grid visible?
 
 figure.move               = @move(dx,dy)#move(dx:Number,dy:Number)<br>Moves the figure.
 figure.stretch            = @stretch(factor)#stretch(factor:Number)<br>Stretches the figure.
@@ -78,7 +82,8 @@ figure.gety               = @getY()#getY():Number<br>Returns the y coordinate of
 figure.visible            = %visible#visible:Boolean<br>Is the figure visible? 
 figure.x                  = %x#x:Number<br>The x coordinate of the center of this figure.
 figure.y                  = %y#y:Number<br>the y coordinate of the center of this figure.
-
+figure.angle               = $angle#angle:Number<br>The figure is turned for that angle.
+figure.mirrored            = $mirrored#mirrored:Number<br>Is the figure mirrored?
 
 filledfigure.setfillstyle   = @setFillStyle(style)#setFillStyle(style:FillStyle)<br>Sets the style used to fill the figure.
 filledfigure.setfillcolor   = @setFillColor(color)#setFillColor(color:Color)<br>Sets the color used to fill the figure.
@@ -97,6 +102,8 @@ group.setCenter            = @setCenter(x,y)#setCenter(x:Number,y:Number)<br>Set
 group.copy                 = @copy(figure)#copy(figure:Figure)<br>Adds a copy of the figure to this group.
 group.mirrorx              = @mirrorX()#mirrorX()<br>Mirrors the group at the y axis.
 group.mirrory              = @mirrorY()#mirrorY()<br>Mirrors the group at the x axis.
+group.autocenter           = $autocenter#autocenter:Boolean<br>Will that group automatically choose the balance point as center?
+group.members              = $members#members:Number<br>Number of members in that group.
 
 circle.setcentery          = @setCenterY(y)#setCenterY(y:Number)<br>Sets the y coordinate of the center.
 circle.setcenterx          = @setCenterX(x)#setCenterX(x:Number)<br>Sets the x coordinate of the center.
@@ -194,11 +201,14 @@ textfield.alignmentvertical      = %alignmentVertical#alignmentVertical:Alignmen
 textfield.alignmenthorizontal    = %alignmentHorizontal#alignmentHorizontal:Alignment<br>Horizontal alignment of the text.
 textfield.autoadjustsize         = %autoAdjustSize#autoAdjustSize:Boolean<br>Is the rectangle automatically adjusted to it's content?
 textfield.hideborder             = %hideBorder#hideBorder:Boolean<br>Is the rectangle border hidden?
+textfield.text                   = $text#text:Zeichenkette<br>Text.
 
 grafic.loadimage    = @loadImage(filename)#loadImage(filename:String)<br>Loads the background image.
 grafic.stretchimage = @stretchImage()#stretchImage()<br>The image will be stretch to the size of the rectangle, which violates its propoertions.
 grafic.cutimage     = @cutImage()#cutImage()<br>The image will cover the rectangle completely, parts that are outside the rectangle will be cut off. 
 grafic.fitimage     = @fitImage()#fitImage()<br>The image will be displayed as big as posible within the rectangle, some parts of the rectangle may not be covered.
+grafic.mode         = $scaling#scaling:FillMode<br>Determines how the image will fill the rectangle. 
+grafic.image        = $image#image:String<br>Name of the image file.
 
 plotter.pendown        = @penDown()#penDown()<br>Starts drawing.
 plotter.penup          = @penUp()#penUp()<br>Stops drawing.
@@ -228,4 +238,5 @@ plotter.penx           = %x#x:Number<br>x coordinate of the pen.
 plotter.peny           = %y#y:Number<br>y coordinate of the pen.
 plotter.course         = %course#course:Number<br>Moving course of the pen.
 plotter.penvisible     = %penVisible#penVisible:Boolean<br>Is the pen shown?
-
+plotter.plotting       = $plotting#plotting:Boolean<br>Is the plotter drawing?
+plotter.penColor       = $penColor#penColor:Color<br>Drawingcolor.

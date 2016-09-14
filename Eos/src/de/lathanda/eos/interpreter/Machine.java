@@ -14,6 +14,7 @@ import de.lathanda.eos.interpreter.exceptions.ProgramTerminationException;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
@@ -64,7 +65,7 @@ public class Machine implements AbstractMachine {
         dmc.remove(dl);
     }
     public void setBreakpoint(int linenumber, boolean active) {
-    	DebugPoint debug = breakpoints.get(linenumber);
+    	DebugPoint debug = getDebugPoint(linenumber);
     	if (debug != null) {
     		debug.setActiveBreakpoint(active);
     	}
@@ -75,14 +76,25 @@ public class Machine implements AbstractMachine {
     	}
     }
     public boolean hasBreakpoint(int linenumber) {
-    	DebugPoint debug = breakpoints.get(linenumber);
+    	DebugPoint debug = getDebugPoint(linenumber);
     	if (debug != null) {
     		return debug.isActiveBreakpoint();
     	} else {
     		return false;
     	}
     }
-
+    private DebugPoint getDebugPoint(int linenumber) {
+    	if (!breakpoints.containsKey(linenumber)) {
+    		return breakpoints.get(linenumber);
+    	} else {
+    		Map.Entry<Integer,DebugPoint> entry = breakpoints.higherEntry(linenumber);
+    		if (entry == null) {
+    			return null;
+    		} else {
+    			return  entry.getValue();
+    		}
+    	}
+    }
     public void reinit() {
         userfunction.clear();
         global = new Context();
