@@ -85,7 +85,7 @@ figure.y                   = %y#y:Zahl<br>Die y-Koordinate der Figur (Mittelpunk
 figure.angle               = $winkel#winkel:Zahl<br>Winkel um den die Figur gedreht wurde.
 figure.mirrored            = $gespiegelt#gespiegelt:Wahrheitswert<br>Ist die Figur gespiegelt?
 
-filledfigure.f\u00fcllartsetzen  = @f�llartSetzen(art)#f\u00fcllartSetzen(art:F\u00fcllart)<br>Setzt die Art wie die Figur gef\u00fcllt wird.
+filledfigure.f\u00fcllartsetzen  = @f\u00fcllartSetzen(art)#f\u00fcllartSetzen(art:F\u00fcllart)<br>Setzt die Art wie die Figur gef\u00fcllt wird.
 filledfigure.f\u00fcllfarbesetzen = @f\u00fcllfarbeSetzen(farbe)#f\u00fcllfarbeSetzen(farbe:Farbe)<br>Setzt die Farbe mit der die Figur gef\u00fcllt wird.
 filledfigure.f\u00fcllartlesen   = @f\u00fcllartLesen()#f\u00fcllartLesen():F\u00fcllart<br>Liefert die F\u00fcllart der Figur.
 filledfigure.f\u00fcllfarbelesen = @f\u00fcllfarbeLesen()#f\u00fcllfarbeLesen()Farbe<br>Liefert die Farbe mit der die Figur gef\u00fcllt wird.

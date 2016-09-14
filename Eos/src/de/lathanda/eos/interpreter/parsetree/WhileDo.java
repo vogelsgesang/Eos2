@@ -50,6 +50,6 @@ public class WhileDo extends Loop {
 
     @Override
     public boolean isPre() {
-        return false;
+        return true;
     }    
 }
