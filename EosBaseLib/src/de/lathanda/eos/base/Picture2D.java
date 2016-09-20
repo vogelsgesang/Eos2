@@ -33,8 +33,8 @@ public class Picture2D extends Picture {
     private double gridwidth = 10;
     private static double GRID_LINE_WIDTH = 0.25;
     private static double AXIS_LINE_WIDTH = 1;
-    private final LineDescriptor gridline = new LineDescriptor(Color.BLACK, LineStyle.SOLID, GRID_LINE_WIDTH);
-    private final LineDescriptor axesline = new LineDescriptor(Color.BLACK, LineStyle.SOLID, AXIS_LINE_WIDTH);    
+    private final LineDescriptor gridline = new LineDescriptor(new Color(128,128,128), LineStyle.SOLID, GRID_LINE_WIDTH);
+    private final LineDescriptor axesline = new LineDescriptor(new Color(128,128,128), LineStyle.SOLID, AXIS_LINE_WIDTH);    
     private boolean gridvisible = true;
     //coordinate transformation
     protected int pCenterX;

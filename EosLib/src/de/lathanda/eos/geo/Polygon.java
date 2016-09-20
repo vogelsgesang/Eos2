@@ -20,6 +20,7 @@ public class Polygon extends FilledFigure {
 
 	public Polygon() {
 		points = new ArrayList<>();
+		line.setDrawWidth(0.5f);
 	}
 
 	@Override

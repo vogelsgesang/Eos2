@@ -19,6 +19,7 @@ public class Line extends LineFigure {
     public Line() {
         super();
         a = new Point(10, -10);
+		line.setDrawWidth(0.5f);        
     }
 
     @Override
