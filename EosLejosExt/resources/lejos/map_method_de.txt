@@ -1,8 +1,8 @@
 carev3.verbinden(1)           = connect,string
 carev3.linksdrehen(1)         = turnLeft,integer
 carev3.rechtsdrehen(1)        = turnRight,integer
-carev3.vorwärtsfahren(1)      = driveForward,integer
-carev3.rückwärtsfahren(1)     = driveBackward,integer
+carev3.vorwÃ¤rtsfahren(1)      = driveForward,integer
+carev3.rÃ¼ckwÃ¤rtsfahren(1)     = driveBackward,integer
 carev3.hupen(0)               = honk
 carev3.abstand(0)             = readDistanceSensor,integer
 carev3.winkel(0)              = readAngleSensor,integer
