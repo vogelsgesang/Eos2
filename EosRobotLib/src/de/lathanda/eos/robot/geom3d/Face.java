@@ -13,16 +13,16 @@ public class Face {
 	public final VerticeTexture[] vt;
 	public final VerticeNormal[] vn;
 	public final Material m;
-	public final int TYPE;
+	public final int type;
     public Face(Vertice[] v, VerticeTexture[] vt, VerticeNormal[] vn, Material m) {
         this.v = v;
         this.vt = vt;
         this.vn = vn;
         this.m = m;
         switch (v.length) {
-        case 3: TYPE = GL2.GL_TRIANGLES; break;
-        case 4: TYPE = GL2.GL_QUADS; break;
-        default: TYPE = GL2.GL_POLYGON;
+        case 3: type = GL2.GL_TRIANGLES; break;
+        case 4: type = GL2.GL_QUADS; break;
+        default: type = GL2.GL_POLYGON;
         }
     }
 }

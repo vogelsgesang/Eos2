@@ -10,21 +10,15 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.io.IOException;
 import java.util.Map.Entry;
-import java.util.TreeMap;
-
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLEventListener;
-import com.jogamp.opengl.GLException;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.FPSAnimator;
-import com.jogamp.opengl.util.texture.Texture;
-import com.jogamp.opengl.util.texture.awt.AWTTextureData;
-
 import de.lathanda.eos.base.ResourceLoader;
 import de.lathanda.eos.robot.Column;
 import de.lathanda.eos.robot.Coordinate;
@@ -32,7 +26,6 @@ import de.lathanda.eos.robot.Cube;
 import de.lathanda.eos.robot.Entrance;
 import de.lathanda.eos.robot.Robot;
 import de.lathanda.eos.robot.World;
-import de.lathanda.eos.robot.geom3d.Face;
 import de.lathanda.eos.robot.geom3d.Material;
 import de.lathanda.eos.robot.geom3d.ObjLoader;
 import de.lathanda.eos.robot.geom3d.Polyhedron;
@@ -132,10 +125,8 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 
 	@Override
 	public void dispose(GLAutoDrawable glad) {
-		for (Texture texture : textures.values()) {
-			texture.destroy(glad.getGL());
-		}
-		textures.clear();
+		GLObjectBuffer.clear(glad.getGL());
+		GLTextureBuffer.clear(glad.getGL());
 	}
 
 	@Override
@@ -271,7 +262,6 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 	private static Polyhedron robotObj;
 	private static Polyhedron entranceObj;
 	private static Polyhedron cursorObj;
-	private TreeMap<Material, Texture> textures = new TreeMap<>();
 
 	private static Color CURSOR_COLOR = new Color(1f, 1f, 0f, .5f);
 	public static double WIDTH = 1d;
@@ -285,7 +275,8 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 
 	public void renderWorld(GL2 gl) {
 		// floor
-		openMaterial(FLOOR_MATERIAL, Color.GREEN, gl);
+		GLTextureBuffer floor = GLTextureBuffer.get(FLOOR_MATERIAL); 
+		floor.openMaterial(Color.GREEN, gl);
 		gl.glBegin(GL2.GL_QUADS);
 		gl.glNormal3f(0f, 0f, 1f);
 		double left = world.getxRange().getMin() - 10.5d;
@@ -301,7 +292,7 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 		gl.glTexCoord2d(width, 0);
 		gl.glVertex3d((left + width) * WIDTH, bottom * DEPTH, 0);
 		gl.glEnd();
-		closeMaterial(FLOOR_MATERIAL, gl);
+		floor.closeMaterial(gl);
 
 		// render columns with stones
 		synchronized (world.getColumns()) {
@@ -386,77 +377,7 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 		}
 	}
 
-	public void openMaterial(Material m, Color base, GL2 gl) {
-		gl.glColor4ub((byte) base.getRed(), (byte) base.getGreen(), (byte) base.getBlue(), (byte) base.getAlpha());
-
-		if (m.ka != null) {
-			gl.glMaterialfv(GL.GL_FRONT, GL2.GL_AMBIENT, m.ka, 0);
-		} else {
-			gl.glMaterialfv(GL.GL_FRONT, GL2.GL_AMBIENT, base.getComponents(null), 0);
-		}
-		if (m.kd != null) {
-			gl.glMaterialfv(GL.GL_FRONT, GL2.GL_DIFFUSE, m.kd, 0);
-		} else {
-			gl.glMaterialfv(GL.GL_FRONT, GL2.GL_DIFFUSE, base.getComponents(null), 0);
-		}
-		if (m.ks != null) {
-			gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, m.ks, 0);
-		} else {
-			gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, base.getComponents(null), 0);
-		}
-		if (m.image != null) {
-			try {
-				Texture texture = getTexture(m, gl);
-				texture.enable(gl);
-				texture.bind(gl);
-				gl.glEnable(GL.GL_TEXTURE);
-				gl.glTexEnvi(GL2.GL_TEXTURE_ENV, GL2.GL_TEXTURE_ENV_MODE, GL2.GL_REPLACE);
-			} catch (GLException gle) {
-				System.err.println(gle.getMessage());
-			}
-		}
-	}
-
-	private Texture getTexture(Material m, GL2 gl) {
-		Texture texture = textures.get(m);
-		if (texture == null) {
-			AWTTextureData atd = new AWTTextureData(GLProfile.get(GLProfile.GL2), GL.GL_RGBA, GL.GL_RGBA, false,
-					m.image);
-			texture = new Texture(gl, atd);
-			texture.setTexParameterf(gl, GL2.GL_TEXTURE_WRAP_S, GL2.GL_REPEAT);
-			texture.setTexParameterf(gl, GL2.GL_TEXTURE_WRAP_T, GL2.GL_REPEAT);
-			textures.put(m, texture);
-		}
-		return texture;
-	}
-
-	public void closeMaterial(Material m, GL2 gl) {
-		if (m.image != null) {
-			Texture texture = getTexture(m, gl);
-			texture.disable(gl);
-			gl.glDisable(GL.GL_TEXTURE);
-		}
-	}
-
-	private void renderFace(Face f, Color base, GL2 gl) {
-		openMaterial(f.m, base, gl);
-		gl.glBegin(f.TYPE);
-		for (int i = 0; i < f.v.length; i++) {
-			if (f.vn != null) {
-				gl.glNormal3f(f.vn[i].dx, f.vn[i].dy, f.vn[i].dz);
-			}
-			if (f.vt != null) {
-				gl.glTexCoord2f(f.vt[i].u, 1 - f.vt[i].v); // I have no idea why
-															// jogamp is
-															// inverted
-			}
-			gl.glVertex3f(f.v[i].x, f.v[i].y, f.v[i].z);
-
-		}
-		gl.glEnd();
-		closeMaterial(f.m, gl);
-	}
 	private void renderPolyhedron(Polyhedron poly, Color base, GL2 gl) {
-		poly.faces.stream().forEach(f -> renderFace(f, base, gl));      
+		GLObjectBuffer.get(poly).render(base, gl);
 	}
 }
