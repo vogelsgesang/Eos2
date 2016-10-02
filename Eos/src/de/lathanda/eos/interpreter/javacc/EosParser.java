@@ -4,16 +4,25 @@ import java.util.Locale;
 
 import de.lathanda.eos.interpreter.Program;
 
-public interface EosParser {
-	void Parse(Program program, String path) throws ParseException;
+public abstract class EosParser {
+	protected StringCharStream scs;
+	public abstract void Parse(Program program, String path) throws ParseException;
 	public static EosParser create(String code) {
+		StringCharStream scs = new StringCharStream(code);
 		switch (Locale.getDefault().getLanguage()) {
 		case "de":
-			ParserTokenManager tokenmanager = new ParserTokenManager(new StringCharStream(code));
-			return new Parser(tokenmanager);
+			ParserTokenManager tokenmanager = new ParserTokenManager(scs);
+			Parser parser = new Parser(tokenmanager);
+			parser.scs = scs;
+			return parser;
 		default:
-			EnParserTokenManager entokenmanager = new EnParserTokenManager(new StringCharStream(code));
-			return new EnParser(entokenmanager);
+			EnParserTokenManager entokenmanager = new EnParserTokenManager(scs);
+			EnParser enparser = new EnParser(entokenmanager);
+			enparser.scs = scs;
+			return enparser;
 		}
+	}
+	public int getLine(int pos) {
+		return scs.getLine(pos);
 	}
 }

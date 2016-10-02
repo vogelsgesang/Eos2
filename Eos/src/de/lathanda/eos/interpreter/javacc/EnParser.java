@@ -3,15 +3,14 @@
 package de.lathanda.eos.interpreter.javacc;
 import de.lathanda.eos.interpreter.parsetree.*;
 import de.lathanda.eos.interpreter.*;
+import de.lathanda.eos.common.interpreter.*;
 import de.lathanda.eos.base.*;
 import de.lathanda.eos.common.*;
-import de.lathanda.eos.common.interpreter.Marker;
-
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 @SuppressWarnings("unused")
-public class EnParser implements EosParser, EnParserConstants {
+public class EnParser extends EosParser implements EnParserConstants {
     private MarkerStack markerStack = new MarkerStack();
     private Program program;
     private String path;

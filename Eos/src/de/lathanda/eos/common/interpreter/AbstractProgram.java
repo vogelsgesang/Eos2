@@ -61,4 +61,10 @@ public interface AbstractProgram {
 	 * @return
 	 */
 	LinkedList<ProgramUnit> getSubPrograms();
+	/**
+	 * Liefert zu einer Position die Zeilennummer
+	 * @param pos
+	 * @return
+	 */
+	int getLine(int pos);
 }

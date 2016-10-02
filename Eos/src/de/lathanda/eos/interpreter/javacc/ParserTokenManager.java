@@ -3,6 +3,7 @@
 package de.lathanda.eos.interpreter.javacc;
 import de.lathanda.eos.interpreter.parsetree.*;
 import de.lathanda.eos.interpreter.*;
+import de.lathanda.eos.common.interpreter.*;
 import de.lathanda.eos.base.*;
 import de.lathanda.eos.common.*;
 import java.awt.Color;

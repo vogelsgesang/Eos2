@@ -212,6 +212,21 @@ public class SourceCode extends DefaultStyledDocument
 	@Override
 	public void insertString(int pos, String text, AttributeSet attributeSet) throws BadLocationException {
 		autoCompleteHook.insertString(pos, text, program);
+		int newLines = countInString(text, "\n");
+		if (program != null) {
+			int line = program.getLine(pos);
+			if (line > 0 && newLines > 0) {
+				TreeSet<Integer> newBreakpoints = new TreeSet<Integer>();
+				for(int breakpoint : breakpoints) {
+					if (breakpoint >= line) {
+						newBreakpoints.add(breakpoint + newLines);
+					} else {
+						newBreakpoints.add(breakpoint);
+					}
+				}
+				breakpoints = newBreakpoints;
+			}
+		}
 		super.insertString(pos, text, attributeSet);
 		changed();
 	}
@@ -220,6 +235,15 @@ public class SourceCode extends DefaultStyledDocument
 	public void remove(int offs, int len) throws BadLocationException {
 		super.remove(offs, len);
 		changed();
+	}
+	private int countInString(String text, String seek) {
+		int index = text.indexOf(seek);
+		int count = 0;
+		while (index != -1) {
+			count++;
+			index = text.indexOf(seek, index + 1);
+		}
+		return count;
 	}
 	public void changed() {
 		synchronized (COMPILE_LOCK) {

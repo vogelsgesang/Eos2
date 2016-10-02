@@ -170,7 +170,9 @@ public class StringCharStream implements CharStream {
     public int getLine() {
         return line[position];
     }
-
+    public int getLine(int pos) {
+    	return line[pos];
+    }
     @Override
     public char[] GetSuffix(int len) {
         return text.substring(position, position + len).toCharArray();

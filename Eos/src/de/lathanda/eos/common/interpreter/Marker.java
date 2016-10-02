@@ -57,7 +57,9 @@ public class Marker {
     public int getLength() {
         return endPosition - beginPosition + 1;
     }
-
+    public boolean contains(int pos) {
+    	return beginPosition < pos && endPosition > pos;
+    }
     public ProgramNode getNode() {
         return node;
     }

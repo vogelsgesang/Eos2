@@ -41,6 +41,7 @@ public class Program implements AbstractProgram {
     private final String source;
     private final PrettyPrinter prettyPrinter;
     private final Machine machine;
+    private EosParser parser;
     public Program() {
     	this.machine = new Machine();
         this.program = new Sequence();
@@ -62,10 +63,10 @@ public class Program implements AbstractProgram {
         tokenList = new LinkedList<>();
     }
     @Override
-    public void parse(String path) throws TranslationException {
-		EosParser parser = EosParser.create(source);
+    public synchronized void parse(String path) throws TranslationException {
+		parser = EosParser.create(source);
 		try {
-			parser.Parse(this, path);
+			parser.Parse(this, path);			
 		} catch (ParseException pe) {
 			throw new TranslationException(handleParseException(pe));
 		} catch (TokenMgrError ex) {
@@ -194,7 +195,10 @@ public class Program implements AbstractProgram {
     public String getSource() {
         return source;
     }
-
+	@Override
+	public synchronized int getLine(int pos) {
+		return parser.getLine(pos);
+	}	
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
@@ -286,5 +290,5 @@ public class Program implements AbstractProgram {
 		}
 		sb.append(text.substring(a));
 		return sb.toString();
-	}	
+	}
 }
