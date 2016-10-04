@@ -17,28 +17,28 @@ import java.awt.Color;
  * 
  */
 public abstract class StrichFigur extends Figur {
-
-    public StrichFigur() {
+	private final LineFigure line;
+    protected StrichFigur(LineFigure figure) {
+    	super(figure);
+    	line = (LineFigure)figure;
     }
-    @Override
-    protected abstract LineFigure getFigure();
     
     public void randfarbeSetzen(Color farbe) {
-        getFigure().setLineColor(farbe);
+    	line.setLineColor(farbe);
     }
     public Color randfarbeLesen() {
-        return getFigure().getLineColor();
+        return line.getLineColor();
     }
     public void randartSetzen(LineStyle randart) {
-        getFigure().setLineStyle(randart);
+    	line.setLineStyle(randart);
     }
     public LineStyle randartLesen() {
-        return getFigure().getLineStyle();
+        return line.getLineStyle();
     }
     public void randstaerkeSetzen(double randstaerke) {
-        getFigure().setLineWidth(randstaerke);
+    	line.setLineWidth(randstaerke);
     }
     public double randstaerkeLesen() {
-        return getFigure().getLineWidth();
+        return line.getLineWidth();
     }
 }

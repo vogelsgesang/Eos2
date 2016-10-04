@@ -2,7 +2,6 @@ package eos;
 
 import de.lathanda.eos.base.LineStyle;
 import de.lathanda.eos.geo.Line;
-import de.lathanda.eos.geo.LineFigure;
 import java.awt.Color;
 
 /**
@@ -19,12 +18,8 @@ public class Linie extends StrichFigur {
 	private final Line line;
 
 	public Linie() {
-		line = new Line();
-	}
-
-	@Override
-	protected LineFigure getFigure() {
-		return line;
+		super(new Line());
+		line = (Line)figure;
 	}
 
 	public void linienStaerkeSetzen(double staerke) {

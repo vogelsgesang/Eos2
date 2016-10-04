@@ -82,6 +82,10 @@ public class GuiConfiguration {
 	 * Fehlerverhalten.
 	 */
 	private ErrorBehavior errorBehavior;
+	/**
+	 * Anzahl der angezeigten Fehlermeldungen
+	 */
+	private int errorNumber;
 	
 	private GuiConfiguration() {
 		try {
@@ -138,6 +142,7 @@ public class GuiConfiguration {
 		configuration.load(in);
 		fontsize = Integer.valueOf(configuration.getProperty("fontsize"));
 		errorBehavior = ErrorBehavior.decode(Integer.valueOf(configuration.getProperty("errorbehavior")));		
+		errorNumber = Integer.valueOf(configuration.getProperty("errornumber"));
 		dirty = false;
 	}
 	/**
@@ -147,9 +152,10 @@ public class GuiConfiguration {
 	 */
 	private void save(OutputStream out) throws IOException {
 		configuration.setProperty("fontsize", Integer.toString(fontsize));
-		configuration.setProperty("errorbehavior", Integer.toString(errorBehavior.encode()));		
+		configuration.setProperty("errorbehavior", Integer.toString(errorBehavior.encode()));
+		configuration.setProperty("errornumber", Integer.toString(errorNumber));
 		configuration.store(out, "EOS Configuration");
-		dirty = false;
+		dirty = false;		
 	}
 	/**
 	 * Speichert die Konfiguration, wenn sie verändert wurde.
@@ -165,7 +171,8 @@ public class GuiConfiguration {
 	 */
 	private void setDefault() {
 		fontsize = 12;
-		errorBehavior = ErrorBehavior.WARN;		
+		errorBehavior = ErrorBehavior.WARN;
+		errorNumber = 1;
 		dirty = false;
 	}
 	public int getFontsize() {
@@ -176,6 +183,13 @@ public class GuiConfiguration {
 			this.fontsize = fontsize;
 			fireFontsizeChanged();
 		}
+	}
+	public int getNumberOfShownErrors() {
+		return errorNumber;
+	}
+	public void setNumberOfShownErrors(int errorNumber) {
+		this.errorNumber = errorNumber;
+		dirty = false;
 	}
 
 	public ErrorBehavior getErrorBehavior() {

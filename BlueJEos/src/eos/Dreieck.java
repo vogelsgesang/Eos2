@@ -1,6 +1,5 @@
 package eos;
 
-import de.lathanda.eos.geo.FilledFigure;
 import de.lathanda.eos.geo.Triangle;
 /**
  * @author Peter Schneider
@@ -16,11 +15,8 @@ import de.lathanda.eos.geo.Triangle;
 public class Dreieck extends GefuellteFigur {
     private final Triangle triangle;
     public Dreieck() {
-        triangle = new Triangle();
-    }
-    @Override
-    protected FilledFigure getFigure() {
-        return triangle;
+    	super(new Triangle());
+        triangle = (Triangle)figure;
     }
     public void eckenSetzen(double x1, double y1, double x2, double y2, double x3, double y3) {
         triangle.setCorners(x1,y1,x2,y2,x3,y3);

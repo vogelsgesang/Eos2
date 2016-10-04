@@ -1,7 +1,6 @@
 package eos;
 
 import de.lathanda.eos.geo.Circle;
-import de.lathanda.eos.geo.FilledFigure;
 
 /**
  * @author Peter Schneider
@@ -17,12 +16,8 @@ public class Kreis extends GefuellteFigur {
 	private final Circle circle;
 
 	public Kreis() {
-		circle = new Circle();
-	}
-
-	@Override
-	protected FilledFigure getFigure() {
-		return circle;
+		super(new Circle());
+		circle = (Circle)figure;
 	}
 
 	public void mitteySetzen(double y) {

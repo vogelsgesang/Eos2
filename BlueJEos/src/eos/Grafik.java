@@ -1,6 +1,5 @@
 package eos;
 
-import de.lathanda.eos.geo.FilledFigure;
 import de.lathanda.eos.geo.Graphic;
 
 /**
@@ -17,11 +16,8 @@ import de.lathanda.eos.geo.Graphic;
 public class Grafik  extends Rechteck {
 	private final Graphic graphic;
     public Grafik() {
-    	graphic = new Graphic();
-    }
-    @Override
-    protected FilledFigure getFigure() {
-        return graphic;
+    	super(new Graphic());
+    	graphic = (Graphic)figure;
     }
     public void ladeBild(String dateiname) {
     	graphic.loadImage(dateiname);

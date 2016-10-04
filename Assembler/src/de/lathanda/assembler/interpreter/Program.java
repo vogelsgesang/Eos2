@@ -131,5 +131,10 @@ public class Program implements AbstractProgram {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public int getLine(int pos) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

@@ -1,7 +1,0 @@
-#BlueJ class context
-comment0.params=dt
-comment0.target=SchrittUhr(long)
-comment0.text=\r\n\ Erzeugt\ eine\ Schrittuhr,\ welc\r\n\ @param\ dt\ Zeitintervall\ eines\ Schrittes\ in\ ms.\r\n
-comment1.params=
-comment1.target=void\ weiter()
-numComments=2

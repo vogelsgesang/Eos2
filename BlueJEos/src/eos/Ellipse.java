@@ -1,7 +1,5 @@
 package eos;
 
-import de.lathanda.eos.geo.FilledFigure;
-
 /**
  * @author Peter Schneider
  * 
@@ -16,12 +14,10 @@ import de.lathanda.eos.geo.FilledFigure;
 public class Ellipse extends GefuellteFigur {
     private final de.lathanda.eos.geo.Ellipse ellipse;
     public Ellipse() {
-        ellipse = new de.lathanda.eos.geo.Ellipse();
+    	super(new de.lathanda.eos.geo.Ellipse());
+        ellipse = (de.lathanda.eos.geo.Ellipse)figure;
     }
-    @Override
-    protected FilledFigure getFigure() {
-        return ellipse;
-    }
+
     public void mitteySetzen(double y) {
         ellipse.setCenterY(y);
     }

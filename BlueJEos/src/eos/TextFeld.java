@@ -1,7 +1,6 @@
 package eos;
 
 import de.lathanda.eos.base.Alignment;
-import de.lathanda.eos.geo.FilledFigure;
 import de.lathanda.eos.geo.TextField;
 import java.awt.Color;
 
@@ -18,11 +17,8 @@ import java.awt.Color;
 public class TextFeld extends Rechteck {
     private final TextField textfield;
     public TextFeld() {
-        textfield = new TextField();
-    }
-    @Override
-    protected FilledFigure getFigure() {
-        return textfield;
+    	super(new TextField());
+        textfield = (TextField)figure;
     }
     public void schriftfarbeSetzen(Color farbe) {
         textfield.setTextColor(farbe);

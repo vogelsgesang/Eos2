@@ -1,6 +1,5 @@
 package eos;
 
-import de.lathanda.eos.geo.FilledFigure;
 import de.lathanda.eos.geo.Rectangle;
 
 /**
@@ -15,21 +14,23 @@ import de.lathanda.eos.geo.Rectangle;
  */
 public class Rechteck extends GefuellteFigur {
 	private final Rectangle rectangle;
-
+	protected Rechteck(Rectangle r) {
+		super(r);
+		rectangle = r;
+	}
 	public Rechteck() {
-		rectangle = new Rectangle();
+		super(new Rectangle());
+		rectangle = (Rectangle)figure;
 	}
 	public Rechteck(double x, double y, double breite, double hoehe) {
-		rectangle = new Rectangle();
+		super(new Rectangle());
+		rectangle = (Rectangle)figure;
 		rectangle.setCorners(x, y, x + breite, y + hoehe);
 	}
 	public Rechteck(double x, double y, double a) {
-		rectangle = new Rectangle();
+		super(new Rectangle());
+		rectangle = (Rectangle)figure;
 		rectangle.setCorners(x, y, x + a, y + a);
-	}
-	@Override
-	protected FilledFigure getFigure() {
-		return rectangle;
 	}
 
 	public void hoeheSetzen(double hoehe) {

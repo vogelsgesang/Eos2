@@ -1,6 +1,5 @@
 package eos;
 
-import de.lathanda.eos.geo.FilledFigure;
 import de.lathanda.eos.geo.Square;
 
 /**
@@ -17,12 +16,8 @@ public class Quadrat extends GefuellteFigur {
 	private final Square square;
 
 	public Quadrat() {
-		square = new Square();
-	}
-
-	@Override
-	protected FilledFigure getFigure() {
-		return square;
+		super(new Square());
+		square = (Square)figure;
 	}
 
 	public void seitenlaengeSetzen(double seitenlaenge) {

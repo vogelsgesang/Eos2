@@ -16,22 +16,26 @@ import java.awt.Color;
  * 
  */
 public abstract class GefuellteFigur extends StrichFigur {
-	@Override
-	protected abstract FilledFigure getFigure();
+	private final FilledFigure filled;
+
+	public GefuellteFigur(FilledFigure figure) {
+		super(figure);
+		filled = (FilledFigure)figure;
+	}
 
 	public void fuellartSetzen(FillStyle fuellart) {
-		getFigure().setFillStyle(fuellart);
+		filled.setFillStyle(fuellart);
 	}
 
 	public FillStyle fuellartLesen() {
-		return getFigure().getFillStyle();
+		return filled.getFillStyle();
 	}
 
 	public void fuellfarbeSetzen(Color farbe) {
-		getFigure().setFillColor(farbe);
+		filled.setFillColor(farbe);
 	}
 
 	public Color fuellfarbeLesen() {
-		return getFigure().getFillColor();
+		return filled.getFillColor();
 	}
 }

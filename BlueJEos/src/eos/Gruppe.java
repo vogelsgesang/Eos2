@@ -2,7 +2,6 @@ package eos;
 
 import de.lathanda.eos.base.FillStyle;
 import de.lathanda.eos.base.LineStyle;
-import de.lathanda.eos.geo.Figure;
 import de.lathanda.eos.geo.Group;
 import java.awt.Color;
 
@@ -21,12 +20,8 @@ public class Gruppe extends Figur {
 	private final Group group;
 
 	public Gruppe() {
-		group = new Group();
-	}
-
-	@Override
-	protected Figure getFigure() {
-		return group;
+		super(new Group());
+		group = (Group)figure;
 	}
 
 	public void randfarbeSetzen(Color farbe) {
@@ -50,11 +45,11 @@ public class Gruppe extends Figur {
 	}
 
 	public void schlucke(Figur figur) {
-		group.addFigure(figur.getFigure());
+		group.addFigure(figur.figure);
 	}
 	
 	public void kopiere(Figur figur) {
-		group.copyFigure(figur.getFigure());
+		group.copyFigure(figur.figure);
 	}
 
 	public void spiegleX() {

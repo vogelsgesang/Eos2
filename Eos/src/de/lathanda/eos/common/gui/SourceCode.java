@@ -267,7 +267,13 @@ public class SourceCode extends DefaultStyledDocument
 		}
 		message.clear();
 		if (errors.size() > 0) {
-			errors.forEach(err -> message.println(err.getMessage()));
+			int errorNr = GuiConfiguration.def.getNumberOfShownErrors();
+			for (ErrorInformation err : errors) {
+				if (errorNr > 0) {
+					errorNr--;
+					message.println(err.getMessage());
+				}
+			}
 			for (ErrorInformation err : errors) {
 				if (err.getCode() != null) {
 					this.errors.add(err.getCode().getBeginLine());

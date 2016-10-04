@@ -1,6 +1,7 @@
 package eos;
 
 import de.lathanda.eos.geo.Figure;
+import de.lathanda.eos.geo.Window;
 
 /**
  * @author Peter Schneider
@@ -11,53 +12,64 @@ import de.lathanda.eos.geo.Figure;
  * grundsätzlich für alle Figuren möglich sind.
  */
 public abstract class Figur {
-
-    public Figur() {
+	private static boolean autowindow = true;
+	private static Window window;
+	protected static void setAutoWindow(boolean value) {
+		autowindow = value;
+	}
+	protected final Figure figure;
+	
+    protected Figur(Figure figure) {
+    	this.figure = figure;
+    	if (autowindow) {
+    		if (window == null) {
+    			Figur.window = new Window();
+    		}
+    		window.addFigure(figure);
+    	}
     }
 
-    protected abstract Figure getFigure();
-
     public void verschieben(double dx, double dy) {
-        getFigure().move(dx, dy);
+    	figure.move(dx, dy);
     }
 
     public void strecken(double streckungsfaktor) {
-        getFigure().scale(streckungsfaktor);
+    	figure.scale(streckungsfaktor);
     }
 
     public void verschiebenNach(double x, double y) {
-        getFigure().moveTo(x, y);
+    	figure.moveTo(x, y);
     }
 
     public void drehen(double winkel) {
-        getFigure().rotate(winkel);
+    	figure.rotate(winkel);
     }
 
     public void drehenAn(double x, double y, double winkel) {
-        getFigure().rotateAround(x, y, winkel);
+    	figure.rotateAround(x, y, winkel);
     }
 
     public void streckenAn(double x, double y, double faktor) {
-        getFigure().scaleAt(x, y, faktor);
+    	figure.scaleAt(x, y, faktor);
     }
 
     public void sichtbarSetzen(boolean sichtbar) {
-        getFigure().setVisible(sichtbar);
+    	figure.setVisible(sichtbar);
     }
 
     public boolean sichtbarLesen() {
-        return getFigure().getVisible();
+        return figure.getVisible();
     }
     public void xSetzen(double x) {
-        getFigure().setX(x);
+    	figure.setX(x);
     }
     public double xLesen() {
-        return getFigure().getX();
+        return figure.getX();
     }
     public void ySetzen(double y) {
-        getFigure().setY(y);
+    	figure.setY(y);
     }
     public double yLesen() {
-        return getFigure().getY();
+        return figure.getY();
     }
 }

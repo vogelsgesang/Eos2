@@ -1,9 +1,9 @@
 package eos;
 
-import de.lathanda.eos.base.LineStyle;
-import de.lathanda.eos.geo.Figure;
-import de.lathanda.eos.geo.Plotter;
 import java.awt.Color;
+
+import de.lathanda.eos.base.LineStyle;
+import de.lathanda.eos.geo.Plotter;
 
 /**
  * @author Peter Schneider
@@ -18,11 +18,8 @@ import java.awt.Color;
 public class Turtle extends Figur {
     private final Plotter plotter;
     public Turtle() {
-        plotter = new Plotter();
-    }
-    @Override
-    protected Figure getFigure() {
-        return plotter;
+    	super(new Plotter());
+        plotter = (Plotter)figure;
     }
     public void turtlexSetzen(double x) {
         plotter.setPenX(x);

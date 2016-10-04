@@ -16,6 +16,7 @@ public class Fenster {
     private final Window window;
     public Fenster() {
         window = new Window();
+        Figur.setAutoWindow(false);
     }
     public void gitterfarbeSetzen(Color color) {
          window.setGridColor(color); 
@@ -69,7 +70,7 @@ public class Fenster {
         window.move(dx, dy);
     }
     public void zeichne(Figur figur) {
-        window.addFigure(figur.getFigure());
+        window.addFigure(figur.figure);
     }
     public void gitterein() {
         window.setGridVisible(true);
