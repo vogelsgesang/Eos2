@@ -1,8 +1,7 @@
 package de.lathanda.eos.robot.gui;
 
 import java.awt.Color;
-import java.util.TreeMap;
-
+import java.util.HashMap;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLException;
@@ -14,7 +13,7 @@ import de.lathanda.eos.robot.geom3d.Material;
 
 public class GLTextureBuffer {
 	// ***************** factory *****************
-	private static TreeMap<Material, GLTextureBuffer> glbuffer = new TreeMap<>();	
+	private static HashMap<Material, GLTextureBuffer> glbuffer = new HashMap<>();	
 
 	public static synchronized GLTextureBuffer get(Material m) {
 		GLTextureBuffer buffer = glbuffer.get(m);
@@ -37,7 +36,9 @@ public class GLTextureBuffer {
 		this.m = m;
 	}
 	public void destroy(GL gl) {
-		texture.destroy(gl);
+		if (texture != null) {
+			texture.destroy(gl);
+		}
 	}
 	public void openMaterial(Color base, GL2 gl) {
 		gl.glColor4ub((byte) base.getRed(), (byte) base.getGreen(), (byte) base.getBlue(), (byte) base.getAlpha());

@@ -1,8 +1,7 @@
 package de.lathanda.eos.robot.gui;
 
 import java.awt.Color;
-import java.util.TreeMap;
-
+import java.util.HashMap;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import de.lathanda.eos.robot.geom3d.Face;
@@ -10,7 +9,7 @@ import de.lathanda.eos.robot.geom3d.Polyhedron;
 
 public class GLObjectBuffer {
 	// ***************** factory *****************
-	private static TreeMap<Polyhedron, GLObjectBuffer> glbuffer = new TreeMap<>();	
+	private static HashMap<Polyhedron, GLObjectBuffer> glbuffer = new HashMap<>();	
 	public static synchronized GLObjectBuffer get(Polyhedron poly) {
 		GLObjectBuffer buffer = glbuffer.get(poly);
 		if (buffer == null) {
@@ -41,7 +40,7 @@ public class GLObjectBuffer {
 
 	private void renderFace(Face f, Color base, GL2 gl) {
 		GLTextureBuffer texture = GLTextureBuffer.get(f.m); 
-		texture.openMaterial(Color.GREEN, gl);
+		texture.openMaterial(base, gl);
 		gl.glBegin(f.type);
 		for (int i = 0; i < f.v.length; i++) {
 			if (f.vn != null) {
