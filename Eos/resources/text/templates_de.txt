@@ -1,5 +1,5 @@
 A = Endlosschleife#wiederhole immer\n\n*wiederhole
-B = Zählschleife#wiederhole anzahl mal\n\n*wiederhole
+B = ZÃ¤hlschleife#wiederhole anzahl mal\n\n*wiederhole
 C = bedingte Schleife#wiederhole solange Bedingung\n\n*wiederhole
 D = bedingte Anweisung#wenn Bedingung dann\n\n*wenn
 E = alternative Anweisungen#wenn Bedingung dann\n\nsonst\n\n*wenn

@@ -61,8 +61,10 @@ public class Group extends Figure implements FigureGroup  {
     
     @Override
     protected void drawObject(Picture p) {
-    	for (Figure m : members) {
-    		m.draw(p);
+    	synchronized (members) {
+    		for (Figure m : members) {
+    			m.draw(p);
+    		}
     	}
     }
 
@@ -148,8 +150,10 @@ public class Group extends Figure implements FigureGroup  {
         //method is synchronized as the group may not be drawn or changed while recentering is done
         double dx = getX() - x;
         double dy = getY() - y;
-        members.forEach(figure -> figure.moveInternal(dx,dy));     
-        moveToInternal(x, y);
+        synchronized (members) {
+        	members.forEach(figure -> figure.moveInternal(dx,dy));     
+        	moveToInternal(x, y);
+        }
     }
   
     /**
