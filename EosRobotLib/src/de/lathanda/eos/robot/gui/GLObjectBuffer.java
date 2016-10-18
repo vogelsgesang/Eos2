@@ -1,9 +1,13 @@
 package de.lathanda.eos.robot.gui;
 
 import java.awt.Color;
+import java.nio.FloatBuffer;
 import java.util.HashMap;
+
+import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
+
 import de.lathanda.eos.robot.geom3d.Face;
 import de.lathanda.eos.robot.geom3d.Polyhedron;
 
@@ -57,5 +61,62 @@ public class GLObjectBuffer {
 		gl.glEnd();
 		texture.closeMaterial(gl);
 	}	
-	
+	private static abstract class VertexObject {
+		static VertexObject create(GL2 gl, Polyhedron poly) {
+			// Check For VBO support
+	        final boolean VBOsupported = gl.isFunctionAvailable("glGenBuffersARB") &&
+	                gl.isFunctionAvailable("glBindBufferARB") &&
+	                gl.isFunctionAvailable("glBufferDataARB") &&
+	                gl.isFunctionAvailable("glDeleteBuffersARB");
+	        if (VBOsupported) {
+	        	return new VertexBufferObject(gl, poly);
+	        } else {
+	        	return new VertexArray(gl, poly);
+	        }
+		}
+        // Mesh Data
+        private int vertexCount;
+        private FloatBuffer vertices;
+        private FloatBuffer texCoords;
+        private FloatBuffer normals;
+        private int[] textureId = new int[1];  // Texture ID
+        VertexObject(Polyhedron poly) {
+        	vertexCount = poly.faces.size() * 3;
+        	vertices  =  Buffers.newDirectFloatBuffer(vertexCount * 3);
+        	texCoords =  Buffers.newDirectFloatBuffer(vertexCount * 2);
+        	normals   =  Buffers.newDirectFloatBuffer(vertexCount * 3);
+        	for(Face f : poly.faces) {
+        		for(int i = 0; i < 3; i++) {
+        			vertices.put(f.v[i].x);
+        			vertices.put(f.v[i].y);
+        			vertices.put(f.v[i].z);
+        			texCoords.put(f.vt[i].u);
+        			texCoords.put(f.vt[i].v);
+        			normals.put(f.vn[i].dx);
+        			normals.put(f.vn[i].dy);
+        			normals.put(f.vn[i].dz);
+        		}
+
+        	}
+        }
+		abstract void render(GL2 gl);
+	}
+	private static class VertexArray extends VertexObject {
+		public VertexArray(GL2 gl, Polyhedron poly) {
+			super(poly);
+		}
+
+		public void render(GL2 gl) {
+			
+		}
+	}
+	private static class VertexBufferObject extends VertexObject {
+		public VertexBufferObject(GL2 gl, Polyhedron poly) {
+			super(poly);
+		}
+
+		public void render(GL2 gl) {
+			
+		}
+	}
 }

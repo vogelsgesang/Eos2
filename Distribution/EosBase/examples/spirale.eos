@@ -1,0 +1,11 @@
+stift:Turtle
+stift.stiftAuf()
+stift.setzeTurtleXY(-80,-80)
+stift.stiftAb()
+l:Real
+l = 160
+wiederhole immer
+  stift.vor(l)
+  stift.linksDrehen(90)
+  l = l * 0.99
+*wiederhole
