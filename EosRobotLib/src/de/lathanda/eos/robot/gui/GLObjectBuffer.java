@@ -30,6 +30,7 @@ public class GLObjectBuffer {
 	
 	//****************** class *******************
 	private final Polyhedron data;
+	private VertexObject vo;
 
 	private GLObjectBuffer(Polyhedron poly) {
 		this.data = poly;
@@ -38,29 +39,12 @@ public class GLObjectBuffer {
 		//free resources on graphic card
 	}	
 	public void render(Color base, GL2 gl) {
-		data.faces.stream().forEach(f -> renderFace(f, base, gl));
+		if (vo == null) {
+			vo = VertexObject.create(gl, data);
+		}
+		vo.render(gl, base);
 	}
 
-
-	private void renderFace(Face f, Color base, GL2 gl) {
-		GLTextureBuffer texture = GLTextureBuffer.get(f.m); 
-		texture.openMaterial(base, gl);
-		gl.glBegin(f.type);
-		for (int i = 0; i < f.v.length; i++) {
-			if (f.vn != null) {
-				gl.glNormal3f(f.vn[i].dx, f.vn[i].dy, f.vn[i].dz);
-			}
-			if (f.vt != null) {
-				gl.glTexCoord2f(f.vt[i].u, 1 - f.vt[i].v); // I have no idea why
-															// jogamp is
-															// inverted
-			}
-			gl.glVertex3f(f.v[i].x, f.v[i].y, f.v[i].z);
-
-		}
-		gl.glEnd();
-		texture.closeMaterial(gl);
-	}	
 	private static abstract class VertexObject {
 		static VertexObject create(GL2 gl, Polyhedron poly) {
 			// Check For VBO support
@@ -80,7 +64,9 @@ public class GLObjectBuffer {
         private FloatBuffer texCoords;
         private FloatBuffer normals;
         private int[] textureId = new int[1];  // Texture ID
+		Polyhedron data;
         VertexObject(Polyhedron poly) {
+        	this.data = poly;
         	vertexCount = poly.faces.size() * 3;
         	vertices  =  Buffers.newDirectFloatBuffer(vertexCount * 3);
         	texCoords =  Buffers.newDirectFloatBuffer(vertexCount * 2);
@@ -99,15 +85,34 @@ public class GLObjectBuffer {
 
         	}
         }
-		abstract void render(GL2 gl);
+		abstract void render(GL2 gl, Color base);
+		protected void renderFace(Face f, Color base, GL2 gl) {
+			GLTextureBuffer texture = GLTextureBuffer.get(f.m); 
+			texture.openMaterial(base, gl);
+			gl.glBegin(GL.GL_TRIANGLES);
+			for (int i = 0; i < f.v.length; i++) {
+				if (f.vn != null) {
+					gl.glNormal3f(f.vn[i].dx, f.vn[i].dy, f.vn[i].dz);
+				}
+				if (f.vt != null) {
+					gl.glTexCoord2f(f.vt[i].u, 1 - f.vt[i].v); // I have no idea why
+																// jogamp is
+																// inverted
+				}
+				gl.glVertex3f(f.v[i].x, f.v[i].y, f.v[i].z);
+
+			}
+			gl.glEnd();
+			texture.closeMaterial(gl);
+		}	
 	}
 	private static class VertexArray extends VertexObject {
 		public VertexArray(GL2 gl, Polyhedron poly) {
 			super(poly);
 		}
 
-		public void render(GL2 gl) {
-			
+		public void render(GL2 gl, Color base) {
+			data.faces.stream().forEach(f -> renderFace(f, base, gl));			
 		}
 	}
 	private static class VertexBufferObject extends VertexObject {
@@ -115,8 +120,9 @@ public class GLObjectBuffer {
 			super(poly);
 		}
 
-		public void render(GL2 gl) {
-			
+		public void render(GL2 gl, Color base) {
+			data.faces.stream().forEach(f -> renderFace(f, base, gl));
 		}
 	}
+	
 }

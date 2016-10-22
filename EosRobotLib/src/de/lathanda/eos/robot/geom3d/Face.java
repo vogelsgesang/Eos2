@@ -1,7 +1,5 @@
 package de.lathanda.eos.robot.geom3d;
 
-import com.jogamp.opengl.GL2;
-
 /**
  * Räumliche Fläche.
  *
@@ -13,16 +11,14 @@ public class Face {
 	public final VerticeTexture[] vt;
 	public final VerticeNormal[] vn;
 	public final Material m;
-	public final int type;
-    public Face(Vertice[] v, VerticeTexture[] vt, VerticeNormal[] vn, Material m) {
+
+    public Face(Vertice[] v, VerticeTexture[] vt, VerticeNormal[] vn, Material m) throws NFaceException {
         this.v = v;
         this.vt = vt;
         this.vn = vn;
         this.m = m;
-        switch (v.length) {
-        case 3: type = GL2.GL_TRIANGLES; break;
-        case 4: type = GL2.GL_QUADS; break;
-        default: type = GL2.GL_POLYGON;
+        if (v.length != 3) {
+        	throw new NFaceException(v.length);
         }
     }
 }

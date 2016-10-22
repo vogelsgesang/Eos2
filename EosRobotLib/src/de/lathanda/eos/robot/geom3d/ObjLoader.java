@@ -20,17 +20,18 @@ import de.lathanda.eos.base.ResourceLoader;
  *
  */
 public class ObjLoader {
-	public static final Polyhedron loadObj(String path, String filename) throws IOException {
+	public static final Polyhedron loadObj(String path, String filename) throws IOException, NFaceException {
 		BufferedReader data = openStream(path + filename);
 		return readPolyhedron(data, path, 100);
 	}
 
-	public static final Polyhedron loadObj(String path, String filename, int hint) throws IOException {
+	public static final Polyhedron loadObj(String path, String filename, int hint) throws IOException, NFaceException {
+		System.out.println("loading "+path+filename);
 		BufferedReader data = openStream(path + filename);
 		return readPolyhedron(data, path, hint);
 	}
 
-	private static final Polyhedron readPolyhedron(BufferedReader data, String path, int hint) throws IOException {
+	private static final Polyhedron readPolyhedron(BufferedReader data, String path, int hint) throws IOException, NFaceException {
 		final Polyhedron ph = new Polyhedron();
 		final Hashtable<String, Material> matIndex = new Hashtable<>();
 		final ArrayList<Vertice> v = new ArrayList<>(hint);
@@ -130,7 +131,7 @@ public class ObjLoader {
 	}
 
 	private static final Face readFace(String values, Polyhedron ph, Material mat, ArrayList<Vertice> v,
-			ArrayList<VerticeTexture> vt, ArrayList<VerticeNormal> vn) {
+			ArrayList<VerticeTexture> vt, ArrayList<VerticeNormal> vn) throws NFaceException {
 		String[] vertices = values.split(" ");
 		Vertice[] fv = new Vertice[vertices.length];
 		VerticeTexture[] fvt = new VerticeTexture[vertices.length];

@@ -27,6 +27,7 @@ import de.lathanda.eos.robot.Entrance;
 import de.lathanda.eos.robot.Robot;
 import de.lathanda.eos.robot.World;
 import de.lathanda.eos.robot.geom3d.Material;
+import de.lathanda.eos.robot.geom3d.NFaceException;
 import de.lathanda.eos.robot.geom3d.ObjLoader;
 import de.lathanda.eos.robot.geom3d.Polyhedron;
 
@@ -251,6 +252,9 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 			cursorObj = ObjLoader.loadObj("obj/", "cursor.obj");
 		} catch (IOException ioe) {
 			System.err.println("missing file! " + ioe.getMessage());
+			System.exit(-1);
+		} catch (NFaceException e) {
+			System.err.println("Illegal Face with "+e.getFaces()+" vertices");
 			System.exit(-1);
 		}
 	}
