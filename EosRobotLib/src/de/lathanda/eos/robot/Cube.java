@@ -28,6 +28,7 @@ public class Cube {
     		throw new CubeImmutableException();
     	} else {
     		type = 0;
+    		free = true;
     	}
     }
 

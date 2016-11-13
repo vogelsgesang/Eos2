@@ -165,9 +165,13 @@ public class World implements CleanupListener, Readout {
 				switch (node.getNodeName()) {
 				case "entrance":
 					synchronized (entrances) {
-						entrances.add(new Entrance(Integer.parseInt(element.getAttribute("x")),
-							Integer.parseInt(element.getAttribute("y")), Integer.parseInt(element.getAttribute("z")),
-							Direction.getDirection(Integer.parseInt(element.getAttribute("direction")))));
+						int x = Integer.parseInt(element.getAttribute("x"));
+						int y = Integer.parseInt(element.getAttribute("y"));
+						int z = Integer.parseInt(element.getAttribute("z"));
+						Direction d = Direction.getDirection(Integer.parseInt(element.getAttribute("direction")));
+						if (z >= 0) {
+							entrances.add(new Entrance(x, y, z, d));
+						}
 					}
 					break;
 				case "column":
@@ -182,7 +186,10 @@ public class World implements CleanupListener, Readout {
 							Element cubeElement = (Element) cubeNode;
 							Cube cube = Cube.createCube(Integer.parseInt(cubeElement.getAttribute("type")),
 									new Color(Integer.parseInt(cubeElement.getAttribute("color"))));
-							column.setCube(Integer.parseInt(cubeElement.getAttribute("index")), cube);
+							int level = Integer.parseInt(cubeElement.getAttribute("index"));
+							if (level >= 0) {
+								column.setCube(level, cube);
+							}
 						}
 					}
 					break;
@@ -228,7 +235,7 @@ public class World implements CleanupListener, Readout {
 				Element entranceElement = doc.createElement("entrance");
 				entranceElement.setAttribute("x", "" + entrance.x);
 				entranceElement.setAttribute("y", "" + entrance.y);
-				entranceElement.setAttribute("z", "" + entrance.y);
+				entranceElement.setAttribute("z", "" + entrance.z);
 				entranceElement.setAttribute("direction", "" + entrance.d.index);
 				world.appendChild(entranceElement);
 			}

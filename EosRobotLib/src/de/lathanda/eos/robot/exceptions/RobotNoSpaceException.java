@@ -9,6 +9,6 @@ package de.lathanda.eos.robot.exceptions;
 public class RobotNoSpaceException extends RobotException {
 	private static final long serialVersionUID = -850424017512233499L;
 	public RobotNoSpaceException() {
-		super("robot.no.space ");
+		super("robot.no.space");
 	}
 }

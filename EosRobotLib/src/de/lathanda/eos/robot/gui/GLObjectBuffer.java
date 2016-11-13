@@ -76,8 +76,10 @@ public class GLObjectBuffer {
         			vertices.put(f.v[i].x);
         			vertices.put(f.v[i].y);
         			vertices.put(f.v[i].z);
-        			texCoords.put(f.vt[i].u);
-        			texCoords.put(f.vt[i].v);
+        			if (f.vt != null) {
+        				texCoords.put(f.vt[i].u);
+        				texCoords.put(f.vt[i].v);
+        			}
         			normals.put(f.vn[i].dx);
         			normals.put(f.vn[i].dy);
         			normals.put(f.vn[i].dz);
