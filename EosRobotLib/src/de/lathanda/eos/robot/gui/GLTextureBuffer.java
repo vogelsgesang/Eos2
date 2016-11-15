@@ -27,6 +27,7 @@ public class GLTextureBuffer {
 		for(GLTextureBuffer buffer : glbuffer.values()) {
 			buffer.destroy(gl);
 		}
+		glbuffer.clear();
 	}	
 	
 	//****************** class *******************	
