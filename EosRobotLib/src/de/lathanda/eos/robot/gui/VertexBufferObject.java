@@ -12,8 +12,9 @@ import com.jogamp.opengl.GL2;
 
 import de.lathanda.eos.robot.geom3d.Face;
 import de.lathanda.eos.robot.geom3d.Material;
+import de.lathanda.eos.robot.geom3d.Polyhedron;
 
-public class VertexBufferObject {
+public class VertexBufferObject implements GLRenderObject{
 	private volatile boolean vboReady = false;
 	private Material m;
 	FloatBuffer vertices;
@@ -23,19 +24,20 @@ public class VertexBufferObject {
 	private int vOff, tOff, nOff, size;
 	private int vCount;
 	private VBORenderer renderer;
-	public static LinkedList<VertexBufferObject> create(LinkedList<Face> faces) {
+	public static LinkedList<GLRenderObject> create(Polyhedron poly) {
 		TreeMap<Material, LinkedList<Face> > faceGroups = new TreeMap<>();
-		for(Face f: faces) {
+		for(Face f: poly.faces) {
 			LinkedList<Face> group;
 			if ( faceGroups.containsKey(f.m)) {
 				group = faceGroups.get(f.m);
 			} else {
-				group = faceGroups.put(f.m, new LinkedList<Face>());
+				group = new LinkedList<Face>();
+				faceGroups.put(f.m, group);
 			}
 			group.add(f);
 		}
 		
-		LinkedList<VertexBufferObject> buffers = new LinkedList<>();
+		LinkedList<GLRenderObject> buffers = new LinkedList<>();
 		for (Entry<Material, LinkedList<Face> > entry : faceGroups.entrySet()) {
 			buffers.add(new VertexBufferObject(entry.getValue(), entry.getKey()));
 		}
@@ -47,12 +49,14 @@ public class VertexBufferObject {
         this.vertices = Buffers.newDirectFloatBuffer(vCount * 3);
 		this.normals = Buffers.newDirectFloatBuffer(vCount * 3);
 		for(Face face: faces) {
-			vertices.put(face.v[0].x);
-			vertices.put(face.v[0].y);
-			vertices.put(face.v[0].z);
-			normals.put(face.vn[0].dx);
-			normals.put(face.vn[0].dy);
-			normals.put(face.vn[0].dz);
+			for(int i = 0; i < 3; i++) {
+				vertices.put(face.v[i].x);
+				vertices.put(face.v[i].y);
+				vertices.put(face.v[i].z);
+				normals.put(face.vn[i].dx);
+				normals.put(face.vn[i].dy);
+				normals.put(face.vn[i].dz);
+			}
 		}
 
 		if (m.image == null) {
@@ -61,8 +65,10 @@ public class VertexBufferObject {
 		} else {
 			this.texCoords = Buffers.newDirectFloatBuffer(vCount * 2);
 			for(Face face: faces) {
-				texCoords.put(face.vt[0].u);
-				texCoords.put(1 - face.vt[0].v); //Jogamp has inverted coords, i don't know why
+				for(int i = 0; i < 3; i++) {
+					texCoords.put(face.vt[i].u);
+					texCoords.put(1 - face.vt[i].v); //Jogamp has inverted coords, i don't know why
+				}
 			}
 			this.renderer = new TextureRenderer();
 		}		
@@ -130,7 +136,9 @@ public class VertexBufferObject {
 	private class NoTextureRenderer implements VBORenderer {
 		@Override
 		public void render(GL2 gl, Color base) {
-			if (!vboReady) return;
+			if (!vboReady) {
+				setupVBO(gl);
+			}
 			gl.glBindBuffer(GL.GL_ARRAY_BUFFER, vboId);
 			gl.glEnableClientState(GL2.GL_VERTEX_ARRAY);
 			gl.glEnableClientState(GL2.GL_NORMAL_ARRAY);
@@ -142,6 +150,10 @@ public class VertexBufferObject {
 			texture.closeMaterial(gl);
 			gl.glBindBuffer(GL.GL_ARRAY_BUFFER, 0);
 		}						
+	}
+	@Override
+	public void destroy(GL gl) {
+		//free vbo ?
 	}
 	
 }

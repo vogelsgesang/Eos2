@@ -26,7 +26,6 @@ public class ObjLoader {
 	}
 
 	public static final Polyhedron loadObj(String path, String filename, int hint) throws IOException, NFaceException {
-		System.out.println("loading "+path+filename);
 		BufferedReader data = openStream(path + filename);
 		return readPolyhedron(data, path, hint);
 	}
