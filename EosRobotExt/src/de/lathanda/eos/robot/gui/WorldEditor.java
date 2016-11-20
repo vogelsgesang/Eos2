@@ -22,8 +22,12 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -38,7 +42,7 @@ import de.lathanda.eos.spi.RobotLanguage;
  * @author Peter (Lathanda) Schneider
  * @since 0.9
  */
-public class WorldEditor extends JFrame implements KeyListener {
+public class WorldEditor extends JFrame implements KeyListener, DocumentListener {
 	private static final long serialVersionUID = -3910302047095245337L;
     private static final Image     LOGO        = loadImage(RobotLanguage.ROBOT.getString("Icon"));
     private World world;
@@ -59,13 +63,22 @@ public class WorldEditor extends JFrame implements KeyListener {
     private JButton btnEntrance;
     private JButton btnSaveAs;
     private JButton btnLoad;
+    
+    private JPanel rangeToolbar;    
+    private JTextField txtMinX;
+    private JTextField txtMaxX;
+    private JTextField txtMinY;
+    private JTextField txtMaxY;
+  
+    private JLabel lblRangeX;
+    private JLabel lblRangeY;
+    
 	public WorldEditor( ) {
 		super(RobotLanguage.ROBOT.getString("Title"));
         this.setIconImage(LOGO);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         world = new World(this);
-        //TODO use graphic card dependent factory and/or
-        //resolve gl errors in order to use alternative renderer
+
         view = new WorldPanelOpenGLNoShader(world);
         world.setShowCursor(true);
         setLocation(0, 0);
@@ -78,58 +91,73 @@ public class WorldEditor extends JFrame implements KeyListener {
     	
 		editorToolbar = new JPanel();
 		editorToolbar.setLayout(new GridLayout(2,7));
-		
+	
 	    btnUp = new JButton(new ImageIcon(getClass().getResource("/icons/arrow-up-double-2.png")));
+	    btnUp.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Up"));
 	    mnemonics.put(KeyEvent.VK_A, evt -> upActionPerformed(evt));
 	    btnUp.addActionListener(evt -> upActionPerformed(evt));
 
-	    btnDown = new JButton(new ImageIcon(getClass().getResource("/icons/arrow-down-double-2.png"))); 
+	    btnDown = new JButton(new ImageIcon(getClass().getResource("/icons/arrow-down-double-2.png")));
+	    btnDown.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Down"));
 	    mnemonics.put(KeyEvent.VK_Z, evt -> downActionPerformed(evt));
 	    btnDown.addActionListener(evt -> downActionPerformed(evt));
 
+	    
 	    btnLeft = new JButton(new ImageIcon(getClass().getResource("/icons/arrow-left-2.png")));
+	    btnLeft.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Left"));
 	    mnemonics.put(KeyEvent.VK_LEFT,	evt -> leftActionPerformed(evt));
 	    btnLeft.addActionListener(evt -> leftActionPerformed(evt));
 	    
-	    btnRight = new JButton(new ImageIcon(getClass().getResource("/icons/arrow-right-2.png"))); 
+	    btnRight = new JButton(new ImageIcon(getClass().getResource("/icons/arrow-right-2.png")));
+	    btnRight.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Right"));
 	    mnemonics.put(KeyEvent.VK_RIGHT, evt -> rightActionPerformed(evt));
 	    btnRight.addActionListener(evt -> rightActionPerformed(evt));
 	    
 	    btnForward = new JButton(new ImageIcon(getClass().getResource("/icons/arrow-up-2.png")));
+	    btnForward.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Forward"));
 	    mnemonics.put(KeyEvent.VK_UP, evt -> forwardActionPerformed(evt));
 	    btnForward.addActionListener(evt -> forwardActionPerformed(evt));
 	    
 	    btnBack = new JButton(new ImageIcon(getClass().getResource("/icons/arrow-down-2.png")));
+	    btnBack.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Back"));
 	    mnemonics.put(KeyEvent.VK_DOWN, evt -> backActionPerformed(evt));
 	    btnBack.addActionListener(evt -> backActionPerformed(evt));
 
 	    btnSaveAs = new JButton(new ImageIcon(getClass().getResource("/icons/document-save-3.png")));
+	    btnSaveAs.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.SaveAs"));
 	    btnSaveAs.addActionListener(evt -> saveAsActionPerformed(evt));
 
 	    btnLoad = new JButton(new ImageIcon(getClass().getResource("/icons/document-open-5.png")));
+	    btnLoad.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Load"));
 	    btnLoad.addActionListener(evt -> loadActionPerformed(evt));	    
 	    
-	    btnChooseColor = new JButton(new ImageIcon(getClass().getResource("/icons/colorize-2.png"))); 
+	    btnChooseColor = new JButton(new ImageIcon(getClass().getResource("/icons/colorize-2.png")));
+	    btnChooseColor.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.ChooseColor"));
 	    mnemonics.put(KeyEvent.VK_C, evt -> chooseColorActionPerformed(evt));
 	    btnChooseColor.addActionListener(evt -> chooseColorActionPerformed(evt));
 	    
 	    btnRemove = new JButton(new ImageIcon(getClass().getResource("/icons/trash-empty-3.png")));
+	    btnRemove.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Remove"));
 	    mnemonics.put(KeyEvent.VK_X, evt -> removeActionPerformed(evt));
 	    btnRemove.addActionListener(evt -> removeActionPerformed(evt));
 	    
 	    btnStone = new JButton(new ImageIcon(getClass().getResource("/icons/kcmdf-3.png")));
+	    btnStone.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Stone"));
 	    mnemonics.put(KeyEvent.VK_S, evt -> stoneActionPerformed(evt));
 	    btnStone.addActionListener(evt -> stoneActionPerformed(evt));
 	    
 	    btnRock = new JButton(new ImageIcon(getClass().getResource("/icons/kblackbox-3.png"))); 
+	    btnRock.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Rock"));
 	    mnemonics.put(KeyEvent.VK_R, evt -> rockActionPerformed(evt));
 	    btnRock.addActionListener(evt -> rockActionPerformed(evt));
 	    
 	    btnMark = new JButton(new ImageIcon(getClass().getResource("/icons/view-pim-notes.png"))); 
+	    btnMark.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Mark"));
 	    mnemonics.put(KeyEvent.VK_M, evt -> markActionPerformed(evt));
 	    btnMark.addActionListener(evt -> markActionPerformed(evt));
 	    
 	    btnEntrance = new JButton(new ImageIcon(getClass().getResource("/icons/im-user.png")));
+	    btnEntrance.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Entrance"));
 	    mnemonics.put(KeyEvent.VK_E, evt -> entranceActionPerformed(evt));
 	    btnEntrance.addActionListener(evt -> entranceActionPerformed(evt));
 
@@ -167,7 +195,35 @@ public class WorldEditor extends JFrame implements KeyListener {
 	    btnSaveAs.addKeyListener(this);
 	    btnLoad.addKeyListener(this);
 	    
-		pack();
+	    rangeToolbar = new JPanel();
+	    rangeToolbar.setLayout(new GridLayout(1,6));
+	    
+	    txtMinX   = new JTextField();
+	    lblRangeX = new JLabel(RobotLanguage.ROBOT.getString("Range.X"));
+	    lblRangeX.setHorizontalAlignment(JTextField.CENTER);
+	    txtMaxX   = new JTextField();
+	    
+	    txtMinY   = new JTextField();
+	    lblRangeY = new JLabel(RobotLanguage.ROBOT.getString("Range.Y"));
+	    lblRangeY.setHorizontalAlignment(JTextField.CENTER);
+	    txtMaxY   = new JTextField();
+
+	    
+	    txtMinX.getDocument().addDocumentListener(this);
+	    txtMaxX.getDocument().addDocumentListener(this);
+	    txtMinY.getDocument().addDocumentListener(this);
+	    txtMaxY.getDocument().addDocumentListener(this);
+	    
+	    rangeToolbar.add(txtMinX);
+	    rangeToolbar.add(lblRangeX);
+	    rangeToolbar.add(txtMaxX);
+	    rangeToolbar.add(txtMinY);
+	    rangeToolbar.add(lblRangeY);
+	    rangeToolbar.add(txtMaxY);
+
+	    getContentPane().add(rangeToolbar, BorderLayout.NORTH);
+	    
+	    pack();
 
 	}
 	
@@ -251,4 +307,32 @@ public class WorldEditor extends JFrame implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent ke) {
 	}
+
+	@Override
+	public void changedUpdate(DocumentEvent arg0) {
+		refreshRange();
+	}
+	@Override
+	public void insertUpdate(DocumentEvent de) {
+		refreshRange();
+	}
+	@Override
+	public void removeUpdate(DocumentEvent de) {
+		refreshRange();
+	}
+	private void refreshRange() {
+		Integer minX = checkRangeText(txtMinX);
+		Integer maxX = checkRangeText(txtMaxX);
+		Integer minY = checkRangeText(txtMinY);
+		Integer maxY = checkRangeText(txtMaxY);
+		world.setRange(minX, maxX, minY, maxY);			
+	}
+	private static Integer checkRangeText(JTextField f) {
+		String text = f.getText();
+		try {
+			return Integer.parseInt(text);			
+		} catch (Throwable t) {
+			return null;
+		}
+	}	
 }

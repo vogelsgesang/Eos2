@@ -79,6 +79,11 @@ public class World implements CleanupListener, Readout {
 	private int cursorZ;
 	private Direction cursorD; 
 	private boolean showCursor = false;
+	private Integer minX;
+	private Integer maxX;
+	private Integer minY;
+	private Integer maxY;
+	private static final Column BORDER = new BorderColumn();
 	private Random random = new Random();
 	/**
 	 * Erzeugt eine neue Welt inklusive eines Fensters.
@@ -157,6 +162,26 @@ public class World implements CleanupListener, Readout {
 	 * @param world
 	 */
 	private void parseVersion1(Element world) {
+		if (world.hasAttribute("minx")) {
+			minX = Integer.parseInt(world.getAttribute("minx"));
+		} else {
+			minX = null;
+		}
+		if (world.hasAttribute("maxx")) {
+			maxX = Integer.parseInt(world.getAttribute("maxx"));
+		} else {
+			maxX = null;
+		}
+		if (world.hasAttribute("miny")) {
+			minY = Integer.parseInt(world.getAttribute("miny"));
+		} else {
+			minY = null;
+		}
+		if (world.hasAttribute("maxy")) {
+			maxY = Integer.parseInt(world.getAttribute("maxy"));
+		} else {
+			maxY = null;
+		}
 		NodeList nodes = world.getChildNodes();
 		for (int i = 0; i < nodes.getLength(); i++) {
 			Node node = nodes.item(i);
@@ -229,6 +254,18 @@ public class World implements CleanupListener, Readout {
 		// create world XML
 		Element world = doc.createElement("world");
 		world.setAttribute("version", "1");
+		if (minX != null) {
+			world.setAttribute("minx", Integer.toString(minX));
+		}
+		if (maxX != null) {		
+			world.setAttribute("maxx", Integer.toString(maxX));
+		}
+		if (minY != null) {		
+			world.setAttribute("miny", Integer.toString(minY));
+		}
+		if (maxY != null) {		
+			world.setAttribute("maxy", Integer.toString(maxY));
+		}
 		doc.appendChild(world);
 		synchronized (entrances) {
 			for (Entrance entrance : entrances) {
@@ -249,6 +286,7 @@ public class World implements CleanupListener, Readout {
 				columnElement.setAttribute("y", "" + coordinate.getY());
 				columnElement.setAttribute("mark", (column.isMarked())?"1":"0");
 				int index = 0;
+				boolean saveColumn = false;
 				for (Cube cube : column.getCubes()) {
 					if (!cube.isEmpty()) {
 						Element cubeElement = doc.createElement("cube");
@@ -256,10 +294,13 @@ public class World implements CleanupListener, Readout {
 						cubeElement.setAttribute("color", "" + cube.getColor().getRGB());
 						cubeElement.setAttribute("type", "" + cube.getType());
 						columnElement.appendChild(cubeElement);
+						saveColumn = true;
 					}
 					index++;
 				}
-				world.appendChild(columnElement);
+				if (saveColumn) {
+					world.appendChild(columnElement);
+				}
 			}
 		}
 		return doc;
@@ -297,6 +338,18 @@ public class World implements CleanupListener, Readout {
 	 * @return
 	 */
 	protected Column getColumn(Coordinate co) {
+		if (minX != null && co.getX() < minX) {
+			return BORDER;
+		}
+		if (minY != null && co.getY() < minY) {
+			return BORDER;
+		}
+		if (maxX != null && co.getX() > maxX) {
+			return BORDER;
+		}
+		if (maxY != null && co.getY() > maxX) {
+			return BORDER;
+		}
 		Column c = null;
 		synchronized (columns) {
 			c = columns.get(co);
@@ -476,11 +529,33 @@ public class World implements CleanupListener, Readout {
 	}
 
 	public IntRange getxRange() {
-		return xRange;
+		IntRange result = new IntRange(xRange.min, xRange.max);
+		if (minX != null) {
+			result.min = minX;
+		} else {
+			result.min -= 10;
+		}
+		if (maxX != null) {
+			result.max = maxX;
+		} else {
+			result.max += 10;
+		}
+		return result;
 	}
 
 	public IntRange getyRange() {
-		return yRange;
+		IntRange result = new IntRange(yRange.min, yRange.max);
+		if (minY != null) {
+			result.min = minY;
+		} else {
+			result.min -= 10;
+		}
+		if (maxY != null) {
+			result.max = maxY;
+		} else {
+			result.max += 10;
+		}
+		return result;
 	}
 
 	/**
@@ -647,5 +722,12 @@ public class World implements CleanupListener, Readout {
  	public void getAttributes(LinkedList<Attribut> attributes) {
         attributes.add(new Attribut("robots", robots.size()));
         attributes.add(new Attribut("entrances", entrances.size()));
+	}
+
+	public void setRange(Integer minX, Integer maxX, Integer minY, Integer maxY) {
+		this.minX= minX;
+		this.maxX = maxX;
+		this.minY = minY;
+		this.maxY = maxY;	
 	} 
 }

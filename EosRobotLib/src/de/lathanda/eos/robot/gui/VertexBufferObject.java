@@ -154,6 +154,7 @@ public class VertexBufferObject implements GLRenderObject{
 	@Override
 	public void destroy(GL gl) {
 		//free vbo ?
+		vboReady = false;
 	}
 	
 }
