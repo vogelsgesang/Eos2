@@ -15,9 +15,8 @@
  Die anderen Dateien sind externe Bibliotheken und Dateien.
    
  \section Download
- <a href="http://eos.lathanda.de/eos_src.zip">Quellcode</a> (Eclipse Projekt)<br>
- Um nur das Programm herrunterzuladen, verwenden Sie bitte meine Homepage <a href="http://www.lathanda.de">Lathanda</a>.
- Alle ausführbaren Dateien befinden sich jedoch auch im Unterordner Distribution des Quellcodes.
+ <a href="https://github.com/Lathanda/Eos2.git">Quellcode</a> (Eclipse Projekt)<br>
+ <a href="http://lathanda.de/index.php/downloads">Programm</a>.
  \section Copyright
   <p>Autor: Peter (Lathanda) Schneider, schneidp@lathanda.de</p>
   <p>Das Projekt Eos2 unterliegt Creative Commons <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a>.</p>
