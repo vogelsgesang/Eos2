@@ -286,7 +286,7 @@ public class World implements CleanupListener, Readout {
 				columnElement.setAttribute("y", "" + coordinate.getY());
 				columnElement.setAttribute("mark", (column.isMarked())?"1":"0");
 				int index = 0;
-				boolean saveColumn = false;
+				boolean saveColumn = column.isMarked();
 				for (Cube cube : column.getCubes()) {
 					if (!cube.isEmpty()) {
 						Element cubeElement = doc.createElement("cube");
@@ -376,7 +376,7 @@ public class World implements CleanupListener, Readout {
 			if (!getColumn(e.x, e.y).isFree(e.z, Robot.SIZE)) {
 				throw new RobotNoSpaceException();
 			}
-			r.initialize(this, e.x, e.y, e.z);
+			r.initialize(this, e.x, e.y, e.z, e.d);
 			entrances.removeFirst();
 		}
 		synchronized(robots) {

@@ -72,10 +72,11 @@ public class Robot implements ConfigurationListener, Readout {
      * @param y y-Koordinate
      * @param z z-Koordiante
      */
-    protected void initialize(World world, int x, int y, int z) {
+    protected void initialize(World world, int x, int y, int z, Direction d) {
         this.x = x;
         this.y = y;
         this.z = z;
+        this.direction = d;
     	this.world = world;
     }    
     @Override
