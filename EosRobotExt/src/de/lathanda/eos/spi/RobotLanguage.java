@@ -1,10 +1,13 @@
 package de.lathanda.eos.spi;
 
+import static de.lathanda.eos.common.gui.GuiConstants.GUI;
+
 import java.io.IOException;
 import java.util.ResourceBundle;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import com.jogamp.opengl.GLProfile;
 
@@ -19,8 +22,16 @@ public class RobotLanguage extends Language implements LanguageProvider {
 	public static final ResourceBundle ROBOT = ResourceBundle.getBundle("robot.robot"); 
 	@Override
 	public void registerLanguage(LanguageManager lm) throws IOException {
+		try {
     	//init JOGL to avoid wait time before first call
-   		GLProfile.initSingleton();
+			GLProfile.initSingleton();
+		} catch (Throwable t) {
+            JOptionPane.showMessageDialog(null, GUI.getString("Export.Error.Title"),
+                    t.getLocalizedMessage(),
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+		}
 		//init diagrams
 		lm.registerNames(ResourceBundle.getBundle("robot.map_names"));
 		//init help

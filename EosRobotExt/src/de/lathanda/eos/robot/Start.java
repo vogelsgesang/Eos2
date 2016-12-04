@@ -7,6 +7,10 @@ import de.lathanda.eos.robot.gui.WorldEditor;
 public class Start {
 
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> new WorldEditor().setVisible(true));
+		SwingUtilities.invokeLater(() -> {
+			WorldEditor we = new WorldEditor();
+			we.setDefaultCloseOperation(WorldEditor.EXIT_ON_CLOSE);
+			we.setVisible(true);	
+		});
 	}
 }

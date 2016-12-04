@@ -269,7 +269,9 @@ public class WorldEditor extends JFrame implements KeyListener, DocumentListener
 	public void saveAsActionPerformed(ActionEvent ae) {
         try {
             if (filechooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                world.save(new FileOutputStream(filechooser.getSelectedFile()));
+            	try (FileOutputStream fos = new FileOutputStream(filechooser.getSelectedFile())) {
+            		world.save(fos);
+            	}
             }
         } catch (TransformerException | ParserConfigurationException | IOException io) {
             JOptionPane.showMessageDialog(this, RobotLanguage.ROBOT.getString("Save.Error.Title"),
@@ -281,7 +283,9 @@ public class WorldEditor extends JFrame implements KeyListener, DocumentListener
 	public void loadActionPerformed(ActionEvent ae) {
         try {
             if (filechooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-                world.load(new FileInputStream(filechooser.getSelectedFile()));
+            	try (FileInputStream fis = new FileInputStream(filechooser.getSelectedFile())) {
+            		world.load(fis);
+            	}
             }
         } catch (RobotException | IOException io) {
             JOptionPane.showMessageDialog(this, RobotLanguage.ROBOT.getString("Open.Error.Title"),
