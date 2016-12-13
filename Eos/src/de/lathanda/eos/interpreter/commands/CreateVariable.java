@@ -15,7 +15,7 @@ public class CreateVariable extends Command {
     private final Type type;
 
     public CreateVariable(String name, Type type) {
-        this.name = name.toLowerCase();
+        this.name = name;
         this.type  = type;
     }
     

@@ -13,7 +13,7 @@ public class StoreVariable extends Command {
     private final String variable;
 
     public StoreVariable(String variable) {
-        this.variable = variable.toLowerCase();
+        this.variable = variable;
     }
 
     @Override

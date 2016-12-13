@@ -13,7 +13,7 @@ public class LoadVariable extends Command {
     private String variable;
 
     public LoadVariable(String variable) {
-        this.variable = variable.toLowerCase();
+        this.variable = variable;
     }
 
     @Override

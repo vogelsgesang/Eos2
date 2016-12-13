@@ -40,7 +40,7 @@ public class Declaration extends Node {
     }
 
     public void addName(String name) {
-        names.add(name);
+        names.add(name.toLowerCase());
     }
 
     public List<String> getNames() {
