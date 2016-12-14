@@ -71,7 +71,13 @@ public class BoundingBox {
             return 0;
         }
     }
-
+    public double getArea(double drawWidth) {
+        if (valid) {
+            return (right - left + drawWidth) *(top - bottom + drawWidth);
+        } else {
+            return 0;
+        }
+    }
     public double getLeft() {
         return left;
     }
@@ -93,4 +99,9 @@ public class BoundingBox {
     public Point getCenter() {
     	return new Point((left + right) / 2, (top + bottom) / 2);
     }
+	@Override
+	public String toString() {
+		return "BoundingBox("+left+","+top+","+right+","+bottom+")";
+	}
+    
 }

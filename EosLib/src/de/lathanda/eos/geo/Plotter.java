@@ -144,8 +144,8 @@ public class Plotter extends Group {
 	public void getAttributes(LinkedList<Attribut> attributes) {
     	super.getAttributes(attributes);
         attributes.add(new Attribut("isplotting", isPlotting));
-    	attributes.add(new Attribut("penx", pen.getX()));
-        attributes.add(new Attribut("peny", pen.getY()));
+    	attributes.add(new Attribut("penx", pen.getAbsolutePosition().getX()));
+        attributes.add(new Attribut("peny", pen.getAbsolutePosition().getY()));
         attributes.add(new Attribut("penangle", pen.getRotation()));
         attributes.add(new Attribut("penvisible", pen.getVisible()));
         attributes.add(new Attribut("pencolor", polygon.getLineColor()));               	

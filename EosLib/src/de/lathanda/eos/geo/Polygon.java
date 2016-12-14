@@ -48,7 +48,7 @@ public class Polygon extends FilledFigure {
 		//approximate with bounding box
 		BoundingBox approx = getBound();
 		Point center = approx.getCenter();
-		return new BalancePoint(approx.getArea(), center.getX(), center.getY());		
+		return new BalancePoint(approx.getArea(line.getDrawWidth()), center.getX(), center.getY());		
 	}
 
 	public boolean isValid() {
@@ -68,8 +68,8 @@ public class Polygon extends FilledFigure {
 	protected BoundingBox calculateBoundingBox(Transform base, Transform own) {
 		Transform t = base.transform(own);
 		BoundingBox bound = new BoundingBox();
-		for (int i = points.size(); i-- > 0;) {
-			bound.add(t.transform(points.get(i)));
+		for (Point p:points) {
+			bound.add(t.transform(p));
 		}
 		return bound;
 	}
