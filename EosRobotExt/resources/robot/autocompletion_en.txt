@@ -38,6 +38,7 @@ robot.turnleft            = @turnLeft()#turnLeft()<br>Turns the robot to the lef
 robot.turnright           = @turnRight()#turnRight()<br>Turns the robot to the right.
 robot.turnaround          = @turnAround()#turnAround()<br>Turns the robot around.
 robot.drop                = @drop()#drop()<br>The robot drops a stone on the column in front of her.
+robot.stonecolor          = @stoneColor():stoneColor():Color<br>The robot delivers the color of the stone in front of her.
 robot.pickupA             = @pickup()#pickup()<br>The robot picks up a stone of the column in front of her.
 robot.pickupB             = @pickup(nr)#pickup(nr:Integer)<br>The robot picks up a number of stones.
 robot.placestone          = @placeStone(n)#placeStone(n:Integer)<br>The robot places a stone relative to her feet + n.

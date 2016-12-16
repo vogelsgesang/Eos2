@@ -38,6 +38,7 @@ robot.linksdrehen         = @linksDrehen()#linksDrehen()<br>Der Roboter dreht si
 robot.rechtsdrehen        = @rechtsDrehen()#rechtsDrehen()<br>Der Roboter dreht sich nach rechts.
 robot.umdrehen            = @umdrehen()#umdrehen()<br>Der Roboter dreht sich um.
 robot.hinlegen            = @hinlegen()#hinlegen()<br>Der Roboter legt einen Stein hin.
+robot.steinfarbe          = @steinFarbe():steinFarbe():Farbe<br>Der Roboter schaut sich den obersten Stein vor ihm an.
 robot.aufhebenA           = @aufheben()#aufheben()<br>Der Roboter hebt einen Stein auf.
 robot.aufhebenB           = @aufheben(anzahl)#aufheben(anzahl:Zahl)<br>Der Roboter hebt anzahl Steine auf.
 robot.steinsetzen         = @steinSetzen(n)#steinSetzen(n:Zahl)<br>Der Roboter setzt einen Stein bei seinen Füssen + n.
