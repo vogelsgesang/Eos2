@@ -32,6 +32,7 @@ robot.linksdrehen(0)         = turnLeft
 robot.rechtsdrehen(0)        = turnRight
 robot.umdrehen(0)            = turnAround
 robot.hinlegen(0)            = dropStone
+robot.steinfarbe(0)          = stoneColor,color
 robot.aufheben(0)            = pickup
 robot.aufheben(1)            = pickup,integer
 robot.steinsetzen(1)         = placeStone,integer

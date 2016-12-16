@@ -35,6 +35,7 @@ robot.drop(0)                = dropStone
 robot.pickup(0)              = pickup
 robot.pickup(1)              = pickup,integer
 robot.placestone(1)          = placeStone,integer
+robot.stonecolor(0)          = stoneColor,color
 robot.removestone(1)         = removeStone,integer
 robot.setstonecolor(1)       = setStoneColor,color
 robot.setmark(0)             = setMark

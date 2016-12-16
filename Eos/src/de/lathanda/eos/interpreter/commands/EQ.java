@@ -25,7 +25,8 @@ public class EQ extends Command {
         } else {
         	m.push(a.equals(b));
         }
-        return true;    }
+        return true;    
+    }
 
     @Override
     public String toString() {

@@ -1,5 +1,6 @@
 package de.lathanda.eos.robot;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import de.lathanda.eos.robot.exceptions.CubeImmutableException;
 import de.lathanda.eos.robot.exceptions.CubeMissingException;
@@ -42,6 +43,24 @@ public class Column {
     public void dropCube(Cube cube) {
     	//drop from above
     	dropCube(cubes.size(), cube);
+    }
+    /**
+     * Liefert die Farbe des Steins auf den dropStone einen neuen Stein legen würde.
+     * @param level Farbe des Steins, Bodenfarbe falls es diesen nicht gibt.
+     * @return
+     */
+    public Color stoneColor(int level) {
+        if(cubes.get(level).isFree()) {
+        	int n = level;
+        	while (cubes.get(n-1).isFree()) { n--; }
+        	return cubes.get(n-1).getColor();
+        } else {
+        	int n = level+1;
+        	while (!cubes.get(n).isFree()) {
+        		n++;
+        	}
+        	return cubes.get(n-1).getColor();
+        }    	
     }
     /**
      * Setzt eine Markierung.

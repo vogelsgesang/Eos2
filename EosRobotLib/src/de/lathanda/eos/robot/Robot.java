@@ -157,6 +157,13 @@ public class Robot implements ConfigurationListener, Readout {
         frontColumn().dropCube(z, Cube.createStone(stoneColor));
     }
     /**
+     * Gibt die Farbe des Steins zurück auf den der Roboter einen neuen Stein legen würde.
+     * @return Farbe des Bodensteins, Bodenfarbe falls es diesen nicht gibt.
+     */
+    public final Color stoneColor() throws RobotVoidException {
+    	return frontColumn().stoneColor(z);
+    }
+    /**
      * Hebt einen Stein vor dem Roboter auf.
      * @throws RobotVoidException
      * @throws CubeMissingException
