@@ -161,3 +161,10 @@ plotter.setlinestyle(1)          = setLineStyle,linestyle
 plotter.setfillstyle(1)       = setFillStyle,fillstyle
 plotter.setfillcolor(1)     = setFillColor,color
 plotter.setcenter(2)            = setCenter,real,real
+
+color.getgreen(0)           = getGreen,integer
+color.getred(0)             = getRed,integer
+color.getblue(0)            = getBlue,integer
+color.getalpha(0)           = getAlpha,integer
+color.brighter(0)           = brighter,color
+color.darker(0)             = darker,color

@@ -240,3 +240,10 @@ plotter.kurs                = %kurs#kurs:Zahl<br>Bewegungsrichtung des Stiftes i
 plotter.turtlesichtbar      = %turtleSichtbar#turtleSichtbar:Wahrheitswert<br>Ist der Stift sichtbar?
 plotter.stiftunten          = $stiftunten#stiftunten:Wahrheitswert<br>Wird gerade gezeichnet?
 plotter.stiftfarbe          = $stiftfarbe#stiftfarbe:Farbe<br>Zeichenfarbe.
+
+color.gr\u00fcnlesen        = @gr\u00fcnLesen()#gr\u00fcnLesen():Zahl<br>Der Gr\u00fcnanteil der Farbe 0 bis 255.
+color.rotlesen              = @rotLesen()#rotLesen():Zahl<br>Der Rotanteil der Farbe 0 bis 255.
+color.blaulesen             = @blauLesen()#blauLesen():Zahl<br>Der Blauanteil der Farbe 0 bis 255.
+color.alphalesen            = @alphaLesen()#alphaLesen():Zahl<br>Die Transparenz der Farbe 0 bis 255.
+color.heller                = @heller()#heller():Farbe<br>Erzeugt eine hellere Farbe.
+color.dunkler               = @dunkler()#dunkler():Farbe<br>Erzeugt eine dunklere Farbe.

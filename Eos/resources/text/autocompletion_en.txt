@@ -239,4 +239,11 @@ plotter.peny           = %y#y:Number<br>y coordinate of the pen.
 plotter.course         = %course#course:Number<br>Moving course of the pen.
 plotter.penvisible     = %penVisible#penVisible:Boolean<br>Is the pen shown?
 plotter.plotting       = $plotting#plotting:Boolean<br>Is the plotter drawing?
-plotter.penColor       = $penColor#penColor:Color<br>Drawingcolor.
+plotter.penColor       = $penColor#penColor:Color<br>Drawing color.
+
+color.getgreen           = @getGreen()#getGreen():Number<br>The green share of the color 0 to 255.
+color.getred             = @getRed()#getRed():Number<br>The red share of the color 0 to 255.
+color.getblue            = @getBlue()#getBlue():Number<br>The blue share of the color 0 to 255.
+color.getalpha           = @getAlpha()#getAlpha():Number<br>The alpha share of the color 0 to 255.
+color.brighter           = @brighter()#brighter():Color<br>Creates a brighter color.
+color.darker             = @darker()#darker():Color<br>Creates a darker color.
