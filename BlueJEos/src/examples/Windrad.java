@@ -4,7 +4,6 @@ import static eos.Farbe.*;
 import static eos.Fuellart.*;
 import static eos.Linienart.*;
 import eos.Ellipse;
-import eos.Fenster;
 import eos.Gruppe;
 import eos.Rechteck;
 import eos.SchrittUhr;
@@ -25,18 +24,14 @@ public class Windrad {
     SchrittUhr uhr;
     Gruppe rad;
     Rechteck turm;
-    Fenster f;
 
     public Windrad() {
-        f = new Fenster();
         uhr = new SchrittUhr(50);
         turm = new Rechteck();
-        f.zeichne(turm);
         turm.eckenSetzen(-10, 20, 10, -80);
         turm.fuellfarbeSetzen(blau);
         rad = new Gruppe();
         rad.zentrumSetzen(0, 0);
-        f.zeichne(rad);
         rad.verschieben(0, 20);
         for (int i = 0; i < 30; i++) {
             Ellipse blatt = new Ellipse();

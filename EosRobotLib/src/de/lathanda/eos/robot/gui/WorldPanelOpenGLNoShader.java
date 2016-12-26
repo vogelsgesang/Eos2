@@ -335,9 +335,10 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 
 	private void renderEntrance(Entrance e, GL2 gl) {
 		gl.glPushMatrix();
-		gl.glTranslated(e.x, e.y, e.z);
+		gl.glTranslated(e.x * WIDTH, e.y * DEPTH, e.z * HEIGHT);
 		gl.glRotatef(e.d.getAngle(), 0f, 0f, 1f);
 		renderPolyhedron(entranceObj, new Color(1f, 0f, 0f), gl);
+		renderPolyhedron(robotObj, new Color(0.5f, 0.5f, 0.5f, 0.5f), gl);
 		gl.glPopMatrix();
 	}
 

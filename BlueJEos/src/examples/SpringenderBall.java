@@ -1,6 +1,5 @@
 package examples;
 
-import eos.Fenster;
 import eos.Kreis;
 import eos.SchrittUhr;
 import static eos.Funktionen.*;
@@ -21,7 +20,7 @@ public class SpringenderBall {
 
     SchrittUhr uhr;
     Kreis k;
-    Fenster f;
+
     /* Ausgrund des Simulationsintervalls ist
      * v in der Einheit [0,1 m/s]
      * g in der Einheit [0,1 m/s^2]
@@ -35,9 +34,7 @@ public class SpringenderBall {
     }
 
     public SpringenderBall(double x, double y, double g) {
-        f = new Fenster();
         k = new Kreis();
-        f.zeichne(k);
         uhr = new SchrittUhr(10);
         k.verschiebenNach(x, y);
         this.g = g;

@@ -79,7 +79,7 @@ public class Welt {
     		throw new SteinFeststehendAusnahme(wnfe);    		
 		}
     }
-    public void ziegelVerstreuen(int links, int oben, int rechts, int unten, int dichte) {
+    public void ziegelVerstreuen(int links, int oben, int rechts, int unten, double dichte) {
     	world.fillRandom(links, oben, rechts, unten, dichte);
     }
 }

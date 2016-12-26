@@ -1,7 +1,6 @@
 package examples;
 
 import static eos.Farbe.*;
-import eos.Fenster;
 import static eos.Funktionen.*;
 import static eos.Linienart.*;
 import eos.Kreis;
@@ -35,7 +34,6 @@ public class Pendel {
     Kreis gewicht;
     Linie feder;
     SchrittUhr uhr;
-    Fenster f;
 
     public Pendel() {
         this(20, -70, 0.007, -0.1);
@@ -44,9 +42,6 @@ public class Pendel {
     public Pendel(double x, double y, double D_m, double g) {
         gewicht = new Kreis();
         feder = new Linie();
-        f = new Fenster();
-        f.zeichne(feder);
-        f.zeichne(gewicht);
         feder.linienartSetzen(gestrichelt);
         feder.linienStaerkeSetzen(2f);
         gewicht.fuellfarbeSetzen(grau);

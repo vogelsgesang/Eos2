@@ -2,16 +2,13 @@ package examples;
 
 import java.awt.Color;
 import static eos.Funktionen.zufall;
-import eos.Fenster;
 import eos.Gruppe;
 import eos.Kreis;
 import eos.SchrittUhr;
 
 public class Sterne {
 	public static void main(String[] args) {
-		Fenster fenster = new Fenster();
 		Gruppe sterne = new Gruppe();
-		fenster.zeichne(sterne);
 		Kreis stern = new Kreis();
 		SchrittUhr uhr = new SchrittUhr(10);
 		stern.fuellfarbeSetzen(Color.YELLOW);
