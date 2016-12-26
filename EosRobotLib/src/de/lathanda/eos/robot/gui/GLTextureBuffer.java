@@ -13,21 +13,29 @@ import de.lathanda.eos.robot.geom3d.Material;
 
 public class GLTextureBuffer {
 	// ***************** factory *****************
-	private static HashMap<Material, GLTextureBuffer> glbuffer = new HashMap<>();	
+	private static HashMap<GL, HashMap<Material, GLTextureBuffer> > glbuffer = new HashMap<>();	
 
-	public static synchronized GLTextureBuffer get(Material m) {
-		GLTextureBuffer buffer = glbuffer.get(m);
+	public static synchronized GLTextureBuffer get(Material m, GL gl) {
+		HashMap<Material, GLTextureBuffer> texbuffer = glbuffer.get(gl);
+		if (texbuffer == null) {
+			texbuffer = new HashMap<>();
+			glbuffer.put(gl,  texbuffer);
+		}
+		GLTextureBuffer buffer = texbuffer.get(m);
 		if (buffer == null) {
 			buffer = new GLTextureBuffer(m);
-			glbuffer.put(m, buffer);
+			texbuffer.put(m, buffer);
 		}
 		return buffer;    
 	}
 	public static synchronized void clear(GL gl) {
-		for(GLTextureBuffer buffer : glbuffer.values()) {
+		HashMap<Material, GLTextureBuffer> texbuffer = glbuffer.get(gl);
+		if (texbuffer == null) return;
+		for(GLTextureBuffer buffer : texbuffer.values()) {
 			buffer.destroy(gl);
 		}
-		glbuffer.clear();
+		texbuffer.clear();
+		glbuffer.remove(gl);
 	}	
 	
 	//****************** class *******************	

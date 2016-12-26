@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -30,8 +31,8 @@ public class ClassChart extends Diagram implements ListSelectionListener {
 		classList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		classDiagram = new ClassDiagram();
 		setLayout(new BorderLayout());
-		add(classList, BorderLayout.WEST);
-		add(classDiagram, BorderLayout.CENTER);
+		add(new JScrollPane(classList), BorderLayout.WEST);
+		add(new JScrollPane(classDiagram), BorderLayout.CENTER);
 		classList.addListSelectionListener(this);	
 		update();
 	}

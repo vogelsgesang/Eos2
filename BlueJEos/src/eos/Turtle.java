@@ -2,6 +2,7 @@ package eos;
 
 import java.awt.Color;
 
+import de.lathanda.eos.base.FillStyle;
 import de.lathanda.eos.base.LineStyle;
 import de.lathanda.eos.geo.Plotter;
 
@@ -40,6 +41,15 @@ public class Turtle extends Figur {
     public void linienartSetzen(LineStyle linienart) {
         plotter.setLineStyle(linienart);
     }
+    public void fuellartSetzen(FillStyle fuellart) {
+    	plotter.setFillStyle(fuellart);
+    }
+    public void fuellfarbeSetzen(Color farbe) {
+    	plotter.setFillColor(farbe);
+    }
+    public void zentrumSetzen(double x, double y) {
+    	plotter.setCenter(x, y);
+    }
     public void kursSetzen(double winkel) {
         plotter.setAngle(winkel);
     }
@@ -58,6 +68,12 @@ public class Turtle extends Figur {
     public void rechtsdrehen(double winkel) {
         plotter.turnRight(winkel);
     }
+    public void links(double winkel) {
+        plotter.turnLeft(winkel);
+    }
+    public void rechts(double winkel) {
+        plotter.turnRight(winkel);
+    }    
     public void vor(double laenge) {
         plotter.moveForward(laenge);
     }
@@ -74,6 +90,9 @@ public class Turtle extends Figur {
         plotter.stopPlotting();
     }
     public void farbeSetzen(Color farbe) {
-        plotter.setPenColor(farbe);
+        plotter.setLineColor(farbe);
+    }
+    public Color farbeLesen() {
+    	return plotter.getLineColor();
     }
 }

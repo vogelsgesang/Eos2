@@ -60,7 +60,7 @@ public class Gruppe extends Figur {
 		group.mirrorY();
 	}
 
-	public void setzeZentrum(double x, double y) {
+	public void zentrumSetzen(double x, double y) {
 		group.setCenter(x, y);
 	}
 }

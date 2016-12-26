@@ -16,7 +16,7 @@ public class Sterne {
 		SchrittUhr uhr = new SchrittUhr(10);
 		stern.fuellfarbeSetzen(Color.YELLOW);
 		stern.radiusSetzen(1);
-		sterne.setzeZentrum(0, 0);
+		sterne.zentrumSetzen(0, 0);
 		while (true) {
 			for(int i = 20; i --> 0; ) {
 				stern.mittexSetzen(zufall(-200, 200));

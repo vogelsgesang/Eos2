@@ -33,7 +33,11 @@ public class ClassDiagram extends JPanel {
 	
 	@Override
 	public String getToolTipText(MouseEvent me) {
-		return unit.getToolTipText(d.convertpixel2mm(me.getX())- SPACE, d.convertpixel2mm(me.getY()) - SPACE);
+		if (unit != null) {
+			return unit.getToolTipText(d.convertpixel2mm(me.getX())- SPACE, d.convertpixel2mm(me.getY()) - SPACE);
+		} else {
+			return "";
+		}
 	}
 	@Override
 	protected void paintComponent(Graphics g) {

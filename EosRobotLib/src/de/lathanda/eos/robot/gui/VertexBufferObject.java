@@ -126,7 +126,7 @@ public class VertexBufferObject implements GLRenderObject{
 			gl.glVertexPointer(3, GL.GL_FLOAT, 0, vOff);
 			gl.glTexCoordPointer(2, GL.GL_FLOAT, 0, tOff);
 			gl.glNormalPointer(GL.GL_FLOAT,0 , nOff);
-			GLTextureBuffer texture = GLTextureBuffer.get(m); 
+			GLTextureBuffer texture = GLTextureBuffer.get(m, gl); 
 			texture.openMaterial(base, gl);
 			gl.glDrawArrays(GL.GL_TRIANGLES,0, vCount);
 			texture.closeMaterial(gl);
@@ -144,7 +144,7 @@ public class VertexBufferObject implements GLRenderObject{
 			gl.glEnableClientState(GL2.GL_NORMAL_ARRAY);
 			gl.glVertexPointer(3, GL.GL_FLOAT, 0, vOff);
 			gl.glNormalPointer(GL.GL_FLOAT,0 , nOff);
-			GLTextureBuffer texture = GLTextureBuffer.get(m); 
+			GLTextureBuffer texture = GLTextureBuffer.get(m, gl); 
 			texture.openMaterial(base, gl);
 			gl.glDrawArrays(GL.GL_TRIANGLES,0, vCount);
 			texture.closeMaterial(gl);

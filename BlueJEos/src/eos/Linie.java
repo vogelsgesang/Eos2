@@ -33,7 +33,9 @@ public class Linie extends StrichFigur {
 	public void linienartSetzen(LineStyle linienart) {
 		line.setLineStyle(linienart);
 	}
-
+	public LineStyle linienartLesen() {
+		return line.getLineStyle();
+	}
 	public void farbeSetzen(Color farbe) {
 		line.setLineColor(farbe);
 	}

@@ -35,7 +35,7 @@ public class Windrad {
         turm.eckenSetzen(-10, 20, 10, -80);
         turm.fuellfarbeSetzen(blau);
         rad = new Gruppe();
-        rad.setzeZentrum(0, 0);
+        rad.zentrumSetzen(0, 0);
         f.zeichne(rad);
         rad.verschieben(0, 20);
         for (int i = 0; i < 30; i++) {

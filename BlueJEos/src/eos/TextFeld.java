@@ -56,6 +56,12 @@ public class TextFeld extends Rechteck {
     public Alignment ausrichtungHorizontalLesen() {
         return textfield.getAlignmentHorizontal();
     }
+    public void durchsichtigSetzen(boolean durchsichtig) {
+    	textfield.setHideBorder(durchsichtig);
+    }
+    public boolean durchsichtigLesen() {
+    	return textfield.getHideBorder();
+    }
 
     public void zeileHinzufuegen(String text) {
         textfield.appendLine(text);

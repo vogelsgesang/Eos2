@@ -9,6 +9,7 @@ import java.util.TreeSet;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
@@ -49,8 +50,8 @@ public class ObjectChart extends Diagram implements CompilerListener, DebugListe
 		memoryList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		objectDiagram = new ObjectDiagram();
 		setLayout(new BorderLayout());
-		add(memoryList, BorderLayout.WEST);
-		add(objectDiagram, BorderLayout.CENTER);
+		add(new JScrollPane(memoryList), BorderLayout.WEST);
+		add(new JScrollPane(objectDiagram), BorderLayout.CENTER);
 		memoryList.addListSelectionListener(this);
 	}
 

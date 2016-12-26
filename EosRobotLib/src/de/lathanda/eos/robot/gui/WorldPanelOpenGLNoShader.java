@@ -280,7 +280,7 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 
 	public void renderWorld(GL2 gl) {
 		// floor
-		GLTextureBuffer floor = GLTextureBuffer.get(FLOOR_MATERIAL); 
+		GLTextureBuffer floor = GLTextureBuffer.get(FLOOR_MATERIAL, gl); 
 		floor.openMaterial(Color.GREEN, gl);
 		gl.glBegin(GL2.GL_QUADS);
 		gl.glNormal3f(0f, 0f, 1f);

@@ -92,6 +92,15 @@ public class Roboter {
     		throw new RoboterOhneWeltAusnahme(e); 
     	}
 	}
+	public void hochFliegen() {
+		try {
+			robot.flyUp();
+		} catch (RobotMovementFailedException e) {
+    		throw new BewegungFehlgeschlagenAusnahme(e); 
+		} catch (RobotVoidException e) {
+    		throw new RoboterOhneWeltAusnahme(e); 
+    	}
+	}
 	public void linksFliegen() {
 		try {
 			robot.flyLeft();
@@ -276,7 +285,7 @@ public class Roboter {
 			throw new RoboterOhneWeltAusnahme(e);
 		}		
 	}
-	public boolean istRightHindernis() {
+	public boolean istRechtsHindernis() {
 		try {
 			return robot.isRightObstacle();
 		} catch (RobotVoidException e) {
@@ -309,4 +318,11 @@ public class Roboter {
 	public boolean istOsten() {
 		return robot.isFacingEast();
 	}	
+	public Color steinFarbe() {
+		try {
+			return robot.stoneColor();
+		} catch (RobotVoidException e) {
+			throw new RoboterOhneWeltAusnahme(e);
+		}		
+	}
 }

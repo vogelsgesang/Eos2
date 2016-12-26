@@ -17,7 +17,7 @@ public class GLBaseRenderObject implements GLRenderObject {
 		data.faces.stream().forEach(f -> renderFace(f, base, gl));			
 	}
 	protected void renderFace(Face f, Color base, GL2 gl) {
-		GLTextureBuffer texture = GLTextureBuffer.get(f.m); 
+		GLTextureBuffer texture = GLTextureBuffer.get(f.m, gl); 
 		texture.openMaterial(base, gl);
 		gl.glBegin(GL.GL_TRIANGLES);
 		for (int i = 0; i < f.v.length; i++) {
