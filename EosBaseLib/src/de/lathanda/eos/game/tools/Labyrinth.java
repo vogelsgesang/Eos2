@@ -79,7 +79,17 @@ public class Labyrinth {
             cell[width - 1][i] = WALL;
         }
     }
-
+    /**
+     * Befüllt das gesamte Labyrinth mit Wänden. Es wird implizit
+     * {@link Labyrinth#clear()} aufgerufen.
+     *
+     * @param labNr Seed für den Zufallsgenerator. Für jeden Werte von labNr
+     * wird immer das gleiche Labyrinth erzeugt!
+     */
+    public void createLabyrinth(int labNr) {
+        clear();
+        createLabyrinth(labNr, width * height * 10, 2, 1, 1, width - 2, height - 2);
+    }
     /**
      * Befüllt das gesamte Labyrinth mit Wänden. Es wird implizit
      * {@link Labyrinth#clear()} aufgerufen.

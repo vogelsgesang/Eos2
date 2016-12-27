@@ -441,7 +441,7 @@ public class World implements CleanupListener, Readout {
 	 * @param y
 	 * @param z
 	 */
-	public void setMark(int x, int y, int z) {
+	public void setMark(int x, int y) {
 		getColumn(x, y).setMark();
 	}
 
@@ -451,7 +451,7 @@ public class World implements CleanupListener, Readout {
 	 * @param y
 	 * @param z
 	 */
-	public void toggleMark(int x, int y, int z) {
+	public void toggleMark(int x, int y) {
 		getColumn(x, y).toggleMark();
 	}
 	public void toggleMarkCursor() {

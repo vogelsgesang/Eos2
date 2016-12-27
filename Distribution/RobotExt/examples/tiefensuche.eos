@@ -1,0 +1,43 @@
+welt:Welt
+kara:Roboter
+welt.laden("labyrinth_41x41.eow")
+welt.betreten(kara)
+wiederhole solange nicht kara.istMarke()
+  wenn nicht schrittVersuch() dann
+    //Vorne versperrt
+    kara.linksDrehen()
+    wenn nicht schrittVersuch() dann
+      //Links versperrt
+      kara.umdrehen()
+      wenn nicht schrittVersuch() dann
+        //Rechts auch versperrt => Sackgasse markiere mit rot
+        //ein Feld zurück und gelben Weg aufheben
+        kara.rechtsDrehen()
+        kara.aufheben()
+        kara.schritt()
+        //Sackgasse rot zumauern
+        kara.umdrehen()
+        kara.steinFarbeSetzen(rot)
+        kara.hinlegen()
+        //Rückweg suchen
+        wiederhole solange kara.steinFarbe() <> gelb
+          kara.linksdrehen()
+        *wiederhole
+        kara.umdrehen()
+      *wenn	
+    *wenn
+  *wenn
+*wiederhole
+
+methode schrittVersuch():Boolean
+  wenn nicht kara.istHindernis() und nicht kara.istStein() dann
+    kara.steinFarbeSetzen(gelb)
+    kara.schritt()
+    kara.umdrehen()
+    kara.hinlegen()
+    kara.umdrehen()
+    ergebnis = wahr
+  sonst
+    ergebnis = falsch
+  *wenn
+*methode
