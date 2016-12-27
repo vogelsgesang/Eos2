@@ -57,6 +57,9 @@ public class MessageHandler {
 			sendError(e.getLocalizedMessage());
 		}
 	}
+	public void handleError(Exception e) {
+		sendError(e.getLocalizedMessage());
+	}	
 	private LinkedList<LogListener> logListener = new LinkedList<>();
 	public synchronized void addLogListener(LogListener log) {
 		logListener.add(log);

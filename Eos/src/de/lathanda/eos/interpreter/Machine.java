@@ -121,7 +121,6 @@ public class Machine implements AbstractMachine {
 
     public Object pop() {
     	if (stack.isEmpty()) {
-    		stop();
     		throw new ProgramTerminationException();
     	}
         return stack.pop();
@@ -195,6 +194,10 @@ public class Machine implements AbstractMachine {
         	if (actcontext.program[actcontext.index].execute(this)) {
         		actcontext.index++;
         	}
+        } catch (ProgramTerminationException pte) {
+        	MessageHandler.def.handleError(pte);
+        	stop();
+        	return true;
     	} catch (Exception e) {
     		MessageHandler.def.handleOrThrowException(e);
     		actcontext.index++;
@@ -364,6 +367,11 @@ public class Machine implements AbstractMachine {
                     }
 
                 }
+            } catch (ProgramTerminationException pte) {
+                // thread was killed or execution ran into an error
+                // either way generate message and terminate execution            	
+            	MessageHandler.def.handleError(pte);
+            	stop();
             } catch (Exception e) {
                 // thread was killed or execution ran into an error
                 // either way generate message and terminate execution
@@ -384,6 +392,11 @@ public class Machine implements AbstractMachine {
                         }
                     }
                 }
+            } catch (ProgramTerminationException pte) {
+                // thread was killed or execution ran into an error
+                // either way generate message and terminate execution            	
+            	MessageHandler.def.handleError(pte);
+            	stop();                
             } catch (Exception e) {
                 // thread was killed or execution ran into an error
                 // either way generate message and terminate execution

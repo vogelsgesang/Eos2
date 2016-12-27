@@ -109,14 +109,22 @@ public class Robot implements ConfigurationListener, Readout {
      * @return
      */
     private Column getColumn(int x, int y) throws RobotVoidException {
-    	return world.getColumn(new Coordinate(x, y));
+    	if (world != null) {
+    		return world.getColumn(new Coordinate(x, y));
+    	} else {
+    		throw new RobotVoidException();
+    	}
     }
     /**
      * Liefert die Säule in der sich der Roboter befindet.
      * @return
      */
     private Column getColumn() throws RobotVoidException {
-    	return world.getColumn(new Coordinate(x, y));
+    	if (world != null) {
+    		return world.getColumn(new Coordinate(x, y));
+    	} else {
+    		throw new RobotVoidException();
+    	}
     }
     /**
      * Setzt die Position des Roboters.
