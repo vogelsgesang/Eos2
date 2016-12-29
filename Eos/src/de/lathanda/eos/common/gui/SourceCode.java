@@ -14,6 +14,9 @@ import java.util.LinkedList;
 import java.util.TreeSet;
 
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
@@ -376,7 +379,17 @@ public class SourceCode extends DefaultStyledDocument
 		}
 		
 	}
-
+	@Override
+	protected void fireUndoableEditUpdate(UndoableEditEvent e) {
+		//TODO HOTFIX for jdk 1.9, all change undo events are supressed as coloring is calculated and therefore not significant. 
+		if (e.getEdit() instanceof AbstractDocument.DefaultDocumentEvent) {
+			AbstractDocument.DefaultDocumentEvent event = (AbstractDocument.DefaultDocumentEvent)e.getEdit();
+			if  (event.getType().equals(DocumentEvent.EventType.CHANGE)) {
+				return;
+			}
+		}		
+		super.fireUndoableEditUpdate(e);
+	}
 	@Override
 	public void fontsizeChanged(int fontsize) {
 		codeColorHook.setFontSize(fontsize);		

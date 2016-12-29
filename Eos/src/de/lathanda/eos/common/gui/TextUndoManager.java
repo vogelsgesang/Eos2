@@ -22,9 +22,11 @@ public class TextUndoManager extends UndoManager {
 
 	@Override
 	public synchronized boolean addEdit(UndoableEdit e) {
-		AbstractDocument.DefaultDocumentEvent event = (AbstractDocument.DefaultDocumentEvent)e;
-		if  (event.getType().equals(DocumentEvent.EventType.CHANGE)) {
-			return true;
+		if (e instanceof AbstractDocument.DefaultDocumentEvent) { //TODO JDK 1.9 uses another class
+			AbstractDocument.DefaultDocumentEvent event = (AbstractDocument.DefaultDocumentEvent)e;
+			if  (event.getType().equals(DocumentEvent.EventType.CHANGE)) {
+				return true;
+			}
 		}
 		return super.addEdit(e);
 	}
