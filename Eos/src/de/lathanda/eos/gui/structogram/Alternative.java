@@ -36,6 +36,12 @@ public class Alternative extends Unit {
 	public void layoutUnit(Drawing d) {
         A.layout(d);
         B.layout(d);
+        if (A.getWidth() < 2 * d.stringWidth(yes)) {
+        	A.setWidth(2 * d.stringWidth(yes));
+        }
+        if (B.getWidth() < 2 * d.stringWidth(no)) {
+        	B.setWidth(2 * d.stringWidth(no));
+        }        
         float textwidth = d.stringWidth(label);
         float textheight = d.getHeight();
         if (2 * textwidth > A.getWidth() + B.getWidth()) {
@@ -74,8 +80,12 @@ public class Alternative extends Unit {
     @Override
     public void setWidth(float width) {
         float diff = (width - this.width)/2;
+        this.width = width;
+        condx += diff;
+        nox += 2*diff;
+        textx += diff;
         A.setWidth(A.getWidth() + diff);
-        B.setWidth(B.getWidth() + diff);
+        B.setWidth(B.getWidth() + diff);        
         B.setOffsetX(A.getWidth());
     }   
 }

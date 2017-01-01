@@ -133,6 +133,7 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
         String source = program.getSource();
         int linenumber = 1;
         boolean placeLinenumber = true;
+
         for (InfoToken st : program.getTokenList()) {
         	if (st.getFormat() == InfoToken.IGNORE) continue;
             String token = source.substring(sourceIndex, st.getBegin() + st.getLength());
