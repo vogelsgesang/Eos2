@@ -116,13 +116,14 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
         int sourceIndex = 0; //sourcecode index
         int tokenIndexBegin; //token index
         int tokenIndexEnd; //token index
-        int offsetX = (int)pageFormat.getImageableX();
+        int lineNrOffset = g.getFontMetrics(fontLinenumber).stringWidth("XX: ");
+        int offsetX = (int)pageFormat.getImageableX() + lineNrOffset;
         int offsetY = (int)pageFormat.getImageableY();
         int x = 0; //x within actual page
         int y = g.getFontMetrics(fontLiteral).getHeight(); //y within actual page
         
         double lineheight = g.getFontMetrics(fontLiteral).getHeight() * 1.0;
-        double linewidth = pageFormat.getImageableWidth();
+        double linewidth = pageFormat.getImageableWidth() - lineNrOffset;
         double pageheight = pageFormat.getImageableHeight();
 
         if (program == null) {
@@ -144,34 +145,40 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
             		linenr.move((int)(offsetX + x - bounds.getWidth()), offsetY + y);
             		page.add(linenr);
             	}
-                Text text;
+                Text text = null;
                 String part;
                 boolean newline;
+                Rectangle2D r = null;
                 tokenIndexEnd = token.indexOf('\n', tokenIndexBegin);
-                if (tokenIndexEnd != -1) {
-                    part = token.substring(tokenIndexBegin, tokenIndexEnd);
-                    newline = true;
-                } else {
-                    tokenIndexEnd = token.length();
-                    part = token;
-                    newline = false;
+              	if (tokenIndexEnd != -1) {
+                   	newline = true;
+               	} else {
+                   	tokenIndexEnd = token.length();
+                   	newline = false;
+               	}
+              	int skip = 1;
+              	while (r == null || r.getWidth() >= linewidth) {
+              		if (r != null) {
+              			tokenIndexEnd--;
+              			skip = 0;
+              		}
+                   	part = token.substring(tokenIndexBegin, tokenIndexEnd);
+                	switch (st.getFormat()) {
+                    	case InfoToken.COMMENT:
+                        	text = new Text(part, fontComment, new Color(0, 160, 0), false);
+                        	break;
+                    	case InfoToken.LITERAL:
+                        	text = new Text(part, fontLiteral, Color.BLACK, false);
+                        	break;
+                    	case InfoToken.KEYWORD:
+                        	text = new Text(part, fontKeyword, Color.BLACK, false);
+                        	break;
+                    	default:
+                        	text = new Text(part, fontLiteral, Color.BLACK, false);
+                	}
+                	r = text.getMetrics(g);
                 }
-                tokenIndexBegin = tokenIndexEnd + 1;
-                
-                switch (st.getFormat()) {
-                    case InfoToken.COMMENT:
-                        text = new Text(part, fontComment, Color.GREEN, false);
-                        break;
-                    case InfoToken.LITERAL:
-                        text = new Text(part, fontLiteral, Color.BLACK, false);
-                        break;
-                    case InfoToken.KEYWORD:
-                        text = new Text(part, fontKeyword, Color.BLACK, false);
-                        break;
-                    default:
-                        text = new Text(part, fontLiteral, Color.BLACK, false);
-                }
-                Rectangle2D r = text.getMetrics(g);
+            	tokenIndexBegin = tokenIndexEnd + skip;
                 if (x + r.getWidth() > linewidth) {
                     x = 0;
                     y += lineheight;
