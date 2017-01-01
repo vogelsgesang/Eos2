@@ -71,6 +71,7 @@ public class Robot implements ConfigurationListener, Readout {
      * @param x x-Koordinate
      * @param y y-Koordinate
      * @param z z-Koordiante
+     * @param d Blickrichtung
      */
     protected void initialize(World world, int x, int y, int z, Direction d) {
         this.x = x;

@@ -439,7 +439,6 @@ public class World implements CleanupListener, Readout {
 	 * Setzt eine Markierung bei diesen Koordinaten.
 	 * @param x
 	 * @param y
-	 * @param z
 	 */
 	public void setMark(int x, int y) {
 		getColumn(x, y).setMark();
@@ -449,7 +448,6 @@ public class World implements CleanupListener, Readout {
 	 * Wechselt die Markierung bei diesen Koordinaten.
 	 * @param x
 	 * @param y
-	 * @param z
 	 */
 	public void toggleMark(int x, int y) {
 		getColumn(x, y).toggleMark();

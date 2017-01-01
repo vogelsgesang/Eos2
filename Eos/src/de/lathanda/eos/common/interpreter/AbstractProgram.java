@@ -16,7 +16,6 @@ public interface AbstractProgram {
 	void parse(String path) throws TranslationException;
 	/**
 	 * Syntaxbaum in Programm übersetzen.
-	 * @param machine
 	 * @throws TranslationException
 	 */
 	void compile() throws TranslationException;

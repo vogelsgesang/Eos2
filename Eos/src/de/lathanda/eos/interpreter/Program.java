@@ -109,7 +109,11 @@ public class Program implements AbstractProgram {
     	sub.forEach(s -> temp.add(s));
         return temp;
     }
-    
+    /**
+     * Wandelt den Syntaxbaum in ein ausführbares Programm dieser Maschine um. 
+     * @param m In diese Maschcine wird das Programm geschrieben.
+     * @throws Exception
+     */
     public void compile(Machine m) throws Exception {
         env.resetAll();
         //first scan, resolve types

@@ -287,7 +287,7 @@ public class Drawing {
     }
     /**
      * Rechnet Pixel in mm um.
-     * @param Pixel
+     * @param pixel
      * @return
      */
     public float convertpixel2mm(int pixel) {

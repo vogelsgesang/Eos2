@@ -64,7 +64,6 @@ public class CodeColoring implements CodeColorHook {
 
 	/**
 	 * Erzeugt ein Quellcodeformatierungsobjekt
-	 * @param sourceCode Der zugeordnete Quellcode
 	 */
 	public CodeColoring() {
 		this.codePointer = new Marker();
