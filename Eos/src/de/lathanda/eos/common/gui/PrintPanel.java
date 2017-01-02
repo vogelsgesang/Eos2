@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import java.awt.print.PageFormat;
 import java.awt.print.Pageable;
+import java.awt.print.Paper;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
@@ -37,12 +38,17 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
     private boolean linenumbers = false;
     private AbstractProgram program;
 //******** layout *******
-    private final ArrayList<LinkedList<Text>> pages = new ArrayList<>();
+    private final ArrayList<LinkedList<PrintPart>> pages = new ArrayList<>();
 //******** fonts ********
     private final Font fontLiteral = new Font("monospaced", Font.PLAIN, 12);
     private final Font fontComment = fontLiteral.deriveFont(Font.ITALIC);
     private final Font fontKeyword = fontLiteral.deriveFont(Font.BOLD);
     private final Font fontLinenumber = fontLiteral;
+    private final Font fontHeader = new Font("sans", Font.PLAIN, 10);
+    private final Font fontFooter = new Font("sans", Font.PLAIN, 8);
+    private static final double PAPER_BORDER_X = 56.69; //2cm in 1/72 inches
+    private static final double PAPER_BORDER_Y = 28.34; //1cm in 1/72 inches
+    private String header = "";
 
     /**
      * Creates new form PrintPanel
@@ -62,6 +68,11 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
             );    		
     		pageFormat = new PageFormat();
     	}
+
+    	Paper paper = pageFormat.getPaper();
+    	paper.setImageableArea(PAPER_BORDER_X, PAPER_BORDER_Y, paper.getWidth()-2*PAPER_BORDER_X, paper.getHeight()-2*PAPER_BORDER_Y);
+    	pageFormat.setPaper(paper);
+  	
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(400,300));
     }
@@ -104,48 +115,52 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
 		linenumbers = visible;	
 		repaint();
 	}
-    void init(AbstractProgram abstractProgram) {
+	public void setHeader(String header) {
+		this.header = header;
+		parse(getGraphics());
+	}
+    void init(AbstractProgram abstractProgram, String header) {
         this.program = abstractProgram;
+        this.header = header;
         parse(getGraphics());
     }
 
     private void parse(Graphics g) {
-        LinkedList<Text> page = new LinkedList<>();
+        LinkedList<PrintPart> page = new LinkedList<>();
+    	pages.clear();
         pages.add(page);
 
         int sourceIndex = 0; //sourcecode index
         int tokenIndexBegin; //token index
         int tokenIndexEnd; //token index
-        int lineNrOffset = g.getFontMetrics(fontLinenumber).stringWidth("XX: ");
-        int offsetX = (int)pageFormat.getImageableX() + lineNrOffset;
-        int offsetY = (int)pageFormat.getImageableY();
-        int x = 0; //x within actual page
-        int y = g.getFontMetrics(fontLiteral).getHeight(); //y within actual page
-        
         double lineheight = g.getFontMetrics(fontLiteral).getHeight() * 1.0;
+        double lineNrOffset = g.getFontMetrics(fontLinenumber).stringWidth("XX: ");
+        double headerHeight = lineheight;
+        double footerHeight = lineheight; 
+        
+
+        double x = 0; //x within actual page
+        double y = g.getFontMetrics(fontLiteral).getHeight(); //y within actual page
+        
         double linewidth = pageFormat.getImageableWidth() - lineNrOffset;
-        double pageheight = pageFormat.getImageableHeight();
+        double pageheight = pageFormat.getImageableHeight() - headerHeight - footerHeight;
+        double offsetX = pageFormat.getImageableX() + lineNrOffset;
+        double offsetY = pageFormat.getImageableY() + headerHeight;
 
         if (program == null) {
         	return;
         }
         
         String source = program.getSource();
-        int linenumber = 1;
-        boolean placeLinenumber = true;
+        int linenumber = 0;        
 
         for (InfoToken st : program.getTokenList()) {
         	if (st.getFormat() == InfoToken.IGNORE) continue;
             String token = source.substring(sourceIndex, st.getBegin() + st.getLength());
             tokenIndexBegin = 0;
+
+            boolean realline = true;
             while (tokenIndexBegin < token.length()) {
-            	if (placeLinenumber) {
-            		placeLinenumber = false;
-            		Text linenr = new Text(linenumber+": ", fontLinenumber, Color.BLACK, true);
-            		Rectangle2D bounds = linenr.getMetrics(g);
-            		linenr.move((int)(offsetX + x - bounds.getWidth()), offsetY + y);
-            		page.add(linenr);
-            	}
                 Text text = null;
                 String part;
                 boolean newline;
@@ -153,12 +168,20 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
                 tokenIndexEnd = token.indexOf('\n', tokenIndexBegin);
               	if (tokenIndexEnd != -1) {
                    	newline = true;
+                   	if (realline) {
+                   		linenumber++;
+                   		Text linenr = new Text(linenumber+": ", fontLinenumber, Color.BLACK, true);
+                   		Rectangle2D bounds = linenr.getMetrics(g);
+                   		linenr.move(offsetX - bounds.getWidth(), offsetY + y);
+                   		page.add(linenr);
+                   	}
                	} else {
                    	tokenIndexEnd = token.length();
                    	newline = false;
                	}
               	int skip = 1;
-              	while (r == null || r.getWidth() >= linewidth) {
+              	boolean fitting = false;
+              	do {
               		if (r != null) {
               			tokenIndexEnd--;
               			skip = 0;
@@ -178,7 +201,19 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
                         	text = new Text(part, fontLiteral, Color.BLACK, false);
                 	}
                 	r = text.getMetrics(g);
-                }
+                	if (fitting || r.getWidth() >= linewidth) {
+                		if(x + r.getWidth() > linewidth) {
+                			fitting = true;
+                		} else {
+                			fitting = false;
+                		}
+                		skip = 0;
+                		realline = false;
+                	} else {
+                		skip = 1;
+                		realline = true;
+                	}
+                } while (fitting);
             	tokenIndexBegin = tokenIndexEnd + skip;
                 if (x + r.getWidth() > linewidth) {
                     x = 0;
@@ -192,11 +227,10 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
                 text.move(offsetX + x, offsetY + y);
                 x += r.getWidth();
                 page.add(text);
+                
                 if (newline) {
                     x = 0;
                     y += lineheight;
-                    linenumber++;
-                    placeLinenumber = true;
                     if (y > pageheight) {
                         y = g.getFontMetrics(fontLiteral).getHeight();
                         page = new LinkedList<>();
@@ -205,6 +239,28 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
                 }
             }
             sourceIndex = st.getBegin() + st.getLength();
+        }
+        //add linenumber for last line
+   		linenumber++;
+   		Text linenr = new Text(linenumber+": ", fontLinenumber, Color.BLACK, true);
+   		Rectangle2D bounds = linenr.getMetrics(g);
+   		linenr.move(offsetX - bounds.getWidth(), offsetY + y);
+   		page.add(linenr);
+   		
+   		//add headers
+   		Text headerText = new Text(header, fontHeader, Color.BLACK, false);
+   		headerText.move(offsetX + (linewidth - headerText.getMetrics(g).getWidth())/2, offsetY - 1);
+   		Line headerLine = new Line(Color.BLACK, offsetX, offsetY, offsetX + linewidth, offsetY);
+   		Line footerLine = new Line (Color.BLACK, offsetX, offsetY + pageheight, offsetX + linewidth, offsetY + pageheight);
+        int pageNr = 1;
+   		for (LinkedList<PrintPart> p:pages) {
+        	Text footerText = new Text(pageNr+"/"+pages.size(), fontFooter, Color.BLACK, false);
+        	footerText.move(offsetX + (linewidth - footerText.getMetrics(g).getWidth())/2, offsetY + pageheight + footerHeight);
+        	pageNr++;
+        	p.add(headerLine);
+        	p.add(footerLine);
+        	p.add(footerText);
+        	p.add(headerText);
         }
     }
 
@@ -227,8 +283,10 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
     public Printable getPrintable(int pageIndex) throws IndexOutOfBoundsException {
         return this;
     }
-
-    private class Text {
+    private static interface PrintPart {
+    	 public void print(Graphics g);
+    }
+    private class Text implements PrintPart {
 
         private final String text;
         private final Font font;
@@ -243,9 +301,9 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
             this.linenumber = linenumber;
         }
 
-        public void move(int x, int y) {
-            this.x = x;
-            this.y = y;
+        public void move(double x, double y) {
+            this.x = (int)x;
+            this.y = (int)y;
         }
 
         public void print(Graphics g) {
@@ -261,5 +319,22 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
             return fm.getStringBounds(text, g);
         }
     }
-
+    private static class Line implements PrintPart {
+        private final Color color;
+        private int x1;
+        private int y1;
+        private int x2;
+        private int y2;
+		public Line(Color color, double x1, double y1, double x2, double y2) {
+			this.color = color;
+			this.x1 = (int)x1;
+			this.y1 = (int)y1;
+			this.x2 = (int)x2;
+			this.y2 = (int)y2;
+		}
+        public void print(Graphics g) {
+        	g.setColor(color);
+        	g.drawLine(x1, y1, x2, y2);
+        }
+    }
 }

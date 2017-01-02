@@ -104,7 +104,7 @@ public class MainWindow extends JFrame implements WindowListener {
         undoManager = new TextUndoManager(data);
         data.addUndoableEditListener(undoManager);
         filechooser = new JFileChooser();
-        filechooser.addChoosableFileFilter(new FileNameExtensionFilter(GUI.getString("File.EOS"), "eos"));
+        filechooser.setFileFilter(new FileNameExtensionFilter(GUI.getString("File.EOS"), "eos"));
         filechooser.setCurrentDirectory(new File("."));
         exportfilechooser = new JFileChooser();
         exportfilechooser.addChoosableFileFilter(new FileNameExtensionFilter(GUI.getString("File.Html"), "html"));
@@ -496,8 +496,15 @@ public class MainWindow extends JFrame implements WindowListener {
     private boolean saveAs() {
         try {
             if (filechooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                data.saveProgram(filechooser.getSelectedFile());
-                activeFile = filechooser.getSelectedFile();
+            	File target = filechooser.getSelectedFile();
+            	if (!target.getName().contains(".")) {
+            		target = new File(target.toString()+".eos");
+            	}
+            	if (!overwriteSafetyCheck(target)) {
+            		return false;
+            	}
+                data.saveProgram(target);
+                activeFile = target;
                 ResourceLoader.setWorkingDirectory(activeFile.getParent());
                 return true;
             } else {
@@ -511,6 +518,7 @@ public class MainWindow extends JFrame implements WindowListener {
             return false;
         }
     }
+
     /**
      * Datei öffnen.
      * @param evt
@@ -518,9 +526,11 @@ public class MainWindow extends JFrame implements WindowListener {
     private void OpenActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             if (filechooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-                data.loadProgram(filechooser.getSelectedFile());
-                activeFile = filechooser.getSelectedFile();
-                ResourceLoader.setWorkingDirectory(activeFile.getParent());
+            	if (dirtySafetyCheck()) {
+            		data.loadProgram(filechooser.getSelectedFile());
+                	activeFile = filechooser.getSelectedFile();
+                	ResourceLoader.setWorkingDirectory(activeFile.getParent());
+            	}
             }
         } catch (IOException io) {
             JOptionPane.showMessageDialog(this, GUI.getString("Open.Error.Title"),
@@ -600,7 +610,11 @@ public class MainWindow extends JFrame implements WindowListener {
      * @param evt
      */
     private void NewActionPerformed(java.awt.event.ActionEvent evt) {
-        data.clear();
+    	if (dirtySafetyCheck()) {
+            data.clear();
+            activeFile = null;
+            undoManager.discardAllEdits();
+    	}
     }
     /**
      * Hilfe anzeigen.
@@ -671,8 +685,8 @@ public class MainWindow extends JFrame implements WindowListener {
      * Druckvorschau anzeigen.
      * @param evt
      */
-    private void PrintActionPerformed(java.awt.event.ActionEvent evt) {
-   		PrintFrame pf = new PrintFrame();
+    private void PrintActionPerformed(java.awt.event.ActionEvent evt) {    	
+   		PrintFrame pf = new PrintFrame((activeFile != null)?activeFile.getName():GUI.getString("Print.Noname"));
        	pf.init(data.getProgram());
        	pf.setVisible(true);
     }
@@ -698,6 +712,9 @@ public class MainWindow extends JFrame implements WindowListener {
 
         if (exportfilechooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             File file = exportfilechooser.getSelectedFile();
+            if (!overwriteSafetyCheck(file)) {
+            	return;
+            }
             String text = HtmlExport.export2html(data.getProgram(), file.getName());
             try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "Utf-8"))) {
                 bw.append(text);
@@ -741,6 +758,20 @@ public class MainWindow extends JFrame implements WindowListener {
      * Anwendung schliessen.
      */
     private void closeApp() {
+    	if (dirtySafetyCheck()) {
+    		System.exit(0);
+    	}
+    }
+    private boolean overwriteSafetyCheck(File file) {
+    	if (!file.exists()) {
+    		return true;
+    	}
+        int answer = JOptionPane.showConfirmDialog(
+                this, GUI.getString("Save.Overwrite.Text"), GUI.getString("Save.Overwrite.Title"),
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        return answer == JOptionPane.OK_OPTION;
+    }
+    private boolean dirtySafetyCheck() {
         if (data.isSourceDirty()) {
             int answer = JOptionPane.showConfirmDialog(
                     this, GUI.getString("Closing.Save.Text"), GUI.getString("Closing.Save.Title"),
@@ -748,16 +779,19 @@ public class MainWindow extends JFrame implements WindowListener {
             switch (answer) {
                 case JOptionPane.YES_OPTION:
                     if (save()) {
-                        System.exit(0);
+                        return true;
+                    } else {
+                    	return false;
                     }
-                    break;
                 case JOptionPane.NO_OPTION:
-                    System.exit(0);
-                    break;
+                    return true;
                 case JOptionPane.CANCEL_OPTION:
+                	return false;
+                default:
+                	return false;
             }
         } else {
-            System.exit(0);
+            return true;
         }
     }
 

@@ -632,7 +632,7 @@ public class MainWindow extends JFrame implements WindowListener {
      */
     private void PrintActionPerformed(java.awt.event.ActionEvent evt) {
     	if (data.getProgram() != null) {
-    		PrintFrame pf = new PrintFrame();
+    		PrintFrame pf = new PrintFrame(activeFile.toString());
         	pf.init(data.getProgram());
         	pf.setVisible(true);
     	}

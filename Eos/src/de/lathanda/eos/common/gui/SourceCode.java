@@ -140,6 +140,7 @@ public class SourceCode extends DefaultStyledDocument
 	public void clear() {
 		try {
 			remove(0, getLength());
+			sourceDirty = false;
 		} catch (BadLocationException ble) {
 			// This shouldn't be possible, but if it happens it's fatal
 			JOptionPane.showMessageDialog(null, ble.getLocalizedMessage(), GUI.getString("InternalError.Title"),

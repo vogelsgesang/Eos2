@@ -18,6 +18,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
@@ -36,14 +37,14 @@ public class PrintFrame extends JFrame {
 	/**
      * Creates new form PrintFrame
      */
-    public PrintFrame() {
-        initComponents();
+    public PrintFrame(String title) {
+        initComponents(title);
     }
     public void init(AbstractProgram abstractProgram) {
-        printview.init(abstractProgram);
+        printview.init(abstractProgram, txtTitle.getText());
     }
 
-    private void initComponents() {
+    private void initComponents(String title) {
 
         controlToolbar = new JToolBar();
         btnLeft = new JButton();
@@ -51,6 +52,8 @@ public class PrintFrame extends JFrame {
         space1 = new Filler(new Dimension(20, 0), new Dimension(20, 0), new Dimension(20, 32767));
         btnPrint = new JButton();
         chkLinenumbers = new JCheckBox(GUI.getString("Print.Linenumbers"), false);
+        txtTitle = new JTextField(title);
+        
         printScroll = new JScrollPane();
         printview = new PrintPanel();
 
@@ -75,9 +78,13 @@ public class PrintFrame extends JFrame {
         controlToolbar.add(btnRight);
 
         chkLinenumbers.setFocusable(false);
-        chkLinenumbers.addChangeListener(evt -> chkLinenumbersChanged(evt));
+        chkLinenumbers.addChangeListener(evt -> chkLinenumbersChanged(evt));                
         
-        controlToolbar.add(chkLinenumbers);        
+        controlToolbar.add(chkLinenumbers);                
+              
+        txtTitle.addActionListener(ae -> printview.setHeader(txtTitle.getText()));
+        txtTitle.setText(title);
+        controlToolbar.add(txtTitle);
         
         controlToolbar.add(space1);
 
@@ -99,6 +106,7 @@ public class PrintFrame extends JFrame {
 
     private void btnPrintActionPerformed(ActionEvent evt) {
         try {
+        	printview.setHeader(txtTitle.getText());
             PrinterJob job = PrinterJob.getPrinterJob();
             job.setPageable(printview);
             if (!job.printDialog()) {
@@ -129,6 +137,7 @@ public class PrintFrame extends JFrame {
     private JButton btnPrint;
     private JButton btnRight;
     private JCheckBox chkLinenumbers;
+    private JTextField txtTitle;
     private JToolBar controlToolbar;
     private JScrollPane printScroll;
     private PrintPanel printview;
