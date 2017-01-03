@@ -39,7 +39,7 @@ public class LoopForever extends ConnectedUnit {
         d.drawLine(width, 0, center, 0);
         
         //draw initial arror
-        d.drawArrow(center, 0, center, SPACE, 3);
+        d.drawArrow(center, 0, center, SPACE, 2);
     }
     
 }

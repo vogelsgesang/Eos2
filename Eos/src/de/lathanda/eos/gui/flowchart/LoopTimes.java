@@ -80,14 +80,14 @@ public class LoopTimes extends ConnectedUnit {
         init.draw(d);
         
         //arrow init -> diamond
-        d.drawArrow( diam.getX(1), diam.getY(1) - SPACE, diam.getX(1), diam.getY(1), 3);
+        d.drawArrow( diam.getX(1), diam.getY(1) - SPACE, diam.getX(1), diam.getY(1), 2);
         
         //condition diamond
         diam.draw(d);
         
         //true arrow
         d.drawString(yes, yesx, yesy);    
-        d.drawArrow(diam.getX(3), diam.getY(3), diam.getX(3), diam.getY(3) + SPACE, 3);
+        d.drawArrow(diam.getX(3), diam.getY(3), diam.getX(3), diam.getY(3) + SPACE, 2);
         
         //draw loop body
         sequence.draw(d);
@@ -110,7 +110,7 @@ public class LoopTimes extends ConnectedUnit {
         d.drawLine(center, y, center, y + SPACE);
         d.drawLine(center, y + SPACE, width, y + SPACE);
         d.drawLine(width, y + SPACE, width, diam.getY(2));
-        d.drawArrow(width, diam.getY(2), diam.getX(2), diam.getY(2), 3);
+        d.drawArrow(width, diam.getY(2), diam.getX(2), diam.getY(2), 2);
      
     }
 }

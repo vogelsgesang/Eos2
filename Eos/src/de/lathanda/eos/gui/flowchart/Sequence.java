@@ -31,7 +31,7 @@ public class Sequence extends ConnectedUnit {
             } else if (!previous.neverEnds) {
                 
                 if (u.needsIncomingArrow) {
-                    d.drawArrow(cx, cy, cx, cy + SPACE, 3);
+                    d.drawArrow(cx, cy, cx, cy + SPACE, 2);
                 } else {
                     d.drawLine(cx, cy, cx, cy + SPACE);
                 }

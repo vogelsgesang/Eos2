@@ -108,7 +108,7 @@ public class ObjectChart extends Diagram implements CompilerListener, DebugListe
 				memoryList.addSelectionInterval(memoryModel.size() - 1, memoryModel.size() - 1);
 			}
 		}
-		memoryList.repaint();		
+		revalidate();
 	}
 	@Override
 	public void valueChanged(ListSelectionEvent lse) {

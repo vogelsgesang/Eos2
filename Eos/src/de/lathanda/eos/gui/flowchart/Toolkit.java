@@ -19,9 +19,9 @@ public class Toolkit {
 		} else if (n instanceof LoopUnit) {
 			LoopUnit lu = (LoopUnit) n;
 			if (lu.isPre()) {
-				return new LoopDoWhile(lu);
-			} else {
 				return new LoopWhile(lu);
+			} else {
+				return new LoopDoWhile(lu);
 			}
 		} else {
 			return new Statement(n);

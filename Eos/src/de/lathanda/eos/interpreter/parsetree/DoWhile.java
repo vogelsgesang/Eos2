@@ -50,7 +50,7 @@ public class DoWhile extends Loop {
 
     @Override
     public boolean isPre() {
-        return true;
+        return false;
     }
     
 }

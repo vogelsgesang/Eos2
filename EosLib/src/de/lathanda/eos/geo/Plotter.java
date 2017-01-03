@@ -69,6 +69,10 @@ public class Plotter extends Group {
 			Polygon newPolygon = new Polygon();
 			newPolygon.fill = new FillDescriptor(polygon.fill);
 			newPolygon.line = new LineDescriptor(polygon.line);
+			if (!polygon.isValid()) {
+				//check if polygon is valid before switching to new one
+				this.removeFigure(polygon);
+			}
 			polygon = newPolygon;
 		}
 		addFigure(polygon);

@@ -67,12 +67,12 @@ public class Alternative extends ConnectedUnit {
         //left side arrow
         d.drawString(yes, yesx, yesy);    
         d.drawLine(diam.getX(0), diam.getY(0), AcenterX, diam.getY(0));
-        d.drawArrow(AcenterX, diam.getY(0), AcenterX, ABbeginY, 3);
+        d.drawArrow(AcenterX, diam.getY(0), AcenterX, ABbeginY, 2);
         
         //right side arrow
         d.drawString(no, nox, noy);    
         d.drawLine(diam.getX(2), diam.getY(2), BcenterX, diam.getY(2));
-        d.drawArrow(BcenterX, diam.getY(2), BcenterX, ABbeginY, 3);
+        d.drawArrow(BcenterX, diam.getY(2), BcenterX, ABbeginY, 2);
         
         //left and right side
         A.draw(d);

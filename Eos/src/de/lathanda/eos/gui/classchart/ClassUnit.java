@@ -40,7 +40,8 @@ public class ClassUnit extends Unit {
 	@Override
 	public void drawUnit(Drawing d) {
 		d.drawRect(0, 0, width, height);
-		d.drawRect(0, yLabel, width, yProperties - yLabel);
+		d.drawLine(0, yLabel, width, yLabel);
+		d.drawLine(0, yProperties, width, yProperties);
 		for(TextUnit t:text) {
 			t.draw(d);
 		}

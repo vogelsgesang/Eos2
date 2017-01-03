@@ -60,11 +60,11 @@ public class LoopDoWhile extends ConnectedUnit {
         d.drawString(yes, yesx, yesy);
         d.drawLine(diam.getX(0), diam.getY(0), 0, diam.getY(0));
         d.drawLine(0, diam.getY(0), 0, 0);
-        d.drawLine(0, 0, (int)width / 2, 0);
-        d.drawArrow(width / 2, 0, width / 2, SPACE, 3);
+        d.drawLine(0, 0, width / 2, 0);
+        d.drawArrow(width / 2, 0, width / 2, SPACE, 2);
         
         //body -> diamond            
-        d.drawArrow(diam.getX(1), diam.getY(1) - SPACE, diam.getX(1), diam.getY(1),  3);
+        d.drawArrow(diam.getX(1), diam.getY(1) - SPACE, diam.getX(1), diam.getY(1),  2);
         
         //loop body
         sequence.draw(d);

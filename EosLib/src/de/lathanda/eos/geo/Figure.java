@@ -177,7 +177,7 @@ public abstract class Figure implements Cloneable, Readout {
         transform = transform.mirrorY();
     }
     protected Point getAbsolutePosition() {
-    	return getAbsolutePosition(new Point(transform.getdx(),transform.getdy()));
+    	return getAbsolutePosition(new Point(0,0));//transform.getdx(),transform.getdy()));
     }
     private Point getAbsolutePosition(Point p) {
         if ( group != null) {
@@ -186,7 +186,7 @@ public abstract class Figure implements Cloneable, Readout {
                 return ((Figure)g).getAbsolutePosition(transform.transform(p));
             }
         }
-        return p;
+        return transform.transform(p);
     }
     protected Point getRelativePosition(Point absolute) {
     	if (group != null) {

@@ -36,7 +36,7 @@ public class LoopWhile extends ConnectedUnit {
         sequence.centerX(width);
         sequence.setOffsetY(diam.getHeight() + SPACE);
         
-        yesx = diam.getX(3) + BORDER;
+        yesx = diam.getX(3) + 2*BORDER;
         yesy = diam.getY(3) + d.getAscent();
         nox = diam.getX(0) - d.stringWidth(no) - BORDER;
         noy = diam.getY(0) - BORDER;
@@ -58,11 +58,11 @@ public class LoopWhile extends ConnectedUnit {
         d.drawLine(width / 2, height - 2 * SPACE, width / 2, height - SPACE);
         d.drawLine(width / 2, height - SPACE, width, height - SPACE);
         d.drawLine(width, height - SPACE, width, diam.getY(2));
-        d.drawArrow(width, diam.getY(2), diam.getX(2), diam.getY(2), 3);
+        d.drawArrow(width, diam.getY(2), diam.getX(2), diam.getY(2), 2);
 
         //true arrow
         d.drawString(yes, yesx, yesy);    
-        d.drawArrow(diam.getX(3), diam.getY(3), diam.getX(3), diam.getY(3) + SPACE, 3);
+        d.drawArrow(diam.getX(3), diam.getY(3), diam.getX(3), diam.getY(3) + SPACE, 2);
         
         //loop body
         sequence.draw(d);

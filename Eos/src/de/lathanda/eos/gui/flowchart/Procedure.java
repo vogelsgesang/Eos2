@@ -51,11 +51,11 @@ public class Procedure extends ConnectedUnit {
         sequence.draw(d);
         
         if (!sequence.neverEnds) {
-            d.drawArrow(arrowxE, arrowyE, arrowxE, arrowyE + SPACE, 3);
+            d.drawArrow(arrowxE, arrowyE, arrowxE, arrowyE + SPACE, 2);
         }       
         
         if (sequence.needsIncomingArrow) {
-            d.drawArrow(arrowxB, arrowyB, arrowxB, arrowyB + SPACE, 3);
+            d.drawArrow(arrowxB, arrowyB, arrowxB, arrowyB + SPACE, 2);
         } else {
             d.drawLine(arrowxB, arrowyB, arrowxB, arrowyB + SPACE);
         }        
