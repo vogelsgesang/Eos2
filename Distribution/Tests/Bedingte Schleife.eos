@@ -1,0 +1,5 @@
+i:Integer
+r:Rechteck
+wiederhole solange i < 10
+    r.verschieben(1,0)
+*wiederhole

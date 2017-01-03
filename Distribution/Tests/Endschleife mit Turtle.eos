@@ -1,0 +1,6 @@
+t:Turtle
+i:Integer
+wiederhole
+    t.vor(10)
+    i = i + 1
+*wiederhole solange i <10
