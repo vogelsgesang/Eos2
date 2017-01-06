@@ -95,4 +95,7 @@ public class Turtle extends Figur {
     public Color farbeLesen() {
     	return plotter.getLineColor();
     }
+    public void allesLoeschen() {
+    	plotter.clearAll();
+    }
 }

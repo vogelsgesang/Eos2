@@ -111,6 +111,15 @@ public class Picture2D extends Picture {
         centerY -= pixel2mmInternal(dy);
     }
     /**
+     * Koordinaten der Mitte festlegen.
+     * @param x
+     * @param y
+     */
+    public void setCenter(double x, double y) {
+    	centerX = x;
+    	centerY = y;
+    }
+    /**
      * Pixel in Millimeter umrechnen inklusive Skalierung.
      * @param pixel Pixel
      * @return Millimeter

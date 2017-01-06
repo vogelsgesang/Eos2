@@ -53,6 +53,16 @@ public class Group extends Figure implements FigureGroup  {
         go.restoreTransformation(this);
         fireLayoutChanged();
     }
+    /**
+     * Entfernt alle Figuren
+     */
+    public void removeAll() {
+    	for (Figure f:members) {
+    		f.restoreTransformation(this);
+    	}
+    	members.clear();
+    	fireLayoutChanged();
+    }
 
     @Override
     public Group getGroup() {

@@ -194,5 +194,14 @@ public class Plotter extends Group {
 	public void setFillColor(Color color) {
 		startPlot();
 		polygon.setFillColor(color);
-	}    
+	}   
+	/**
+	 * Löscht die Zeichnung
+	 */
+	public void clearAll() {
+		super.removeAll();
+		pen = new Pen();
+		addFigure(pen);
+		startPlot();
+	}
 }
