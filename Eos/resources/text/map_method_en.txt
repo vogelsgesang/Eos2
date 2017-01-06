@@ -27,6 +27,8 @@ window.settop(1)              = setTop,real
 window.gettop(0)              = getTop,real
 window.setleft(1)             = setLeft,real
 window.getleft(0)             = getLeft,real
+window.setzoom(1)             = setZoom,real
+window.setcenter(2)           = setCenter,real,real
 window.setname(1)             = setTitle,string
 window.getname(0)             = getTitle,string
 window.setgridwidth(1)        = setGridWidth,real
@@ -161,6 +163,7 @@ plotter.setlinestyle(1)          = setLineStyle,linestyle
 plotter.setfillstyle(1)       = setFillStyle,fillstyle
 plotter.setfillcolor(1)     = setFillColor,color
 plotter.setcenter(2)            = setCenter,real,real
+plotter.clearall(0)             = clearAll
 
 color.getgreen(0)           = getGreen,integer
 color.getred(0)             = getRed,integer

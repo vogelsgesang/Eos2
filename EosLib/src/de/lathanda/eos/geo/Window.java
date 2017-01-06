@@ -109,7 +109,14 @@ public class Window implements FigureGroup, CleanupListener, Readout {
     public double getLeft() {
         return vf.getLeft();
     }
+    
+    public void setCenter(double x, double y) {
+    	vf.setCenter(x, y);
+    }
 
+    public void setZoom(double zoom) {
+    	vf.setZoom(zoom);
+    }
     public void setGridWidth(double gridwidth) {
         vf.setGridWidth(gridwidth);
     }

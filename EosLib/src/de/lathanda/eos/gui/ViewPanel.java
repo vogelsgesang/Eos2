@@ -69,18 +69,26 @@ public class ViewPanel extends JPanel {
         return new Dimension(prefWidth, prefHeight);
     }
     public void zoomIn() {
-        gmm.setScale(gmm.getScale() * 1.1f);
+        gmm.setScale(gmm.getScale() * 1.1d);
         repaint();
     }
 
     public void zoomOut() {
-        gmm.setScale(gmm.getScale() / 1.1f);
+        gmm.setScale(gmm.getScale() / 1.1d);
         repaint();        
     }
 
     public void zoom100() {
-        gmm.setScale(1f);
+        gmm.setScale(1d);
         repaint();        
+    }
+    public void setZoom(double zoom) {
+    	gmm.setScale(zoom);
+    	repaint();
+    }
+    public void setCenter(double x, double y) {
+    	gmm.setCenter(x, y);
+    	repaint();
     }
     public void addCursorListener(CursorListener cl) {
         cursorMulticaster.add(cl);

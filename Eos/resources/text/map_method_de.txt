@@ -27,6 +27,8 @@ window.obensetzen(1)             = setTop,real
 window.obenlesen(0)              = getTop,real
 window.linkssetzen(1)            = setLeft,real
 window.linkslesen(0)             = getLeft,real
+window.zoomsetzen(1)             = setZoom,real
+window.mittesetzen(2)            = setCenter,real,real
 window.namesetzen(1)             = setTitle,string
 window.namelesen(0)              = getTitle,string
 window.strichabstandsetzen(1)    = setGridWidth,real
@@ -161,6 +163,7 @@ plotter.linienartsetzen(1)          = setLineStyle,linestyle
 plotter.f\u00fcllartsetzen(1)       = setFillStyle,fillstyle
 plotter.f\u00fcllfarbesetzen(1)     = setFillColor,color
 plotter.zentrumsetzen(2)            = setCenter,real,real
+plotter.alleslöschen(0)             = clearAll
 
 color.gr\u00fcnlesen(0)           = getGreen,integer
 color.rotlesen(0)                 = getRed,integer

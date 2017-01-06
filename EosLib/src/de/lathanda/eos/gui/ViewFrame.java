@@ -146,7 +146,12 @@ public class ViewFrame extends JFrame {
         r.y += view.mm2pixel(dy);
         this.setBounds(r);
     }
-
+    public void setCenter(double x, double y) {
+    	view.setCenter(x, y);    	
+    }
+    public void setZoom(double zoom) {
+    	view.setZoom(zoom);
+    }
     public void setGridVisible(boolean b) {
         view.setGridVisible(b);
     }

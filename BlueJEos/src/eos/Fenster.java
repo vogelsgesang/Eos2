@@ -78,4 +78,10 @@ public class Fenster {
     public void gitteraus() {
         window.setGridVisible(false);
     }
+    public void zoomSetzen(double zoom) {
+    	window.setZoom(zoom);
+    }
+    public void mitteSetzen(double x, double y) {
+    	window.setCenter(x, y);
+    }
 }
