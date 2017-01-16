@@ -132,9 +132,11 @@ public class TextField extends Rectangle {
     }
 
     public void deleteLine() {
-        text.removeLast();
-        dirty = true;
-        fireDataChanged();
+    	if (!text.isEmpty()) {
+    		text.removeLast();
+    		dirty = true;
+    		fireDataChanged();
+    	}
     }
     @Override
 	public void getAttributes(LinkedList<Attribut> attributes) {

@@ -63,8 +63,8 @@ public class TextFeld extends Rechteck {
     	return textfield.getHideBorder();
     }
 
-    public void zeileHinzufuegen(String text) {
-        textfield.appendLine(text);
+    public void zeileHinzufuegen(Object text) {
+        textfield.appendLine(text.toString());
     }
     public void zeileLoeschen() {
         textfield.deleteLine();

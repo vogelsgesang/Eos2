@@ -101,6 +101,10 @@ public class CodeColoring implements CodeColorHook {
 	}
 
 	private void doSwingColoring() {
+		if (sourceCode.getProgram() == null) {
+			sourceCode.setCharacterAttributes(0, sourceCode.getLength() + 1, attributeSetBase, false);
+			return;
+		}
 		LinkedList<InfoToken> tokens = sourceCode.getProgram().getTokenList();
 		// remove previous coloring, +1 is needed or the last symbol will not
 		// change size

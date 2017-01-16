@@ -52,6 +52,7 @@ public class SideInformation extends JPanel implements DocumentListener, GuiConf
 		addMouseListener(this);
 		setFont(new Font("Serif", Font.PLAIN, GuiConfiguration.def.getFontsize()));
 		updateSize();
+		GuiConfiguration.def.addConfigurationListener(this);
 	}
 	private void updateSize() {		
 		int digits = Math.max(String.valueOf(lines).length(), 3);
