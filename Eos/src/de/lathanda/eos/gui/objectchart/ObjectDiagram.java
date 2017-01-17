@@ -24,6 +24,7 @@ public class ObjectDiagram extends JPanel {
 	private LinkedList<Unit> units;
 	private final Drawing d;
 	private static final float SPACE = 5;
+	private LinkedList<MemoryEntry> data;
 
 	public ObjectDiagram() {
 		super();
@@ -39,14 +40,32 @@ public class ObjectDiagram extends JPanel {
 	}
 
 	public BufferedImage export(float dpi) {
+		if (data == null) return new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+		 LinkedList<Unit> units = new LinkedList<>();
+		for (MemoryEntry v : data) {
+			units.add(Toolkit.create(v));
+		}
 		Drawing drawing = new Drawing(300);
-		Dimension dim = layout(drawing);
+		units.forEach(p -> p.layout(drawing));
+		float h = 0;
+		float w = 0;
+		for (Unit u : units) {
+			u.setOffsetY(h);
+			h = h + u.getHeight() + SPACE;
+			if (w < u.getWidth()) {
+				w = u.getWidth();
+			}
+		}
+		h -= SPACE;
+		Dimension dim = new Dimension(drawing.convertmm2pixel(w), drawing.convertmm2pixel(h));
 		BufferedImage image = new BufferedImage(dim.width, dim.height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = image.createGraphics();
 		g.setColor(new Color(255, 255, 255, 0));
 		g.fillRect(0, 0, dim.width, dim.height);
-		drawing.init(g);
-		render(drawing);
+        drawing.init(g);
+        drawing.setDrawWidth(0.5f);
+        drawing.setColor(Color.BLACK);
+		units.stream().forEachOrdered(p -> p.draw(drawing));
 		return image;
 
 	}
@@ -65,6 +84,7 @@ public class ObjectDiagram extends JPanel {
 				w = u.getWidth();
 			}
 		}
+		h -= SPACE;
 		return new Dimension(d.convertmm2pixel(w + SPACE * 2), d.convertmm2pixel(h + SPACE * 2));
 	}
 
@@ -78,6 +98,7 @@ public class ObjectDiagram extends JPanel {
 	}
 
 	public void setData(LinkedList<MemoryEntry> data) {
+		this.data = data;
 		units.clear();
 		for (MemoryEntry v : data) {
 			units.add(Toolkit.create(v));

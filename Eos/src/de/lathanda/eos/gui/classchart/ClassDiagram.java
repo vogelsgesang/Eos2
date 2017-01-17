@@ -51,7 +51,7 @@ public class ClassDiagram extends JPanel {
         render(d);
     }
 	public BufferedImage export(float dpi) {
-		if (type == null) return new BufferedImage(0,0, BufferedImage.TYPE_INT_ARGB);
+		if (type == null) return new BufferedImage(1,1, BufferedImage.TYPE_INT_ARGB);
 		ClassUnit unit = new ClassUnit(type);
 		Drawing drawing = new Drawing(300);
 		unit.layout(drawing);
@@ -61,11 +61,9 @@ public class ClassDiagram extends JPanel {
 		g.setColor(new Color(255, 255, 255, 0));
 		g.fillRect(0, 0, dim.width, dim.height);
 		drawing.init(g);
-		drawing.pushTransform();
 		drawing.setDrawWidth(0.5f);
 		drawing.setColor(Color.BLACK);
 		unit.draw(drawing);
-		drawing.popTransform();
 		return image;
 
 	}

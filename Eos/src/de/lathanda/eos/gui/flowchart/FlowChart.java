@@ -73,6 +73,7 @@ public class FlowChart extends Diagram implements CompilerListener {
         g.fillRect(0, 0, dim.width, dim.height);
         drawing.init(g);
         render(drawing);
+        layout(d);
         return image;
     }
     private Dimension layout(Drawing d) {

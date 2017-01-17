@@ -51,6 +51,7 @@ public class ClassUnit extends Unit {
 
 	@Override
 	public void layoutUnit(Drawing d) {
+		text.clear();
 		//header
 		TextUnit header = new TextUnit(name);
 		header.setFont(HEADER_FONT);
