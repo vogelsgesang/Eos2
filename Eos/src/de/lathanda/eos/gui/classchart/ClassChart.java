@@ -28,11 +28,11 @@ public class ClassChart extends Diagram implements ListSelectionListener {
 		classModel = new DefaultListModel<String>();
 		classList = new JList<>(classModel);
 		classList.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-		classList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		classList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		classDiagram = new ClassDiagram();
 		setLayout(new BorderLayout());
 		add(new JScrollPane(classList), BorderLayout.WEST);
-		add(new JScrollPane(classDiagram), BorderLayout.CENTER);
+		add(new JScrollPane(classDiagram), BorderLayout.CENTER);		
 		classList.addListSelectionListener(this);	
 		update();
 	}
