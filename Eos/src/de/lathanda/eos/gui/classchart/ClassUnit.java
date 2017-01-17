@@ -1,5 +1,6 @@
 package de.lathanda.eos.gui.classchart;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -39,6 +40,7 @@ public class ClassUnit extends Unit {
 
 	@Override
 	public void drawUnit(Drawing d) {
+		d.setColor(Color.BLACK);
 		d.drawRect(0, 0, width, height);
 		d.drawLine(0, yLabel, width, yLabel);
 		d.drawLine(0, yProperties, width, yProperties);
