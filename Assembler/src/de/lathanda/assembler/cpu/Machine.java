@@ -8,6 +8,7 @@ import de.lathanda.eos.common.interpreter.DebugInfo;
 import de.lathanda.eos.common.interpreter.DebugListener;
 import de.lathanda.eos.common.interpreter.DebugMulticaster;
 import de.lathanda.eos.gui.diagram.MemoryEntry;
+import de.lathanda.eos.interpreter.commands.DebugPoint;
 
 public class Machine implements AbstractMachine {
 	private Memory memory;
@@ -113,6 +114,11 @@ public class Machine implements AbstractMachine {
 		
 	}
 	@Override
+	public int getBreakpointPosition(int linenumber) {
+		// TODO Auto-generated method stub
+		return 0;
+	} 	
+	@Override
 	public LinkedList<MemoryEntry> getMemory() {
 		// TODO Auto-generated method stub
 		return null;
@@ -166,6 +172,5 @@ public class Machine implements AbstractMachine {
                 stop();
             }
         }
-    }
-	
+    }	
 }

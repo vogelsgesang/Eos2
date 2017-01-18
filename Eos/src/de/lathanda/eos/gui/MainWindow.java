@@ -196,12 +196,14 @@ public class MainWindow extends JFrame implements WindowListener {
         toolbarGroup.setLayout(new GridLayout(2,1)); 
         
         btnSave.setIcon(new ImageIcon(getClass().getResource("/icons/document-save-3.png")));
+        btnSave.setToolTipText(GUI.getString("Menu.Save.Tooltip"));
         btnSave.setFocusable(false);
         btnSave.addActionListener(evt -> SaveActionPerformed(evt));
 
         mainToolbar.add(btnSave);
 
         btnOpen.setIcon(new ImageIcon(getClass().getResource("/icons/document-open-5.png")));
+        btnOpen.setToolTipText(GUI.getString("Menu.Open.Tooltip"));
         btnOpen.setFocusable(false);
         btnOpen.addActionListener(evt -> OpenActionPerformed(evt));
 
@@ -210,18 +212,21 @@ public class MainWindow extends JFrame implements WindowListener {
         toolbarGroup.add(mainToolbar);
 
         btnCopy.setIcon(new ImageIcon(getClass().getResource("/icons/edit-copy-4.png")));
+        btnCopy.setToolTipText(GUI.getString("Menu.Copy.Tooltip"));
         btnCopy.setFocusable(false);
         btnCopy.addActionListener(evt -> CopyActionPerformed(evt));
 
         mainToolbar.add(btnCopy);
 
         btnCut.setIcon(new ImageIcon(getClass().getResource("/icons/edit-cut-4.png")));
+        btnCut.setToolTipText(GUI.getString("Menu.Cut.Tooltip"));
         btnCut.setFocusable(false);
         btnCut.addActionListener(evt -> CutActionPerformed(evt));
 
         mainToolbar.add(btnCut);
 
         btnPaste.setIcon(new ImageIcon(getClass().getResource("/icons/edit-paste-4.png")));
+        btnPaste.setToolTipText(GUI.getString("Menu.Paste.Tooltip"));
         btnPaste.setFocusable(false);
         btnPaste.addActionListener(evt -> PasteActionPerformed(evt));
 
@@ -229,12 +234,14 @@ public class MainWindow extends JFrame implements WindowListener {
         mainToolbar.add(jSeparator1);
 
         btnUndo.setIcon(new ImageIcon(getClass().getResource("/icons/edit-undo-4.png")));
+        btnUndo.setToolTipText(GUI.getString("Menu.Undo.Tooltip"));
         btnUndo.setFocusable(false);
         btnUndo.addActionListener(evt -> UndoActionPerformed(evt));
 
         mainToolbar.add(btnUndo);
 
         btnRedo.setIcon(new ImageIcon(getClass().getResource("/icons/edit-redo-4.png")));
+        btnRedo.setToolTipText(GUI.getString("Menu.Redo.Tooltip"));
         btnRedo.setFocusable(false);
         btnRedo.addActionListener(evt -> RedoActionPerformed(evt));
 
@@ -243,6 +250,7 @@ public class MainWindow extends JFrame implements WindowListener {
         mainToolbar.add(jSeparator3);
         
         btnBreakpoint.setIcon(new ImageIcon(getClass().getResource("/icons/pictograms-road_signs-stop_sign.png")));
+        btnBreakpoint.setToolTipText(GUI.getString("Tooltip.Breakpoint"));
         btnBreakpoint.setFocusable(false);
         btnBreakpoint.addActionListener(evt -> BreakpointActionPerformed(evt));
         
@@ -251,12 +259,14 @@ public class MainWindow extends JFrame implements WindowListener {
         mainToolbar.add(jSeparator4);
         
         btnClassDoc.setIcon(new ImageIcon(getClass().getResource("/icons/books.png")));
+        btnClassDoc.setToolTipText(GUI.getString("Menu.Classbook.Tooltip"));
         btnClassDoc.setFocusable(false);
         btnClassDoc.addActionListener(evt -> ClassDocActionPerformed(evt));
         
         mainToolbar.add(btnClassDoc);
         
         btnHelp.setIcon(new ImageIcon(getClass().getResource("/icons/help-3.png")));
+        btnHelp.setToolTipText(GUI.getString("Menu.Handbook.Tooltip"));
         btnHelp.setFocusable(false);
         btnHelp.addActionListener(evt -> HelpActionPerformed(evt));
 
@@ -284,30 +294,35 @@ public class MainWindow extends JFrame implements WindowListener {
         toolbarGroup.add(runToolbar);
         
         btnStart.setIcon(new ImageIcon(getClass().getResource("/icons/media-playback-start-3.png")));
+        btnStart.setToolTipText(GUI.getString("Tooltip.Start"));
         btnStart.setFocusable(false);
         btnStart.addActionListener(evt -> StartActionPerformed(evt));
 
         runToolbar.add(btnStart);
 
         btnSingleStep.setIcon(new ImageIcon(getClass().getResource("/icons/media-skip-forward-3.png")));
+        btnSingleStep.setToolTipText(GUI.getString("Tooltip.SingleStep"));
         btnSingleStep.setFocusable(false);
         btnSingleStep.addActionListener(evt -> SingleStepActionPerformed(evt));
 
         runToolbar.add(btnSingleStep);
 
         btnPause.setIcon(new ImageIcon(getClass().getResource("/icons/media-playback-pause-3.png")));
+        btnPause.setToolTipText(GUI.getString("Tooltip.Pause"));
         btnPause.setFocusable(false);
         btnPause.addActionListener(evt -> PauseActionPerformed(evt));
 
         runToolbar.add(btnPause);
 
         btnStop.setIcon(new ImageIcon(getClass().getResource("/icons/media-playback-stop-3.png")));
+        btnStop.setToolTipText(GUI.getString("Tooltip.Stop"));
         btnStop.setFocusable(false);
         btnStop.addActionListener(evt -> StopActionPerformed(evt));
 
         runToolbar.add(btnStop);
 
         btnSkip.setIcon(new ImageIcon(getClass().getResource("/icons/media-seek-forward-3.png")));
+        btnSkip.setToolTipText(GUI.getString("Tooltip.Skip"));
         btnSkip.setFocusable(false);
         btnSkip.addActionListener(evt -> SkipActionPerformed(evt));
 
@@ -324,44 +339,52 @@ public class MainWindow extends JFrame implements WindowListener {
 
         mitNew.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         mitNew.setText(GUI.getString("Menu.New"));
+        mitNew.setToolTipText(GUI.getString("Menu.New.Tooltip"));
         mitNew.addActionListener(evt -> NewActionPerformed(evt));
 
         menuFile.add(mitNew);
 
         mitOpen.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         mitOpen.setText(GUI.getString("Menu.Open"));
+        mitOpen.setToolTipText(GUI.getString("Menu.Open.Tooltip"));
         mitOpen.addActionListener(evt -> OpenActionPerformed(evt));
 
         menuFile.add(mitOpen);
 
         mitSave.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         mitSave.setText(GUI.getString("Menu.Save"));
+        mitSave.setToolTipText(GUI.getString("Menu.Save.Tooltip"));
         mitSave.addActionListener(evt -> SaveActionPerformed(evt));
 
         menuFile.add(mitSave);
 
         mitSaveAs.setText(GUI.getString("Menu.SaveAs"));
+        mitSaveAs.setToolTipText(GUI.getString("Menu.SaveAs.Tooltip"));
         mitSaveAs.addActionListener(evt -> SaveAsActionPerformed(evt));
 
         menuFile.add(mitSaveAs);
 
         mitSaveAsHtml.setText(GUI.getString("Menu.SaveAs.Html"));
+        mitSaveAsHtml.setToolTipText(GUI.getString("Menu.SaveAs.Html.Tooltip"));
         mitSaveAsHtml.addActionListener(evt -> SaveAsHtmlActionPerformed(evt));
 
         menuFile.add(mitSaveAsHtml);
 
         mitPrint.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         mitPrint.setText(GUI.getString("Menu.Print"));
+        mitPrint.setToolTipText(GUI.getString("Menu.Print.Tooltip"));
         mitPrint.addActionListener(evt -> PrintActionPerformed(evt));
 
         menuFile.add(mitPrint);
 
         mitConfig.setText(GUI.getString("Menu.Config"));
+        mitConfig.setToolTipText(GUI.getString("Menu.Config.Tooltip"));
         mitConfig.addActionListener(evt -> ConfigActionPerformed(evt));
 
         menuFile.add(mitConfig);
 
         mitExit.setText(GUI.getString("Menu.Close"));
+        mitExit.setToolTipText(GUI.getString("Menu.Close.Tooltip"));
         mitExit.addActionListener(evt -> ExitActionPerformed(evt));
 
         menuFile.add(mitExit);
@@ -372,36 +395,42 @@ public class MainWindow extends JFrame implements WindowListener {
 
         mitCopy.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         mitCopy.setText(GUI.getString("Menu.Copy"));
+        mitCopy.setToolTipText(GUI.getString("Menu.Copy.Tooltip"));
         mitCopy.addActionListener(evt -> CopyActionPerformed(evt));
 
         editMenu.add(mitCopy);
 
         mitCut.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
         mitCut.setText(GUI.getString("Menu.Cut"));
+        mitCut.setToolTipText(GUI.getString("Menu.Cut.Tooltip"));
         mitCut.addActionListener(evt -> CutActionPerformed(evt));
 
         editMenu.add(mitCut);
 
         mitPaste.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
         mitPaste.setText(GUI.getString("Menu.Paste"));
+        mitPaste.setToolTipText(GUI.getString("Menu.Paste.Tooltip"));
         mitPaste.addActionListener(evt -> PasteActionPerformed(evt));
 
         editMenu.add(mitPaste);
 
         mitUndo.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
         mitUndo.setText(GUI.getString("Menu.Undo"));
+        mitUndo.setToolTipText(GUI.getString("Menu.Undo.Tooltip"));
         mitUndo.addActionListener(evt -> UndoActionPerformed(evt));
 
         editMenu.add(mitUndo);
 
         mitRedo.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
         mitRedo.setText(GUI.getString("Menu.Redo"));
+        mitRedo.setToolTipText(GUI.getString("Menu.Redo.Tooltip"));
         mitRedo.addActionListener(evt -> RedoActionPerformed(evt));
 
         editMenu.add(mitRedo);
 
         mitPretty.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
         mitPretty.setText(GUI.getString("Menu.Pretty"));
+        mitPretty.setToolTipText(GUI.getString("Menu.Pretty.Tooltip"));
         mitPretty.addActionListener(evt -> PrettyActionPerformed(evt));
         
         editMenu.add(mitPretty);
@@ -411,18 +440,22 @@ public class MainWindow extends JFrame implements WindowListener {
         diagramMenu.setText(GUI.getString("Menu.Visualization"));
 
         mitStructogram.setText(GUI.getString("Menu.Structogram"));
+        mitStructogram.setToolTipText(GUI.getString("Menu.Structogram.Tooltip"));
         mitStructogram.addActionListener(evt -> StructogramActionPerformed(evt));
         diagramMenu.add(mitStructogram);
 
         mitFlowChart.setText(GUI.getString("Menu.Flowchart"));
+        mitFlowChart.setToolTipText(GUI.getString("Menu.Flowchart.Tooltip"));
         mitFlowChart.addActionListener(evt -> FlowChartActionPerformed(evt));
         diagramMenu.add(mitFlowChart);
 
         mitObjectChart.setText(GUI.getString("Menu.Objectchart"));
+        mitObjectChart.setToolTipText(GUI.getString("Menu.Objectchart.Tooltip"));
         mitObjectChart.addActionListener(evt -> ObjectChartActionPerformed(evt));        
         diagramMenu.add(mitObjectChart);
 
         mitClassChart.setText(GUI.getString("Menu.Classchart"));
+        mitClassChart.setToolTipText(GUI.getString("Menu.Classchart.Tooltip"));
         mitClassChart.addActionListener(evt -> ClassChartActionPerformed(evt));        
         diagramMenu.add(mitClassChart);
         
@@ -433,12 +466,14 @@ public class MainWindow extends JFrame implements WindowListener {
         helpMenu.setText(GUI.getString("Menu.Help"));
 
         mitClassDoc.setText(GUI.getString("Menu.Classbook"));
+        mitClassDoc.setToolTipText(GUI.getString("Menu.Classbook.Tooltip"));
         mitClassDoc.addActionListener(evt -> ClassDocActionPerformed(evt));
 
         helpMenu.add(mitClassDoc);
 
         mitHelp.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         mitHelp.setText(GUI.getString("Menu.Handbook"));
+        mitHelp.setToolTipText(GUI.getString("Menu.Handbook.Tooltip"));
         mitHelp.addActionListener(evt -> HelpActionPerformed(evt));
 
         helpMenu.add(mitHelp);
