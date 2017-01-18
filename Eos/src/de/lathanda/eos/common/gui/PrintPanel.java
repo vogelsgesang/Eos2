@@ -46,6 +46,7 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
     private final Font fontLinenumber = fontLiteral;
     private final Font fontHeader = new Font("sans", Font.PLAIN, 10);
     private final Font fontFooter = new Font("sans", Font.PLAIN, 8);
+    private final static String TAB = "        ";
     private static final double PAPER_BORDER_X = 56.69; //2cm in 1/72 inches
     private static final double PAPER_BORDER_Y = 28.34; //1cm in 1/72 inches
     private String header = "";
@@ -295,7 +296,7 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
         private int y;
         private boolean linenumber;
         public Text(String text, Font font, Color color, boolean linenumber) {
-            this.text = text;
+            this.text = text.replace("\t", TAB);
             this.font = font;
             this.color = color;
             this.linenumber = linenumber;
