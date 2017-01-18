@@ -1,1 +1,2 @@
-javaw -jar eos.jar
+start javaw -jar eos.jar
+exit
