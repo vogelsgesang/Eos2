@@ -83,6 +83,15 @@ public class Machine implements AbstractMachine {
     		return false;
     	}
     }
+	@Override
+	public int getBreakpointPosition(int linenumber) {
+		DebugPoint dp = getDebugPoint(linenumber);
+		if (dp != null) {
+			return dp.getMarker().getBeginPosition();
+		} else {
+			return -1;
+		}
+	}    
     private DebugPoint getDebugPoint(int linenumber) {
     	if (breakpoints.containsKey(linenumber)) {
     		return breakpoints.get(linenumber);

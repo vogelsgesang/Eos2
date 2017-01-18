@@ -49,5 +49,8 @@ public class DebugPoint extends Command {
 	@Override
 	public void prepare(Machine m) {
 		m.addPossibleBreakpoint(this, marker.getBeginLine());
-	}   
+	} 
+	public Marker getMarker() {
+		return marker;
+	}
 }

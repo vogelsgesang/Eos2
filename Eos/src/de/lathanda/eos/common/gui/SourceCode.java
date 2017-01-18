@@ -15,6 +15,7 @@ import java.util.TreeSet;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
@@ -47,7 +48,7 @@ import de.lathanda.eos.common.interpreter.Source;
  */
 public class SourceCode extends DefaultStyledDocument 
        implements Source, CompilerListener, DebugListener, 
-           LogListener, GuiConfigurationListener, CleanupListener {
+           LogListener, GuiConfigurationListener, CleanupListener, DocumentListener {
 	private static final long serialVersionUID = -7902775704808861534L;
 
 	private static final Object COMPILE_LOCK = new Object();
@@ -70,6 +71,7 @@ public class SourceCode extends DefaultStyledDocument
 		message = new OutputStyle();
 		MessageHandler.def.addLogListener(this);
 		GuiConfiguration.def.addConfigurationListener(this);
+		addDocumentListener(this);
 		
 	}
 	public void init(AutoCompleteHook autoCompleteHook, CodeColorHook codeColorHook) {
@@ -216,39 +218,16 @@ public class SourceCode extends DefaultStyledDocument
 	@Override
 	public void insertString(int pos, String text, AttributeSet attributeSet) throws BadLocationException {
 		autoCompleteHook.insertString(pos, text, program);
-		int newLines = countInString(text, "\n");
-		if (program != null) {
-			int line = program.getLine(pos);
-			if (line > 0 && newLines > 0) {
-				TreeSet<Integer> newBreakpoints = new TreeSet<Integer>();
-				for(int breakpoint : breakpoints) {
-					if (breakpoint >= line) {
-						newBreakpoints.add(breakpoint + newLines);
-					} else {
-						newBreakpoints.add(breakpoint);
-					}
-				}
-				breakpoints = newBreakpoints;
-			}
-		}
 		super.insertString(pos, text, attributeSet);
 		changed();
 	}
 
 	@Override
-	public void remove(int offs, int len) throws BadLocationException {
+	public void remove(int offs, int len) throws BadLocationException {	
 		super.remove(offs, len);
 		changed();
 	}
-	private int countInString(String text, String seek) {
-		int index = text.indexOf(seek);
-		int count = 0;
-		while (index != -1) {
-			count++;
-			index = text.indexOf(seek, index + 1);
-		}
-		return count;
-	}
+
 	public void changed() {
 		synchronized (COMPILE_LOCK) {
 			compileNeeded = true;
@@ -402,6 +381,53 @@ public class SourceCode extends DefaultStyledDocument
 		if (machine != null) {
 			//machine.stop();
 			machine = null;
+		}
+	}
+	private int linecount = -1;
+	@Override
+	public void changedUpdate(DocumentEvent e) {}
+	@Override
+	public void insertUpdate(DocumentEvent e) {
+		int oldLineCount = linecount;
+		Element root = getDefaultRootElement();
+		linecount = root.getElementIndex(getLength()) + 1;
+		int newLines = linecount - oldLineCount;		
+		if (program != null) {
+			int line = program.getLine(e.getOffset());
+			if (line > 0 && newLines > 0) {
+				TreeSet<Integer> newBreakpoints = new TreeSet<Integer>();
+				for(int breakpoint : breakpoints) {
+					int pos = machine.getBreakpointPosition(breakpoint);
+					if (e.getOffset() < pos) {
+						newBreakpoints.add(breakpoint + newLines);
+					} else {
+						newBreakpoints.add(breakpoint);
+					}
+				}
+				breakpoints = newBreakpoints;
+			}
+		}
+	}
+	@Override
+	public void removeUpdate(DocumentEvent e) {
+		int oldLineCount = linecount;
+		linecount = getDefaultRootElement().getElementIndex(getLength()) + 1;
+		int deleteLines = oldLineCount - linecount;
+		if (program != null) {
+			if (deleteLines > 0) {
+				TreeSet<Integer> newBreakpoints = new TreeSet<Integer>();
+				for(int breakpoint : breakpoints) {
+					int pos = machine.getBreakpointPosition(breakpoint);
+					if (e.getOffset() + e.getLength() <= pos) {
+						newBreakpoints.add(breakpoint - deleteLines);
+					} else if (e.getOffset() > pos){
+						newBreakpoints.add(breakpoint);
+					} else {
+						//breakpoint no longer exists
+					}
+				}
+				breakpoints = newBreakpoints;
+			}
 		}
 	}	
 }

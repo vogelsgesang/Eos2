@@ -60,6 +60,12 @@ public interface AbstractMachine {
 	 */
 	void setBreakpoint(int linenumber, boolean b);
 	/**
+	 * Liefert die Position des Breakpoints für diese Zeile innerhalb des Soucecodes.
+	 * @param linenumber
+	 * @return
+	 */
+	int getBreakpointPosition(int linenumber);
+	/**
 	 * Speicher für Visualisierung auslesen.
 	 * @return
 	 */
