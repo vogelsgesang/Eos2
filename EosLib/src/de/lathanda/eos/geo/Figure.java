@@ -28,7 +28,7 @@ public abstract class Figure implements Cloneable, Readout {
 //***********
 //* drawing *
 //***********    
-    public final void draw(Picture g) {
+    public void draw(Picture g) {
         if (!visible) return;
         g.pushTransform();
         beforeDrawing(g);

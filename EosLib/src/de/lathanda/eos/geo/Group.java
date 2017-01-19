@@ -24,6 +24,7 @@ import de.lathanda.eos.util.ConcurrentLinkedList;
 public class Group extends Figure implements FigureGroup  {
     protected ConcurrentLinkedList<Figure> members;
     protected boolean autoCenter = true;
+    private final Object DRAW_LOCK = new Object();
     public Group() {
         super();
         members = new ConcurrentLinkedList<Figure>();
@@ -70,18 +71,27 @@ public class Group extends Figure implements FigureGroup  {
     }
     
     @Override
+	public void draw(Picture g) {
+		synchronized (DRAW_LOCK) {
+			super.draw(g);
+		}
+	}
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+	@Override
     protected void drawObject(Picture p) {
-    	synchronized (members) {
-    		for (Figure m : members) {
-    			m.draw(p);
-    		}
-    	}
+   		for (Figure m : members) {
+   			m.draw(p);
+   		}
     }
 
     @Override
     protected void fireLayoutChanged() {
-        recenter();
-        super.fireLayoutChanged();
+   		recenter();
+    	super.fireLayoutChanged();
     }
 
     public void setLineColor(Color color) {
@@ -156,11 +166,10 @@ public class Group extends Figure implements FigureGroup  {
         }
         return g;
     }
-    private synchronized void setCenterInternal(double x, double y) {
-        //method is synchronized as the group may not be drawn or changed while recentering is done
-        double dx = getX() - x;
-        double dy = getY() - y;
-        synchronized (members) {
+    private void setCenterInternal(double x, double y) {
+        synchronized (DRAW_LOCK) {
+        	double dx = getX() - x;
+        	double dy = getY() - y;
         	members.forEach(figure -> figure.moveInternal(dx,dy));     
         	moveToInternal(x, y);
         }
@@ -179,7 +188,7 @@ public class Group extends Figure implements FigureGroup  {
     }
     public void centerBalancePoint() {
         autoCenter = true;
-        recenter();
+       	recenter();
     }
     private void recenter() {
         if (!autoCenter) {
