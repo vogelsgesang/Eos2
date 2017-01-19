@@ -70,7 +70,7 @@ public class PropertyWrite extends Node {
     private void accessMember(Environment env) {
         //access member
         type = target.getType();
-        target.resolveNamesAndTypes(target, env);
+        target.resolveNamesAndTypes(null, env);
         methodType = type.getAssignProperty(member);
         isVariable = false;
         if (methodType == null) {
