@@ -6,6 +6,8 @@ import de.lathanda.eos.interpreter.MethodType;
 import de.lathanda.eos.interpreter.Type;
 import de.lathanda.eos.interpreter.commands.LoadVariable;
 import de.lathanda.eos.interpreter.commands.Method;
+import de.lathanda.eos.spi.LanguageManager;
+
 import java.util.ArrayList;
 
 /**
@@ -58,6 +60,10 @@ public class PropertyRead extends Expression {
                 target.resolveNamesAndTypes(null, env);
                 //access member
                 accessMember(env);
+            } else if (env.getAutoWindow() && member.equals(LanguageManager.getInstance().getDefaultWindowName())) {
+            	member = ReservedVariables.WINDOW;
+            	isVariable = true;
+            	type = Type.getWindow();
             } else {
                 env.addError(marker, "UnknownVariable", member);
                 type = Type.getUnknown();

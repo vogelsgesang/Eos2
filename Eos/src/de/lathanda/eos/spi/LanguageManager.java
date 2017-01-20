@@ -52,6 +52,7 @@ public class LanguageManager {
 	 * Attributnamen
 	 */
 	private static final TreeMap<String, String> names = new TreeMap<>();
+	private static String defaultwindowname = "";
 	/**
 	 * Objektdiagramm Attributdarsteller
 	 */
@@ -63,7 +64,7 @@ public class LanguageManager {
 	private static String helpBase = "";
 	private static String helpClasses = "";
 	private static String helpInfo = "";
-
+	
 	private LanguageManager() {
 	}
 
@@ -420,4 +421,10 @@ public class LanguageManager {
 		}
 	}
 
+	public void setDefaultWindowName(String windowname) {
+		defaultwindowname = windowname;		
+	}
+	public String getDefaultWindowName() {
+		return defaultwindowname;
+	}
 }

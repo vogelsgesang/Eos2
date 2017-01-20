@@ -57,6 +57,7 @@ public class EosLanguage /*extends Language*/ implements LanguageProvider {
    		lm.registerInherits("class", getInherits("class"));
    		lm.registerInherits("#", getInherits("#"));
    		lm.registerInherits("?", getInherits("?"));
+   		lm.setDefaultWindowName(lang.getString("windowname"));
    		
    		//create other classes
    		lm.registerLanguageByConfig(lang, this);

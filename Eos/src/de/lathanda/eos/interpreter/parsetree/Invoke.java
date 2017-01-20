@@ -109,6 +109,7 @@ public class Invoke extends Expression {
                 }
             }
         } else {
+        	//method
             target.resolveNamesAndTypes(with, env);
         }
         functionType = FunctionType.METHOD;
