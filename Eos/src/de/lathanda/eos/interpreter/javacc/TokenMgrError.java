@@ -2,8 +2,6 @@
 /* JavaCCOptions: */
 package de.lathanda.eos.interpreter.javacc;
 
-import de.lathanda.eos.common.gui.Messages;
-
 /** Token Manager Error. */
 public class TokenMgrError extends Error
 {
@@ -143,9 +141,7 @@ public class TokenMgrError extends Error
 
   /** Full Constructor. */
   public TokenMgrError(boolean EOFSeen, int lexState, int errorLine, int errorColumn, String errorAfter, char curChar, int reason) {
-//    this(LexicalError(EOFSeen, lexState, errorLine, errorColumn, errorAfter, curChar), reason);
-	  //MODIFICATION
-    this(Messages.formatError("InvalidCharacter", curChar, errorLine, errorColumn), reason);
+    this(LexicalError(EOFSeen, lexState, errorLine, errorColumn, errorAfter, curChar), reason);
   }
 }
 /* JavaCC - OriginalChecksum=82b5266d67fb4ae173d22980b6a59b39 (do not edit this line) */

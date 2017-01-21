@@ -77,6 +77,7 @@ public class SourceToken implements InfoToken {
         case NOT:
         case OR:
         case AND:
+        case BREAKPOINT:
         	return KEYWORD;
         case TRUE:
         case FALSE:

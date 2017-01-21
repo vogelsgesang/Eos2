@@ -10,7 +10,6 @@ import java.util.ArrayList;
  * Speichert u nd behandelt eine Zuweisung.
  *
  * @author Peter (Lathanda) Schneider
- * @since 0.4
  */
 public class Assignment extends Node {
 

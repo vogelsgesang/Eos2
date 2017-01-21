@@ -137,6 +137,7 @@ TOKEN:
 | < TRUE:          "wahr" >
 | < FALSE:         "falsch" >
 | < RESULT:        "ergebnis" >
+| < BREAKPOINT:    "haltepunkt" >
 }
 
 /** Trennende Zeichen */
@@ -435,7 +436,8 @@ Sequence Sequence( ) :
     instruction = Loop() |
     instruction = IfElse() |
     instruction = With() |
-    instruction = Statement()
+    instruction = Statement() |
+    instruction = Breakpoint()
   )
   {
     close(instruction);
@@ -446,6 +448,13 @@ Sequence Sequence( ) :
     close(sequence);
     return sequence;
   }
+}
+
+Node Breakpoint( ) :
+{}
+{
+  "haltepunkt"
+  {return new Breakpoint(); }
 }
 
 Node Loop( ) : 
