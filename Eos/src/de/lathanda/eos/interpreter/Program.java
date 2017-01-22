@@ -24,6 +24,7 @@ import de.lathanda.eos.interpreter.parsetree.Expression;
 import de.lathanda.eos.interpreter.parsetree.ReservedVariables;
 import de.lathanda.eos.interpreter.parsetree.Sequence;
 import de.lathanda.eos.interpreter.parsetree.SubRoutine;
+import de.lathanda.eos.spi.LanguageManager;
 
 /**
  * Speichert und behandelt den Syntaxbaum des Programms.
@@ -48,7 +49,7 @@ public class Program implements AbstractProgram {
         this.prettyPrinter = new PrettyPrinter("");    	
         this.source = "";
         sub = new LinkedList<>();
-        env = new Environment();
+        env = new Environment(LanguageManager.getInstance().getLockProperties());
         nodeList = new LinkedList<>();
         tokenList = new LinkedList<>();
     }
@@ -58,7 +59,7 @@ public class Program implements AbstractProgram {
         this.prettyPrinter = new PrettyPrinter(source);    	
         this.source = source;
         sub = new LinkedList<>();
-        env = new Environment();
+        env = new Environment(LanguageManager.getInstance().getLockProperties());
         nodeList = new LinkedList<>();
         tokenList = new LinkedList<>();
     }

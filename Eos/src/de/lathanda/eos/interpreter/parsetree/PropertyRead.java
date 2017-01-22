@@ -82,7 +82,12 @@ public class PropertyRead extends Expression {
             env.addError(marker, "UnknownMember", type + "." + member);
             type = Type.getUnknown();
         } else {
-            type = methodType.getReturnType();
+        	if (env.getLockProperties()) {
+                env.addError(marker, "LockedMember", type + "." + member);
+                type = Type.getUnknown();
+        	} else {
+        		type = methodType.getReturnType();
+        	}
         }
     }
 

@@ -77,7 +77,12 @@ public class PropertyWrite extends Node {
             env.addError(marker, "UnknownMember", type + "." + member);
             type = Type.getUnknown();
         } else {
-            type = methodType.getParameterType(0);
+        	if (env.getLockProperties()) {
+                env.addError(marker, "LockedMember", type + "." + member);
+                type = Type.getUnknown();
+        	} else {        	
+        		type = methodType.getParameterType(0);
+        	}
         }
     }
     @Override

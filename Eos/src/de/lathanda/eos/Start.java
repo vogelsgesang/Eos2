@@ -17,6 +17,7 @@ import de.lathanda.eos.common.interpreter.AbstractProgram;
 import de.lathanda.eos.gui.MainWindow;
 import de.lathanda.eos.interpreter.Program;
 import de.lathanda.eos.spi.LanguageManager;
+
 /**
  * \brief Startklasse
  * 
@@ -33,115 +34,131 @@ public class Start {
 	 *  
 	 * @param args Befehlszeilenargumente
 	 */
-    public static void main(String args[]) {
-    	try {
-    	    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-    	        if ("Nimbus".equals(info.getName())) {
-    	            UIManager.setLookAndFeel(info.getClassName());
-    	            break;
-    	        }
-    	    }
-    	} catch (Exception e) {
-    	    // use default
-    	}
-    	Factory.setProgram(Program.class);
-    	for(String arg:args) {
-    		apply(arg);
-    	}
-    	switch (mode) {
-    	case EDITOR:
-    		editorStart();
-    		break;
-    	case PROGRAM:
-    		programStart();
-    		break;
-    	default:
-    		editorStart();
-    	}
-    	Runtime.getRuntime().addShutdownHook(new Stop());
-    	try {
+	public static void main(String args[]) {
+		try {
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (Exception e) {
+			// use default
+		}
+		Factory.setProgram(Program.class);
+		Runtime.getRuntime().addShutdownHook(new Stop());
+		try {
 			LanguageManager.prepare();
 		} catch (Exception e) {
-            JOptionPane.showMessageDialog(null, GUI.getString("Export.Error.Title"),
-                    e.getLocalizedMessage(),
-                    JOptionPane.ERROR_MESSAGE
-            );
+			JOptionPane.showMessageDialog(null, GUI.getString("Export.Error.Title"), e.getLocalizedMessage(),
+					JOptionPane.ERROR_MESSAGE);
+		}		
+		apply(args);
+		switch (mode) {
+		case EDITOR:
+			editorStart();
+			break;
+		case PROGRAM:
+			programStart();
+			break;
+		default:
+			editorStart();
 		}
-    }
-    /**
-     * Agrgument auswerten. /p bedeutet Programmmodus. Alles andere ist der Dateiname.
-     * @param arg
-     */
-    private static void apply(String arg) {    	
-		if (arg.equals("/p")) {
-			mode = Mode.PROGRAM;
-		} else {
-			file = new File(arg);
-		}
-		
 	}
-    /**
-     * Modus
-     * @author schneidp
-     *
-     */
+
+	/**
+	 * Agrgument auswerten. /p bedeutet Programmmodus. Alles andere ist der Dateiname.
+	 * @param arg
+	 */
+	private static void apply(String[] args) {
+		for (int an = 0; an < args.length; an++) {
+			System.out.println(args[an]);
+			if (args[an].startsWith("/") || args[an].startsWith("-")) {
+				for (int i = 1; i < args[an].length(); i++) {
+					switch (args[an].charAt(i)) {
+					case 'p': //directly start the program, no editor
+						mode = Mode.PROGRAM;
+					case 'm': //only methods are allowed
+						allowProperties = false;
+					}
+				}
+			} else {
+				file = new File(args[an]);
+			}
+		}
+
+	}
+
+	/**
+	 * Modus
+	 * @author schneidp
+	 *
+	 */
 	private enum Mode {
 		/**
 		 * Editor
 		 */
-    	EDITOR,
-    	/**
-    	 * Demo/Programm ohne Programmiermöglichkeiten.
-    	 */
-    	PROGRAM
-    };
-    /**
-     * Die beim start zu ladende Datei.
-     */
-    private static File file = null;
-    /**
-     * Modus
-     */
-    private static Mode mode = Mode.EDITOR;
-    /**
-     * Startet Editor.
-     */
-    private static void editorStart() {
-    	MainWindow mainWindow = new MainWindow();
-    	if (file != null) {
+		EDITOR,
+		/**
+		 * Demo/Programm ohne Programmiermöglichkeiten.
+		 */
+		PROGRAM
+	};
+
+	/**
+	 * Die beim start zu ladende Datei.
+	 */
+	private static File file = null;
+	/**
+	 * Modus
+	 */
+	private static Mode mode = Mode.EDITOR;
+	/**
+	 * Atribute erlaubt?
+	 */
+	private static boolean allowProperties = true;
+
+	/**
+	 * Startet Editor.
+	 */
+	private static void editorStart() {
+		if (!allowProperties) {
+			LanguageManager.getInstance().lockProperties();
+		}
+		MainWindow mainWindow = new MainWindow();
+		if (file != null) {
 			mainWindow.load(file);
-    	}
-    	mainWindow.setVisible(true);
-    	mainWindow.startCompiler();    	
-    }
-    /**
-     * Startet Demomodus.
-     */
-    private static void programStart() {
-    	if (file == null) {
-    		editorStart();
-    		return;
-    	}
-        try {
-            StringBuilder src = new StringBuilder();
-            String path = file.getParent();
-            
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "Utf-8"));
-            while (br.ready()) {
-                src.append(br.readLine());
-                src.append("\n");
-            }
-            br.close();
-            
-            AbstractProgram program =  Factory.createProgram(src.toString());
-            program.parse(path);
+		}
+		mainWindow.setVisible(true);
+		mainWindow.startCompiler();
+	}
+
+	/**
+	 * Startet Demomodus.
+	 */
+	private static void programStart() {
+		if (file == null) {
+			editorStart();
+			return;
+		}
+		try {
+			StringBuilder src = new StringBuilder();
+			String path = file.getParent();
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "Utf-8"));
+			while (br.ready()) {
+				src.append(br.readLine());
+				src.append("\n");
+			}
+			br.close();
+
+			AbstractProgram program = Factory.createProgram(src.toString());
+			program.parse(path);
 			program.compile();
 			program.getMachine().skip();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, GUI.getString("Export.Error.Title"),
-                    e.getLocalizedMessage(),
-                    JOptionPane.ERROR_MESSAGE
-            );
-        }        	
-    }
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, GUI.getString("Export.Error.Title"), e.getLocalizedMessage(),
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
 }

@@ -43,28 +43,29 @@ public class LanguageManager {
 	/**
 	 * Templates
 	 */
-	private static final TreeSet<AutoCompleteEntry> templates = new TreeSet<>();
+	private final TreeSet<AutoCompleteEntry> templates = new TreeSet<>();
 	/**
 	 * Labels
 	 */
-	private static final TreeMap<String, String> labels = new TreeMap<>();
+	private final TreeMap<String, String> labels = new TreeMap<>();
 	/**
 	 * Attributnamen
 	 */
-	private static final TreeMap<String, String> names = new TreeMap<>();
-	private static String defaultwindowname = "";
+	private final TreeMap<String, String> names = new TreeMap<>();
+	private String defaultwindowname = "";
 	/**
 	 * Objektdiagramm Attributdarsteller
 	 */
-	private static final TreeMap<String, UnitSource> units = new TreeMap<>();
+	private final TreeMap<String, UnitSource> units = new TreeMap<>();
 	/**
 	 * Plugin Menues
 	 */
-	private static final LinkedList<JMenu> menues = new LinkedList<>();
-	private static String helpBase = "";
-	private static String helpClasses = "";
-	private static String helpInfo = "";
+	private final LinkedList<JMenu> menues = new LinkedList<>();
+	private String helpBase = "";
+	private String helpClasses = "";
+	private String helpInfo = "";
 	
+	private boolean lockProperties = false;
 	private LanguageManager() {
 	}
 
@@ -426,5 +427,12 @@ public class LanguageManager {
 	}
 	public String getDefaultWindowName() {
 		return defaultwindowname;
+	}
+
+	public void lockProperties() {
+		lockProperties = true;	
+	}
+	public boolean getLockProperties() {
+		return lockProperties;
 	}
 }
