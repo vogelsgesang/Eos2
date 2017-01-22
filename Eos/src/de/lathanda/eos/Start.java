@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.Locale;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -46,15 +47,14 @@ public class Start {
 			// use default
 		}
 		Factory.setProgram(Program.class);
-		Runtime.getRuntime().addShutdownHook(new Stop());
+		Runtime.getRuntime().addShutdownHook(new Stop());		
+		apply(args);
 		try {
 			LanguageManager.prepare();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, GUI.getString("Export.Error.Title"), e.getLocalizedMessage(),
 					JOptionPane.ERROR_MESSAGE);
-		}		
-		apply(args);
-		switch (mode) {
+		}		switch (mode) {
 		case EDITOR:
 			editorStart();
 			break;
@@ -78,8 +78,13 @@ public class Start {
 					switch (args[an].charAt(i)) {
 					case 'p': //directly start the program, no editor
 						mode = Mode.PROGRAM;
+						break;
 					case 'm': //only methods are allowed
 						allowProperties = false;
+						break;
+					case 'e':
+						Locale.setDefault(Locale.ENGLISH);
+						break;
 					}
 				}
 			} else {
