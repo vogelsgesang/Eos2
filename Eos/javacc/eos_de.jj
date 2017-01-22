@@ -138,6 +138,7 @@ TOKEN:
 | < FALSE:         "falsch" >
 | < RESULT:        "ergebnis" >
 | < BREAKPOINT:    "haltepunkt" >
+| < STOP:          "beenden" >
 }
 
 /** Trennende Zeichen */
@@ -436,8 +437,7 @@ Sequence Sequence( ) :
     instruction = Loop() |
     instruction = IfElse() |
     instruction = With() |
-    instruction = Statement() |
-    instruction = Breakpoint()
+    instruction = Statement()
   )
   {
     close(instruction);
@@ -448,13 +448,6 @@ Sequence Sequence( ) :
     close(sequence);
     return sequence;
   }
-}
-
-Node Breakpoint( ) :
-{}
-{
-  "haltepunkt"
-  {return new Breakpoint(); }
 }
 
 Node Loop( ) : 
@@ -604,9 +597,25 @@ Node Statement( ) :
   (
   LOOKAHEAD(2)
   statement = Declaration() |
-  statement = Command(null)
+  statement = Command(null) |
+  statement = Breakpoint()  |
+  statement = Stop()    
   ) {return statement;}
 }
+
+Node Breakpoint( ) :
+{}
+{
+  "haltepunkt"
+  {return new Breakpoint(); }
+}
+
+Node Stop( ) :
+{}
+{
+  "beenden"
+  {return new Stoppoint();}
+} 
  
 Declaration Declaration( ) :
 {

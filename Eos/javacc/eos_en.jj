@@ -138,6 +138,7 @@ TOKEN:
 | < FALSE:         "false" >
 | < RESULT:        "result" >
 | < BREAKPOINT:    "breakpoint" >
+| < STOP:          "stop" >
 }
 
 /** Trennende Zeichen */
@@ -436,8 +437,7 @@ Sequence Sequence( ) :
     instruction = Loop() |
     instruction = IfElse() |
     instruction = With() |
-    instruction = Statement() |
-    instruction = Breakpoint()    
+    instruction = Statement()
   )
   {
     close(instruction);
@@ -448,13 +448,6 @@ Sequence Sequence( ) :
     close(sequence);
     return sequence;
   }
-}
-
-Node Breakpoint( ) :
-{}
-{
-  "breakpoint"
-  {return new Breakpoint(); }
 }
 
 Node Loop( ) : 
@@ -604,10 +597,26 @@ Node Statement( ) :
   (
   LOOKAHEAD(2)
   statement = Declaration() |
-  statement = Command(null)
+  statement = Command(null) |
+  statement = Breakpoint()  |
+  statement = Stop()    
   ) {return statement;}
 }
- 
+
+Node Breakpoint( ) :
+{}
+{
+  "breakpoint"
+  {return new Breakpoint(); }
+}
+
+Node Stop( ) :
+{}
+{
+  "stop"
+  {return new Stoppoint();}
+} 
+
 Declaration Declaration( ) :
 {
   String name;
