@@ -60,10 +60,13 @@ public class PropertyRead extends Expression {
                 target.resolveNamesAndTypes(null, env);
                 //access member
                 accessMember(env);
-            } else if (env.getAutoWindow() && member.equals(LanguageManager.getInstance().getDefaultWindowName())) {
-            	member = ReservedVariables.WINDOW;
-            	isVariable = true;
-            	type = Type.getWindow();
+            } else if (member.equals(LanguageManager.getInstance().getDefaultWindowName())) {
+            	env.setFigureExists();
+            	if (env.getAutoWindow()) {
+            		member = ReservedVariables.WINDOW;
+            		isVariable = true;
+            		type = Type.getWindow();
+            	}
             } else {
                 env.addError(marker, "UnknownVariable", member);
                 type = Type.getUnknown();
@@ -82,7 +85,7 @@ public class PropertyRead extends Expression {
             env.addError(marker, "UnknownMember", type + "." + member);
             type = Type.getUnknown();
         } else {
-        	if (env.getLockProperties()) {
+        	if (LanguageManager.getInstance().getLockProperties()) {
                 env.addError(marker, "LockedMember", type + "." + member);
                 type = Type.getUnknown();
         	} else {

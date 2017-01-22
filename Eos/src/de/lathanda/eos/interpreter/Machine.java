@@ -2,6 +2,7 @@ package de.lathanda.eos.interpreter;
 
 import de.lathanda.eos.base.event.CleanupListener;
 import de.lathanda.eos.common.gui.MessageHandler;
+import de.lathanda.eos.common.gui.Messages;
 import de.lathanda.eos.common.interpreter.AbstractMachine;
 import de.lathanda.eos.common.interpreter.DebugInfo;
 import de.lathanda.eos.common.interpreter.DebugListener;
@@ -203,6 +204,8 @@ public class Machine implements AbstractMachine {
         	if (actcontext.program[actcontext.index].execute(this)) {
         		actcontext.index++;
         	}
+        } catch (ArrayIndexOutOfBoundsException aiobe) {
+        	MessageHandler.def.fireMessage(Messages.formatError("NoProgram"), MessageHandler.ErrorLevel.FATAL);
         } catch (ProgramTerminationException pte) {
         	MessageHandler.def.handleError(pte);
         	stop();

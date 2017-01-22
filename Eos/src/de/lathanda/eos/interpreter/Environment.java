@@ -45,18 +45,12 @@ public class Environment {
      * next unique id, for creating artifical unique variables, eg counting variable for counting loop
      */
     private int uid = 0;
-    /**
-     * is access to properties locked?
-     */
-    private boolean lockProperties;
 
     public Environment() {
         this.functions = new TreeMap<>();
-        this.lockProperties = false;
     }
     public Environment(boolean lockProperties) {
         this.functions = new TreeMap<>();
-        this.lockProperties = lockProperties;
     }
     public void addError(Marker marker, String errorId, Object ... data) {
         errors.add(new CompilerError(marker, errorId, data));
@@ -120,9 +114,6 @@ public class Environment {
         variables.putAll(global);
     }
 
-    public boolean getLockProperties() {
-		return lockProperties;
-	}
 	@Override
     public String toString() {
         StringBuilder res = new StringBuilder();

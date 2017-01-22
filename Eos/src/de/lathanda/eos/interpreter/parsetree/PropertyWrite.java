@@ -7,6 +7,8 @@ import de.lathanda.eos.interpreter.MethodType;
 import de.lathanda.eos.interpreter.Type;
 import de.lathanda.eos.interpreter.commands.Method;
 import de.lathanda.eos.interpreter.commands.StoreVariable;
+import de.lathanda.eos.spi.LanguageManager;
+
 import java.util.ArrayList;
 
 /**
@@ -77,7 +79,7 @@ public class PropertyWrite extends Node {
             env.addError(marker, "UnknownMember", type + "." + member);
             type = Type.getUnknown();
         } else {
-        	if (env.getLockProperties()) {
+        	if (LanguageManager.getInstance().getLockProperties()) {
                 env.addError(marker, "LockedMember", type + "." + member);
                 type = Type.getUnknown();
         	} else {        	
