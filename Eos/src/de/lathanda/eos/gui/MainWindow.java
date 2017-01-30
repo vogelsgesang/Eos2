@@ -49,7 +49,6 @@ import de.lathanda.eos.common.gui.HtmlExport;
 import de.lathanda.eos.common.gui.PrintFrame;
 import de.lathanda.eos.common.gui.SideInformation;
 import de.lathanda.eos.common.gui.SourceCode;
-import de.lathanda.eos.common.gui.TextUndoManager;
 import de.lathanda.eos.gui.classchart.ClassChart;
 import de.lathanda.eos.gui.diagram.DiagramFrame;
 import de.lathanda.eos.gui.flowchart.FlowChart;
@@ -101,7 +100,7 @@ public class MainWindow extends JFrame implements WindowListener {
         compiler = new BackgroundCompiler(data);
         compiler.addCompilerListener(data);
         data.setSpeed(10);
-        undoManager = new TextUndoManager(data);
+        undoManager = new UndoManager();
         data.addUndoableEditListener(undoManager);
         filechooser = new JFileChooser();
         filechooser.setFileFilter(new FileNameExtensionFilter(GUI.getString("File.EOS"), "eos"));

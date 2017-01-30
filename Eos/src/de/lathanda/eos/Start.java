@@ -85,6 +85,9 @@ public class Start {
 					case 'e':
 						Locale.setDefault(Locale.ENGLISH);
 						break;
+					case 'd':
+						Locale.setDefault(Locale.GERMAN);
+						break;
 					}
 				}
 			} else {

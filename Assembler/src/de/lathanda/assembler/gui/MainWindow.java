@@ -48,7 +48,6 @@ import de.lathanda.eos.common.gui.GuiConfiguration;
 import de.lathanda.eos.common.gui.PrintFrame;
 import de.lathanda.eos.common.gui.SideInformation;
 import de.lathanda.eos.common.gui.SourceCode;
-import de.lathanda.eos.common.gui.TextUndoManager;
 import de.lathanda.eos.gui.diagram.DiagramFrame;
 import de.lathanda.eos.gui.flowchart.FlowChart;
 
@@ -97,7 +96,7 @@ public class MainWindow extends JFrame implements WindowListener {
         compiler = new BackgroundCompiler(data);
         compiler.addCompilerListener(data);
         data.setSpeed(10);
-        undoManager = new TextUndoManager(data);
+        undoManager = new UndoManager();
         data.addUndoableEditListener(undoManager);
         filechooser = new JFileChooser();
         filechooser.addChoosableFileFilter(new FileNameExtensionFilter(ASM.getString("File.asm"), "asm"));

@@ -219,13 +219,6 @@ public class SourceCode extends DefaultStyledDocument
 	public void insertString(int pos, String text, AttributeSet attributeSet) throws BadLocationException {
 		autoCompleteHook.insertString(pos, text, program);
 		super.insertString(pos, text, attributeSet);
-		changed();
-	}
-
-	@Override
-	public void remove(int offs, int len) throws BadLocationException {	
-		super.remove(offs, len);
-		changed();
 	}
 
 	public void changed() {
@@ -361,7 +354,6 @@ public class SourceCode extends DefaultStyledDocument
 	}
 	@Override
 	protected void fireUndoableEditUpdate(UndoableEditEvent e) {
-		//TODO HOTFIX for jdk 1.9, all change undo events are supressed as coloring is calculated and therefore not significant. 
 		if (e.getEdit() instanceof AbstractDocument.DefaultDocumentEvent) {
 			AbstractDocument.DefaultDocumentEvent event = (AbstractDocument.DefaultDocumentEvent)e.getEdit();
 			if  (event.getType().equals(DocumentEvent.EventType.CHANGE)) {
@@ -407,6 +399,7 @@ public class SourceCode extends DefaultStyledDocument
 				breakpoints = newBreakpoints;
 			}
 		}
+		changed();
 	}
 	@Override
 	public void removeUpdate(DocumentEvent e) {
@@ -429,5 +422,6 @@ public class SourceCode extends DefaultStyledDocument
 				breakpoints = newBreakpoints;
 			}
 		}
+		changed();
 	}	
 }
