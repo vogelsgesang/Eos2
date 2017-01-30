@@ -130,13 +130,34 @@ public class TextField extends Rectangle {
         dirty = true;
         fireDataChanged();
     }
-
+    public void setLine(int linenr, String text) {
+    	int linenumber;
+    	if (linenr > 0) {
+    		linenumber = linenr - 1;
+    	} else {
+    		linenumber = 0;
+    	}
+        String[] lines = text.split("\n");
+        for(int i = text.length(); i < linenumber + lines.length; i++) {
+        	this.text.add("");
+        }
+        for(int i = 0; i < lines.length; i++) {
+        	this.text.set(i + linenumber, lines[i]);
+        }
+        dirty = true;
+        fireDataChanged();        
+    }
     public void deleteLine() {
     	if (!text.isEmpty()) {
     		text.removeLast();
     		dirty = true;
     		fireDataChanged();
     	}
+    }
+    public void deleteText() {
+    	text.clear();
+    	dirty = true;
+    	fireDataChanged();    	
     }
     @Override
 	public void getAttributes(LinkedList<Attribut> attributes) {

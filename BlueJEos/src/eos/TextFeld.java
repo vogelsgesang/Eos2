@@ -69,4 +69,10 @@ public class TextFeld extends Rechteck {
     public void zeileLoeschen() {
         textfield.deleteLine();
     }
+    public void textLoeschen() {
+    	textfield.deleteText();
+    }
+    public void zeileSetzen(int zeilennummer, String text) {
+    	textfield.setLine(zeilennummer, text);
+    }
 }
