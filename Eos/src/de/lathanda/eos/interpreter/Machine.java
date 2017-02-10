@@ -250,6 +250,7 @@ public class Machine implements AbstractMachine {
      * executes a single statement/expression
      */
     public synchronized void singleStep() {
+    	if (!check()) return;    	
         //stop continues execution
         pause();
         //execute a single step
@@ -260,7 +261,8 @@ public class Machine implements AbstractMachine {
         }
     }
     public synchronized void skip() {
-        pause();
+    	if (!check()) return;
+    	pause();
         new Thread(speedexecuter).start();
     }
 
@@ -288,8 +290,16 @@ public class Machine implements AbstractMachine {
         //set machine back to start
         reset();
     }
+    /**
+     * Überprüft ob es ein gültiges Programm gibt.
+     * @return
+     */
+    private boolean check() {
+    	return context.program != null;
+    }
     @Override
     public void run() {
+    	if (!check()) return;
         pause();
         new Thread(executer).start();
     }
