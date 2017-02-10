@@ -284,6 +284,7 @@ public class MainWindow extends JFrame implements WindowListener {
 
         txtOutput.setEditable(false);
         txtOutput.setFont(new Font("Courier New", Font.PLAIN, 12));
+        txtOutput.setFocusable(false);
         scrollOutput.setViewportView(txtOutput);
 
         mainSplit.setRightComponent(scrollOutput);
@@ -328,6 +329,7 @@ public class MainWindow extends JFrame implements WindowListener {
         runToolbar.add(btnSkip);
 
         sliderSpeed.setValue(10);
+        sliderSpeed.setFocusable(false);
         sliderSpeed.setBorder(BorderFactory.createTitledBorder(BorderFactory.createTitledBorder(""), GUI.getString("Run.Speed.Slider"), TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", 0, 12)));
         sliderSpeed.setPreferredSize(new java.awt.Dimension(400, 48));
         sliderSpeed.addChangeListener(evt -> sliderSpeedStateChanged(evt));
