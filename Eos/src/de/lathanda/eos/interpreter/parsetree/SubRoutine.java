@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * @author Peter (Lathanda) Schneider
  * @since 0.4
  */
-public class SubRoutine extends Node implements ProgramUnit{
+public class SubRoutine extends Node implements ProgramUnit {
 	private final String name;
 	private final Sequence sequence;
 	private final Parameters parameters;

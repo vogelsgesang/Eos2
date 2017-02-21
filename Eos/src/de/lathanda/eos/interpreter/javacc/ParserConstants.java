@@ -49,141 +49,149 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int END_WITH = 19;
   /** RegularExpression Id. */
-  int WHILE = 20;
+  int CLASS = 20;
   /** RegularExpression Id. */
-  int DO = 21;
+  int EXTENDS = 21;
   /** RegularExpression Id. */
-  int END_WHILE = 22;
+  int END_CLASS = 22;
   /** RegularExpression Id. */
-  int TRUE = 23;
+  int SELF = 23;
   /** RegularExpression Id. */
-  int FALSE = 24;
+  int WHILE = 24;
   /** RegularExpression Id. */
-  int RESULT = 25;
+  int DO = 25;
   /** RegularExpression Id. */
-  int BREAKPOINT = 26;
+  int END_WHILE = 26;
   /** RegularExpression Id. */
-  int STOP = 27;
+  int TRUE = 27;
   /** RegularExpression Id. */
-  int LPAREN = 28;
+  int FALSE = 28;
   /** RegularExpression Id. */
-  int RPAREN = 29;
+  int RESULT = 29;
   /** RegularExpression Id. */
-  int SEMICOLON = 30;
+  int BREAKPOINT = 30;
   /** RegularExpression Id. */
-  int COLON = 31;
+  int STOP = 31;
   /** RegularExpression Id. */
-  int SEPARATOR = 32;
+  int LPAREN = 32;
   /** RegularExpression Id. */
-  int DOT = 33;
+  int RPAREN = 33;
   /** RegularExpression Id. */
-  int ASSIGN = 34;
+  int SEMICOLON = 34;
   /** RegularExpression Id. */
-  int GT = 35;
+  int COLON = 35;
   /** RegularExpression Id. */
-  int LT = 36;
+  int SEPARATOR = 36;
   /** RegularExpression Id. */
-  int EQ = 37;
+  int DOT = 37;
   /** RegularExpression Id. */
-  int LE = 38;
+  int ASSIGN = 38;
   /** RegularExpression Id. */
-  int GE = 39;
+  int GT = 39;
   /** RegularExpression Id. */
-  int NE = 40;
+  int LT = 40;
   /** RegularExpression Id. */
-  int OR = 41;
+  int EQ = 41;
   /** RegularExpression Id. */
-  int AND = 42;
+  int LE = 42;
   /** RegularExpression Id. */
-  int NOT = 43;
+  int GE = 43;
   /** RegularExpression Id. */
-  int PLUS = 44;
+  int NE = 44;
   /** RegularExpression Id. */
-  int MINUS = 45;
+  int OR = 45;
   /** RegularExpression Id. */
-  int MULT = 46;
+  int AND = 46;
   /** RegularExpression Id. */
-  int DIV = 47;
+  int NOT = 47;
   /** RegularExpression Id. */
-  int POW = 48;
+  int PLUS = 48;
   /** RegularExpression Id. */
-  int YELLOW = 49;
+  int MINUS = 49;
   /** RegularExpression Id. */
-  int RED = 50;
+  int MULT = 50;
   /** RegularExpression Id. */
-  int GREEN = 51;
+  int DIV = 51;
   /** RegularExpression Id. */
-  int BLUE = 52;
+  int POW = 52;
   /** RegularExpression Id. */
-  int WHITE = 53;
+  int YELLOW = 53;
   /** RegularExpression Id. */
-  int BLACK = 54;
+  int RED = 54;
   /** RegularExpression Id. */
-  int BROWN = 55;
+  int GREEN = 55;
   /** RegularExpression Id. */
-  int LIGHT_BLUE = 56;
+  int BLUE = 56;
   /** RegularExpression Id. */
-  int LIGHT_GREEN = 57;
+  int WHITE = 57;
   /** RegularExpression Id. */
-  int GRAY = 58;
+  int BLACK = 58;
   /** RegularExpression Id. */
-  int LIGHT_GRAY = 59;
+  int BROWN = 59;
   /** RegularExpression Id. */
-  int DASHED = 60;
+  int LIGHT_BLUE = 60;
   /** RegularExpression Id. */
-  int SOLID = 61;
+  int LIGHT_GREEN = 61;
   /** RegularExpression Id. */
-  int DOTTED = 62;
+  int GRAY = 62;
   /** RegularExpression Id. */
-  int DASHED_DOTTED = 63;
+  int LIGHT_GRAY = 63;
   /** RegularExpression Id. */
-  int INVISIBLE = 64;
+  int DASHED = 64;
   /** RegularExpression Id. */
-  int FILLED = 65;
+  int SOLID = 65;
   /** RegularExpression Id. */
-  int SHADED = 66;
+  int DOTTED = 66;
   /** RegularExpression Id. */
-  int DARK_SHADED = 67;
+  int DASHED_DOTTED = 67;
   /** RegularExpression Id. */
-  int TRANSPARENT = 68;
+  int INVISIBLE = 68;
   /** RegularExpression Id. */
-  int CENTER = 69;
+  int FILLED = 69;
   /** RegularExpression Id. */
-  int LEFT = 70;
+  int SHADED = 70;
   /** RegularExpression Id. */
-  int RIGHT = 71;
+  int DARK_SHADED = 71;
   /** RegularExpression Id. */
-  int TOP = 72;
+  int TRANSPARENT = 72;
   /** RegularExpression Id. */
-  int BOTTOM = 73;
+  int CENTER = 73;
   /** RegularExpression Id. */
-  int SINGLE_LINE_COMMENT = 80;
+  int LEFT = 74;
   /** RegularExpression Id. */
-  int MULTI_LINE_COMMENT = 81;
+  int RIGHT = 75;
   /** RegularExpression Id. */
-  int MULTI_LINE_COMMENT2 = 82;
+  int TOP = 76;
   /** RegularExpression Id. */
-  int INTEGER_LITERAL = 83;
+  int BOTTOM = 77;
   /** RegularExpression Id. */
-  int DECIMAL_LITERAL = 84;
+  int SINGLE_LINE_COMMENT = 84;
   /** RegularExpression Id. */
-  int FLOATING_POINT_LITERAL = 85;
+  int MULTI_LINE_COMMENT = 85;
   /** RegularExpression Id. */
-  int EXPONENT = 86;
+  int MULTI_LINE_COMMENT2 = 86;
   /** RegularExpression Id. */
-  int STRING_LITERAL1 = 87;
+  int INTEGER_LITERAL = 87;
   /** RegularExpression Id. */
-  int STRING_LITERAL2 = 88;
+  int DECIMAL_LITERAL = 88;
   /** RegularExpression Id. */
-  int COLOR_LITERAL_RGB = 89;
+  int FLOATING_POINT_LITERAL = 89;
   /** RegularExpression Id. */
-  int COLOR_LITERAL_RGBA = 90;
+  int EXPONENT = 90;
   /** RegularExpression Id. */
-  int IDENTIFIER = 91;
+  int STRING_LITERAL1 = 91;
   /** RegularExpression Id. */
-  int LETTER = 92;
+  int STRING_LITERAL2 = 92;
   /** RegularExpression Id. */
-  int DIGIT = 93;
+  int COLOR_LITERAL_RGB = 93;
+  /** RegularExpression Id. */
+  int COLOR_LITERAL_RGBA = 94;
+  /** RegularExpression Id. */
+  int IDENTIFIER = 95;
+  /** RegularExpression Id. */
+  int LETTER = 96;
+  /** RegularExpression Id. */
+  int DIGIT = 97;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -210,6 +218,10 @@ public interface ParserConstants {
     "\"*wenn\"",
     "\"f\\u00fcr\"",
     "\"*f\\u00fcr\"",
+    "\"klasse\"",
+    "\"erweitert\"",
+    "\"*klasse\"",
+    "\"selbst\"",
     "\"solange\"",
     "\"tue\"",
     "\"*solange\"",

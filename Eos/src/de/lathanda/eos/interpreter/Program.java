@@ -24,17 +24,18 @@ import de.lathanda.eos.interpreter.parsetree.Expression;
 import de.lathanda.eos.interpreter.parsetree.ReservedVariables;
 import de.lathanda.eos.interpreter.parsetree.Sequence;
 import de.lathanda.eos.interpreter.parsetree.SubRoutine;
+import de.lathanda.eos.interpreter.parsetree.UserClass;
 
 /**
  * Speichert und behandelt den Syntaxbaum des Programms.
  *
  * @author Peter (Lathanda) Schneider
- * @since 0.4
  */
 public class Program implements AbstractProgram {
     private final static TreeMap<String, Type> guessTable = new TreeMap<>();
     private final Sequence program;
     private final LinkedList<SubRoutine> sub;
+    private final LinkedList<UserClass> userclass;
     private final LinkedList<Node> nodeList;
     private final LinkedList<InfoToken> tokenList;
     private final Environment env;
@@ -48,6 +49,7 @@ public class Program implements AbstractProgram {
         this.prettyPrinter = new PrettyPrinter("");    	
         this.source = "";
         sub = new LinkedList<>();
+        userclass = new LinkedList<>();
         env = new Environment();
         nodeList = new LinkedList<>();
         tokenList = new LinkedList<>();
@@ -58,6 +60,7 @@ public class Program implements AbstractProgram {
         this.prettyPrinter = new PrettyPrinter(source);    	
         this.source = source;
         sub = new LinkedList<>();
+        userclass = new LinkedList<>();
         env = new Environment();
         nodeList = new LinkedList<>();
         tokenList = new LinkedList<>();
@@ -78,6 +81,9 @@ public class Program implements AbstractProgram {
     }
     public void add(SubRoutine s) {
         sub.add(s);
+    }
+    public void add(UserClass u) {
+    	userclass.add(u);
     }
     public void addNode(Node node) {
         nodeList.add(node);
@@ -102,6 +108,7 @@ public class Program implements AbstractProgram {
     	}
     	this.program.append(subprogram.program);
     	this.sub.addAll(subprogram.sub);
+    	this.userclass.addAll(subprogram.userclass);
     	this.nodeList.addAll(subprogram.nodeList);
     }
     public LinkedList<ProgramUnit> getSubPrograms() {
@@ -117,6 +124,9 @@ public class Program implements AbstractProgram {
     public void compile(Machine m) throws Exception {
         env.resetAll();
         //first scan, resolve types
+        for(UserClass uc : userclass) {
+        	//TODO register user defined classes
+        }
         for(SubRoutine s : sub) {
             s.registerSub(env);
         }
@@ -139,7 +149,9 @@ public class Program implements AbstractProgram {
         }
         program.compile(ops, env.getAutoWindow());
         m.setProgram(ops);
-        
+        for(UserClass uc : userclass) {
+        	//TODO compile userdefined classes
+        }
         for(SubRoutine s : sub) {
             ops = new ArrayList<>();
             //automatic add to window only works with user function that have global access to the window object
@@ -211,6 +223,9 @@ public class Program implements AbstractProgram {
         res.append("endprogram\n");
         for(SubRoutine s : sub) {
             res.append(s);
+        }
+        for(UserClass uc : userclass) {
+        	res.append(uc);
         }
         res.append(env);
         return res.toString();        

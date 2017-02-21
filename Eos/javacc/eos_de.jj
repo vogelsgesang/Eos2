@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2015, Peter "Lathanda" Schneider
  * CC BY-NC-SA
- * Version 0.9.9
+ * Version 1.0.8
  *
  */
 options {
@@ -131,6 +131,10 @@ TOKEN:
 | < END_IF:        "*wenn" >
 | < WITH:          "für" >
 | < END_WITH:      "*für" >
+| < CLASS:         "klasse" >
+| < EXTENDS:       "erweitert" >
+| < END_CLASS:     "*klasse" >
+| < SELF:          "selbst" >
 | < WHILE:         "solange" >
 | < DO:            "tue" > 
 | < END_WHILE:     "*solange" >
@@ -317,6 +321,7 @@ void Parse(Program program, String path) :
   token_source.setProgram(program);
   Sequence sequence;
   SubRoutine sub;
+  UserClass cls;
 }
 {
   sequence = Sequence() {program.add(sequence); }
@@ -325,6 +330,7 @@ void Parse(Program program, String path) :
       sequence = Program() {program.add(sequence);} | 
       sub = Procedure()    {program.add(sub);} |
       sub = Method()       {program.add(sub);} |
+      cls = UserClass()    {program.add(cls);} |
       Import()
     )
      sequence = Sequence() {program.add(sequence);}
@@ -354,6 +360,20 @@ SubRoutine Procedure( ) :
     close(subroutine); 
     return subroutine;
   }
+}
+
+UserClass UserClass() :
+{ String name; String sup = null; UserClass cls; SubRoutine meth; Declaration prop;}
+{
+  {open();}
+  {newlineInc();} "klasse" name = Name() ["erweitert" sup = Name()]
+  {cls = new UserClass(name, sup);}
+  (meth = Method() {cls.addMethod(meth);} | prop = Declaration() {cls.addDeclaration(prop);} )* 
+  {newlineDec();} "*klasse"
+  {
+    close(cls);
+    return cls;
+  } 
 }
 
 SubRoutine Method( ) :
@@ -458,7 +478,7 @@ Node Loop( ) :
     loop = RepeatForever() | 
     loop = RepeatUntil() | 
     //LOOKAHEAD(1)  //Erzwingt Erkennung von wiederhole solange wie in EOS1
-    LOOKAHEAD("solange" Expression() ("*wiederhole" | "solange"| "wiederhole" | Name() | "ergebnis" | "wenn" | "für") ) //Langsamere korrekte Erkennung
+    LOOKAHEAD("solange" Expression() ("*wiederhole" | "solange"| "wiederhole" | Name() | "ergebnis" | "selbst" | "wenn" | "für") ) //Langsamere korrekte Erkennung
     loop = RepeatPreWhile() |
     //Erkennung von wiederhole Term mal
     LOOKAHEAD(Expression() "mal")
@@ -818,7 +838,7 @@ PropertyRead PropertyRead(Expression left) :
   open();
 }
 {
-  (name = Name() | "ergebnis" {name = ReservedVariables.RESULT;} )
+  (name = Name() | "ergebnis" {name = ReservedVariables.RESULT;} | "selbst" {name = ReservedVariables.SELF;} )
   {
     PropertyRead propertyRead = new PropertyRead(left, name);
     close(propertyRead);

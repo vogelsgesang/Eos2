@@ -14,6 +14,10 @@ public interface ReservedVariables {
      */
     String RESULT = "1x";
     /**
+     * Lokale Variable für das eigene Objekt
+     */
+    String SELF= "1s";
+    /**
      * Globale Variable für das automatisch erzeugte Fenster.
      * Diese Variable kann von Methoden, aber nicht von Anweisungen, verwendet werden.
      */
