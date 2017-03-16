@@ -15,7 +15,7 @@ import javax.swing.event.ListSelectionListener;
 import de.lathanda.eos.common.gui.BackgroundCompiler;
 import static de.lathanda.eos.common.gui.GuiConstants.GUI;
 import de.lathanda.eos.gui.diagram.Diagram;
-import de.lathanda.eos.interpreter.Type;
+import de.lathanda.eos.interpreter.parsetree.Type;
 
 public class ClassChart extends Diagram implements ListSelectionListener {
 	private static final long serialVersionUID = -9004622410733768404L;

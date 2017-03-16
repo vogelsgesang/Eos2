@@ -1,7 +1,5 @@
 package de.lathanda.eos.interpreter.parsetree;
 
-import de.lathanda.eos.interpreter.Node;
-
 /**
  * Gemeinsame abstrakte Klasse aller Ausdrücke.
  * Die Klasse stellt eine Reihe von Hilfsfunktionen zur Verfügung,

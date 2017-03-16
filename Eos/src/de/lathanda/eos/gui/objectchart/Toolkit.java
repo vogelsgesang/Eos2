@@ -9,9 +9,9 @@ import de.lathanda.eos.base.LineStyle;
 import de.lathanda.eos.base.Readout;
 import de.lathanda.eos.base.Scaling;
 import de.lathanda.eos.gui.diagram.Unit;
+import de.lathanda.eos.interpreter.ReservedVariables;
 import de.lathanda.eos.gui.diagram.MemoryEntry;
 import de.lathanda.eos.gui.diagram.TextUnit;
-import de.lathanda.eos.interpreter.parsetree.ReservedVariables;
 import de.lathanda.eos.util.ConcurrentLinkedList;
 
 public class Toolkit {

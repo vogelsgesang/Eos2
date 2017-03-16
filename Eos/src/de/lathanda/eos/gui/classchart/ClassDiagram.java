@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.ToolTipManager;
 
 import de.lathanda.eos.gui.diagram.Drawing;
-import de.lathanda.eos.interpreter.Type;
+import de.lathanda.eos.interpreter.parsetree.Type;
 
 public class ClassDiagram extends JPanel {
 	private static final long serialVersionUID = -5709882169808097527L;

@@ -26,9 +26,9 @@ import de.lathanda.eos.common.interpreter.MissingTypeException;
 import de.lathanda.eos.gui.diagram.TextUnit;
 import de.lathanda.eos.gui.diagram.Unit;
 import de.lathanda.eos.gui.objectchart.UnitSource;
-import de.lathanda.eos.interpreter.MethodType;
-import de.lathanda.eos.interpreter.Type;
-import de.lathanda.eos.interpreter.Type.ObjectSource;
+import de.lathanda.eos.interpreter.parsetree.MethodType;
+import de.lathanda.eos.interpreter.parsetree.Type;
+import de.lathanda.eos.interpreter.parsetree.Type.ObjectSource;
 
 /**
  * \brief Sprach Konfiguration

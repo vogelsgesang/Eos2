@@ -1,10 +1,7 @@
 package de.lathanda.eos.interpreter.parsetree;
 
-import de.lathanda.eos.interpreter.Node;
 import de.lathanda.eos.interpreter.Command;
-import de.lathanda.eos.interpreter.Environment;
-import de.lathanda.eos.interpreter.MethodType;
-import de.lathanda.eos.interpreter.Type;
+import de.lathanda.eos.interpreter.ReservedVariables;
 import de.lathanda.eos.interpreter.commands.Method;
 import de.lathanda.eos.interpreter.commands.StoreVariable;
 import de.lathanda.eos.spi.LanguageManager;
@@ -41,7 +38,7 @@ public class PropertyWrite extends Node {
         } else {
             if (target != null) {
                 target.compile(ops, autoWindow);
-                ops.add(new Method(methodType));
+                ops.add(new Method(methodType.getParameters(), methodType.getMethod()));
             }
         }
     }

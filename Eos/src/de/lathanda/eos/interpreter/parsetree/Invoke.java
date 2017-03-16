@@ -1,10 +1,9 @@
 package de.lathanda.eos.interpreter.parsetree;
 
 import de.lathanda.eos.interpreter.Command;
-import de.lathanda.eos.interpreter.Environment;
-import de.lathanda.eos.interpreter.MethodType;
+
 import java.util.ArrayList;
-import de.lathanda.eos.interpreter.Type;
+
 import de.lathanda.eos.interpreter.commands.DebugPoint;
 import de.lathanda.eos.interpreter.commands.Function;
 import de.lathanda.eos.interpreter.commands.Method;
@@ -15,12 +14,10 @@ import de.lathanda.eos.interpreter.commands.UserFunction;
  * benutzerdefinierten Funktion.
  *
  * @author Peter (Lathanda) Schneider
- * @since 0.4
  */
 public class Invoke extends Expression {
 
     private enum FunctionType {
-
         USER,
         SYSTEM_FUNCTION,
         METHOD
@@ -56,14 +53,14 @@ public class Invoke extends Expression {
         ops.add(new DebugPoint(marker));
         switch (functionType) {
             case USER:
-                ops.add(new UserFunction(methodType));
+                ops.add(new UserFunction(methodType.getSignature()));
                 break;
             case SYSTEM_FUNCTION:
-                ops.add(new Function(methodType));
+                ops.add(new Function(methodType.getParameters(), methodType.getMethod()));
                 break;
             case METHOD:
                 target.compile(ops, autoWindow);
-                ops.add(new Method(methodType));
+                ops.add(new Method(methodType.getParameters(), methodType.getMethod()));
                 break;
         }
     }

@@ -47,9 +47,9 @@ public class ClassDoc extends JFrame {
 	static {
 		
 		root = new DefaultMutableTreeNode(new TreeEntry(GUI.getString("Classbook.Classes"), AutoCompleteInformation.CLASS));
-		LinkedList<de.lathanda.eos.interpreter.Type> types = de.lathanda.eos.interpreter.Type.getAll();
+		LinkedList<de.lathanda.eos.interpreter.parsetree.Type> types = de.lathanda.eos.interpreter.parsetree.Type.getAll();
 		
-		for(de.lathanda.eos.interpreter.Type t:types) {
+		for(de.lathanda.eos.interpreter.parsetree.Type t:types) {
 			DefaultMutableTreeNode clsNode = new DefaultMutableTreeNode(new TreeEntry(t));
 			TreeSet<TreeEntry> methods = new TreeSet<>();
 			TreeSet<TreeEntry> properties = new TreeSet<>();
@@ -99,11 +99,11 @@ public class ClassDoc extends JFrame {
 			this.tooltip = "";
 		}
 
-		TreeEntry(de.lathanda.eos.interpreter.Type type) {
+		TreeEntry(de.lathanda.eos.interpreter.parsetree.Type type) {
 			StringBuffer title = new StringBuffer();
 			boolean first = true;
 			title.append("<html><p>");
-			for(de.lathanda.eos.interpreter.Type sup : type.getTypeList()) {
+			for(de.lathanda.eos.interpreter.parsetree.Type sup : type.getTypeList()) {
 				if (!first) {
 					title.append("\u2192");
 					title.append(sup.getName());

@@ -363,15 +363,13 @@ SubRoutine Procedure( ) :
 }
 
 UserClass UserClass() :
-{ String name; String sup = null; UserClass cls; SubRoutine meth; Declaration prop;}
+{ String name; String sup = null; UserClass cls; SubRoutine meth; Declaration prop;Sequence sequence;}
 {
-  {open();}
   {newlineInc();} "class" name = Name() ["extends" sup = Name()]
   {cls = new UserClass(name, sup);}
   (meth = Method() {cls.addMethod(meth);} | prop = Declaration() {cls.addDeclaration(prop);} )* 
   {newlineDec();} "*class"
   {
-    close(cls);
     return cls;
   } 
 }

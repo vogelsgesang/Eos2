@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import de.lathanda.eos.gui.diagram.LoopForeverUnit;
 import de.lathanda.eos.interpreter.Command;
-import de.lathanda.eos.interpreter.Environment;
 import de.lathanda.eos.interpreter.commands.Jump;
 
 /**

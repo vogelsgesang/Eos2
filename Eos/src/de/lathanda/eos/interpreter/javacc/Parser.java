@@ -159,8 +159,7 @@ SubRoutine subroutine = new SubRoutine(name, parameters, sequence, ret, false);
     throw new Error("Missing return statement in function");
   }
 
-  final public UserClass UserClass() throws ParseException {String name; String sup = null; UserClass cls; SubRoutine meth; Declaration prop;
-open();
+  final public UserClass UserClass() throws ParseException {String name; String sup = null; UserClass cls; SubRoutine meth; Declaration prop;Sequence sequence;
 newlineInc();
     jj_consume_token(CLASS);
     name = Name();
@@ -206,8 +205,7 @@ cls.addDeclaration(prop);
     }
 newlineDec();
     jj_consume_token(END_CLASS);
-close(cls);
-    {if ("" != null) return cls;}
+{if ("" != null) return cls;}
     throw new Error("Missing return statement in function");
   }
 

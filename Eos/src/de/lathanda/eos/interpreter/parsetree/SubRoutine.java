@@ -2,12 +2,11 @@ package de.lathanda.eos.interpreter.parsetree;
 
 import de.lathanda.eos.common.interpreter.ProgramUnit;
 import de.lathanda.eos.interpreter.Command;
-import de.lathanda.eos.interpreter.Environment;
-import de.lathanda.eos.interpreter.MethodType;
-import de.lathanda.eos.interpreter.Node;
-import de.lathanda.eos.interpreter.Type;
+import de.lathanda.eos.interpreter.ReservedVariables;
 import de.lathanda.eos.interpreter.commands.CreateVariable;
 import de.lathanda.eos.interpreter.commands.LoadVariable;
+import de.lathanda.eos.interpreter.commands.StoreVariable;
+
 import java.util.ArrayList;
 
 /**
@@ -15,7 +14,6 @@ import java.util.ArrayList;
  * Funktion, Methode oder Benutzerfunktion.
  * 
  * @author Peter (Lathanda) Schneider
- * @since 0.4
  */
 public class SubRoutine extends Node implements ProgramUnit {
 	private final String name;
@@ -41,23 +39,20 @@ public class SubRoutine extends Node implements ProgramUnit {
 		return methodType.getSignature();
 	}
 
-	public String[] getParameters() {
-		if (parameters != null) {
-			return parameters.getParameters();
-		} else {
-			return new String[] {};
-		}
-	}
-
 	public Sequence getSequence() {
 		return sequence;
 	}
 
 	@Override
 	public void compile(ArrayList<Command> ops, boolean autoWindow) throws Exception {
-		if (returnType != null && !returnType.isVoid()) {
-			ops.add(new CreateVariable(ReservedVariables.RESULT, returnType));
+		for(Parameter p: parameters.getParameters()) {
+			ops.add(new CreateVariable(p.getName(), p.getType().getMType()));
+			ops.add(new StoreVariable(p.getName()));
 		}
+		if (returnType != null && !returnType.isVoid()) {
+			ops.add(new CreateVariable(ReservedVariables.RESULT, returnType.getMType()));
+		}
+		
 		sequence.compile(ops, autoWindow);
 		if (returnType != null && !returnType.isVoid()) {
 			ops.add(new LoadVariable(ReservedVariables.RESULT));

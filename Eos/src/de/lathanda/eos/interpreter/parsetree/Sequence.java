@@ -4,8 +4,7 @@ import de.lathanda.eos.common.interpreter.Marker;
 import de.lathanda.eos.common.interpreter.ProgramNode;
 import de.lathanda.eos.common.interpreter.ProgramSequence;
 import de.lathanda.eos.interpreter.Command;
-import de.lathanda.eos.interpreter.Environment;
-import de.lathanda.eos.interpreter.Node;
+
 import java.util.ArrayList;
 import java.util.List;
 

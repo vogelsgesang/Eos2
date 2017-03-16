@@ -3,8 +3,8 @@ package de.lathanda.eos.interpreter.commands;
 import java.lang.reflect.InvocationTargetException;
 
 import de.lathanda.eos.interpreter.Command;
+import de.lathanda.eos.interpreter.MType;
 import de.lathanda.eos.interpreter.Machine;
-import de.lathanda.eos.interpreter.MethodType;
 import de.lathanda.eos.interpreter.exceptions.NullAccessException;
 
 /**
@@ -15,18 +15,23 @@ import de.lathanda.eos.interpreter.exceptions.NullAccessException;
  * @author Peter (Lathanda) Schneider
  */
 public class Method extends Command {
-    private final MethodType methodType;
-    public Method(MethodType methodType) {
-        this.methodType = methodType;
+    private final MType[] parameters;
+    private final java.lang.reflect.Method method;
+    public Method(MType[] parameters, java.lang.reflect.Method method) {
+        this.parameters = parameters;
+        this.method = method;
     }
     @Override
     public boolean execute(Machine m) throws Exception {
         Object target = m.pop();        
-        Object[] args = methodType.popArguments(m);
+        Object[] args = new Object[parameters.length];
+        for (int i = args.length; i-- > 0;) {
+            args[i] = m.pop();
+            args[i] = parameters[i].checkAndCast(args[i]);
+        }
         if (target == null) {
         	throw new NullAccessException();
         }
-        java.lang.reflect.Method method = methodType.getMethod();
         try {
         	Object result = method.invoke(target, args);
         	if (result != null) {
@@ -40,7 +45,7 @@ public class Method extends Command {
 
     @Override
     public String toString() {
-        return "Method{" + methodType + '}';
+        return "Method{" + method.getName() +"(" + parameters.length + ") }";
     }
     
 }

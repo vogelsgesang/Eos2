@@ -3,8 +3,6 @@ package de.lathanda.eos.interpreter.parsetree;
 import java.util.ArrayList;
 
 import de.lathanda.eos.interpreter.Command;
-import de.lathanda.eos.interpreter.Environment;
-import de.lathanda.eos.interpreter.Node;
 
 /**
  * Unterbricht das Programm.

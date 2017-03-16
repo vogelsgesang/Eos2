@@ -30,10 +30,10 @@ import javax.swing.text.Document;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.JTextComponent;
 import de.lathanda.eos.common.interpreter.AbstractProgram;
-import de.lathanda.eos.common.interpreter.AbstractType;
+import de.lathanda.eos.common.interpreter.AutoCompleteType;
 import de.lathanda.eos.common.interpreter.AutoCompleteHook;
 import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
-import de.lathanda.eos.interpreter.Type;
+import de.lathanda.eos.interpreter.parsetree.Type;
 import de.lathanda.eos.spi.AutoCompleteEntry;
 import de.lathanda.eos.spi.LanguageManager;
 /**
@@ -107,7 +107,7 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 	 * @param position Position im Text für die die Auswahl gestart wurde.
 	 * @throws BadLocationException
 	 */
-	public void start(AbstractType base, int position) throws BadLocationException {
+	public void start(AutoCompleteType base, int position) throws BadLocationException {
 		if (base.isUnknown()) {
 			stop();
 			return;
@@ -390,7 +390,7 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 	public void insertString(int pos, String text, AbstractProgram program) {
 		try {
 			if (text.equals(".")) {
-				AbstractType base = program.seekType(pos);
+				AutoCompleteType base = program.seekType(pos);
 				start(base, pos + 1);
 			} else if (text.equals(":")) {
 				start(Type.getClassType(), pos + 1);

@@ -2,8 +2,7 @@ package de.lathanda.eos.interpreter.parsetree;
 
 import de.lathanda.eos.gui.diagram.LoopTimesUnit;
 import de.lathanda.eos.interpreter.Command;
-import de.lathanda.eos.interpreter.Environment;
-import de.lathanda.eos.interpreter.Type;
+import de.lathanda.eos.interpreter.ReservedVariables;
 import de.lathanda.eos.interpreter.commands.GE;
 import de.lathanda.eos.interpreter.commands.Jump;
 import de.lathanda.eos.interpreter.commands.JumpIf;
@@ -42,7 +41,7 @@ public class RepeatTimes extends Loop implements LoopTimesUnit {
         ArrayList<Command> body = new ArrayList<>();
         sequence.compile(body, autoWindow);
         ops.add(new DebugPoint(timesE.getMarker()));
-        ops.add(new CreateVariable(varName, Type.getInteger()));
+        ops.add(new CreateVariable(varName, Type.getInteger().getMType()));
         timesE.compile(ops, autoWindow);
 
         ops.add(new StoreVariable(varName));

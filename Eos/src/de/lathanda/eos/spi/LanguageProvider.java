@@ -1,6 +1,6 @@
 package de.lathanda.eos.spi;
 
-import de.lathanda.eos.interpreter.Type.ObjectSource;
+import de.lathanda.eos.interpreter.parsetree.Type.ObjectSource;
 /**
  * Die Schnittstelle dient zum ergänzen 
  * hart kodierter Information einer Spracherweiterung.

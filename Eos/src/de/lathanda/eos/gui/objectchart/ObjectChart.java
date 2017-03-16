@@ -27,7 +27,7 @@ import de.lathanda.eos.common.interpreter.ErrorInformation;
 import de.lathanda.eos.gui.diagram.Diagram;
 import de.lathanda.eos.gui.diagram.MemoryEntry;
 import de.lathanda.eos.gui.diagram.Unit;
-import de.lathanda.eos.interpreter.parsetree.ReservedVariables;
+import de.lathanda.eos.interpreter.ReservedVariables;
 /**
  * Objektdiagramm
  *

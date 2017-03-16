@@ -1,11 +1,7 @@
 package de.lathanda.eos.interpreter.parsetree;
 
 import de.lathanda.eos.interpreter.Command;
-import de.lathanda.eos.interpreter.Environment;
-import de.lathanda.eos.interpreter.MethodType;
-import de.lathanda.eos.interpreter.Node;
-import de.lathanda.eos.interpreter.Program;
-import de.lathanda.eos.interpreter.Type;
+import de.lathanda.eos.interpreter.ReservedVariables;
 import de.lathanda.eos.interpreter.commands.CreateVariable;
 import de.lathanda.eos.interpreter.commands.DebugPoint;
 import de.lathanda.eos.interpreter.commands.LoadVariable;
@@ -57,12 +53,12 @@ public class Declaration extends Node {
         ops.add(new DebugPoint(marker));
         names.stream().forEach((name) -> {
             if (autoWindow && vartype.isFigure() && !vartype.isAbstract()) {
-                ops.add(new CreateVariable(name, vartype));
+                ops.add(new CreateVariable(name, vartype.getMType()));
                 ops.add(new LoadVariable(name));
                 ops.add(new LoadVariable(ReservedVariables.WINDOW));
-                ops.add(new Method(ADD_FIGURE));
+                ops.add(new Method(ADD_FIGURE.getParameters(), ADD_FIGURE.getMethod()));
             } else {
-                ops.add(new CreateVariable(name, vartype));
+                ops.add(new CreateVariable(name, vartype.getMType()));
             }
         });
     }

@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 
 import de.lathanda.eos.base.ResourceLoader;
 
-public interface AutoCompleteInformation {
+public interface AutoCompleteInformation extends Comparable<AutoCompleteInformation> {
 	final static ImageIcon[] ICON = new ImageIcon[]{
    		 ResourceLoader.loadIcon("icons/method.png"),
    		 ResourceLoader.loadIcon("icons/attribut.png"),
@@ -21,7 +21,15 @@ public interface AutoCompleteInformation {
 	int getType();
 	String getTooltip();
 	String getLabelLong();
-	AbstractType getCls();
+	AutoCompleteType getCls();
 	String getSort();
 	String getTemplate();
+	@Override
+	default int compareTo(AutoCompleteInformation b) {
+		if (b.getType() == getType()) {
+			return getSort().compareTo(b.getSort());
+		} else {
+			return getType() - b.getType();
+		}
+	}	
 }

@@ -1,11 +1,11 @@
 package de.lathanda.eos.spi;
 
-import de.lathanda.eos.common.interpreter.AbstractType;
+import de.lathanda.eos.common.interpreter.AutoCompleteType;
 import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
 import de.lathanda.eos.common.interpreter.MissingTypeException;
-import de.lathanda.eos.interpreter.Type;
+import de.lathanda.eos.interpreter.parsetree.Type;
 
-public class AutoCompleteEntry  implements Comparable<AutoCompleteEntry>, AutoCompleteInformation {
+public class AutoCompleteEntry  implements AutoCompleteInformation {
 	/**
 	 * Basistyp
 	 */
@@ -98,19 +98,12 @@ public class AutoCompleteEntry  implements Comparable<AutoCompleteEntry>, AutoCo
 		type = 3;
 		cls = Type.getVoid();
 	}
-	@Override
-	public int compareTo(AutoCompleteEntry b) {
-		if (b.type == type) {
-			return sort.compareTo(b.sort);
-		} else {
-			return type - b.type;
-		}
-	}
+
 	@Override
 	public String getScantext() {
 		return scantext;
 	}
-	public AbstractType getCls() {
+	public AutoCompleteType getCls() {
 		return cls;
 	}
 	public String getLabel() {

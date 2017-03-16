@@ -4,11 +4,12 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+
 import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
 import de.lathanda.eos.gui.diagram.Drawing;
 import de.lathanda.eos.gui.diagram.TextUnit;
 import de.lathanda.eos.gui.diagram.Unit;
-import de.lathanda.eos.interpreter.Type;
+import de.lathanda.eos.interpreter.parsetree.Type;
 
 public class ClassUnit extends Unit {
 	

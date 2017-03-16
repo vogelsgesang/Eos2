@@ -1,7 +1,6 @@
 package de.lathanda.eos.interpreter.parsetree;
 
 import de.lathanda.eos.gui.diagram.LoopUnit;
-import de.lathanda.eos.interpreter.Node;
 
 /**
  * Gemeinsame Klasse aller Schleifen.

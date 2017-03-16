@@ -1,8 +1,5 @@
 package de.lathanda.eos.interpreter.parsetree;
 
-import de.lathanda.eos.interpreter.Environment;
-import de.lathanda.eos.interpreter.Type;
-
 /**
  * Parameter.
  * 

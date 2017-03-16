@@ -3,8 +3,6 @@ package de.lathanda.eos.interpreter.parsetree;
 import java.util.ArrayList;
 
 import de.lathanda.eos.interpreter.Command;
-import de.lathanda.eos.interpreter.Environment;
-import de.lathanda.eos.interpreter.Type;
 import de.lathanda.eos.interpreter.commands.AddD;
 import de.lathanda.eos.interpreter.commands.AddI;
 import de.lathanda.eos.interpreter.commands.Concatenate;

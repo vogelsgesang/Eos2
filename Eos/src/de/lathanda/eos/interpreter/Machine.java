@@ -12,7 +12,6 @@ import de.lathanda.eos.gui.diagram.MemoryEntry;
 import de.lathanda.eos.interpreter.commands.DebugPoint;
 import de.lathanda.eos.interpreter.exceptions.MemoryAccessViolation;
 import de.lathanda.eos.interpreter.exceptions.ProgramTerminationException;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Map;
@@ -37,7 +36,7 @@ public class Machine implements AbstractMachine {
      * Globaler Kontext. Außerhalb von Funtionen ist dieser mit dem aktuellen Kontext identisch.
      */
     private Context global;
-    private final TreeMap<String, UserFunction> userfunction;
+    private final TreeMap<String, MProcedure> userfunction;
     private final Executer executer = new Executer();
     private final SpeedExecuter speedexecuter = new SpeedExecuter();
     private DebugInfo debugInfo = new DebugInfo();
@@ -181,7 +180,7 @@ public class Machine implements AbstractMachine {
         context.index += relativ;
     }
 
-    public void create(String variable, Type type) throws Exception {    	
+    public void create(String variable, MType type) throws Exception {    	
         Variable v = new Variable(type, variable);
         if (!type.isAbstract()) {
         	v.set(type.newInstance());
@@ -192,7 +191,7 @@ public class Machine implements AbstractMachine {
         context.memory.put(variable, v);
     }
 
-    public void create(String variable, Type type, Object data) throws Exception {
+    public void create(String variable, MType type, Object data) throws Exception {
         Variable v = new Variable(type, variable);
         v.set(data);
         context.memory.put(variable, v);
@@ -311,31 +310,21 @@ public class Machine implements AbstractMachine {
         }
     }
 
-    public void call(MethodType mt, Object[] args) {
+    public void call(String signature) {
+        MProcedure uf = userfunction.get(signature);
+        call(uf);
+    }
+    public void call(MProcedure proc) {
         callstack.push(context);
         context = new Context();
-        UserFunction uf = userfunction.get(mt.signature);
-        context.program = uf.program;
-        context.globalAccess = uf.globalAccess;
+        context.program = proc.getOps();
+        context.globalAccess = proc.getGlobalAccess();
         context.index = 0;
-        Type[] parameterTypes = mt.parameters;
-        for (int i = 0; i < parameterTypes.length; i++) {
-            Variable v = new Variable(parameterTypes[i], uf.paramters[i]);
-            v.set(args[i]);
-            context.memory.put(uf.paramters[i], v);
-        }
     }
 
-    public void createUserFunction(String signature, String[] parameters, ArrayList<Command> ops, boolean globalAccess) {
-        UserFunction uf = new UserFunction();
-    	for(Command command : ops) {
-    		command.prepare(this);
-    	}
-        uf.program = new Command[ops.size()];
-        uf.program = ops.toArray(uf.program);
-        uf.paramters = parameters;
-        uf.globalAccess = globalAccess;
-        userfunction.put(signature, uf);
+    public void addUserFunction(MProcedure proc) {
+        proc.prepare(this);
+        userfunction.put(proc.getSignature(), proc);
     }
 
     public void setProgram(ArrayList<Command> ops) {
@@ -358,13 +347,6 @@ public class Machine implements AbstractMachine {
             index = 0;
             memory.clear();
         }
-    }
-
-    private class UserFunction {
-
-        public String[] paramters;
-        public Command[] program;
-        public boolean globalAccess;
     }
 
     private class Executer implements Runnable {

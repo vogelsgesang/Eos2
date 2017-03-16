@@ -1,8 +1,7 @@
 package de.lathanda.eos.interpreter.parsetree;
 
-import de.lathanda.eos.interpreter.Environment;
-import de.lathanda.eos.interpreter.Type;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Speichert und behandelt eine Parameterliste.
@@ -23,12 +22,8 @@ public class Parameters {
     public int size() {
         return parameters.size();
     }
-    public String[] getParameters() {
-        String[] para = new String[parameters.size()];
-        for(int i = 0; i < para.length; i++) {
-            para[i] = parameters.get(i).getName();
-        }
-        return para;
+    public List<Parameter> getParameters() {
+        return parameters;
     }
     public Type[] getTypes() {
         Type[] para = new Type[parameters.size()];

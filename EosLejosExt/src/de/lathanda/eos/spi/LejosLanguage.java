@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 import de.lathanda.eos.ev3.Car;
-import de.lathanda.eos.interpreter.Type.ObjectSource;
+import de.lathanda.eos.interpreter.parsetree.Type.ObjectSource;
 
 /**
  * \brief Spracherweiterung Basissprache

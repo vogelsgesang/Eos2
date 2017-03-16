@@ -1,4 +1,6 @@
 package de.lathanda.eos.interpreter;
+
+
 /**
  * Variable
  * 
@@ -8,10 +10,10 @@ package de.lathanda.eos.interpreter;
  */
 public class Variable {
 
-    public final Type type;
+    public final MType type;
     private Object data;
     public final String name;
-    protected Variable(Type type, String name) {
+    protected Variable(MType type, String name) {
     	this.type = type;
     	this.name = name;
     }

@@ -1,9 +1,7 @@
 package de.lathanda.eos.interpreter.parsetree;
 
-import de.lathanda.eos.interpreter.Node;
+import de.lathanda.eos.common.interpreter.AutoCompleteType;
 import de.lathanda.eos.interpreter.Command;
-import de.lathanda.eos.interpreter.Environment;
-import de.lathanda.eos.interpreter.Type;
 import de.lathanda.eos.interpreter.commands.DebugPoint;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -53,7 +51,7 @@ public class Arguments extends Node {
         StringBuilder res = new StringBuilder();
         boolean first = true;
         res.append("(");
-        for (Type t : types) {
+        for (AutoCompleteType t : types) {
             if (first) {
                 res.append(t);
             } else {

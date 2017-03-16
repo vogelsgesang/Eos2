@@ -16,7 +16,7 @@ import de.lathanda.eos.common.Factory;
 import de.lathanda.eos.common.Stop;
 import de.lathanda.eos.common.interpreter.AbstractProgram;
 import de.lathanda.eos.gui.MainWindow;
-import de.lathanda.eos.interpreter.Program;
+import de.lathanda.eos.interpreter.parsetree.Program;
 import de.lathanda.eos.spi.LanguageManager;
 
 /**

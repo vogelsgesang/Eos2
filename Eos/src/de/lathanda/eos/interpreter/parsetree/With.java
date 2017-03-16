@@ -1,8 +1,7 @@
 package de.lathanda.eos.interpreter.parsetree;
 
 import de.lathanda.eos.interpreter.Command;
-import de.lathanda.eos.interpreter.Environment;
-import de.lathanda.eos.interpreter.Node;
+
 import java.util.ArrayList;
 
 /**

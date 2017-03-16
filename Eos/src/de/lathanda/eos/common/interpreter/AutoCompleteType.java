@@ -2,7 +2,7 @@ package de.lathanda.eos.common.interpreter;
 
 import java.util.List;
 
-public interface AbstractType {
+public interface AutoCompleteType {
 
 	boolean isUnknown();
 

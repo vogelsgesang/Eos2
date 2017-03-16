@@ -2,7 +2,7 @@ package de.lathanda.eos.interpreter.javacc;
 
 import java.util.Locale;
 
-import de.lathanda.eos.interpreter.Program;
+import de.lathanda.eos.interpreter.parsetree.Program;
 
 public abstract class EosParser {
 	protected StringCharStream scs;

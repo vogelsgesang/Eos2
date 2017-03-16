@@ -44,7 +44,7 @@ public interface AbstractProgram {
 	 * @param pos
 	 * @return
 	 */
-	AbstractType seekType(int pos);
+	AutoCompleteType seekType(int pos);
 	/**
 	 * Quellcode Layouten.
 	 * @return

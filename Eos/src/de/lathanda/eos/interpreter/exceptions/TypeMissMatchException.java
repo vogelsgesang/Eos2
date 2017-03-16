@@ -12,9 +12,9 @@ import de.lathanda.eos.common.gui.Messages;
  */
 public class TypeMissMatchException extends RuntimeException {
     private static final long serialVersionUID = -1331782960608862330L;
-    Class<?> expected;
-    Class<?> found;
-    public TypeMissMatchException(Class<?> expected, Class<?> found) {
+    String expected;
+    String found;
+    public TypeMissMatchException(String expected, String found) {
         this.expected = expected;
         this.found = found;
     }
