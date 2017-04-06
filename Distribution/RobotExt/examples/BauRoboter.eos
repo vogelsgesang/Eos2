@@ -1,0 +1,11 @@
+bob:BauRoboter
+bob.reihelegen(5)
+
+klasse BauRoboter erweitert Roboter
+  methode reihelegen(anzahl:integer)
+    wiederhole anzahl mal
+        selbst.schritt()
+        selbst.hinlegen()
+    *wiederhole
+  *methode
+*klasse
