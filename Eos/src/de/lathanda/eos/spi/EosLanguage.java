@@ -24,7 +24,7 @@ import de.lathanda.eos.geo.TextField;
 import de.lathanda.eos.geo.Triangle;
 import de.lathanda.eos.geo.Window;
 import de.lathanda.eos.interpreter.SystemFunctions;
-import de.lathanda.eos.interpreter.parsetree.Type.ObjectSource;
+import de.lathanda.eos.interpreter.parsetree.SystemType.ObjectSource;
 /**
  * \brief Spracherweiterung Basissprache
  * 

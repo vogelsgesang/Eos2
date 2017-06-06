@@ -22,12 +22,12 @@ public class Parser extends EosParser implements ParserConstants {
         markerStack.peek().begin(token.beginColumn, token.beginLine);
         token = old;
     }
-    void close(Node node) {
+    void close(MarkedNode node) {
         markerStack.peek().end(token.endColumn, token.endLine);
         node.setMarker(markerStack.pop());
         program.addNode(node);
     }
-    void setCode(Node node) {
+    void setCode(MarkedNode node) {
         node.setMarker(new Marker(token.beginColumn, token.beginLine, token.endColumn, token.endLine));
         program.addNode(node);
     }
@@ -160,6 +160,7 @@ SubRoutine subroutine = new SubRoutine(name, parameters, sequence, ret, false);
   }
 
   final public UserClass UserClass() throws ParseException {String name; String sup = null; UserClass cls; SubRoutine meth; Declaration prop;Sequence sequence;
+open();
 newlineInc();
     jj_consume_token(CLASS);
     name = Name();
@@ -173,7 +174,7 @@ newlineInc();
       jj_la1[4] = jj_gen;
       ;
     }
-cls = new UserClass(name, sup);
+cls = program.createUserClass(name); cls.setSuperClass(sup);
     label_2:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -205,7 +206,8 @@ cls.addDeclaration(prop);
     }
 newlineDec();
     jj_consume_token(END_CLASS);
-{if ("" != null) return cls;}
+close(cls);
+    {if ("" != null) return cls;}
     throw new Error("Missing return statement in function");
   }
 
@@ -1520,7 +1522,7 @@ align = Alignment.BOTTOM;
 
   final public Type Type() throws ParseException {Token type;
     type = jj_consume_token(IDENTIFIER);
-{if ("" != null) return Type.getInstanceByName(type.image);}
+{if ("" != null) return program.getType(type.image);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1569,24 +1571,16 @@ text = t.image;
   final public Constant IntNumber() throws ParseException {Token number;
     number = jj_consume_token(INTEGER_LITERAL);
 try {
-      {if ("" != null) return new Constant(new Integer(number.image), Type.getInteger(), number.image);}
-    } catch (NumberFormatException nfe) {
-      //shouldn't be possible, crash if it happens
-      nfe.printStackTrace();
-      System.exit(-1);
-    }
+        {if ("" != null) return new Constant(new Integer(number.image), Type.getInteger(), number.image);}
+      } catch (NumberFormatException nfe) {
+                        {if (true) throw new NumberFormatException(number.image);}
+      }
     throw new Error("Missing return statement in function");
   }
 
   final public Constant DoubleNumber() throws ParseException {Token number;
     number = jj_consume_token(FLOATING_POINT_LITERAL);
-try {
-      {if ("" != null) return new Constant(new Double(number.image), Type.getDouble(), number.image);}
-    } catch (NumberFormatException nfe) {
-      //shouldn't be possible, crash if it happens
-      nfe.printStackTrace();
-      System.exit(-1);
-    }
+{if ("" != null) return new Constant(new Double(number.image), Type.getDouble(), number.image);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2037,12 +2031,6 @@ try {
     return false;
   }
 
-  private boolean jj_3R_75()
- {
-    if (jj_scan_token(FLOATING_POINT_LITERAL)) return true;
-    return false;
-  }
-
   private boolean jj_3R_14()
  {
     if (jj_3R_19()) return true;
@@ -2051,6 +2039,12 @@ try {
       xsp = jj_scanpos;
       if (jj_3R_20()) { jj_scanpos = xsp; break; }
     }
+    return false;
+  }
+
+  private boolean jj_3R_75()
+ {
+    if (jj_scan_token(FLOATING_POINT_LITERAL)) return true;
     return false;
   }
 

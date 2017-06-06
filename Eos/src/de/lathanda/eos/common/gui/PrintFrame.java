@@ -64,14 +64,14 @@ public class PrintFrame extends JFrame {
         controlToolbar.setFloatable(false);
         controlToolbar.setRollover(true);
 
-        btnLeft.setIcon(new ImageIcon(getClass().getResource("/icons/arrow-left-2.png")));
+        btnLeft.setIcon(new ImageIcon(getClass().getResource("/icons/navigate_left.png")));
         btnLeft.setFocusable(false);
 
         btnLeft.addActionListener(evt -> btnLeftActionPerformed(evt));
 
         controlToolbar.add(btnLeft);
 
-        btnRight.setIcon(new ImageIcon(getClass().getResource("/icons/arrow-right-2.png")));
+        btnRight.setIcon(new ImageIcon(getClass().getResource("/icons/navigate_right.png")));
         btnRight.setFocusable(false);
         btnRight.addActionListener(evt -> btnRightActionPerformed(evt));
         
@@ -88,7 +88,7 @@ public class PrintFrame extends JFrame {
         
         controlToolbar.add(space1);
 
-        btnPrint.setIcon(new ImageIcon(getClass().getResource("/icons/document-print-3.png")));
+        btnPrint.setIcon(new ImageIcon(getClass().getResource("/icons/printer.png")));
         btnPrint.addActionListener(evt -> btnPrintActionPerformed(evt));
 
         controlToolbar.add(btnPrint);

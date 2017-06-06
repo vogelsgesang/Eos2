@@ -64,10 +64,10 @@ public class ConfigFrame extends javax.swing.JFrame {
         generalPanel.setLayout(new GridLayout(0, 2));
         getContentPane().add(generalPanel);
 
-        btnOk.setIcon(new ImageIcon(getClass().getResource("/icons/dialog-ok-2.png")));
+        btnOk.setIcon(new ImageIcon(getClass().getResource("/icons/ok.png")));
         btnOk.addActionListener(ae -> {writeData(); setVisible(false);});
         
-        btnCancel.setIcon(new ImageIcon(getClass().getResource("/icons/dialog-cancel-2.png")));
+        btnCancel.setIcon(new ImageIcon(getClass().getResource("/icons/close.png")));
         btnCancel.addActionListener(ae -> {readData(); setVisible(false);});
         
         commandPanel.add(btnOk);

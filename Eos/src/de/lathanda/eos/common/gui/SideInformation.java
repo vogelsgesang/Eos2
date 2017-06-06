@@ -33,8 +33,8 @@ import de.lathanda.eos.common.gui.GuiConfiguration.GuiConfigurationListener;
 public class SideInformation extends JPanel implements DocumentListener, GuiConfigurationListener, MouseListener {
 	private static final long serialVersionUID = 4837891668872540779L;
 	private static final BufferedImage BREAKPOINT_IMAGE = ResourceLoader
-			.loadImage("icons/pictograms-road_signs-stop_sign.png");
-	private static final BufferedImage ERROR_IMAGE = ResourceLoader.loadImage("icons/dialog-error-3.png");
+			.loadImage("icons/sign_stop.png");
+	private static final BufferedImage ERROR_IMAGE = ResourceLoader.loadImage("icons/error.png");
 	private SourceCode sourceCode;
 	private JTextComponent component;
 

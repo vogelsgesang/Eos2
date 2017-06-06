@@ -1,5 +1,6 @@
 package de.lathanda.eos.interpreter.parsetree;
 
+import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
 import de.lathanda.eos.common.interpreter.ProgramUnit;
 import de.lathanda.eos.interpreter.Command;
 import de.lathanda.eos.interpreter.ReservedVariables;
@@ -64,23 +65,14 @@ public class SubRoutine extends Node implements ProgramUnit {
 		if (parameters != null) {
 			parameters.registerParameters(env);
 		}
-		if (returnType != null) {
+		if (returnType != null && !returnType.isVoid()) {
 			env.setVariableType("1x", returnType);
 		}
 		sequence.resolveNamesAndTypes(with, env);
 	}
 
 	public void registerSub(Environment env) {
-		Type[] para;
-		if (parameters != null) {
-			para = parameters.getTypes();
-		} else {
-			para = new Type[] {};
-		}
-		if (returnType != null && returnType.isUnknown()) {
-			env.addError(marker, "UnknownType", returnType);
-		}
-		methodType = new MethodType(name, para, returnType);
+		createMethodType(env);
 		if (env.isFunctionDefined(name, (parameters == null)?0:parameters.size())) {
 			env.addError(marker, "DoubleMethodDefinition", name, (parameters == null)?0:parameters.size());
 		} else {
@@ -91,7 +83,27 @@ public class SubRoutine extends Node implements ProgramUnit {
 			}
 		}
 	}
-
+	public MethodType getMethodType(Environment env) {
+		if (methodType == null) {
+			createMethodType(env);
+		}
+		return methodType;
+	}
+	public void createMethodType(Environment env) {
+		if (methodType != null) {
+			return;
+		}
+		Type[] para;
+		if (parameters != null) {
+			para = parameters.getTypes();
+		} else {
+			para = new Type[] {};
+		}
+		if (returnType != null && returnType.isUnknown()) {
+			env.addError(marker, "UnknownType", returnType);
+		}
+		methodType = new MethodType(name, para, returnType);
+	}
 	public boolean getGlobalAccess() {
 		return globalAccess;
 	}
@@ -99,5 +111,10 @@ public class SubRoutine extends Node implements ProgramUnit {
 	@Override
 	public String getLabel() {
 		return name;
+	}
+
+	public AutoCompleteInformation getAutoComplete() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

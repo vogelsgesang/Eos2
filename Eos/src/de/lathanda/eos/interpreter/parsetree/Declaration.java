@@ -1,5 +1,6 @@
 package de.lathanda.eos.interpreter.parsetree;
 
+import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
 import de.lathanda.eos.interpreter.Command;
 import de.lathanda.eos.interpreter.ReservedVariables;
 import de.lathanda.eos.interpreter.commands.CreateVariable;
@@ -19,7 +20,7 @@ import java.util.List;
 public class Declaration extends Node {
 	static {
 		try {
-			ADD_FIGURE = new MethodType(Type.getWindow(), new Type[]{Type.getFigure()}, Type.getVoid(), "addFigure", "");
+			ADD_FIGURE = new MethodType(SystemType.getWindow(), new SystemType[]{SystemType.getFigure()}, Type.getVoid(), "addFigure", "");
 		}catch(NoSuchMethodException e) {
 			e.printStackTrace();
 			System.exit(-1);
@@ -52,7 +53,7 @@ public class Declaration extends Node {
     public void compile(ArrayList<Command> ops, boolean autoWindow) throws Exception {
         ops.add(new DebugPoint(marker));
         names.stream().forEach((name) -> {
-            if (autoWindow && vartype.isFigure() && !vartype.isAbstract()) {
+            if (autoWindow && vartype.inherits(SystemType.getFigure()) && !vartype.isAbstract()) {
                 ops.add(new CreateVariable(name, vartype.getMType()));
                 ops.add(new LoadVariable(name));
                 ops.add(new LoadVariable(ReservedVariables.WINDOW));
@@ -75,10 +76,10 @@ public class Declaration extends Node {
 
         if (vartype.isUnknown()) {
             env.addError(marker, "UnknownType", vartype);
-        } else if (vartype.isWindow()) {
+        } else if (vartype == SystemType.getWindow()) {
             //a window variable was found, this information is used to determine if automatic window has to be generated
             env.setWindowExists();
-        } else if (vartype.isFigure()) {
+        } else if (vartype.inherits(SystemType.getFigure())) {
             //a figure variable was found, this information is used to determine if automatic window has to be generated
         	env.setFigureExists();
         }
@@ -114,5 +115,10 @@ public class Declaration extends Node {
         text.append(":").append(vartype);
         return text.toString();        
     }
+
+	public AutoCompleteInformation getAutoComplete() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

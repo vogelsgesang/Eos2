@@ -18,6 +18,8 @@ import javax.swing.tree.TreePath;
 
 import de.lathanda.eos.base.ResourceLoader;
 import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
+import de.lathanda.eos.interpreter.parsetree.SystemType;
+
 import static de.lathanda.eos.common.gui.GuiConstants.GUI;
 
 public class ClassDoc extends JFrame {
@@ -47,7 +49,7 @@ public class ClassDoc extends JFrame {
 	static {
 		
 		root = new DefaultMutableTreeNode(new TreeEntry(GUI.getString("Classbook.Classes"), AutoCompleteInformation.CLASS));
-		LinkedList<de.lathanda.eos.interpreter.parsetree.Type> types = de.lathanda.eos.interpreter.parsetree.Type.getAll();
+		LinkedList<de.lathanda.eos.interpreter.parsetree.Type> types = SystemType.getAll();
 		
 		for(de.lathanda.eos.interpreter.parsetree.Type t:types) {
 			DefaultMutableTreeNode clsNode = new DefaultMutableTreeNode(new TreeEntry(t));

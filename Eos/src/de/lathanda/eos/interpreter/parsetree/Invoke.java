@@ -1,6 +1,7 @@
 package de.lathanda.eos.interpreter.parsetree;
 
 import de.lathanda.eos.interpreter.Command;
+import de.lathanda.eos.interpreter.MProcedure;
 
 import java.util.ArrayList;
 
@@ -8,6 +9,7 @@ import de.lathanda.eos.interpreter.commands.DebugPoint;
 import de.lathanda.eos.interpreter.commands.Function;
 import de.lathanda.eos.interpreter.commands.Method;
 import de.lathanda.eos.interpreter.commands.UserFunction;
+import de.lathanda.eos.interpreter.commands.UserMethod;
 
 /**
  * Speichert und behandelt einen Aufruf einer Methode, Funktion oder
@@ -20,7 +22,8 @@ public class Invoke extends Expression {
     private enum FunctionType {
         USER,
         SYSTEM_FUNCTION,
-        METHOD
+        METHOD,
+        USER_METHOD
     }
 
     private Expression target;
@@ -62,6 +65,11 @@ public class Invoke extends Expression {
                 target.compile(ops, autoWindow);
                 ops.add(new Method(methodType.getParameters(), methodType.getMethod()));
                 break;
+            case USER_METHOD:          
+            	target.compile(ops, autoWindow);
+            	UserType ut = (UserType)target.getType();
+            	MProcedure mp = ut.getMClass().getMethod(methodType.getSignature());
+            	ops.add(new UserMethod(mp));
         }
     }
 
@@ -109,7 +117,7 @@ public class Invoke extends Expression {
         	//method
             target.resolveNamesAndTypes(with, env);
         }
-        functionType = FunctionType.METHOD;
+
         Type tartype = target.getType();
         if (tartype == null) {
             env.addError(marker, "UnknownVariable",
@@ -117,6 +125,13 @@ public class Invoke extends Expression {
             );
         } else {
             methodType = tartype.getMethod(methodname, arguments.getTypes().length);
+        }
+        if (methodType != null) {
+        	if (methodType.isNative()) {
+        		functionType = FunctionType.METHOD;
+        	} else {
+        		functionType = FunctionType.USER_METHOD;
+        	}
         }
 
         if (methodType == null) {
@@ -132,6 +147,7 @@ public class Invoke extends Expression {
             );
         } else if (methodType != null) {
         	type = methodType.getReturnType();
+        	
         } else {
         	env.addError(marker, "MethodNotFound", methodname);
         }

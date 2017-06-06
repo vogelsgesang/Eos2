@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2015, Peter "Lathanda" Schneider
  * CC BY-NC-SA
- * Version 1.0.8
+ * Version 1.0.9
  *
  */
 options {
@@ -51,12 +51,12 @@ public class EnParser extends EosParser {
         markerStack.peek().begin(token.beginColumn, token.beginLine);
         token = old;
     }
-    void close(Node node) {
+    void close(MarkedNode node) {
         markerStack.peek().end(token.endColumn, token.endLine);
         node.setMarker(markerStack.pop());
         program.addNode(node);
     }
-    void setCode(Node node) {
+    void setCode(MarkedNode node) {
         node.setMarker(new Marker(token.beginColumn, token.beginLine, token.endColumn, token.endLine));
         program.addNode(node);
     }
@@ -365,11 +365,13 @@ SubRoutine Procedure( ) :
 UserClass UserClass() :
 { String name; String sup = null; UserClass cls; SubRoutine meth; Declaration prop;Sequence sequence;}
 {
+  {open();}
   {newlineInc();} "class" name = Name() ["extends" sup = Name()]
-  {cls = new UserClass(name, sup);}
+  {cls = program.createUserClass(name); cls.setSuperClass(sup);}
   (meth = Method() {cls.addMethod(meth);} | prop = Declaration() {cls.addDeclaration(prop);} )* 
   {newlineDec();} "*class"
   {
+    close(cls);  
     return cls;
   } 
 }
@@ -1023,7 +1025,7 @@ Type Type() :
 {Token type;}
 { 
   type = <IDENTIFIER>
-  {return Type.getInstanceByName(type.image);}
+  {return program.getType(type.image);}
 }
 
 File File() :
@@ -1070,13 +1072,11 @@ Constant IntNumber() :
 {
   number = <INTEGER_LITERAL>
   {
-    try {
-      return new Constant(new Integer(number.image), Type.getInteger(), number.image);
-    } catch (NumberFormatException nfe) {
-      //shouldn't be possible, crash if it happens
-      nfe.printStackTrace();
-      System.exit(-1);
-    }
+      try {
+        return new Constant(new Integer(number.image), Type.getInteger(), number.image);
+      } catch (NumberFormatException nfe) {
+    			throw new NumberFormatException(number.image);
+      }
   }
 }
 
@@ -1085,12 +1085,6 @@ Constant DoubleNumber() :
 {
   number = <FLOATING_POINT_LITERAL>
   {
-    try {     
       return new Constant(new Double(number.image), Type.getDouble(), number.image);
-    } catch (NumberFormatException nfe) {
-      //shouldn't be possible, crash if it happens
-      nfe.printStackTrace();
-      System.exit(-1);
-    }
   }
 }

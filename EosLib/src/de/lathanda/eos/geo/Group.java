@@ -76,11 +76,7 @@ public class Group extends Figure implements FigureGroup  {
 			super.draw(g);
 		}
 	}
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
-		return super.clone();
-	}
+
 	@Override
     protected void drawObject(Picture p) {
    		for (Figure m : members) {

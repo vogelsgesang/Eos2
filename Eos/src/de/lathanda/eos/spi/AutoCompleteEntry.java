@@ -3,6 +3,7 @@ package de.lathanda.eos.spi;
 import de.lathanda.eos.common.interpreter.AutoCompleteType;
 import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
 import de.lathanda.eos.common.interpreter.MissingTypeException;
+import de.lathanda.eos.interpreter.parsetree.SystemType;
 import de.lathanda.eos.interpreter.parsetree.Type;
 
 public class AutoCompleteEntry  implements AutoCompleteInformation {
@@ -49,7 +50,7 @@ public class AutoCompleteEntry  implements AutoCompleteInformation {
 		//class.Grafik              = !Grafik#Ein Bild in einem Rechteck.
 		int dot = key.indexOf('.');
 
-		this.cls = Type.getInstanceByID(key.substring(0, dot));
+		this.cls = SystemType.getInstanceByID(key.substring(0, dot));
 		this.scantext = key.substring(dot + 1);
 		if (cls == null) {
 			throw new MissingTypeException(key.substring(0, dot));

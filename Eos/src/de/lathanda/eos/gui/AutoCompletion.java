@@ -33,7 +33,6 @@ import de.lathanda.eos.common.interpreter.AbstractProgram;
 import de.lathanda.eos.common.interpreter.AutoCompleteType;
 import de.lathanda.eos.common.interpreter.AutoCompleteHook;
 import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
-import de.lathanda.eos.interpreter.parsetree.Type;
 import de.lathanda.eos.spi.AutoCompleteEntry;
 import de.lathanda.eos.spi.LanguageManager;
 /**
@@ -102,7 +101,7 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 	}
 	
 	/**
-	 * Startet den Auswahldialog.
+	 * Startet den Auswahldialog für Attribute und Methoden.
 	 * @param base Typ für den die Auswahl generiert wird.
 	 * @param position Position im Text für die die Auswahl gestart wurde.
 	 * @throws BadLocationException
@@ -130,6 +129,23 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 		}
 		showMenue();
 	}
+	/**
+	 * Startet den Auswahldialog für Klassen.
+	 * @param base Typ für den die Auswahl generiert wird.
+	 * @param position Position im Text für die die Auswahl gestart wurde.
+	 * @throws BadLocationException
+	 */
+	public void startClass(AbstractProgram program, int position) throws BadLocationException {
+
+		startPosition = position;
+		lastPosition = position;
+		for(AutoCompleteInformation aci:program.getClassAutoCompletes()) {
+			if (aci.getType() != AutoCompleteInformation.PRIVATE) {				
+				choiceItems.add(aci);
+			}
+		}
+		showMenue();
+	}	
 	/**
 	 * Hilfsmethode zeigt das Menue an.
 	 */
@@ -216,7 +232,7 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 		try {
 			AutoCompleteInformation selected = choiceList.getSelectedValue();
 			String prefix = text.getText(startPosition, lastPosition - startPosition).toLowerCase();
-			AutoCompleteEntry[] choices = choiceItems.stream().filter(choice -> choice.getScantext().toLowerCase().startsWith(prefix)).toArray(size -> new AutoCompleteEntry[size]);
+			AutoCompleteInformation[] choices = choiceItems.stream().filter(choice -> choice.getScantext().toLowerCase().startsWith(prefix)).toArray(size -> new AutoCompleteInformation[size]);
 			if (choices.length == 0) {
 				stop();
 			} else {
@@ -393,7 +409,7 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 				AutoCompleteType base = program.seekType(pos);
 				start(base, pos + 1);
 			} else if (text.equals(":")) {
-				start(Type.getClassType(), pos + 1);
+				startClass(program, pos + 1);
 			}
 		} catch (BadLocationException e) {
 			//ignore it

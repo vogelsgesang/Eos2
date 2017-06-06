@@ -31,4 +31,12 @@ public interface ReservedVariables {
      * Name der Konstruktor Prozedur.
      */
     String INIT_PROCEDURE = "1new";
+    /**
+     * user property set prefix
+     */
+    String SET_PREFIX = "1set";
+    /**
+     * user property get prefix
+     */
+    String GET_PREFIX = "1get";
 }

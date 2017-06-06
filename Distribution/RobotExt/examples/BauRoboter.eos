@@ -1,6 +1,7 @@
+w:Welt
 bob:BauRoboter
+w.betreten(bob)
 bob.reihelegen(5)
-
 klasse BauRoboter erweitert Roboter
   methode reihelegen(anzahl:integer)
     wiederhole anzahl mal

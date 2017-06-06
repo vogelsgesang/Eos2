@@ -63,7 +63,7 @@ public class PropertyRead extends Expression {
             	if (env.getAutoWindow()) {
             		member = ReservedVariables.WINDOW;
             		isVariable = true;
-            		type = Type.getWindow();
+            		type = SystemType.getWindow();
             	}
             } else {
                 env.addError(marker, "UnknownVariable", member);

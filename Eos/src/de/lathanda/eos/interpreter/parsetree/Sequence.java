@@ -74,7 +74,7 @@ public class Sequence extends Node implements ProgramSequence {
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
-        for (Node n : sequence) {
+        for (MarkedNode n : sequence) {
             res.append(n).append("\n");
         }
         return res.toString();

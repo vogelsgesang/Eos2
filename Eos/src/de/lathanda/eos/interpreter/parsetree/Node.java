@@ -1,7 +1,6 @@
 package de.lathanda.eos.interpreter.parsetree;
 
 import de.lathanda.eos.common.interpreter.Marker;
-import de.lathanda.eos.common.interpreter.ProgramNode;
 import de.lathanda.eos.interpreter.Command;
 
 import java.text.MessageFormat;
@@ -14,30 +13,14 @@ import java.util.ResourceBundle;
  * @author Peter (Lathanda) Schneider
  * @since 0.2
  */
-public abstract class Node implements ProgramNode {
+public abstract class Node extends MarkedNode {
     protected static final ResourceBundle LABEL = ResourceBundle.getBundle("text.label");
-    protected Type type = Type.getVoid();
-    protected Marker marker;
     public abstract void compile(ArrayList<Command> ops, boolean autoWindow) throws Exception;
     public abstract void resolveNamesAndTypes(Expression with, Environment env);
     public Node() {
     	marker = new Marker();
     }
-    public final Type getType() {
-        return type;
-    }
 
-    public final Marker getMarker() {
-        return marker;
-    }
-
-    public final void setMarker(Marker cr) {
-        marker = cr;
-        marker.setNode(this);
-    }
-    public final void sameMarker(Node node) {
-    	marker.extend(node.marker);
-    }
     /**
      * Erzeugt eine Textlesbare Version dieses Knotens für Struktogramme.
      * @return

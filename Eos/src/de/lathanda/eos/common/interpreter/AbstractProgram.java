@@ -66,4 +66,9 @@ public interface AbstractProgram {
 	 * @return
 	 */
 	int getLine(int pos);
+	/**
+	 * Liefert die Informationen über alle Klassen die in diesem Programm verfügbar sind.
+	 * @return
+	 */
+	LinkedList<AutoCompleteInformation> getClassAutoCompletes();
 }

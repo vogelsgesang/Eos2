@@ -27,8 +27,9 @@ import de.lathanda.eos.gui.diagram.TextUnit;
 import de.lathanda.eos.gui.diagram.Unit;
 import de.lathanda.eos.gui.objectchart.UnitSource;
 import de.lathanda.eos.interpreter.parsetree.MethodType;
+import de.lathanda.eos.interpreter.parsetree.SystemType;
 import de.lathanda.eos.interpreter.parsetree.Type;
-import de.lathanda.eos.interpreter.parsetree.Type.ObjectSource;
+import de.lathanda.eos.interpreter.parsetree.SystemType.ObjectSource;
 
 /**
  * \brief Sprach Konfiguration
@@ -270,12 +271,12 @@ public class LanguageManager {
 	};
 
 	public void registerType(String id, String[] name, String description, ObjectSource objSrc, Class<?> cls) {
-		Type.registerType(id, name, description, objSrc, cls);
+		SystemType.registerType(id, name, description, objSrc, cls);
 	}
 
 	public void registerInherits(String id, String[] inherits) {
 		try {
-			Type.registerInherits(id, inherits);
+			SystemType.registerInherits(id, inherits);
 		} catch (MissingTypeException e) {
 			JOptionPane.showMessageDialog(null,
 					"broken configuration\n" + id + " inherits " + Arrays.asList(inherits).toString(), "fatal error",
@@ -286,20 +287,20 @@ public class LanguageManager {
 
 	private static class Signature {
 		protected int args;
-		protected Type[] parameters;
-		protected Type ret;
+		protected SystemType[] parameters;
+		protected SystemType ret;
 		protected String name;
 
 		protected void parseSignature(String value, int args) throws MissingTypeException {
 			this.args = args;
 			String[] signature = value.split(",");
 			name = signature[0];
-			parameters = new Type[args];
+			parameters = new SystemType[args];
 			for (int i = 0; i < args; i++) {
-				parameters[i] = Type.getInstanceByID(signature[i + 1]);
+				parameters[i] = SystemType.getInstanceByID(signature[i + 1]);
 			}
 			if (args + 1 < signature.length) {
-				ret = Type.getInstanceByID(signature[signature.length - 1]);
+				ret = SystemType.getInstanceByID(signature[signature.length - 1]);
 				if (ret == null) {
 					throw new MissingTypeException(signature[signature.length - 1]);
 				}
@@ -322,13 +323,13 @@ public class LanguageManager {
 
 	protected static class MethodSignature extends Signature {
 		protected String originalName;
-		protected Type target;
+		protected SystemType target;
 
 		private MethodSignature(String key, String value) throws MissingTypeException {
 			super();
 			int braket = key.indexOf("(");
 			int dot = key.indexOf(".");
-			target = Type.getInstanceByID(key.substring(0, dot));
+			target = SystemType.getInstanceByID(key.substring(0, dot));
 			originalName = key.substring(dot + 1, braket);
 			parseSignature(value, Integer.parseInt(key.substring(braket + 1, key.length() - 1)));
 		}
@@ -336,12 +337,12 @@ public class LanguageManager {
 
 	protected static class ReadSignature extends Signature {
 		protected String originalName;
-		protected Type target;
+		protected SystemType target;
 
 		private ReadSignature(String key, String value) throws MissingTypeException {
 			super();
 			int dot = key.indexOf(".");
-			target = Type.getInstanceByID(key.substring(0, dot));
+			target = SystemType.getInstanceByID(key.substring(0, dot));
 			originalName = key.substring(dot + 1, key.length());
 			parseSignature(value, 0);
 		}
@@ -349,12 +350,12 @@ public class LanguageManager {
 
 	protected static class AssignSignature extends Signature {
 		protected String originalName;
-		protected Type target;
+		protected SystemType target;
 
 		private AssignSignature(String key, String value) throws MissingTypeException {
 			super();
 			int dot = key.indexOf(".");
-			target = Type.getInstanceByID(key.substring(0, dot));
+			target = SystemType.getInstanceByID(key.substring(0, dot));
 			originalName = key.substring(dot + 1, key.length());
 			parseSignature(value, 1);
 		}

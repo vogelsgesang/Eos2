@@ -9,15 +9,15 @@ import java.util.TreeMap;
  */
 public class MObject {
 	private final TreeMap<String, Variable> properties;
-	private final MType cls;
+	private final MClass cls;
 	private final Object javaObject;
-	public MObject(MType mClass) throws Exception {
+	public MObject(MClass mClass) throws Exception {
 		properties = mClass.createProperties();
 		cls = mClass;
 		javaObject = mClass.createJavaObject();
 	}
 
-	public MType getType() {
+	public MClass getType() {
 		return cls;
 	}
 	public void setProperty(String name, Object value) {

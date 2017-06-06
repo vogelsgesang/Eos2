@@ -3,7 +3,7 @@ package de.lathanda.eos.interpreter;
 import java.util.TreeMap;
 
 import de.lathanda.eos.interpreter.exceptions.TypeMissMatchException;
-import de.lathanda.eos.interpreter.parsetree.Type.ObjectSource;
+import de.lathanda.eos.interpreter.parsetree.SystemType.ObjectSource;
 
 /**
  * Informationen über eine Java Klasse
@@ -36,6 +36,8 @@ public class MJavaClass implements MType {
 			return (Boolean) obj;
 		} else if (obj instanceof Double && c == double.class) {
 			return (Double) obj;
+		} else if (obj instanceof MObject) {
+			return checkAndCast(c, ((MObject)obj).getJavaObject());
 		} else if (c.isInstance(obj)) {
 			return obj;
 		} else if (c == String.class) {

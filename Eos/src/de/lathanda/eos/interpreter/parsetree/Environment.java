@@ -45,12 +45,20 @@ public class Environment {
      * next unique id, for creating artifical unique variables, eg counting variable for counting loop
      */
     private int uid = 0;
-
-    public Environment() {
+    /**
+     * program associated with this environment
+     */
+    private final Program program;
+    public Environment(Program p) {
         this.functions = new TreeMap<>();
+        program = p;
     }
-    public Environment(boolean lockProperties) {
+    public Environment(boolean lockProperties, Program p) {
         this.functions = new TreeMap<>();
+        program = p;
+    }
+    public Program getProgram() {
+    	return program;
     }
     public void addError(Marker marker, String errorId, Object ... data) {
         errors.add(new CompilerError(marker, errorId, data));

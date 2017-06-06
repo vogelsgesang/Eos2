@@ -26,8 +26,8 @@ public class MClass implements MType {
 		this.name = name;
 		isAbstract = false;
 	}
-	public void addMethod(String name, MProcedure m) {
-		methods.put(name, m);
+	public void addMethod(MProcedure m) {
+		methods.put(m.getSignature(), m);
 	}
 	public MProcedure getMethod(String signature) {
 		return methods.get(signature);
@@ -75,5 +75,8 @@ public class MClass implements MType {
 	@Override
 	public Object createJavaObject() throws Exception {
 		return sup.createJavaObject();
+	}
+	public void setSuper(MType sup) {
+		this.sup = sup;
 	}	
 }

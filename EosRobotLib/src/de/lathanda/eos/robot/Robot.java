@@ -510,6 +510,9 @@ public class Robot implements ConfigurationListener, Readout {
 	public Color getRobotColor() {
 		return robotColor;
 	}
+	public void setRobotColor(Color robotColor) {
+		this.robotColor = robotColor;
+	}
 	public Direction getDirection() {
 		return direction;
 	}

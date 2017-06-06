@@ -92,71 +92,71 @@ public class WorldEditor extends JFrame implements KeyListener, DocumentListener
 		editorToolbar = new JPanel();
 		editorToolbar.setLayout(new GridLayout(2,7));
 	
-	    btnUp = new JButton(new ImageIcon(getClass().getResource("/icons/arrow-up-double-2.png")));
+	    btnUp = new JButton(new ImageIcon(getClass().getResource("/icons/navigate_up2.png")));
 	    btnUp.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Up"));
 	    mnemonics.put(KeyEvent.VK_A, evt -> upActionPerformed(evt));
 	    btnUp.addActionListener(evt -> upActionPerformed(evt));
 
-	    btnDown = new JButton(new ImageIcon(getClass().getResource("/icons/arrow-down-double-2.png")));
+	    btnDown = new JButton(new ImageIcon(getClass().getResource("/icons/navigate_down2.png")));
 	    btnDown.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Down"));
 	    mnemonics.put(KeyEvent.VK_Z, evt -> downActionPerformed(evt));
 	    btnDown.addActionListener(evt -> downActionPerformed(evt));
 
 	    
-	    btnLeft = new JButton(new ImageIcon(getClass().getResource("/icons/arrow-left-2.png")));
+	    btnLeft = new JButton(new ImageIcon(getClass().getResource("/icons/navigate_left.png")));
 	    btnLeft.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Left"));
 	    mnemonics.put(KeyEvent.VK_LEFT,	evt -> leftActionPerformed(evt));
 	    btnLeft.addActionListener(evt -> leftActionPerformed(evt));
 	    
-	    btnRight = new JButton(new ImageIcon(getClass().getResource("/icons/arrow-right-2.png")));
+	    btnRight = new JButton(new ImageIcon(getClass().getResource("/icons/navigate_right.png")));
 	    btnRight.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Right"));
 	    mnemonics.put(KeyEvent.VK_RIGHT, evt -> rightActionPerformed(evt));
 	    btnRight.addActionListener(evt -> rightActionPerformed(evt));
 	    
-	    btnForward = new JButton(new ImageIcon(getClass().getResource("/icons/arrow-up-2.png")));
+	    btnForward = new JButton(new ImageIcon(getClass().getResource("/icons/navigate_up.png")));
 	    btnForward.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Forward"));
 	    mnemonics.put(KeyEvent.VK_UP, evt -> forwardActionPerformed(evt));
 	    btnForward.addActionListener(evt -> forwardActionPerformed(evt));
 	    
-	    btnBack = new JButton(new ImageIcon(getClass().getResource("/icons/arrow-down-2.png")));
+	    btnBack = new JButton(new ImageIcon(getClass().getResource("/icons/navigate_down.png")));
 	    btnBack.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Back"));
 	    mnemonics.put(KeyEvent.VK_DOWN, evt -> backActionPerformed(evt));
 	    btnBack.addActionListener(evt -> backActionPerformed(evt));
 
-	    btnSaveAs = new JButton(new ImageIcon(getClass().getResource("/icons/document-save-3.png")));
+	    btnSaveAs = new JButton(new ImageIcon(getClass().getResource("/icons/save_as.png")));
 	    btnSaveAs.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.SaveAs"));
 	    btnSaveAs.addActionListener(evt -> saveAsActionPerformed(evt));
 
-	    btnLoad = new JButton(new ImageIcon(getClass().getResource("/icons/document-open-5.png")));
+	    btnLoad = new JButton(new ImageIcon(getClass().getResource("/icons/folder_open.png")));
 	    btnLoad.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Load"));
 	    btnLoad.addActionListener(evt -> loadActionPerformed(evt));	    
 	    
-	    btnChooseColor = new JButton(new ImageIcon(getClass().getResource("/icons/colorize-2.png")));
+	    btnChooseColor = new JButton(new ImageIcon(getClass().getResource("/icons/painters_palette.png")));
 	    btnChooseColor.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.ChooseColor"));
 	    mnemonics.put(KeyEvent.VK_C, evt -> chooseColorActionPerformed(evt));
 	    btnChooseColor.addActionListener(evt -> chooseColorActionPerformed(evt));
 	    
-	    btnRemove = new JButton(new ImageIcon(getClass().getResource("/icons/trash-empty-3.png")));
+	    btnRemove = new JButton(new ImageIcon(getClass().getResource("/icons/garbage.png")));
 	    btnRemove.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Remove"));
 	    mnemonics.put(KeyEvent.VK_X, evt -> removeActionPerformed(evt));
 	    btnRemove.addActionListener(evt -> removeActionPerformed(evt));
 	    
-	    btnStone = new JButton(new ImageIcon(getClass().getResource("/icons/kcmdf-3.png")));
+	    btnStone = new JButton(new ImageIcon(getClass().getResource("/icons/cubes.png")));
 	    btnStone.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Stone"));
 	    mnemonics.put(KeyEvent.VK_S, evt -> stoneActionPerformed(evt));
 	    btnStone.addActionListener(evt -> stoneActionPerformed(evt));
 	    
-	    btnRock = new JButton(new ImageIcon(getClass().getResource("/icons/kblackbox-3.png"))); 
+	    btnRock = new JButton(new ImageIcon(getClass().getResource("/icons/brickwall.png"))); 
 	    btnRock.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Rock"));
 	    mnemonics.put(KeyEvent.VK_R, evt -> rockActionPerformed(evt));
 	    btnRock.addActionListener(evt -> rockActionPerformed(evt));
 	    
-	    btnMark = new JButton(new ImageIcon(getClass().getResource("/icons/view-pim-notes.png"))); 
+	    btnMark = new JButton(new ImageIcon(getClass().getResource("/icons/gold_bar.png"))); 
 	    btnMark.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Mark"));
 	    mnemonics.put(KeyEvent.VK_M, evt -> markActionPerformed(evt));
 	    btnMark.addActionListener(evt -> markActionPerformed(evt));
 	    
-	    btnEntrance = new JButton(new ImageIcon(getClass().getResource("/icons/im-user.png")));
+	    btnEntrance = new JButton(new ImageIcon(getClass().getResource("/icons/robot.png")));
 	    btnEntrance.setToolTipText(RobotLanguage.ROBOT.getString("Tooltip.Entrance"));
 	    mnemonics.put(KeyEvent.VK_E, evt -> entranceActionPerformed(evt));
 	    btnEntrance.addActionListener(evt -> entranceActionPerformed(evt));

@@ -7,6 +7,7 @@ import java.util.TreeSet;
 
 import de.lathanda.eos.common.interpreter.AbstractMachine;
 import de.lathanda.eos.common.interpreter.AbstractProgram;
+import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
 import de.lathanda.eos.common.interpreter.AutoCompleteType;
 import de.lathanda.eos.common.interpreter.ErrorInformation;
 import de.lathanda.eos.common.interpreter.InfoToken;
@@ -34,10 +35,10 @@ import de.lathanda.eos.interpreter.javacc.TokenMgrError;
  */
 public class Program implements AbstractProgram {
     private final static TreeMap<String, Type> guessTable = new TreeMap<>();
-    private final Sequence program;
+    private final Sequence program;    
     private final LinkedList<SubRoutine> sub;
-    private final LinkedList<UserClass> userclass;
-    private final LinkedList<Node> nodeList;
+    private final TreeMap<String, UserClass> userclass;
+    private final LinkedList<MarkedNode> nodeList;
     private final LinkedList<InfoToken> tokenList;
     private final Environment env;
     private final String source;
@@ -50,8 +51,8 @@ public class Program implements AbstractProgram {
         this.prettyPrinter = new PrettyPrinter("");    	
         this.source = "";
         sub = new LinkedList<>();
-        userclass = new LinkedList<>();
-        env = new Environment();
+        userclass = new TreeMap<>();
+        env = new Environment(this);
         nodeList = new LinkedList<>();
         tokenList = new LinkedList<>();
     }
@@ -61,8 +62,8 @@ public class Program implements AbstractProgram {
         this.prettyPrinter = new PrettyPrinter(source);    	
         this.source = source;
         sub = new LinkedList<>();
-        userclass = new LinkedList<>();
-        env = new Environment();
+        userclass = new TreeMap<>();
+        env = new Environment(this);
         nodeList = new LinkedList<>();
         tokenList = new LinkedList<>();
     }
@@ -75,6 +76,11 @@ public class Program implements AbstractProgram {
 			throw new TranslationException(handleParseException(pe));
 		} catch (TokenMgrError ex) {
 			throw new TranslationException(new CompilerError("Token.Error", ex.getLocalizedMessage()));
+		} catch (NumberFormatException nfe) {
+			throw new TranslationException(new CompilerError("Number.Error", nfe.getLocalizedMessage()));			
+		} catch (Throwable t) {
+			t.printStackTrace();
+			throw new TranslationException(new CompilerError("UnknownError", t.getLocalizedMessage()));			
 		}
     }
     public void add(Sequence s) {
@@ -84,15 +90,15 @@ public class Program implements AbstractProgram {
         sub.add(s);
     }
     public void add(UserClass u) {
-    	userclass.add(u);
+    	userclass.put(u.getName(), u);
     }
-    public void addNode(Node node) {
+    public void addNode(MarkedNode node) {
         nodeList.add(node);
     }
     public void addToken(SourceToken token) {
         tokenList.add(token);
     }
-    public LinkedList<Node> getNodeList() {
+    public LinkedList<MarkedNode> getNodeList() {
         return nodeList;
     }
     public LinkedList<InfoToken> getTokenList() {
@@ -104,12 +110,12 @@ public class Program implements AbstractProgram {
     }
     public void merge(Program subprogram, Marker marker) {
     	//override all debugging markers
-    	for(Node n:subprogram.nodeList) {
+    	for(MarkedNode n:subprogram.nodeList) {
     		n.setMarker(marker);
     	}
     	this.program.append(subprogram.program);
     	this.sub.addAll(subprogram.sub);
-    	this.userclass.addAll(subprogram.userclass);
+    	this.userclass.putAll(subprogram.userclass);
     	this.nodeList.addAll(subprogram.nodeList);
     }
     public LinkedList<ProgramUnit> getSubPrograms() {
@@ -125,14 +131,14 @@ public class Program implements AbstractProgram {
     public void compile(Machine m) throws Exception {
         env.resetAll();
         //first scan, resolve types
-        for(UserClass uc : userclass) {
-        	uc.registerUserClass(env);
-        }
-        for(SubRoutine s : sub) {
+        for(UserClass uc : userclass.values()) { //prepare user types
+        	uc.bind(env);
+        } 
+        for(SubRoutine s : sub) { //register all sub routines
             s.registerSub(env);
         }
         
-        for(UserClass uc : userclass) {
+        for(UserClass uc : userclass.values()) { //finish user types
         	uc.resolveNamesAndTypes(env);
         } 
         
@@ -149,9 +155,12 @@ public class Program implements AbstractProgram {
         }
         
         //second scan produce commands
+        for(UserClass uc : userclass.values()) { //compile user types
+        	uc.compile();
+        } 
         ArrayList<Command> ops = new ArrayList<>();
         if (env.getAutoWindow()) {
-            ops.add(new CreateVariable(ReservedVariables.WINDOW, Type.getWindow().getMType()));
+            ops.add(new CreateVariable(ReservedVariables.WINDOW, SystemType.getWindow().getMType()));
         }
         program.compile(ops, env.getAutoWindow());
         m.setProgram(ops);
@@ -161,7 +170,7 @@ public class Program implements AbstractProgram {
             //methods can, procedures cannot.
             s.compile(ops, s.getGlobalAccess() && env.getAutoWindow());
             m.addUserFunction(new MProcedure(s.getSignature(), ops, s.getGlobalAccess()));
-        }
+        }        
     }    
     public LinkedList<ErrorInformation> getErrors() {
         return env.getErrors();
@@ -176,8 +185,8 @@ public class Program implements AbstractProgram {
     	return type;
     }
     private Type seekTypeSemantical(int position) {
-    	Node target = null;
-    	for(Node node : nodeList) {
+    	MarkedNode target = null;
+    	for(MarkedNode node : nodeList) {
     		if (node.getMarker().getEndPosition() < position) {
     			if (node instanceof Expression && node.getMarker().getEndPosition() == position - 1) {
     				target = node;
@@ -227,7 +236,7 @@ public class Program implements AbstractProgram {
         for(SubRoutine s : sub) {
             res.append(s);
         }
-        for(UserClass uc : userclass) {
+        for(UserClass uc : userclass.values()) {
         	res.append(uc);
         }
         res.append(env);
@@ -245,6 +254,7 @@ public class Program implements AbstractProgram {
 			machine.reinit();
 			compile(machine);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new TranslationException(new CompilerError("Compile.Error", e.getLocalizedMessage()));
 		}
 	}
@@ -312,5 +322,39 @@ public class Program implements AbstractProgram {
 		}
 		sb.append(text.substring(a));
 		return sb.toString();
+	}
+	@Override
+	public LinkedList<AutoCompleteInformation> getClassAutoCompletes() {
+		LinkedList<AutoCompleteInformation> classInfos = new LinkedList<>();
+		classInfos.addAll(SystemType.getClassType().getAutoCompletes());
+		for(UserClass uc : userclass.values()) {
+			classInfos.add(uc.getAutoComplete());
+		}
+		return classInfos;
+	}
+	public Type getType(String name) {
+		Type t = SystemType.getInstanceByName(name);
+		if (t == null || t.isUnknown()) {
+			UserClass uc = userclass.getOrDefault(name, null);
+			if (uc != null) {
+				t = uc.getType();
+			} else {
+				uc = new UserClass(name);
+				userclass.put(name, uc);
+				t = uc.getType();
+			}
+		}
+		return t;
+	}
+	public UserClass createUserClass(String name) {
+		UserClass uc = userclass.getOrDefault(name, null);
+		if (uc != null) {
+			return uc;
+		} else {
+			uc = new UserClass(name);
+			userclass.put(name, uc);
+			return uc;
+		}
+		
 	}
 }

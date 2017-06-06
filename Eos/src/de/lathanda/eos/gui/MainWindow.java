@@ -194,14 +194,14 @@ public class MainWindow extends JFrame implements WindowListener {
         
         toolbarGroup.setLayout(new GridLayout(2,1)); 
         
-        btnSave.setIcon(new ImageIcon(getClass().getResource("/icons/document-save-3.png")));
+        btnSave.setIcon(new ImageIcon(getClass().getResource("/icons/floppy_disk.png")));
         btnSave.setToolTipText(GUI.getString("Menu.Save.Tooltip"));
         btnSave.setFocusable(false);
         btnSave.addActionListener(evt -> SaveActionPerformed(evt));
 
         mainToolbar.add(btnSave);
 
-        btnOpen.setIcon(new ImageIcon(getClass().getResource("/icons/document-open-5.png")));
+        btnOpen.setIcon(new ImageIcon(getClass().getResource("/icons/folder_open.png")));
         btnOpen.setToolTipText(GUI.getString("Menu.Open.Tooltip"));
         btnOpen.setFocusable(false);
         btnOpen.addActionListener(evt -> OpenActionPerformed(evt));
@@ -210,21 +210,21 @@ public class MainWindow extends JFrame implements WindowListener {
         mainToolbar.add(jSeparator2);
         toolbarGroup.add(mainToolbar);
 
-        btnCopy.setIcon(new ImageIcon(getClass().getResource("/icons/edit-copy-4.png")));
+        btnCopy.setIcon(new ImageIcon(getClass().getResource("/icons/copy.png")));
         btnCopy.setToolTipText(GUI.getString("Menu.Copy.Tooltip"));
         btnCopy.setFocusable(false);
         btnCopy.addActionListener(evt -> CopyActionPerformed(evt));
 
         mainToolbar.add(btnCopy);
 
-        btnCut.setIcon(new ImageIcon(getClass().getResource("/icons/edit-cut-4.png")));
+        btnCut.setIcon(new ImageIcon(getClass().getResource("/icons/cut.png")));
         btnCut.setToolTipText(GUI.getString("Menu.Cut.Tooltip"));
         btnCut.setFocusable(false);
         btnCut.addActionListener(evt -> CutActionPerformed(evt));
 
         mainToolbar.add(btnCut);
 
-        btnPaste.setIcon(new ImageIcon(getClass().getResource("/icons/edit-paste-4.png")));
+        btnPaste.setIcon(new ImageIcon(getClass().getResource("/icons/clipboard_paste.png")));
         btnPaste.setToolTipText(GUI.getString("Menu.Paste.Tooltip"));
         btnPaste.setFocusable(false);
         btnPaste.addActionListener(evt -> PasteActionPerformed(evt));
@@ -232,14 +232,14 @@ public class MainWindow extends JFrame implements WindowListener {
         mainToolbar.add(btnPaste);
         mainToolbar.add(jSeparator1);
 
-        btnUndo.setIcon(new ImageIcon(getClass().getResource("/icons/edit-undo-4.png")));
+        btnUndo.setIcon(new ImageIcon(getClass().getResource("/icons/undo.png")));
         btnUndo.setToolTipText(GUI.getString("Menu.Undo.Tooltip"));
         btnUndo.setFocusable(false);
         btnUndo.addActionListener(evt -> UndoActionPerformed(evt));
 
         mainToolbar.add(btnUndo);
 
-        btnRedo.setIcon(new ImageIcon(getClass().getResource("/icons/edit-redo-4.png")));
+        btnRedo.setIcon(new ImageIcon(getClass().getResource("/icons/redo.png")));
         btnRedo.setToolTipText(GUI.getString("Menu.Redo.Tooltip"));
         btnRedo.setFocusable(false);
         btnRedo.addActionListener(evt -> RedoActionPerformed(evt));
@@ -248,7 +248,7 @@ public class MainWindow extends JFrame implements WindowListener {
         
         mainToolbar.add(jSeparator3);
         
-        btnBreakpoint.setIcon(new ImageIcon(getClass().getResource("/icons/pictograms-road_signs-stop_sign.png")));
+        btnBreakpoint.setIcon(new ImageIcon(getClass().getResource("/icons/sign_stop.png")));
         btnBreakpoint.setToolTipText(GUI.getString("Tooltip.Breakpoint"));
         btnBreakpoint.setFocusable(false);
         btnBreakpoint.addActionListener(evt -> BreakpointActionPerformed(evt));
@@ -264,7 +264,7 @@ public class MainWindow extends JFrame implements WindowListener {
         
         mainToolbar.add(btnClassDoc);
         
-        btnHelp.setIcon(new ImageIcon(getClass().getResource("/icons/help-3.png")));
+        btnHelp.setIcon(new ImageIcon(getClass().getResource("/icons/question_and_answer.png")));
         btnHelp.setToolTipText(GUI.getString("Menu.Handbook.Tooltip"));
         btnHelp.setFocusable(false);
         btnHelp.addActionListener(evt -> HelpActionPerformed(evt));
@@ -293,35 +293,35 @@ public class MainWindow extends JFrame implements WindowListener {
         runToolbar.setRollover(true);
         toolbarGroup.add(runToolbar);
         
-        btnStart.setIcon(new ImageIcon(getClass().getResource("/icons/media-playback-start-3.png")));
+        btnStart.setIcon(new ImageIcon(getClass().getResource("/icons/media_play.png")));
         btnStart.setToolTipText(GUI.getString("Tooltip.Start"));
         btnStart.setFocusable(false);
         btnStart.addActionListener(evt -> StartActionPerformed(evt));
 
         runToolbar.add(btnStart);
 
-        btnSingleStep.setIcon(new ImageIcon(getClass().getResource("/icons/media-skip-forward-3.png")));
+        btnSingleStep.setIcon(new ImageIcon(getClass().getResource("/icons/media_end.png")));
         btnSingleStep.setToolTipText(GUI.getString("Tooltip.SingleStep"));
         btnSingleStep.setFocusable(false);
         btnSingleStep.addActionListener(evt -> SingleStepActionPerformed(evt));
 
         runToolbar.add(btnSingleStep);
 
-        btnPause.setIcon(new ImageIcon(getClass().getResource("/icons/media-playback-pause-3.png")));
+        btnPause.setIcon(new ImageIcon(getClass().getResource("/icons/media_pause.png")));
         btnPause.setToolTipText(GUI.getString("Tooltip.Pause"));
         btnPause.setFocusable(false);
         btnPause.addActionListener(evt -> PauseActionPerformed(evt));
 
         runToolbar.add(btnPause);
 
-        btnStop.setIcon(new ImageIcon(getClass().getResource("/icons/media-playback-stop-3.png")));
+        btnStop.setIcon(new ImageIcon(getClass().getResource("/icons/media_stop.png")));
         btnStop.setToolTipText(GUI.getString("Tooltip.Stop"));
         btnStop.setFocusable(false);
         btnStop.addActionListener(evt -> StopActionPerformed(evt));
 
         runToolbar.add(btnStop);
 
-        btnSkip.setIcon(new ImageIcon(getClass().getResource("/icons/media-seek-forward-3.png")));
+        btnSkip.setIcon(new ImageIcon(getClass().getResource("/icons/media_fast_forward.png")));
         btnSkip.setToolTipText(GUI.getString("Tooltip.Skip"));
         btnSkip.setFocusable(false);
         btnSkip.addActionListener(evt -> SkipActionPerformed(evt));

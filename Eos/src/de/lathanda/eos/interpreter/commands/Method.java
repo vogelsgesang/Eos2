@@ -3,6 +3,7 @@ package de.lathanda.eos.interpreter.commands;
 import java.lang.reflect.InvocationTargetException;
 
 import de.lathanda.eos.interpreter.Command;
+import de.lathanda.eos.interpreter.MObject;
 import de.lathanda.eos.interpreter.MType;
 import de.lathanda.eos.interpreter.Machine;
 import de.lathanda.eos.interpreter.exceptions.NullAccessException;
@@ -33,7 +34,12 @@ public class Method extends Command {
         	throw new NullAccessException();
         }
         try {
-        	Object result = method.invoke(target, args);
+        	Object result;
+        	if (target instanceof MObject) {
+        		result = method.invoke(((MObject)target).getJavaObject(), args);
+        	} else {
+        		result = method.invoke(target, args);
+        	}
         	if (result != null) {
         		m.push(result);
         	}

@@ -31,11 +31,11 @@ public class MethodType {
      * @param originalName
      * @throws NoSuchMethodException
      */
-    public MethodType(Type target, Type[] parameters, Type ret, String name, String originalName) throws NoSuchMethodException {
+    public MethodType(SystemType target, SystemType[] parameters, Type ret, String name, String originalName) throws NoSuchMethodException {
 		this.parameters = parameters;
 		Class<?>[] parametersClass = new Class<?>[parameters.length];
 		for(int i = 0; i < parameters.length; i++) {
-			parametersClass[i] = this.parameters[i].convertToClass();
+			parametersClass[i] = parameters[i].convertToClass();
 		}
 		this.method = target.convertToClass().getMethod(name, parametersClass);
 		this.ret = ret;
@@ -66,11 +66,11 @@ public class MethodType {
      * @param originalName
      * @throws NoSuchMethodException
      */
-    public MethodType(Class<?> target, Type[] parameters, Type ret, String name, String originalName) throws NoSuchMethodException {
+    public MethodType(Class<?> target, SystemType[] parameters, Type ret, String name, String originalName) throws NoSuchMethodException {
 		this.parameters = parameters;
 		Class<?>[] parametersClass = new Class<?>[parameters.length];
 		for(int i = 0; i < parameters.length; i++) {
-			parametersClass[i] = this.parameters[i].convertToClass();
+			parametersClass[i] = parameters[i].convertToClass();
 		}
 		this.method = target.getMethod(name, parametersClass);
 		this.ret = ret;
@@ -81,7 +81,7 @@ public class MethodType {
     public static MethodType getSystemFunction(String originalName, int args) {
     	return systemFunctions.get(createSignature(originalName, args));
     }
-    public static void registerSystemFunction(Class<?> target, Type[] parameters, Type ret, String name, String originalName ) throws NoSuchMethodException {
+    public static void registerSystemFunction(Class<?> target, SystemType[] parameters, Type ret, String name, String originalName ) throws NoSuchMethodException {
     	systemFunctions.put(
     			createSignature(originalName, parameters.length), 
     			new MethodType(target, parameters, ret, name, originalName)
@@ -140,5 +140,8 @@ public class MethodType {
     		para[i] = parameters[i].getMType();
     	}
     	return para;
+	}
+	public boolean isNative() {
+		return method != null;
 	}
 }

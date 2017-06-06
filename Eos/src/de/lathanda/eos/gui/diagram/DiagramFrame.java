@@ -49,7 +49,7 @@ public class DiagramFrame extends JFrame implements WindowListener {
         diagramToolbar.setFloatable(false);
         diagramToolbar.setRollover(true);
 
-        btnClipboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/document-export-4.png"))); // NOI18N
+        btnClipboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/clipboard.png"))); // NOI18N
         btnClipboard.setFocusable(false);
         btnClipboard.addActionListener(evt -> btnClipboardActionPerformed(evt));
 

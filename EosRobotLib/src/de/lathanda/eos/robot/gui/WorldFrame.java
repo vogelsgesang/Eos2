@@ -29,8 +29,8 @@ public class WorldFrame extends JFrame {
         this.setIconImage(LOGO);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
-        //TODO use grafic card dependen factory and/or
-        //resolve gl errors in order to use alternativ renderer
+        //TODO use graphic card dependent factory and/or
+        //resolve gl errors in order to use alternative renderer
         view = new WorldPanelOpenGLNoShader(world);
         
         setLocation(0, 0);

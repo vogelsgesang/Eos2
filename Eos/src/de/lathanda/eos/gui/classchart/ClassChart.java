@@ -15,6 +15,7 @@ import javax.swing.event.ListSelectionListener;
 import de.lathanda.eos.common.gui.BackgroundCompiler;
 import static de.lathanda.eos.common.gui.GuiConstants.GUI;
 import de.lathanda.eos.gui.diagram.Diagram;
+import de.lathanda.eos.interpreter.parsetree.SystemType;
 import de.lathanda.eos.interpreter.parsetree.Type;
 
 public class ClassChart extends Diagram implements ListSelectionListener {
@@ -56,7 +57,7 @@ public class ClassChart extends Diagram implements ListSelectionListener {
 		repaint();
 	}
 	private void update() {
-		variableList.addAll(Type.getAll());
+		variableList.addAll(SystemType.getAll());
 		for(Type t:variableList) {
 			classModel.addElement(t.getName());
 		}
