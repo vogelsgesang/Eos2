@@ -330,7 +330,7 @@ public class MainWindow extends JFrame implements WindowListener {
 
         sliderSpeed.setValue(10);
         sliderSpeed.setFocusable(false);
-        sliderSpeed.setBorder(BorderFactory.createTitledBorder(BorderFactory.createTitledBorder(""), GUI.getString("Run.Speed.Slider"), TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", 0, 12)));
+        sliderSpeed.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), GUI.getString("Run.Speed.Slider"), TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", 0, 12)));
         sliderSpeed.setPreferredSize(new java.awt.Dimension(400, 48));
         sliderSpeed.addChangeListener(evt -> sliderSpeedStateChanged(evt));
 
