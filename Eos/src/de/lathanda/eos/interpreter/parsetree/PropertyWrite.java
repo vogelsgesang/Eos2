@@ -36,7 +36,7 @@ public class PropertyWrite extends Node {
         if (isVariable) {
             ops.add(new StoreVariable(member));
         } else {
-            if (target != null) {
+            if (target != null && methodType != null) {
                 target.compile(ops, autoWindow);
                 ops.add(new Method(methodType.getParameters(), methodType.getMethod()));
             }

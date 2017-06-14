@@ -1,0 +1,6 @@
+klasse A erweitert B
+  x:Integer
+*klasse
+klasse B erweitert A
+  y:Integer
+*klasse

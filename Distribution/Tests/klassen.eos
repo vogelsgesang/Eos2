@@ -1,0 +1,23 @@
+a:A
+b:B
+c:C
+d:D
+a.x = 5
+b = c
+a = d
+a = b
+klasse A 
+  x:Integer
+*klasse
+klasse B erweitert A
+  y:Rechteck
+*klasse
+klasse C erweitert B
+ z:Kreis
+*klasse
+klasse D erweitert B
+ z:Dreieck
+*klasse
+klasse E erweitert Kreis
+  b:B
+*klasse

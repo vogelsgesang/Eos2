@@ -268,7 +268,17 @@
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod6">UserClass</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>"klasse" <A HREF="#prod8">Name</A> ( "erweitert" <A HREF="#prod8">Name</A> )? ( <A HREF="#prod5">Method</A> | <A HREF="#prod11">Declaration</A> )* "*klasse"</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>"klasse" <A HREF="#prod8">Name</A> ( "erweitert" <A HREF="#prod8">Name</A> )? ( <A HREF="#prod11">UserMethod</A> | <A HREF="#prod12">UserProperty</A> )* "*klasse"</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod11">UserMethod</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>"methode" <A HREF="#prod8">Name</A> ( <A HREF="#prod9">Parameters</A> )? ( ":" <A HREF="#prod10">Type</A> )? <A HREF="#prod2">Sequence</A> "*methode"</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod12">UserProperty</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod8">Name</A> ( "," <A HREF="#prod8">Name</A> )* ":" <A HREF="#prod10">Type</A></TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod5">Method</A></TD>
@@ -278,110 +288,110 @@
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod9">Parameters</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>"(" ( <A HREF="#prod12">Parameter</A> ( "," <A HREF="#prod12">Parameter</A> )* )? ")"</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>"(" ( <A HREF="#prod13">Parameter</A> ( "," <A HREF="#prod13">Parameter</A> )* )? ")"</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod12">Parameter</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod13">Parameter</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod8">Name</A> ( "," <A HREF="#prod8">Name</A> )* ":" <A HREF="#prod10">Type</A></TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod7">Import</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>"einf\u00fcgen" <A HREF="#prod13">File</A> ( "," <A HREF="#prod13">File</A> )* "*einf\u00fcgen"</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>"einf\u00fcgen" <A HREF="#prod14">File</A> ( "," <A HREF="#prod14">File</A> )* "*einf\u00fcgen"</TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod2">Sequence</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>( ( <A HREF="#prod14">Loop</A> | <A HREF="#prod15">IfElse</A> | <A HREF="#prod16">With</A> | <A HREF="#prod17">Statement</A> ) )*</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( ( <A HREF="#prod15">Loop</A> | <A HREF="#prod16">IfElse</A> | <A HREF="#prod17">With</A> | <A HREF="#prod18">Statement</A> ) )*</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod14">Loop</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod15">Loop</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>( "wiederhole" ( <A HREF="#prod18">RepeatForever</A> | <A HREF="#prod19">RepeatUntil</A> | <A HREF="#prod20">RepeatPreWhile</A> | <A HREF="#prod21">RepeatTimes</A> | <A HREF="#prod22">RepeatPostWhile</A> ) | <A HREF="#prod23">WhileDo</A> )</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( "wiederhole" ( <A HREF="#prod19">RepeatForever</A> | <A HREF="#prod20">RepeatUntil</A> | <A HREF="#prod21">RepeatPreWhile</A> | <A HREF="#prod22">RepeatTimes</A> | <A HREF="#prod23">RepeatPostWhile</A> ) | <A HREF="#prod24">WhileDo</A> )</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod15">IfElse</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod16">IfElse</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>"wenn" <A HREF="#prod24">Expression</A> "dann" <A HREF="#prod2">Sequence</A> ( "sonst" <A HREF="#prod2">Sequence</A> )? "*wenn"</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>"wenn" <A HREF="#prod25">Expression</A> "dann" <A HREF="#prod2">Sequence</A> ( "sonst" <A HREF="#prod2">Sequence</A> )? "*wenn"</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod16">With</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod17">With</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>"f\u00fcr" <A HREF="#prod24">Expression</A> <A HREF="#prod2">Sequence</A> "*f\u00fcr"</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>"f\u00fcr" <A HREF="#prod25">Expression</A> <A HREF="#prod2">Sequence</A> "*f\u00fcr"</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod18">RepeatForever</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod19">RepeatForever</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>"immer" <A HREF="#prod2">Sequence</A> "*wiederhole"</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod21">RepeatTimes</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod22">RepeatTimes</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod24">Expression</A> "mal" <A HREF="#prod2">Sequence</A> "*wiederhole"</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod25">Expression</A> "mal" <A HREF="#prod2">Sequence</A> "*wiederhole"</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod19">RepeatUntil</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod20">RepeatUntil</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>"bis" <A HREF="#prod24">Expression</A> <A HREF="#prod2">Sequence</A> "*wiederhole"</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>"bis" <A HREF="#prod25">Expression</A> <A HREF="#prod2">Sequence</A> "*wiederhole"</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod20">RepeatPreWhile</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod21">RepeatPreWhile</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>"solange" <A HREF="#prod24">Expression</A> <A HREF="#prod2">Sequence</A> "*wiederhole"</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>"solange" <A HREF="#prod25">Expression</A> <A HREF="#prod2">Sequence</A> "*wiederhole"</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod22">RepeatPostWhile</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod23">RepeatPostWhile</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod2">Sequence</A> "*wiederhole" "solange" <A HREF="#prod24">Expression</A></TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod2">Sequence</A> "*wiederhole" "solange" <A HREF="#prod25">Expression</A></TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod23">WhileDo</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod24">WhileDo</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>"solange" <A HREF="#prod24">Expression</A> "tue" <A HREF="#prod2">Sequence</A> "*solange"</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>"solange" <A HREF="#prod25">Expression</A> "tue" <A HREF="#prod2">Sequence</A> "*solange"</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod17">Statement</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod18">Statement</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod11">Declaration</A> | <A HREF="#prod25">Command</A> | <A HREF="#prod26">Breakpoint</A> | <A HREF="#prod27">Stop</A> )</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod26">Declaration</A> | <A HREF="#prod27">Command</A> | <A HREF="#prod28">Breakpoint</A> | <A HREF="#prod29">Stop</A> )</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod26">Breakpoint</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod28">Breakpoint</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>"haltepunkt"</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod27">Stop</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod29">Stop</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>"beenden"</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod11">Declaration</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod26">Declaration</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod8">Name</A> ( "," <A HREF="#prod8">Name</A> )* ":" <A HREF="#prod10">Type</A></TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod25">Command</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod27">Command</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod28">Function</A></TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod30">Function</A></TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>|</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod29">Assignment</A></TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod31">Assignment</A></TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>|</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod30">PropertyRead</A> ( "." <A HREF="#prod25">Command</A> )?</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod32">PropertyRead</A> ( "." <A HREF="#prod27">Command</A> )?</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod29">Assignment</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod31">Assignment</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod31">PropertyWrite</A> <A HREF="#prod32">AssignmentOperator</A> <A HREF="#prod24">Expression</A></TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod33">PropertyWrite</A> <A HREF="#prod34">AssignmentOperator</A> <A HREF="#prod25">Expression</A></TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod32">AssignmentOperator</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod34">AssignmentOperator</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>"="</TD>
 </TR>
@@ -391,82 +401,82 @@
 <TD ALIGN=LEFT VALIGN=BASELINE>":="</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod24">Expression</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod25">Expression</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod33">AndExpression</A> ( "oder" <A HREF="#prod33">AndExpression</A> )*</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod35">AndExpression</A> ( "oder" <A HREF="#prod35">AndExpression</A> )*</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod33">AndExpression</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod35">AndExpression</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod34">EqualityExpression</A> ( "und" <A HREF="#prod34">EqualityExpression</A> )*</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod36">EqualityExpression</A> ( "und" <A HREF="#prod36">EqualityExpression</A> )*</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod34">EqualityExpression</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod36">EqualityExpression</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod35">RelationalExpression</A> ( "=" <A HREF="#prod35">RelationalExpression</A> | "&lt;&gt;" <A HREF="#prod35">RelationalExpression</A> )?</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod37">RelationalExpression</A> ( "=" <A HREF="#prod37">RelationalExpression</A> | "&lt;&gt;" <A HREF="#prod37">RelationalExpression</A> )?</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod35">RelationalExpression</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod37">RelationalExpression</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod36">AdditiveExpression</A> ( "&lt;" <A HREF="#prod36">AdditiveExpression</A> | "&gt;" <A HREF="#prod36">AdditiveExpression</A> | "&lt;=" <A HREF="#prod36">AdditiveExpression</A> | "&gt;=" <A HREF="#prod36">AdditiveExpression</A> )?</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod38">AdditiveExpression</A> ( "&lt;" <A HREF="#prod38">AdditiveExpression</A> | "&gt;" <A HREF="#prod38">AdditiveExpression</A> | "&lt;=" <A HREF="#prod38">AdditiveExpression</A> | "&gt;=" <A HREF="#prod38">AdditiveExpression</A> )?</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod36">AdditiveExpression</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod38">AdditiveExpression</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod37">MultiplicativeExpression</A> ( "+" <A HREF="#prod37">MultiplicativeExpression</A> | "-" <A HREF="#prod37">MultiplicativeExpression</A> )*</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod39">MultiplicativeExpression</A> ( "+" <A HREF="#prod39">MultiplicativeExpression</A> | "-" <A HREF="#prod39">MultiplicativeExpression</A> )*</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod37">MultiplicativeExpression</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod39">MultiplicativeExpression</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod38">UnaryExpression</A> ( "*" <A HREF="#prod38">UnaryExpression</A> | "/" <A HREF="#prod38">UnaryExpression</A> )*</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod40">UnaryExpression</A> ( "*" <A HREF="#prod40">UnaryExpression</A> | "/" <A HREF="#prod40">UnaryExpression</A> )*</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod38">UnaryExpression</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod40">UnaryExpression</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>( "-" <A HREF="#prod39">Pow</A> | "nicht" <A HREF="#prod39">Pow</A> | <A HREF="#prod39">Pow</A> )</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( "-" <A HREF="#prod41">Pow</A> | "nicht" <A HREF="#prod41">Pow</A> | <A HREF="#prod41">Pow</A> )</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod39">Pow</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod41">Pow</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod40">PrimaryExpression</A> ( "^" <A HREF="#prod39">Pow</A> )? )</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod42">PrimaryExpression</A> ( "^" <A HREF="#prod41">Pow</A> )? )</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod40">PrimaryExpression</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod42">PrimaryExpression</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod41">Literal</A> | <A HREF="#prod28">Function</A> | <A HREF="#prod30">PropertyRead</A> | "(" <A HREF="#prod24">Expression</A> ")" ) ( <A HREF="#prod42">PostPrimaryExpression</A> )?</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod43">Literal</A> | <A HREF="#prod30">Function</A> | <A HREF="#prod32">PropertyRead</A> | "(" <A HREF="#prod25">Expression</A> ")" ) ( <A HREF="#prod44">PostPrimaryExpression</A> )?</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod42">PostPrimaryExpression</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod44">PostPrimaryExpression</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>( "." ( <A HREF="#prod28">Function</A> | <A HREF="#prod30">PropertyRead</A> ) )+</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( "." ( <A HREF="#prod30">Function</A> | <A HREF="#prod32">PropertyRead</A> ) )+</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod30">PropertyRead</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod32">PropertyRead</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod8">Name</A> | "ergebnis" | "selbst" )</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod31">PropertyWrite</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod33">PropertyWrite</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod8">Name</A> | "ergebnis" )</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod28">Function</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod30">Function</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod8">Name</A> <A HREF="#prod43">Arguments</A></TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod8">Name</A> <A HREF="#prod45">Arguments</A></TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod43">Arguments</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod45">Arguments</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>"(" ( <A HREF="#prod24">Expression</A> ( "," <A HREF="#prod24">Expression</A> )* )? ")"</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>"(" ( <A HREF="#prod25">Expression</A> ( "," <A HREF="#prod25">Expression</A> )* )? ")"</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod41">Literal</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod43">Literal</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod44">IntNumber</A> | <A HREF="#prod45">DoubleNumber</A> | <A HREF="#prod46">Text</A> | <A HREF="#prod47">BooleanLiteral</A> | <A HREF="#prod48">Color</A> | <A HREF="#prod49">LineStyle</A> | <A HREF="#prod50">FillStyle</A> | <A HREF="#prod51">Alignment</A> | <A HREF="#prod52">ColorLiteral</A> )</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod46">IntNumber</A> | <A HREF="#prod47">DoubleNumber</A> | <A HREF="#prod48">Text</A> | <A HREF="#prod49">BooleanLiteral</A> | <A HREF="#prod50">Color</A> | <A HREF="#prod51">LineStyle</A> | <A HREF="#prod52">FillStyle</A> | <A HREF="#prod53">Alignment</A> | <A HREF="#prod54">ColorLiteral</A> )</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod47">BooleanLiteral</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod49">BooleanLiteral</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>"wahr"</TD>
 </TR>
@@ -476,27 +486,27 @@
 <TD ALIGN=LEFT VALIGN=BASELINE>"falsch"</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod48">Color</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod50">Color</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>( "gelb" | "rot" | "gr\u00fcn" | "blau" | "wei\u00df" | "schwarz" | "braun" | "hellblau" | "hellgr\u00fcn" | "grau" | "hellgrau" )</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod52">ColorLiteral</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod54">ColorLiteral</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>( ( &lt;COLOR_LITERAL_RGB&gt; ) | ( &lt;COLOR_LITERAL_RGBA&gt; ) )</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod49">LineStyle</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod51">LineStyle</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>( "gestrichelt" | "durchgezogen" | "gepunktelt" | "gestrichpunktelt" | "unsichtbar" )</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod50">FillStyle</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod52">FillStyle</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>( "ausgemalt" | "schraffiert" | "kariert" | "durchsichtig" )</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod51">Alignment</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod53">Alignment</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>( "zentriert" | "linksb\u00fcndig" | "rechtsb\u00fcndig" | "obenb\u00fcndig" | "untenb\u00fcndig" )</TD>
 </TR>
@@ -511,27 +521,27 @@
 <TD ALIGN=LEFT VALIGN=BASELINE>&lt;IDENTIFIER&gt;</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod13">File</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod14">File</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod53">TextRaw</A></TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod55">TextRaw</A></TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod46">Text</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod48">Text</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod53">TextRaw</A></TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod55">TextRaw</A></TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod53">TextRaw</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod55">TextRaw</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>( &lt;STRING_LITERAL1&gt; | &lt;STRING_LITERAL2&gt; )</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod44">IntNumber</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod46">IntNumber</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>&lt;INTEGER_LITERAL&gt;</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod45">DoubleNumber</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod47">DoubleNumber</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>&lt;FLOATING_POINT_LITERAL&gt;</TD>
 </TR>

@@ -86,7 +86,9 @@ public class Ellipse extends FilledFigure {
     @Override
 	public void getAttributes(LinkedList<Attribut> attributes) {
     	super.getAttributes(attributes);
-    	attributes.add(new Attribut("radiusx", radiusX));
-        attributes.add(new Attribut("radiusy", radiusY));
+    	attributes.add(new Attribut("centerx", getCenterX()));
+        attributes.add(new Attribut("centery", getCenterY()));        
+    	attributes.add(new Attribut("radiusx", getRadiusX()));
+        attributes.add(new Attribut("radiusy", getRadiusY()));
 	}    
 }

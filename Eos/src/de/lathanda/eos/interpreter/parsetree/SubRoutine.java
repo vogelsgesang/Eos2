@@ -1,6 +1,5 @@
 package de.lathanda.eos.interpreter.parsetree;
 
-import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
 import de.lathanda.eos.common.interpreter.ProgramUnit;
 import de.lathanda.eos.interpreter.Command;
 import de.lathanda.eos.interpreter.ReservedVariables;
@@ -111,10 +110,5 @@ public class SubRoutine extends Node implements ProgramUnit {
 	@Override
 	public String getLabel() {
 		return name;
-	}
-
-	public AutoCompleteInformation getAutoComplete() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

@@ -29,11 +29,10 @@ import javax.swing.JToolBar;
 public class ViewFrame extends JFrame {
     private static final long serialVersionUID = 8808554555627848478L;
     private static final ResourceBundle VIEW   = ResourceBundle.getBundle("text.view");
-    private static final ImageIcon ZOOM_IN     = loadIcon(VIEW.getString("View.Icon.ZoomIn"));
-    private static final ImageIcon ZOOM_OUT    = loadIcon(VIEW.getString("View.Icon.ZoomOut"));
-    private static final ImageIcon ZOOM_100    = loadIcon(VIEW.getString("View.Icon.Zoom100"));
-    private static final Image     LOGO        = loadImage(VIEW.getString("View.Icon.Logo"));
-    
+    private static final ImageIcon ZOOM_IN     = loadIcon("icons/document_zoom_in.png");
+    private static final ImageIcon ZOOM_OUT    = loadIcon("icons/document_zoom_out.png");
+    private static final ImageIcon ZOOM_100    = loadIcon("icons/document_view.png");
+    private static final Image     LOGO        = loadImage("icon/eos.png");
     private ViewPanel view;
     private final JToolBar toolbar;
     private final JButton zoomIn;

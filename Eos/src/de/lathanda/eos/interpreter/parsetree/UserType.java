@@ -6,16 +6,21 @@ import java.util.TreeMap;
 import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
 import de.lathanda.eos.interpreter.MClass;
 import de.lathanda.eos.interpreter.MType;
+import de.lathanda.eos.interpreter.exceptions.CyclicStorageException;
 
 import static de.lathanda.eos.interpreter.ReservedVariables.*;
 
 public class UserType extends Type {
 	private String supCls = null;
 	private Type supType = null;
-	private TreeMap<String, SubRoutine> usermethods = new TreeMap<>();
-	private TreeMap<String, Declaration> userproperties = new TreeMap<>();
+	private TreeMap<String, Method> usermethods = new TreeMap<>();
+	private TreeMap<String, Property> userproperties = new TreeMap<>();
 	private boolean isAbstract = false;
 	private MClass mtype;
+	/**
+	 * marker for cyclic storage check
+	 */
+	private boolean checked = false;	
 	public UserType(String id) {
 		super(id, id);
 		inherits.add(this);
@@ -33,24 +38,44 @@ public class UserType extends Type {
 			mtype.setSuper(supType.getMType());
 			inherits.addAll(supType.inherits);
 		}
-		for (SubRoutine s : usermethods.values()) {
+		for (Method s : usermethods.values()) {
 			s.createMethodType(env);
 			methods.put(s.getSignature(), s.getMethodType(env));			
 		}
-		for (Declaration s : userproperties.values()) {
+		for (Property s : userproperties.values()) {
 			for(String name:s.getNames()) {
-				getProperty.put(name, new MethodType(GET_PREFIX, new Type[]{}, s.getType()));
-				setProperty.put(name, new MethodType(SET_PREFIX, new Type[]{s.getType()}, SystemType.VOID));
+				getProperty.put(name, new MethodType(GET_PREFIX, new Type[]{}, s.getPropertyType()));
+				setProperty.put(name, new MethodType(SET_PREFIX, new Type[]{s.getPropertyType()}, SystemType.VOID));
 			}					
 		}
 	}
+	public void checkCyclicStorage() throws CyclicStorageException {
+		if (checked) return; 
+		checkCyclicStorageInternal();
+	}
+	private void checkCyclicStorageInternal() throws CyclicStorageException {
+		if (checked) {
+			throw new CyclicStorageException(id);
+		}
+		checked = true;
+		checkCyclicStorageInternal(supType);
+		for( Property prop : userproperties.values()) {
+			checkCyclicStorageInternal(prop.getPropertyType());
+		}
+		
+	}
+	private void checkCyclicStorageInternal(Type t) throws CyclicStorageException {
+		if (t != null && t instanceof UserType) {
+			((UserType)t).checkCyclicStorageInternal();
+		}
+	}	
 	@Override
 	public LinkedList<AutoCompleteInformation> getAutoCompletes() {
 		LinkedList<AutoCompleteInformation> aci = (supCls == null)?new LinkedList<>():supType.getAutoCompletes();
-		for(Declaration p:userproperties.values()) {
-			aci.add(p.getAutoComplete());
+		for(Property p:userproperties.values()) {
+			aci.addAll(p.getAutoCompletes());
 		}
-		for(SubRoutine m:usermethods.values()) {
+		for(Method m:usermethods.values()) {
 			aci.add(m.getAutoComplete());
 		}
 		return aci;
@@ -81,17 +106,17 @@ public class UserType extends Type {
 		return isAbstract;
 	}
 
-	public void addProperty(Declaration prop) {
+	public void addProperty(Property prop) {
 		for(String name:prop.getNames()) {
 			userproperties.put(name, prop);
 		}		
 	}
 
-	public void addMethod(SubRoutine meth) {
+	public void addMethod(Method meth) {
 		usermethods.put(meth.getName(), meth);
 	}
 
 	public MClass getMClass() {
 		return mtype;
-	}
+	}	
 }

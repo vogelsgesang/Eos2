@@ -61,8 +61,8 @@ public abstract class LineFigure extends Figure {
     @Override
 	public void getAttributes(LinkedList<Attribut> attributes) {
     	super.getAttributes(attributes);    	
-        attributes.add(new Attribut("linecolor", line.getColor()));
-        attributes.add(new Attribut("linestyle", line.getLineStyle()));
-        attributes.add(new Attribut("drawwidth", line.getDrawWidth()));
+        attributes.add(new Attribut("bordercolor", line.getColor()));
+        attributes.add(new Attribut("borderstyle", line.getLineStyle()));
+        attributes.add(new Attribut("borderwidth", line.getDrawWidth()));
 	} 
 }

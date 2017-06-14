@@ -79,7 +79,6 @@ public class Program implements AbstractProgram {
 		} catch (NumberFormatException nfe) {
 			throw new TranslationException(new CompilerError("Number.Error", nfe.getLocalizedMessage()));			
 		} catch (Throwable t) {
-			t.printStackTrace();
 			throw new TranslationException(new CompilerError("UnknownError", t.getLocalizedMessage()));			
 		}
     }
@@ -134,6 +133,10 @@ public class Program implements AbstractProgram {
         for(UserClass uc : userclass.values()) { //prepare user types
         	uc.bind(env);
         } 
+        for(UserClass uc : userclass.values()) { //check for storage cycles
+        	uc.checkCyclicStorage();
+        } 
+        
         for(SubRoutine s : sub) { //register all sub routines
             s.registerSub(env);
         }
@@ -254,7 +257,6 @@ public class Program implements AbstractProgram {
 			machine.reinit();
 			compile(machine);
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new TranslationException(new CompilerError("Compile.Error", e.getLocalizedMessage()));
 		}
 	}

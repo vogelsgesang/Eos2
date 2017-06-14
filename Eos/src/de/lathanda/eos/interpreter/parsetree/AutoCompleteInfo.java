@@ -6,10 +6,12 @@ import de.lathanda.eos.common.interpreter.AutoCompleteType;
 class AutoCompleteInfo implements AutoCompleteInformation {
 	private String name;
 	private AutoCompleteType t;
+	private int type;
 	
-	public AutoCompleteInfo(String name, AutoCompleteType t) {
+	public AutoCompleteInfo(String name, AutoCompleteType t, int type) {
 		this.name = name;
 		this.t = t;
+		this.type = type;
 	}
 
 	@Override
@@ -24,7 +26,7 @@ class AutoCompleteInfo implements AutoCompleteInformation {
 
 	@Override
 	public int getType() {
-		return CLASS;
+		return type;
 	}
 
 	@Override
@@ -44,12 +46,11 @@ class AutoCompleteInfo implements AutoCompleteInformation {
 
 	@Override
 	public String getSort() {
-		return "@" + name;
+		return PREFIX[type] + name;
 	}
 
 	@Override
 	public String getTemplate() {
 		return name;
-	}
-	
+	}	
 }

@@ -1,0 +1,301 @@
+<classes>
+  <class id="alignment" de="ausrichtung" en="alignment">
+  </class>
+  <class id="boolean" de="boolean" en="boolean">
+  </class>
+  <class id="color" de="farbe" en="color">
+  </class>
+  <class id="real" de="real" en="real">
+  </class>
+  <class id="fillstyle" de="füllart" en="fillstyle">
+  </class>
+  <class id="integer" de="integer" en="integer">
+  </class>
+  <class id="grafic" de="grafik" en="grafic">
+  </class>
+  <class id="linestyle" de="linienart, randart" en="linestyle">
+  </class>
+  <class id="linefigure" de="strichfigur" en="linefigure">
+  </class>
+  <class id="window" de="fenster" en="window">
+  </class>
+  <class id="triangle" de="dreieck" en="triangle">
+  </class>
+  <class id="textfield" de="textfeld" en="alignment">
+  </class>
+  <class id="square" de="quadrat" en="square">
+  </class>
+  <class id="rectangle" de="rechteck" en="rectangle">
+  </class>
+  <class id="plotter" de="turtle" en="plotter">
+  </class>
+  <class id="string" de="string, zeichenkette" en="string">
+  </class>
+  <class id="line" de="linie" en="line">
+  </class>
+  <class id="group" de="gruppe" en="group">
+  </class>
+  <class id="filledfigure" de="gefülltefigur" en="filledfigure">
+  </class>
+  <class id="figure" de="figur" en="figure" extends="">
+  <attribute de="x" en="x" read=>
+  </class>
+  <class id="ellipse" de="ellipse" en="ellipse">
+  </class>
+  <class id="circle" de="kreis" en="circle">
+  </class>
+</classes>
+<functions>
+  <function parameters=1 de="round" en="round" target="round,real,integer" class="de.lathanda.eos.interpreter.SystemFunctions">
+    <tooltip>
+    </tooltip>
+    <help>
+    </help>
+  </function>
+  <function parameters=1 de="trunc" en="trunc" target="floor,real,integer" class="de.lathanda.eos.interpreter.SystemFunctions">
+    <tooltip>
+    </tooltip>
+    <help>
+    </help>
+  </function>
+  <function parameters=2 de="zufall" en="random" target="random,integer,integer,integer" class="de.lathanda.eos.interpreter.SystemFunctions">
+    <tooltip>
+    </tooltip>
+    <help>
+    </help>
+  </function>
+  <function parameters=1 de="abs" en="abs" target="abs,real,real" class="de.lathanda.eos.interpreter.SystemFunctions">
+    <tooltip>
+    </tooltip>
+    <help>
+    </help>
+  </function>
+  <function parameters=1 de="sqrt" en="sqrt" target="sqrt,real,real" class="de.lathanda.eos.interpreter.SystemFunctions">
+    <tooltip>
+    </tooltip>
+    <help>
+    </help>
+  </function>
+  <function parameters=1 de="sin" en="sin" target="sin,real,real" class="de.lathanda.eos.interpreter.SystemFunctions">
+    <tooltip>
+    </tooltip>
+    <help>
+    </help>
+  </function>
+  <function parameters=1 de="cos" en="cos" target="cos,real,real" class="de.lathanda.eos.interpreter.SystemFunctions">
+    <tooltip>
+    </tooltip>
+    <help>
+    </help>
+  </function>
+  <function parameters=1 de="tan" en="tan" target="tan,real,real" class="de.lathanda.eos.interpreter.SystemFunctions">
+    <tooltip>
+    </tooltip>
+    <help>
+    </help>
+  </function>
+  <function parameters=1 de="arctan" en="arctan" target="arctan,real,real" class="de.lathanda.eos.interpreter.SystemFunctions">
+    <tooltip>
+    </tooltip>
+    <help>
+    </help>
+  </function>
+  <function parameters=1 de="arcsin" en="arcsin" target="arcsin,real,real" class="de.lathanda.eos.interpreter.SystemFunctions">
+    <tooltip>
+    </tooltip>
+    <help>
+    </help>
+  </function>
+  <function parameters=1 de="arccos" en="arccos" target="arccos,real,real" class="de.lathanda.eos.interpreter.SystemFunctions">
+    <tooltip>
+    </tooltip>
+    <help>
+    </help>
+  </function>
+  <function parameters=2 de="phi" en="phi" target="phi,real,real,real" class="de.lathanda.eos.interpreter.SystemFunctions">
+    <tooltip>
+    </tooltip>
+    <help>
+    </help>
+  </function>
+  <function parameters=2 de="r" en="r" target="r,real,real,real" class="de.lathanda.eos.interpreter.SystemFunctions">
+    <tooltip>
+    </tooltip>
+    <help>
+    </help>
+  </function>
+</functions>
+<templates>
+  <template de="Endlosschleife" en="infinite loop">
+  <de>
+    wiederhole immer
+    
+    *wiederhole
+  </de>
+  <en>
+    repeat forever
+    
+    *repeat  
+  </en>
+  </template>
+  <template de="Zählschleife" en="counting loop">
+  <de>
+    wiederhole Anzahl mal
+    
+    *wiederhole  
+  </de>
+  <en>
+    repeat count times
+    
+    *repeat  
+  </en>
+  </template> 
+  <template de="Bedingte Schleife" en="conditional loop">
+  <de>
+    wiederhole solange Bedingung
+    
+    *wiederhole
+  </de>
+  <en>
+    repeat while condition
+    
+    *repeat
+  </en>
+  </template> 
+  <template de="Bedingte Anweisung" en="conditional statement">
+  <de>
+    wenn Bedingung dann
+    
+    *wenn
+  </de>
+  <en>
+    if condition then
+    
+    *if
+  </en>
+  </template>  
+  <template de="Alternative Anweisungen" en="alternative statement">
+  <de>
+    wenn Bedingung dann
+    
+    sonst
+    
+    *wenn
+  </de>
+  <en>
+    if condition then
+    
+    else
+    
+    *if
+  </en>
+  </template> 
+  <template de="Schleife mit Endbedingung" en="loop with condition at its end">
+  <de>
+    wiederhole
+    
+    *wiederhole solange Bedingung
+  </de>
+  <en>
+    repeat
+    
+    *repeat while condition
+  </en>
+  </template> 
+  <template de="Runden" en="round">
+  <de>
+    round(Zahl)
+  </de>
+  <en>
+    round(number)
+  </en>
+  </template> 
+  <template de="Abrunden" en="floor">
+  <de>
+    trunc(Zahl)
+  </de>
+  <en>
+    trunc(number)
+  </en>
+  </template> 
+  <template de="Betrag" en="absolute value">
+  <de>
+    abs(Zahl)
+  </de>
+  <en>
+    abs(number)
+  </en>
+  </template> 
+  <template de="Wurzel" en="square root">
+  <de>
+    sqrt(Zahl)
+  </de>
+  <en>
+    sqrt(number)
+  </en>
+  </template> 
+  <template de="Sinus" en="sinus">
+  <de>
+    sin(Winkel)
+  </de>
+  <en>
+    sin(angle)
+  </en>
+  </template> 
+  <template de="Kosinus" en="cosinus">
+  <de>
+    cos(Winkel)
+  </de>
+  <en>
+    cos(angle)
+  </en>
+  </template> 
+  <template de="Tangens" en="Tangens">
+  <de>
+    tan(Winkel)
+  </de>
+  <en>
+    tan(angle)
+  </en>
+  </template> 
+  <template de="Umkehrsinus" en="inverse sinus">
+  <de>
+    arcsin(Wert)
+  </de>
+  <en>
+    arcsin(value)
+  </en>
+  </template> 
+  <template de="Umkehrkosinus" en="inverse cosinus">
+  <de>
+    arccos(Wert)
+  </de>
+  <en>
+    arccos(value)
+  </en>
+  </template>  
+  <template de="Polarkoordinate Winkel" en="polar coordinate angle">
+  <de>
+    phi(x,y)
+  </de>
+  <en>
+    phi(x,y)
+  </en>
+  </template> 
+  <template de="Polarkoordinate Abstand" en="polar coordinate distance">
+  <de>
+    r(x,y)
+  </de>
+  <en>
+    r(x,y)
+  </en>
+  </template> 
+  <template de="Zufall" en="random">
+  <de>
+    zufall(von, bis)
+  </de>
+  <en>
+    random(from, to)
+  </en>
+  </template> 
+</templates>

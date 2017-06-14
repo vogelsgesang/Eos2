@@ -136,11 +136,11 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 	 * @throws BadLocationException
 	 */
 	public void startClass(AbstractProgram program, int position) throws BadLocationException {
-
+		if (program == null) return;
 		startPosition = position;
 		lastPosition = position;
 		for(AutoCompleteInformation aci:program.getClassAutoCompletes()) {
-			if (aci.getType() != AutoCompleteInformation.PRIVATE) {				
+			if (aci != null && aci.getType() != AutoCompleteInformation.PRIVATE) {				
 				choiceItems.add(aci);
 			}
 		}

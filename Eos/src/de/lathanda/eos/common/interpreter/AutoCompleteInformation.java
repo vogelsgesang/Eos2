@@ -5,13 +5,13 @@ import javax.swing.ImageIcon;
 import de.lathanda.eos.base.ResourceLoader;
 
 public interface AutoCompleteInformation extends Comparable<AutoCompleteInformation> {
-	final static ImageIcon[] ICON = new ImageIcon[]{
+	final static ImageIcon[] ICON = {
    		 ResourceLoader.loadIcon("icons/method.png"),
    		 ResourceLoader.loadIcon("icons/attribut.png"),
    		 ResourceLoader.loadIcon("icons/class.png"),
    		 ResourceLoader.loadIcon("icons/attribut.png"),
     };
-
+	final static char[] PREFIX = {	'@','%','!','$'	};
 	final int METHOD = 0;
 	final int PROPERTY = 1;
 	final int CLASS = 2;

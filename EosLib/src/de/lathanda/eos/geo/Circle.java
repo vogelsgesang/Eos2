@@ -63,6 +63,8 @@ public class Circle extends FilledFigure {
     @Override
  	public void getAttributes(LinkedList<Attribut> attributes) {
     	super.getAttributes(attributes);
+    	attributes.add(new Attribut("centerx", getCenterX()));
+        attributes.add(new Attribut("centery", getCenterY()));         
         attributes.add(new Attribut("radius", radius));
 	}   
 }

@@ -163,5 +163,9 @@ public class Rectangle extends FilledFigure {
     	super.getAttributes(attributes);
     	attributes.add(new Attribut("width", getWidth()));
         attributes.add(new Attribut("height", getHeight()));
+    	attributes.add(new Attribut("left", getLeft()));
+    	attributes.add(new Attribut("top", getTop()));
+        attributes.add(new Attribut("right", getRight()));
+        attributes.add(new Attribut("bottom", getBottom()));
 	} 
 }

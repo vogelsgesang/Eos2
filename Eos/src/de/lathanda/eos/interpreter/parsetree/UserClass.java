@@ -2,7 +2,6 @@ package de.lathanda.eos.interpreter.parsetree;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-
 import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
 import de.lathanda.eos.interpreter.Command;
 import de.lathanda.eos.interpreter.MClass;
@@ -14,6 +13,7 @@ import de.lathanda.eos.interpreter.commands.LoadProperty;
 import de.lathanda.eos.interpreter.commands.LoadVariable;
 import de.lathanda.eos.interpreter.commands.StoreProperty;
 import de.lathanda.eos.interpreter.commands.StoreVariable;
+import de.lathanda.eos.interpreter.exceptions.CyclicStorageException;
 
 /**
  * Speichert und behandelt Benutzerdefinierte Klassen
@@ -21,12 +21,15 @@ import de.lathanda.eos.interpreter.commands.StoreVariable;
  * @author Peter (Lathanda) Schneider
  */
 public class UserClass extends MarkedNode {
-	private final LinkedList<SubRoutine> meths  = new LinkedList<>();
-	private final LinkedList<Declaration> props = new LinkedList<>();
+	private final LinkedList<Method> meths  = new LinkedList<>();
+	private final LinkedList<Property> props = new LinkedList<>();
 	private final String name;
 	private String sup;
 	private Self self;
 
+	/** 
+	 * @param name Name der Klasse
+	 */
 	public UserClass(String name) {
 		this.name = name;
 		sup = null;
@@ -36,11 +39,11 @@ public class UserClass extends MarkedNode {
 	public void setSuperClass(String name) {
 		sup = name;
 	}
-	public void addDeclaration(Declaration prop) {
+	public void addProperty(Property prop) {
 		props.add(prop);		
 	}
 
-	public void addMethod(SubRoutine meth) {
+	public void addMethod(Method meth) {
 		meths.add(meth);
 	}
 	public String getName() {
@@ -53,31 +56,34 @@ public class UserClass extends MarkedNode {
 	public void bind(Environment env) {
 		self.bind(env);
 	}
+	public void checkCyclicStorage() throws CyclicStorageException {
+		self.ut.checkCyclicStorage();
+	}
 
 	public void compile() throws Exception {
 		//create class
 		MClass cls = self.ut.getMClass();
 		//generate constructor
 		ArrayList<Command> initCmd = new ArrayList<>();
-		for(Declaration decl: props) {
-			for(String name:decl.getNames()) {
-				cls.addProperty(name, decl.getType().getMType());
+		for(Property p: props) {
+			for(String name:p.getNames()) {
+				cls.addProperty(name, p.getType().getMType());
 			}
-			decl.compile(initCmd, false);
+			p.compile(initCmd, false);
 			//create set get methods
-			compileProperty(cls, name, decl.getType().getMType());
+			compileProperty(cls, name, p.getType().getMType());
 		}
 		MProcedure init = new MProcedure(ReservedVariables.INIT_PROCEDURE, initCmd, false);		
 		cls.addMethod(init);
 		//generate methods
-		for(SubRoutine sub: meths ) {
+		for(Method m: meths ) {
 			ArrayList<Command> methCmd = new ArrayList<>();
 			//store self
 			methCmd.add(new DeclareVariable(ReservedVariables.SELF, cls));			
 			methCmd.add(new StoreVariable(ReservedVariables.SELF));
 			//compile method
-			sub.compile(methCmd,  false);
-			MProcedure meth = new MProcedure(sub.getSignature(), methCmd, false);
+			m.compile(methCmd,  false);
+			MProcedure meth = new MProcedure(m.getSignature(), methCmd, false);
 			cls.addMethod(meth);
 		}
 	}
@@ -101,18 +107,17 @@ public class UserClass extends MarkedNode {
 	}
 	
 	public void resolveNamesAndTypes(Environment env) {
+		env.storeVariables();
 		env.setVariableType(ReservedVariables.SELF, self.ut);
-		for(Declaration decl:props) {
-			decl.resolveNamesAndTypes(self, env);
+		for(Property p:props) {
+			p.resolveNamesAndTypes(self, env);
 		}
-		for(SubRoutine sub:meths) {
-			sub.resolveNamesAndTypes(self, env);
-		}	
+		for(Method m:meths) {
+			m.resolveNamesAndTypes(self, env);
+		}
+		env.restoreVariables();
 	}
 
-	public AutoCompleteInformation getAutoComplete() {
-		return new AutoCompleteInfo(name, self.getType());
-	}
 	private class Self extends Expression {
 		private UserType ut;
 		public Self() {
@@ -121,11 +126,11 @@ public class UserClass extends MarkedNode {
 		}
 		public void bind(Environment env) {
 			ut.setSuperclass(sup);		
-			for (SubRoutine s : meths) {
-				ut.addMethod(s);
+			for (Method m : meths) {
+				ut.addMethod(m);
 			}
-			for (Declaration d : props) {
-				ut.addProperty(d);
+			for (Property p : props) {
+				ut.addProperty(p);
 			}
 			ut.bind(env);
 		}
@@ -143,5 +148,9 @@ public class UserClass extends MarkedNode {
 		public String getLabel() {
 			return  createText("Class.Self");
 		}		
+	}
+
+	public AutoCompleteInformation getAutoComplete() {
+		return new AutoCompleteInfo(name, self.ut, AutoCompleteInformation.CLASS);
 	}
 }

@@ -363,19 +363,45 @@ SubRoutine Procedure( ) :
 }
 
 UserClass UserClass() :
-{ String name; String sup = null; UserClass cls; SubRoutine meth; Declaration prop;Sequence sequence;}
+{ String name; String sup = null; UserClass cls; Method meth; Property prop;Sequence sequence;}
 {
   {open();}
   {newlineInc();} "class" name = Name() ["extends" sup = Name()]
   {cls = program.createUserClass(name); cls.setSuperClass(sup);}
-  (meth = Method() {cls.addMethod(meth);} | prop = Declaration() {cls.addDeclaration(prop);} )* 
+  ({newline();} (meth = UserMethod(cls) {cls.addMethod(meth);} | prop = UserProperty(cls) {cls.addProperty(prop);}) )* 
   {newlineDec();} "*class"
   {
     close(cls);  
     return cls;
   } 
 }
-
+Method UserMethod( UserClass ut ) :
+{String name; Sequence sequence;Parameters parameters = null; Type ret =null;}
+{
+  {open();}
+  {newlineInc();} "method" name = Name() [parameters = Parameters()] [":" ret = Type()]
+    sequence = Sequence()
+  {newlineDec();} "*method"
+  {
+    Method method = new Method(name, parameters, sequence, ret, ut);
+    close(method); 
+    return method;
+  }
+}
+Property UserProperty( UserClass ut ) :
+{
+  String name;
+  Type type;
+  Property property = new Property(ut);
+}
+{
+  name = Name() {property.addName(name);} 
+  ("," name = Name() {property.addName(name); })* 
+  ":" type = Type() {property.setType(type);}
+  {
+    return property;
+  }
+}
 SubRoutine Method( ) :
 {String name; Sequence sequence;Parameters parameters = null; Type ret =null;}
 {

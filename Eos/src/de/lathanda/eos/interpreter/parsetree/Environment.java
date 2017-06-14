@@ -27,7 +27,7 @@ public class Environment {
     /*
      * currently valid global variables
      */
-    private final TreeMap<String,Type> global = new TreeMap<>();
+    private final TreeMap<String,Type> storedVariables = new TreeMap<>();   
     /*
      * user definied functions
      */
@@ -84,7 +84,7 @@ public class Environment {
         variables.clear();
         errors.clear();
         functions.clear();
-        global.clear();
+        storedVariables.clear();
         hasFigure = false;
         hasWindow = false;
     }
@@ -114,12 +114,12 @@ public class Environment {
     }
 
     public void storeVariables() {
-        global.putAll(variables);
+        storedVariables.putAll(variables);
     }
 
     public void restoreVariables() {
         variables.clear();
-        variables.putAll(global);
+        variables.putAll(storedVariables);
     }
 
 	@Override
@@ -133,7 +133,7 @@ public class Environment {
             res.append(v.getKey()).append(":").append(v.getValue()).append("\n");
         }
         res.append("global variable:\n");
-        for(Entry<String,Type> v : global.entrySet()) {
+        for(Entry<String,Type> v : storedVariables.entrySet()) {
             res.append(v.getKey()).append(":").append(v.getValue()).append("\n");
         }
         res.append("user defined functions:\n");

@@ -1,6 +1,5 @@
 package de.lathanda.eos.interpreter.parsetree;
 
-import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
 import de.lathanda.eos.interpreter.Command;
 import de.lathanda.eos.interpreter.ReservedVariables;
 import de.lathanda.eos.interpreter.commands.CreateVariable;
@@ -15,7 +14,6 @@ import java.util.List;
  * Speichert und behandelt eine Variablendeklaration.
  *
  * @author Peter (Lathanda) Schneider
- * @since 0.4
  */
 public class Declaration extends Node {
 	static {
@@ -26,9 +24,9 @@ public class Declaration extends Node {
 			System.exit(-1);
 		}
 	}
-    private static /*final*/ MethodType ADD_FIGURE; //java doesn't allow final here, but it should be final
-    private final List<String> names;
-    private Type vartype;
+	protected static /*final*/ MethodType ADD_FIGURE; //java doesn't allow final here, but it should be final
+    protected final List<String> names;
+    protected Type vartype;
 
     public Declaration() {
         this.names = new LinkedList<>();
@@ -84,7 +82,7 @@ public class Declaration extends Node {
         	env.setFigureExists();
         }
     }
-
+    
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
@@ -115,10 +113,4 @@ public class Declaration extends Node {
         text.append(":").append(vartype);
         return text.toString();        
     }
-
-	public AutoCompleteInformation getAutoComplete() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

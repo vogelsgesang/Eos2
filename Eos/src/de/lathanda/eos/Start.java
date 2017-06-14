@@ -9,9 +9,6 @@ import java.io.InputStreamReader;
 import java.util.Locale;
 
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-
 import de.lathanda.eos.common.Factory;
 import de.lathanda.eos.common.Stop;
 import de.lathanda.eos.common.interpreter.AbstractProgram;
@@ -36,16 +33,6 @@ public class Start {
 	 * @param args Befehlszeilenargumente
 	 */
 	public static void main(String args[]) {
-		try {
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (Exception e) {
-			// use default
-		}
 		Factory.setProgram(Program.class);
 		Runtime.getRuntime().addShutdownHook(new Stop());		
 		apply(args);
