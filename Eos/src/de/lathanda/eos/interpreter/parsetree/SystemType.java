@@ -15,6 +15,8 @@ import java.util.TreeMap;
  * @since 0.4
  */
 public class SystemType extends Type implements Comparable<Type>, AutoCompleteType {
+	protected final TreeMap<String, MethodType> getProperty = new TreeMap<>();
+	protected final TreeMap<String, MethodType> setProperty = new TreeMap<>();	
 	// type maps
 	private static final TreeMap<String, SystemType> nameType = new TreeMap<>();
 	private static final TreeMap<String, SystemType> idType = new TreeMap<>();
@@ -85,17 +87,19 @@ public class SystemType extends Type implements Comparable<Type>, AutoCompleteTy
 		}
 	}
 
-	public static void registerInherits(String id, String[] inherits) throws MissingTypeException {
+	public static void registerSuper(String id, String superType) throws MissingTypeException {
 		Type t = idType.get(id);
 		if (t == null) {
 			throw new MissingTypeException(id);
 		}
-		for (String sup : inherits) {
-			Type st = idType.get(sup);
+		if (superType != null) {
+			Type st = idType.get(superType);
 			if (st == null) {
-				throw new MissingTypeException(sup);
+				throw new MissingTypeException(superType);
 			}
-			t.inherits.add(st);
+			t.superType = st;
+		} else {
+			t.superType = null;
 		}
 	}
 
@@ -136,7 +140,44 @@ public class SystemType extends Type implements Comparable<Type>, AutoCompleteTy
 		return allTypes;
 	}
 
+	/**
+	 * Liefert die Methode, um ein Attribut zu setzen.
+	 * @param name Attributname
+	 * @return
+	 */
+	public MethodType getAssignProperty(String name) {
+		String key = name.toLowerCase();
+		if (setProperty.containsKey(key)) {
+			return setProperty.get(key);
+		} else if (superType != null) {
+			return superType.getAssignProperty(name);
+		} else {
+			return null;
+		}
+	}
 
+	/**
+	 * Liefert die Methode, um ein Attribut zu lesen.
+	 * @param name Attributname
+	 * @return
+	 */
+	public MethodType getReadProperty(String name) {
+		String key = name.toLowerCase();
+		if (getProperty.containsKey(key)) {
+			return getProperty.get(key);
+		} else if (superType != null) {
+			return superType.getReadProperty(name);
+		} else {
+			return null;
+		}
+	}
+	public void registerReadProperty(SystemMethodType mt) {
+		getProperty.put(mt.originalName, mt);
+	}
+
+	public void registerAssignProperty(SystemMethodType mt) {
+		setProperty.put(mt.originalName, mt);
+	}	
 	public Class<?> convertToClass() {
 		return cls;
 	}
@@ -147,21 +188,6 @@ public class SystemType extends Type implements Comparable<Type>, AutoCompleteTy
 
 	public interface ObjectSource {
 		public Object createObject();
-	}
-	public Type mergeTypes(Type right) {
-		if (this == right) {
-			return this;
-		} else {
-			if (right.inherits.contains(this)) {
-				if (this == INTEGER && right == REAL) {
-					return REAL;
-				} else {
-					return this;
-				}
-			} else {
-				return UNKNOWN;
-			}
-		}
 	}
 
 	public MType getMType() {

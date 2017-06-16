@@ -5,7 +5,6 @@ import de.lathanda.eos.interpreter.ReservedVariables;
 import de.lathanda.eos.interpreter.commands.CreateVariable;
 import de.lathanda.eos.interpreter.commands.DebugPoint;
 import de.lathanda.eos.interpreter.commands.LoadVariable;
-import de.lathanda.eos.interpreter.commands.Method;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.List;
 public class Declaration extends Node {
 	static {
 		try {
-			ADD_FIGURE = new MethodType(SystemType.getWindow(), new SystemType[]{SystemType.getFigure()}, Type.getVoid(), "addFigure", "");
+			ADD_FIGURE = new SystemMethodType(SystemType.getWindow(), new SystemType[]{SystemType.getFigure()}, Type.getVoid(), "addFigure", "");
 		}catch(NoSuchMethodException e) {
 			e.printStackTrace();
 			System.exit(-1);
@@ -50,16 +49,16 @@ public class Declaration extends Node {
     @Override
     public void compile(ArrayList<Command> ops, boolean autoWindow) throws Exception {
         ops.add(new DebugPoint(marker));
-        names.stream().forEach((name) -> {
+        for(String name : names) {
             if (autoWindow && vartype.inherits(SystemType.getFigure()) && !vartype.isAbstract()) {
                 ops.add(new CreateVariable(name, vartype.getMType()));
                 ops.add(new LoadVariable(name));
                 ops.add(new LoadVariable(ReservedVariables.WINDOW));
-                ops.add(new Method(ADD_FIGURE.getParameters(), ADD_FIGURE.getMethod()));
+                ADD_FIGURE.compile(ops, null, autoWindow);
             } else {
                 ops.add(new CreateVariable(name, vartype.getMType()));
             }
-        });
+        };
     }
 
     @Override

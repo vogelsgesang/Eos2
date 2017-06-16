@@ -54,7 +54,7 @@ public class Sequence extends Node implements ProgramSequence {
         for (Node instruction : sequence) {
             if (instruction.getType().isVoid()) {
                 //none void instruction would corrupt the parameter stack
-                //we can choose between adding an artifical consumer or to not compile the instruction
+                //we can choose between adding an artificial consumer or to not compile the instruction
                 //as this type of instruction has no effect, we do not compile it
                 instruction.compile(ops, autoWindow);            
             }

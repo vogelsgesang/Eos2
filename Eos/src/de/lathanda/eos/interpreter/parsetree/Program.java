@@ -21,6 +21,8 @@ import de.lathanda.eos.interpreter.Machine;
 import de.lathanda.eos.interpreter.PrettyPrinter;
 import de.lathanda.eos.interpreter.ReservedVariables;
 import de.lathanda.eos.interpreter.commands.CreateVariable;
+import de.lathanda.eos.interpreter.commands.DebugPoint;
+import de.lathanda.eos.interpreter.exceptions.DoubleClassDeclarationException;
 import de.lathanda.eos.interpreter.javacc.CommonParserConstants;
 import de.lathanda.eos.interpreter.javacc.EosParser;
 import de.lathanda.eos.interpreter.javacc.ParseException;
@@ -77,9 +79,12 @@ public class Program implements AbstractProgram {
 		} catch (TokenMgrError ex) {
 			throw new TranslationException(new CompilerError("Token.Error", ex.getLocalizedMessage()));
 		} catch (NumberFormatException nfe) {
-			throw new TranslationException(new CompilerError("Number.Error", nfe.getLocalizedMessage()));			
+			throw new TranslationException(new CompilerError("Number.Error", nfe.getLocalizedMessage()));
+		} catch (RuntimeException re) {
+			throw new TranslationException(new CompilerError("Generic.Error", re.getLocalizedMessage()));			
 		} catch (Throwable t) {
-			throw new TranslationException(new CompilerError("UnknownError", t.getLocalizedMessage()));			
+			t.printStackTrace();
+			throw new TranslationException(new CompilerError("UnknownError", t.getLocalizedMessage()));					
 		}
     }
     public void add(Sequence s) {
@@ -166,6 +171,7 @@ public class Program implements AbstractProgram {
             ops.add(new CreateVariable(ReservedVariables.WINDOW, SystemType.getWindow().getMType()));
         }
         program.compile(ops, env.getAutoWindow());
+        ops.add(new DebugPoint());
         m.setProgram(ops);
         for(SubRoutine s : sub) {
             ops = new ArrayList<>();
@@ -337,26 +343,27 @@ public class Program implements AbstractProgram {
 	public Type getType(String name) {
 		Type t = SystemType.getInstanceByName(name);
 		if (t == null || t.isUnknown()) {
-			UserClass uc = userclass.getOrDefault(name, null);
+			UserClass uc = userclass.getOrDefault(name.toLowerCase(), null);
 			if (uc != null) {
 				t = uc.getType();
 			} else {
 				uc = new UserClass(name);
-				userclass.put(name, uc);
+				userclass.put(name.toLowerCase(), uc);
 				t = uc.getType();
 			}
 		}
 		return t;
 	}
 	public UserClass createUserClass(String name) {
-		UserClass uc = userclass.getOrDefault(name, null);
-		if (uc != null) {
-			return uc;
-		} else {
-			uc = new UserClass(name);
-			userclass.put(name, uc);
-			return uc;
+		SystemType st = SystemType.getInstanceByName(name.toLowerCase());
+		if (st != null && !st.isUnknown()) {
+			throw new DoubleClassDeclarationException(name);
 		}
-		
+		UserClass uc = userclass.getOrDefault(name.toLowerCase(), null);
+		if (uc == null) {
+			uc = new UserClass(name);
+			userclass.put(name.toLowerCase(), uc);
+		}		
+		return uc;
 	}
 }

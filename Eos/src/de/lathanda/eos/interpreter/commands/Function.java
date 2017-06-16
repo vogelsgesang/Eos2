@@ -22,7 +22,7 @@ public class Function extends Command {
     @Override
     public boolean execute(Machine m) throws Exception {
         Object[] args = new Object[parameters.length];
-        for (int i = args.length; i-- > 0;) {
+        for (int i = 0; i < args.length; i++) {
             args[i] = m.pop();
             args[i] = parameters[i].checkAndCast(args[i]);
         }

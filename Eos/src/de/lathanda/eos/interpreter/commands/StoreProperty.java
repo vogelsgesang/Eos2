@@ -1,8 +1,10 @@
 package de.lathanda.eos.interpreter.commands;
 
 import de.lathanda.eos.interpreter.Command;
+import de.lathanda.eos.interpreter.MClass;
 import de.lathanda.eos.interpreter.MObject;
 import de.lathanda.eos.interpreter.Machine;
+import de.lathanda.eos.interpreter.parsetree.Property.Signature;
 
 /**
  * 
@@ -11,10 +13,10 @@ import de.lathanda.eos.interpreter.Machine;
  * @author Peter (Lathanda) Schneider
  */
 public class StoreProperty extends Command {
-	private String variable;
+	private final Signature variable;
 
-	public StoreProperty(String variable) {
-	        this.variable = variable;
+	public StoreProperty(MClass cls, String variable) {
+	        this.variable = new Signature(variable, cls.getName());
 	    }
 
 	@Override

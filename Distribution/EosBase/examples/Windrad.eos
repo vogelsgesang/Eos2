@@ -9,6 +9,7 @@ wiederhole 6 mal
 *wiederhole
 t.turtleSichtbarSetzen(falsch)
 g:Gruppe
+
 wiederhole 5 mal
   g.kopiere(t)
   g.drehen(60)

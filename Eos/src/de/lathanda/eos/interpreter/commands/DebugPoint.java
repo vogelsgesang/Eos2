@@ -19,6 +19,10 @@ public class DebugPoint extends Command {
     private final Marker marker;
     private boolean activeBreakpoint;
 
+    public DebugPoint() {
+        this.marker = new Marker();
+        activeBreakpoint = false;
+    }
     public DebugPoint(Marker marker) {
         this.marker = marker;
         activeBreakpoint = false;

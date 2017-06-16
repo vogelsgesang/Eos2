@@ -20,7 +20,7 @@ public class Method extends Node implements ProgramUnit {
 	private final Sequence sequence;
 	private final Parameters parameters;
 	private final Type returnType;
-	private MethodType methodType;
+	private UserMethodType methodType;
 	private final UserClass uc;
 
 	public Method(String name, Parameters parameters, Sequence sequence, Type returnType, UserClass uc) {
@@ -57,6 +57,7 @@ public class Method extends Node implements ProgramUnit {
 		if (returnType != null && !returnType.isVoid()) {
 			ops.add(new LoadVariable(ReservedVariables.RESULT));
 		}
+		methodType.createMProcedure(ops);
 	}
 
 	@Override
@@ -89,7 +90,7 @@ public class Method extends Node implements ProgramUnit {
 		if (returnType != null && returnType.isUnknown()) {
 			env.addError(marker, "UnknownType", returnType);
 		}
-		methodType = new MethodType(name, para, returnType);
+		methodType = new UserMethodType(name, para, returnType);
 	}
 
 	@Override
@@ -98,7 +99,6 @@ public class Method extends Node implements ProgramUnit {
 	}
 
 	public AutoCompleteInformation getAutoComplete() {
-		// TODO Auto-generated method stub
 		return new AutoCompleteInfo(name, uc.getType(), AutoCompleteInformation.METHOD);
 	}
 }

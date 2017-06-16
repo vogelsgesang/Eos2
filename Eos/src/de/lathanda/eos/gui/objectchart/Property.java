@@ -17,7 +17,11 @@ public class Property extends Unit {
 	public Property(String name, Object data) {
 		font = STANDARD_FONT;
 		value = Toolkit.formatValue(data);
-		this.name = name;
+		if (name != null) {
+			this.name = name;
+		} else {
+			this.name = "\uFFFD";
+		}		
 	}
 	@Override
 	public void drawUnit(Drawing d) {

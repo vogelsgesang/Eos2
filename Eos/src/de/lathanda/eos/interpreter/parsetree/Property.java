@@ -39,4 +39,29 @@ public class Property extends Declaration {
 	public Type getPropertyType() {
 		return vartype;
 	}
+	public static class Signature implements Comparable<Signature> {
+		public final String name;
+		public final String type;
+		
+		public Signature(String name, String type) {
+			super();
+			this.name = name;
+			this.type = type;
+		}
+
+		@Override
+		public int compareTo(Signature b) {
+			int a = b.type.compareTo(type);
+			if (a == 0) {
+				return b.name.compareTo(name);
+			} else {
+				return a;
+			}
+		}
+
+		@Override
+		public String toString() {
+			return type + "." + name;
+		}		
+	}
 }

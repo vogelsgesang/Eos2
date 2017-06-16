@@ -27,16 +27,8 @@ public interface ReservedVariables {
      * 1rt1, 1rt2 ....
      */
     String REPEAT_TIMES_INDEX = "1rt";
-    /**
-     * Name der Konstruktor Prozedur.
-     */
-    String INIT_PROCEDURE = "1new";
-    /**
-     * user property set prefix
-     */
-    String SET_PREFIX = "1set";
-    /**
-     * user property get prefix
-     */
-    String GET_PREFIX = "1get";
+
+    public static String createSignature(String originalName, int args) {
+    	return originalName.toLowerCase() + "(" + args + ")";
+    }    
 }

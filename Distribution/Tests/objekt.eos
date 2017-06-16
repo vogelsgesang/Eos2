@@ -1,0 +1,17 @@
+a:A
+b:B
+b.x = 5
+b.r = 4
+a = b
+a.x = 2
+a.y = 1
+//b = a //Fehler test
+
+klasse A
+  x:Integer
+  y:Integer
+*klasse
+klasse B erweitert A
+  r:Integer
+  x:Integer
+*klasse

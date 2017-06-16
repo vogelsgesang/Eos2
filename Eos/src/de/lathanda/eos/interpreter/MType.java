@@ -2,6 +2,8 @@ package de.lathanda.eos.interpreter;
 
 import java.util.TreeMap;
 
+import de.lathanda.eos.interpreter.parsetree.Property.Signature;
+
 public interface MType {
 	Object checkAndCast(Object obj);
 
@@ -9,10 +11,10 @@ public interface MType {
 
 	boolean isAbstract();
 
-	Object newInstance() throws Exception;
+	Object newInstance(Machine m) throws Exception;
 
-	Object createJavaObject() throws Exception;
+	Object createJavaObject(Machine m) throws Exception;
 
-	TreeMap<String, Variable> createProperties();
+	TreeMap<Signature, Variable> createProperties(Machine m) throws Exception;
 
 }

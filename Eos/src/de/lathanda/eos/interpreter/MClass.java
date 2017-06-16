@@ -4,6 +4,7 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import de.lathanda.eos.interpreter.exceptions.TypeMissMatchException;
+import de.lathanda.eos.interpreter.parsetree.Property.Signature;
 
 /**
  * Informationen über eine Benutzerdefinierte Klasse
@@ -26,7 +27,7 @@ public class MClass implements MType {
 		this.name = name;
 		isAbstract = false;
 	}
-	public void addMethod(MProcedure m) {
+	public void addMethod(MProcedure m) {	
 		methods.put(m.getSignature(), m);
 	}
 	public MProcedure getMethod(String signature) {
@@ -37,8 +38,15 @@ public class MClass implements MType {
 	}
 	@Override
 	public Object checkAndCast(Object obj) {
-		if (obj instanceof MObject && ((MObject)obj).getType() == this) {
-			return obj;
+		if (obj instanceof MObject) {
+			MType objType = ((MObject)obj).getType();
+			while (objType instanceof MClass) {
+				if (objType == this) {
+					return obj;
+				}
+				objType = ((MClass)objType).sup;
+			}
+			throw new TypeMissMatchException(name, ((MObject)obj).getType().toString());
 		} else if (sup != null) {
 			return sup.checkAndCast(obj);
 		} else {
@@ -61,20 +69,21 @@ public class MClass implements MType {
 	}
 
 	@Override
-	public Object newInstance() throws Exception {
-		return new MObject(this);
+	public Object newInstance(Machine m) throws Exception {
+		return new MObject(this, m);
 	}
-	@Override
-	public TreeMap<String, Variable> createProperties() {
-		TreeMap<String, Variable> prop = sup.createProperties();
+
+	public TreeMap<Signature, Variable> createProperties(Machine m) throws Exception {
+		TreeMap<Signature, Variable> prop = sup.createProperties(m);
 		for(Entry<String, MType> p:properties.entrySet()) {
-			prop.put(p.getKey(), new Variable(p.getValue(), p.getKey()));
+			Signature s = new Signature(p.getKey(), this.name);
+			prop.put(s, m.createInitVariable(p.getKey(), p.getValue()));
 		}
-		return prop;
+		return prop;		
 	}
-	@Override
-	public Object createJavaObject() throws Exception {
-		return sup.createJavaObject();
+
+	public Object createJavaObject(Machine m) throws Exception {
+		return sup.createJavaObject(m);
 	}
 	public void setSuper(MType sup) {
 		this.sup = sup;

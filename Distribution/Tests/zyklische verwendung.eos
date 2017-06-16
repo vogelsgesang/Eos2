@@ -1,0 +1,11 @@
+klasse A erweitert B
+ x:B 
+*klasse
+klasse B
+*klasse
+klasse C erweitert D
+  x:Integer
+*klasse
+klasse D
+ y:C
+*klasse

@@ -33,7 +33,6 @@ import de.lathanda.eos.interpreter.parsetree.SystemType.ObjectSource;
  * 
  *
  * @author Peter (Lathanda) Schneider
- * @since 0.9.7
  */
 public class EosLanguage /*extends Language*/ implements LanguageProvider {
 
@@ -54,9 +53,9 @@ public class EosLanguage /*extends Language*/ implements LanguageProvider {
    		lm.registerType("class", null, "", null, null);	
    		lm.registerType("#", null, lang.getString("#"), null, null);
    		lm.registerType("?", null, lang.getString("?"), null, null);
-   		lm.registerInherits("class", getInherits("class"));
-   		lm.registerInherits("#", getInherits("#"));
-   		lm.registerInherits("?", getInherits("?"));
+   		lm.registerSuper("class", getSuper("class"));
+   		lm.registerSuper("#", getSuper("#"));
+   		lm.registerSuper("?", getSuper("?"));
    		lm.setDefaultWindowName(lang.getString("windowname"));
    		
    		//create other classes
@@ -153,54 +152,54 @@ public class EosLanguage /*extends Language*/ implements LanguageProvider {
 		}
 	}
 
-	public String[] getInherits(String id) {
+	public String getSuper(String id) {
 		switch (id) {
 		case "alignment":
-			return new String[]{"alignment","string"};
+			return "string";
 		case "boolean":
-			return new String[]{"boolean","string"};
+			return "string";
 		case "color":
-			return new String[]{"color","string"};
+			return "string";
 		case "real":
-			return new String[]{"real","integer", "string"};
+			return "string";
 		case "fillstyle":
-			return new String[]{"fillstyle","string"};
+			return "string";
 		case "integer":
-			return new String[]{"integer","real","string"};
+			return "real";
 		case "linestyle":
-			return new String[]{"linestyle", "string"};
+			return "string";
 		case "linefigure":
-			return new String[]{"linefigure","figure", "string"};
+			return "figure";
 		case "window":
-			return new String[]{"window","string"};
+			return "string";
 		case "triangle":
-			return new String[]{"triangle","filledfigure","linefigure","figure","string"};
+			return "filledfigure";
 		case "textfield":
-			return new String[]{"textfield","rectangle","filledfigure","linefigure","figure","string"};
+			return "rectangle";
 		case "square":
-			return new String[]{"square","filledfigure","linefigure","figure","string"};
+			return "filledfigure";
 		case "rectangle":
-			return new String[]{"rectangle","filledfigure","linefigure","figure","string"};
+			return "filledfigure";
 		case "grafic":
-			return new String[]{"grafic","rectangle","filledfigure","linefigure","figure","string"};
+			return "rectangle";
 		case "string":
-			return new String[]{"string"};
+			return null;
 		case "plotter":
-			return new String[]{"plotter","figure","string"};
+			return "figure";
 		case "line":
-			return new String[]{"line","linefigure","figure","string"};
+			return "linefigure";
 		case "group":
-			return new String[]{"group","figure","string"};
+			return "figure";
 		case "filledfigure":
-			return new String[]{"filledfigure","linefigure","figure","string"};
+			return "linefigure";
 		case "figure":
-			return new String[]{"figure","string"};
+			return "string";
 		case "ellipse":
-			return new String[]{"ellipse","filledfigure","linefigure","figure","string"};
+			return "filledfigure";
 		case "circle":
-			return new String[]{"circle","filledfigure","linefigure","figure","string"};
+			return "filledfigure";
 		default:
-			return new String[]{id};
+			return null;
 		}
 	}
 	public Class<?> getClassById(String id) {

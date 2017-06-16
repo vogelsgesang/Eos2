@@ -22,8 +22,14 @@ public class ObjectCard extends Unit {
 		properties = new LinkedList<>();
 		LinkedList<Attribut> attr = new LinkedList<>();
 		readout.getAttributes(attr);
-		for(Attribut a : attr) {
-			properties.add(new Property(Unit.getName(a.name), a.value));
+		if (readout.translate()) {
+			for(Attribut a : attr) {
+				properties.add(new Property(Unit.getName(a.name), a.value));
+			}
+		} else {
+			for(Attribut a : attr) {
+				properties.add(new Property(a.name, a.value));
+			}
 		}
 	}
 	@Override

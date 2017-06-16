@@ -47,12 +47,12 @@ public class LejosLanguage extends Language implements LanguageProvider {
 		}
 	}
 
-	public String[] getInherits(String id) {
+	public String getSuper(String id) {
 		switch (id) {
 		case "carev3":
-			return new String[]{"carev3", "string"};
+			return "string";
 		default:
-			return new String[]{id};
+			return null;
 		}
 	}
 	public Class<?> getClassById(String id) {

@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Properties;
@@ -26,7 +25,8 @@ import de.lathanda.eos.common.interpreter.MissingTypeException;
 import de.lathanda.eos.gui.diagram.TextUnit;
 import de.lathanda.eos.gui.diagram.Unit;
 import de.lathanda.eos.gui.objectchart.UnitSource;
-import de.lathanda.eos.interpreter.parsetree.MethodType;
+import de.lathanda.eos.interpreter.parsetree.SystemFunctionType;
+import de.lathanda.eos.interpreter.parsetree.SystemMethodType;
 import de.lathanda.eos.interpreter.parsetree.SystemType;
 import de.lathanda.eos.interpreter.parsetree.Type;
 import de.lathanda.eos.interpreter.parsetree.SystemType.ObjectSource;
@@ -157,7 +157,7 @@ public class LanguageManager {
 	}
 
 	public String getLabel(String id) {
-		return labels.get(id);
+		return labels.getOrDefault(id, id);
 	}
 
 	public void registerUnit(UnitSource us, String classname) {
@@ -183,7 +183,7 @@ public class LanguageManager {
 	}
 
 	public String getName(String id) {
-		return names.get(id);
+		return names.getOrDefault(id, id);
 	}
 
 	public void registerAutoComplete(Properties res) {
@@ -214,7 +214,7 @@ public class LanguageManager {
 		for (String key : res.stringPropertyNames()) {
 			try {
 				AssignSignature signature = new AssignSignature(key, res.getProperty(key));
-				signature.target.registerAssignProperty(new MethodType(signature.target, signature.parameters,
+				signature.target.registerAssignProperty(new SystemMethodType(signature.target, signature.parameters,
 						signature.ret, signature.name, signature.originalName));
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null,
@@ -229,7 +229,7 @@ public class LanguageManager {
 		for (String key : res.stringPropertyNames()) {
 			try {
 				ReadSignature signature = new ReadSignature(key, res.getProperty(key));
-				signature.target.registerReadProperty(new MethodType(signature.target, signature.parameters,
+				signature.target.registerReadProperty(new SystemMethodType(signature.target, signature.parameters,
 						signature.ret, signature.name, signature.originalName));
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null,
@@ -244,7 +244,7 @@ public class LanguageManager {
 		for (String key : map_method.stringPropertyNames()) {
 			try {
 				MethodSignature signature = new MethodSignature(key, map_method.getProperty(key));
-				signature.target.registerMethod(new MethodType(signature.target, signature.parameters, signature.ret,
+				signature.target.registerMethod(new SystemMethodType(signature.target, signature.parameters, signature.ret,
 						signature.name, signature.originalName));
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null,
@@ -259,7 +259,7 @@ public class LanguageManager {
 		for (String key : res.stringPropertyNames()) {
 			try {
 				FunctionSignature signature = new FunctionSignature(key, res.getProperty(key));
-				MethodType.registerSystemFunction(target, signature.parameters, signature.ret, signature.name,
+				SystemFunctionType.registerSystemFunction(target, signature.parameters, signature.ret, signature.name,
 						signature.originalName);
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null,
@@ -274,12 +274,12 @@ public class LanguageManager {
 		SystemType.registerType(id, name, description, objSrc, cls);
 	}
 
-	public void registerInherits(String id, String[] inherits) {
+	public void registerSuper(String id, String sup) {
 		try {
-			SystemType.registerInherits(id, inherits);
+			SystemType.registerSuper(id, sup);
 		} catch (MissingTypeException e) {
 			JOptionPane.showMessageDialog(null,
-					"broken configuration\n" + id + " inherits " + Arrays.asList(inherits).toString(), "fatal error",
+					"broken configuration\n" + id + " inherits " + sup, "fatal error",
 					JOptionPane.OK_OPTION);
 			System.exit(-1);
 		}
@@ -388,7 +388,7 @@ public class LanguageManager {
 		}
 		// init classes
 		for (String id : map_class.stringPropertyNames()) {
-			lm.registerInherits(id, lp.getInherits(id));
+			lm.registerSuper(id, lp.getSuper(id));
 		}
 		String name = "";
 		name = lc.getString("map_method");

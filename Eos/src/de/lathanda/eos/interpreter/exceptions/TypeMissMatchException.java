@@ -8,12 +8,11 @@ import de.lathanda.eos.common.gui.Messages;
  * der Typprüfung einen Fehler macht oder die Konfiguration falsch ist.
  *
  * @author Peter (Lathanda) Schneider
- * @since 0.2
  */
 public class TypeMissMatchException extends RuntimeException {
     private static final long serialVersionUID = -1331782960608862330L;
-    String expected;
-    String found;
+    private final String expected;
+    private final String found;
     public TypeMissMatchException(String expected, String found) {
         this.expected = expected;
         this.found = found;

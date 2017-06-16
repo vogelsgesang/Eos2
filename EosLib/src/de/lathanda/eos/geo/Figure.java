@@ -135,11 +135,11 @@ public abstract class Figure implements Cloneable, Readout {
 
     public void rotate(double angle) {
         transform = transform.rotate(angle/180*Math.PI);
-        fireLayoutChanged();
+        fireDataChanged();
     }
     public void setRotation(double angle) {
         transform = transform.setAngle(angle/180*Math.PI);
-        fireLayoutChanged();
+        fireDataChanged();
     }
     public double getRotation() {
         return transform.getAngle()/Math.PI*180;

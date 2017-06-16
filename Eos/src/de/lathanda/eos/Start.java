@@ -41,6 +41,7 @@ public class Start {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, GUI.getString("Export.Error.Title"), e.getLocalizedMessage(),
 					JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
 		}		switch (mode) {
 		case EDITOR:
 			editorStart();

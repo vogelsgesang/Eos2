@@ -181,16 +181,19 @@ public class Machine implements AbstractMachine {
     }
 
     public void create(String variable, MType type) throws Exception {    	
-        Variable v = new Variable(type, variable);
+        Variable v = createInitVariable(variable, type);
+        context.memory.put(variable, v);
+    }
+    public Variable createInitVariable(String name, MType type) throws Exception {
+    	Variable v = new Variable(type, name);
         if (!type.isAbstract()) {
-        	v.set(type.newInstance());
+        	v.set(type.newInstance(this));
         	if (v.get() instanceof CleanupListener) {
         		gc.add((CleanupListener)v.get());
         	}
         }
-        context.memory.put(variable, v);
+        return v;
     }
-
     public void create(String variable, MType type, Object data) throws Exception {
         Variable v = new Variable(type, variable);
         v.set(data);

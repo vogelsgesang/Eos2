@@ -7,7 +7,6 @@ import de.lathanda.eos.common.gui.Messages;
  * nicht behebbarem Zustand befindet.
  *
  * @author Peter (Lathanda) Schneider
- * @since 0.9.5
  */
 public class ProgramTerminationException extends RuntimeException {
 	private static final long serialVersionUID = 693918237097929645L;

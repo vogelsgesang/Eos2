@@ -80,14 +80,14 @@ public class RobotLanguage extends Language implements LanguageProvider {
 		}
 	}
 
-	public String[] getInherits(String id) {
+	public String getSuper(String id) {
 		switch (id) {
 		case "robot":
-			return new String[]{"robot", "string"};
+			return "string";
 		case "world":
-			return new String[]{"world", "string"};
+			return "string";
 		default:
-			return new String[]{id};
+			return null;
 		}
 	}
 	public Class<?> getClassById(String id) {

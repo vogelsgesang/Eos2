@@ -2,7 +2,6 @@ package de.lathanda.eos.interpreter.parsetree;
 
 import de.lathanda.eos.interpreter.Command;
 import de.lathanda.eos.interpreter.ReservedVariables;
-import de.lathanda.eos.interpreter.commands.Method;
 import de.lathanda.eos.interpreter.commands.StoreVariable;
 import de.lathanda.eos.spi.LanguageManager;
 
@@ -12,7 +11,6 @@ import java.util.ArrayList;
  * Speichert und behandelt einen schreibenden Variablenzugriff.
  *
  * @author Peter (Lathanda) Schneider
- * @since 0.4
  */
 public class PropertyWrite extends Node {
 
@@ -37,8 +35,7 @@ public class PropertyWrite extends Node {
             ops.add(new StoreVariable(member));
         } else {
             if (target != null && methodType != null) {
-                target.compile(ops, autoWindow);
-                ops.add(new Method(methodType.getParameters(), methodType.getMethod()));
+                methodType.compile(ops, target, autoWindow);
             }
         }
     }

@@ -88,7 +88,7 @@ public class SubRoutine extends Node implements ProgramUnit {
 		}
 		return methodType;
 	}
-	public void createMethodType(Environment env) {
+	private void createMethodType(Environment env) {
 		if (methodType != null) {
 			return;
 		}
@@ -101,7 +101,7 @@ public class SubRoutine extends Node implements ProgramUnit {
 		if (returnType != null && returnType.isUnknown()) {
 			env.addError(marker, "UnknownType", returnType);
 		}
-		methodType = new MethodType(name, para, returnType);
+		methodType = new UserFunctionType(name, para, returnType);
 	}
 	public boolean getGlobalAccess() {
 		return globalAccess;

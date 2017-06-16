@@ -27,7 +27,7 @@ public class Arguments extends Node {
 
     @Override
     public void compile(ArrayList<Command> ops, boolean autoWindow) throws Exception {
-        for (int i = 0; i < arguments.size(); i++) {
+        for (int i = arguments.size(); i --> 0; ) {
             ops.add(new DebugPoint(arguments.get(i).getMarker()));
             arguments.get(i).compile(ops, autoWindow);
         }

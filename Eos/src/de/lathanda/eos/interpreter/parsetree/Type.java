@@ -3,6 +3,7 @@ package de.lathanda.eos.interpreter.parsetree;
 import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
 import de.lathanda.eos.common.interpreter.AutoCompleteType;
 import de.lathanda.eos.interpreter.MType;
+import de.lathanda.eos.interpreter.ReservedVariables;
 import de.lathanda.eos.spi.AutoCompleteEntry;
 
 
@@ -15,14 +16,12 @@ import java.util.TreeMap;
  *
  */
 public abstract class Type implements Comparable<Type>, AutoCompleteType {
-	protected final LinkedList<Type> inherits = new LinkedList<>();
+	protected Type superType;
 	// properties
 	protected final String id;
 	protected final String description;
 	
 	protected final TreeMap<String, MethodType> methods = new TreeMap<>();
-	protected final TreeMap<String, MethodType> getProperty = new TreeMap<>();
-	protected final TreeMap<String, MethodType> setProperty = new TreeMap<>();	
 	protected final LinkedList<AutoCompleteEntry> autocompletes = new LinkedList<>();
 	
 	protected static SystemType VOID;
@@ -63,7 +62,19 @@ public abstract class Type implements Comparable<Type>, AutoCompleteType {
 	public boolean isUnknown() {
 		return this == UNKNOWN;
 	}
-	public abstract Type mergeTypes(Type right);
+	public Type mergeTypes(Type right) {
+		if (this == right) {
+			return this;
+		} else if (right != null) {
+			if (this == INTEGER && right == REAL || this == REAL && right == INTEGER) {
+				return REAL;
+			} else {
+				return mergeTypes(right.superType);
+			}
+		} else {
+			return UNKNOWN;
+		}
+	}
 
 	public static SystemType getVoid() {
 		return VOID;
@@ -108,14 +119,7 @@ public abstract class Type implements Comparable<Type>, AutoCompleteType {
 	public void registerMethod(MethodType mt) {
 		methods.put(mt.getSignature(), mt);
 	}
-
-	public void registerReadProperty(MethodType mt) {
-		getProperty.put(mt.originalName, mt);
-	}
-
-	public void registerAssignProperty(MethodType mt) {
-		setProperty.put(mt.originalName, mt);
-	}	
+	
 	/**
 	 * Liefert die Methode zur Signature.
 	 * Die Signature ist der Name gefolgt von der Parameterzahl in Klammern
@@ -125,60 +129,49 @@ public abstract class Type implements Comparable<Type>, AutoCompleteType {
 	 * @return
 	 */
 	public MethodType getMethod(String originalName, int args) {
-		String key = MethodType.createSignature(originalName, args);
+		String key = ReservedVariables.createSignature(originalName, args);
 
-		for (Type t : inherits) {
-			if (t.methods.containsKey(key)) {
-				return t.methods.get(key);
-			}
+		if (methods.containsKey(key)) {
+			return methods.get(key);
+		} else  if (superType != null) {
+			return superType.getMethod(originalName, args);
+		} else {
+			return null;
 		}
-		return null;
 	}
 
-	/**
-	 * Liefert die Methode, um ein Attribut zu setzen.
-	 * @param name Attributname
-	 * @return
-	 */
-	public MethodType getAssignProperty(String name) {
-		String key = name.toLowerCase();
-		for (Type t : inherits) {
-			if (t.setProperty.containsKey(key)) {
-				return t.setProperty.get(key);
-			}
-		}
-		return null;
-	}
 
-	/**
-	 * Liefert die Methode, um ein Attribut zu lesen.
-	 * @param name Attributname
-	 * @return
-	 */
-	public MethodType getReadProperty(String name) {
-		String key = name.toLowerCase();
-		for (Type t : inherits) {
-			if (t.getProperty.containsKey(key)) {
-				return t.getProperty.get(key);
-			}
-		}
-		return null;
-	}
 	
 	public boolean inherits(Type b) {
-		return inherits.contains(b);
+		if (b == this) {
+			return true;
+		} else if (superType != null) {
+			return superType.inherits(b);
+		} else {
+			return false;
+		}
 	}	
 
 	public LinkedList<Type> getTypeList() {
-		return inherits;
+		LinkedList<Type> typelist = new LinkedList<Type>();
+		Type act = this;
+		while (act != null) {
+			typelist.add(act);
+			act = act.superType;
+		}
+		return typelist;
 	}	
 
 	public LinkedList<AutoCompleteInformation> getAutoCompletes() {
 		LinkedList<AutoCompleteInformation> completes = new LinkedList<>();
-		for (Type t : inherits) {
-			completes.addAll(t.autocompletes);
-		}
+		fillAutoCompletes(completes);
 		return completes;
+	}
+	protected void fillAutoCompletes(LinkedList<AutoCompleteInformation> list) {
+		list.addAll(autocompletes);
+		if (superType != null) {
+			superType.fillAutoCompletes(list);
+		}
 	}
 	
 	@Override
@@ -199,4 +192,6 @@ public abstract class Type implements Comparable<Type>, AutoCompleteType {
 	}
 	public abstract MType getMType();
 	public abstract boolean isAbstract();
+	public abstract MethodType getReadProperty(String name);
+	public abstract MethodType getAssignProperty(String name);
 }

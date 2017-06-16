@@ -3,6 +3,7 @@ package de.lathanda.eos.interpreter;
 import java.util.TreeMap;
 
 import de.lathanda.eos.interpreter.exceptions.TypeMissMatchException;
+import de.lathanda.eos.interpreter.parsetree.Property.Signature;
 import de.lathanda.eos.interpreter.parsetree.SystemType.ObjectSource;
 
 /**
@@ -58,17 +59,17 @@ public class MJavaClass implements MType {
 	}
 
 	@Override
-	public Object newInstance() throws InstantiationException, IllegalAccessException {
+	public Object newInstance(Machine m) throws InstantiationException, IllegalAccessException {
 		if (objSrc != null) {
 			return objSrc.createObject();
 		} else {
 			return null;
 		}
 	}
-	public Object createJavaObject() throws Exception {
-		return newInstance();
+	public Object createJavaObject(Machine m) throws Exception {
+		return newInstance(m);
 	}
-	public TreeMap<String, Variable> createProperties() {
+	public TreeMap<Signature, Variable> createProperties(Machine m) {
 		return new TreeMap<>();
 	}
 

@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.MessageFormat;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -35,7 +34,6 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.Scrollable;
 import javax.swing.WindowConstants;
-import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.undo.UndoManager;
@@ -330,7 +328,7 @@ public class MainWindow extends JFrame implements WindowListener {
 
         sliderSpeed.setValue(10);
         sliderSpeed.setFocusable(false);
-        sliderSpeed.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), GUI.getString("Run.Speed.Slider"), TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", 0, 12)));
+//        sliderSpeed.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), GUI.getString("Run.Speed.Slider"), TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", 0, 12)));
         sliderSpeed.setPreferredSize(new java.awt.Dimension(400, 48));
         sliderSpeed.addChangeListener(evt -> sliderSpeedStateChanged(evt));
 

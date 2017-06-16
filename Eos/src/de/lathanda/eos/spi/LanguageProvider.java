@@ -10,8 +10,8 @@ import de.lathanda.eos.interpreter.parsetree.SystemType.ObjectSource;
  */
 public interface LanguageProvider {
 	ObjectSource getObjectSource(String id);
-	default String[] getInherits(String id) {
-		return new String[]{id};
+	default String getSuper(String id) {
+		return null;
 	}
 	Class<?> getClassById(String id);
 	Class<?> getFunctionTarget();

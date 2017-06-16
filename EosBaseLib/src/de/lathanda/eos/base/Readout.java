@@ -27,4 +27,7 @@ public interface Readout {
 			this.value = value;
 		}
 	}
+	default boolean translate() {
+		return true;
+	}
 }

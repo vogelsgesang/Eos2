@@ -8,7 +8,6 @@ import de.lathanda.eos.common.gui.Messages;
  * Fehlern in der Konfiguration.
  *
  * @author Peter (Lathanda) Schneider
- * @since 0.2
  */
 public class MemoryAccessViolation extends RuntimeException {
     private static final long serialVersionUID = -2812099102982159089L;

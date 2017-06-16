@@ -1,18 +1,20 @@
 package de.lathanda.eos.interpreter.parsetree;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.TreeMap;
-
 import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
+import de.lathanda.eos.interpreter.Command;
 import de.lathanda.eos.interpreter.MClass;
+import de.lathanda.eos.interpreter.MProcedure;
 import de.lathanda.eos.interpreter.MType;
+import de.lathanda.eos.interpreter.ReservedVariables;
+import de.lathanda.eos.interpreter.commands.DeclareVariable;
+import de.lathanda.eos.interpreter.commands.StoreVariable;
 import de.lathanda.eos.interpreter.exceptions.CyclicStorageException;
-
-import static de.lathanda.eos.interpreter.ReservedVariables.*;
 
 public class UserType extends Type {
 	private String supCls = null;
-	private Type supType = null;
 	private TreeMap<String, Method> usermethods = new TreeMap<>();
 	private TreeMap<String, Property> userproperties = new TreeMap<>();
 	private boolean isAbstract = false;
@@ -20,33 +22,26 @@ public class UserType extends Type {
 	/**
 	 * marker for cyclic storage check
 	 */
-	private boolean checked = false;	
+	private boolean checked = false;
+	private boolean marked = false;
 	public UserType(String id) {
 		super(id, id);
-		inherits.add(this);
 		mtype = new MClass(id);
 	}
 	public void setSuperclass(String sup) {
 		this.supCls = sup;
 	}
 	public void bind(Environment env) {
-		if (supType == null && supCls != null) {
-			supType = env.getProgram().getType(supCls);
-			if (supType instanceof UserType) {
-				((UserType)supType).bind(env);
+		if (superType == null && supCls != null) {
+			superType = env.getProgram().getType(supCls);
+			if (superType instanceof UserType) {
+				((UserType)superType).bind(env);
 			}
-			mtype.setSuper(supType.getMType());
-			inherits.addAll(supType.inherits);
+			mtype.setSuper(superType.getMType());
 		}
 		for (Method s : usermethods.values()) {
 			s.createMethodType(env);
 			methods.put(s.getSignature(), s.getMethodType(env));			
-		}
-		for (Property s : userproperties.values()) {
-			for(String name:s.getNames()) {
-				getProperty.put(name, new MethodType(GET_PREFIX, new Type[]{}, s.getPropertyType()));
-				setProperty.put(name, new MethodType(SET_PREFIX, new Type[]{s.getPropertyType()}, SystemType.VOID));
-			}					
 		}
 	}
 	public void checkCyclicStorage() throws CyclicStorageException {
@@ -54,24 +49,25 @@ public class UserType extends Type {
 		checkCyclicStorageInternal();
 	}
 	private void checkCyclicStorageInternal() throws CyclicStorageException {
-		if (checked) {
+		if (marked) {
 			throw new CyclicStorageException(id);
 		}
-		checked = true;
-		checkCyclicStorageInternal(supType);
+		marked = true;
+		checkCyclicStorageInternal(superType);
 		for( Property prop : userproperties.values()) {
 			checkCyclicStorageInternal(prop.getPropertyType());
 		}
+		checked = true;
 		
 	}
 	private void checkCyclicStorageInternal(Type t) throws CyclicStorageException {
 		if (t != null && t instanceof UserType) {
-			((UserType)t).checkCyclicStorageInternal();
+			((UserType)t).checkCyclicStorage();
 		}
 	}	
 	@Override
 	public LinkedList<AutoCompleteInformation> getAutoCompletes() {
-		LinkedList<AutoCompleteInformation> aci = (supCls == null)?new LinkedList<>():supType.getAutoCompletes();
+		LinkedList<AutoCompleteInformation> aci = (supCls == null)?new LinkedList<>():superType.getAutoCompletes();
 		for(Property p:userproperties.values()) {
 			aci.addAll(p.getAutoCompletes());
 		}
@@ -79,21 +75,6 @@ public class UserType extends Type {
 			aci.add(m.getAutoComplete());
 		}
 		return aci;
-	}
-
-	@Override
-	public Type mergeTypes(Type right) {
-		if (right instanceof UserType) {
-			UserType r = (UserType)right;
-			while (r != null) {
-				if (r == this) {
-					return this;
-				} else {
-					r = (r.supType instanceof UserType)?(UserType)r.supType:null;
-				}
-			}
-		}
-		return Type.UNKNOWN;
 	}
 
 	@Override
@@ -118,5 +99,45 @@ public class UserType extends Type {
 
 	public MClass getMClass() {
 		return mtype;
-	}	
+	}
+	public void compile() throws Exception {		
+		//generate properties
+		for(Property p: userproperties.values()) {
+			for(String name:p.getNames()) {
+				mtype.addProperty(name, p.getPropertyType().getMType());
+			}
+		}
+		//generate methods
+		for(Method m: usermethods.values() ) {
+			ArrayList<Command> methCmd = new ArrayList<>();
+			//store self
+			methCmd.add(new DeclareVariable(ReservedVariables.SELF, mtype));			
+			methCmd.add(new StoreVariable(ReservedVariables.SELF));
+			//compile method
+			m.compile(methCmd,  false);
+			MProcedure meth = new MProcedure(m.getSignature(), methCmd, false);
+			mtype.addMethod(meth);
+		}	
+	}
+
+	@Override
+	public MethodType getReadProperty(String name) {
+		if (userproperties.containsKey(name)) {
+			return new UserReadProperty(this, name, userproperties.get(name));
+		} else if (superType != null){
+			return superType.getReadProperty(name);
+		} else {
+			return null;
+		}
+	}
+	@Override
+	public MethodType getAssignProperty(String name) {
+		if (userproperties.containsKey(name)) {
+			return new UserAssignProperty(this, name, userproperties.get(name));
+		} else if (superType != null){
+			return superType.getAssignProperty(name);
+		} else {
+			return null;
+		}
+	}
 }
