@@ -44,6 +44,7 @@ creative commons
             <node title = "Variables" html = "text/help/en/variables.html"/>
             <node title = "Conditional Expressions" html = "text/help/en/conditionalexpression.html"/>            
             <node title = "Loops" html = "text/help/en/loop.html"/>
+            <node title = "Classes" html = "text/help/en/classes.html"/>
             <node title = "Comments" html = "text/help/en/comments.html"/>
             <node title = "With" html = "text/help/en/with.html"/>
             <node title = "Methods" html = "text/help/en/methods.html"/>

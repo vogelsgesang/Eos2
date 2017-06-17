@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Classes</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Classes</h1>
+        <p>You can define your own classes. It allows to define your own structures of data,
+        allowing to create a group of variables at once. In addition you can can you own methods.
+        You also can inherit existing classes an extend them.</p>
+        <h2>Syntax</h2> 
+        <h3>Einfach Klasse</h3>       
+    <p><b>class</b> Name<br>        
+    &nbsp;&nbsp;Properties<br>
+    &nbsp;&nbsp;Methods<br>
+      <b>*classe</b>
+      <h3>Class with super class</h3>
+    <p><b>class</b> Name <b>extends</b> Name<br>         
+    &nbsp;&nbsp;Properties<br>
+    &nbsp;&nbsp;Methods<br>
+      <b>*classe</b>
+</p>              
+        <h2>BNF</h2>
+UserClass := <br>
+	&nbsp;&nbsp;&nbsp;"class" Name ( "extends" Name )? ( Method | Property)* "*class"<br>
+Method := A method<br>
+Property := a normal Variable declaration   
+    </body>
+</html>

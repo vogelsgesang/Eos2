@@ -44,6 +44,7 @@ creative commons
             <node title = "Variablen" html = "text/help/de/variablen.html"/>
             <node title = "Bedingte Anweisung" html = "text/help/de/bedingteanweisung.html"/>            
             <node title = "Wiederholungen" html = "text/help/de/wiederholungen.html"/>
+            <node title = "Klassen" html = "text/help/de/klassen.html"/>
             <node title = "Kommentare" html = "text/help/de/kommentare.html"/>
             <node title = "Für" html = "text/help/de/fuer.html"/>
             <node title = "Methoden" html = "text/help/de/methoden.html"/>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Klassen</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p><img src="../../../images/eos2.png" alt="EOS2"></p>
+        <h1>Klassen</h1>
+        <p>Man kann seine eigneen Klassen definieren. Dies erlaubt es eigene Datenstrukturen zu verwenden,
+        was es erlaubt eine Gruppe von Variablen gemeinsam zu erzeugen. Zusätzlich kann man eigene Methoden definieren.
+        Es ist ebenso m&ouml;glich bestehende Klassen zu erweitern.</p>
+        <h2>Schreibweise</h2>
+        <h3>Einfache Klasse</h3>
+    <p><b>klasse</b> Name<br>        
+    &nbsp;&nbsp;Attribute<br>
+    &nbsp;&nbsp;Methoden<br>
+      <b>*klasse</b>
+      </p>        
+      <h3>Klasse mit Vererbung</h3>
+    <p><b>klasse</b> Name <b>erweitert</b> Name<br>         
+    &nbsp;&nbsp;Attribute<br>
+    &nbsp;&nbsp;Methoden<br>
+      <b>*klasse</b>
+      
+        <h2>BNF</h2>
+Benutzerklasse := <br>
+	&nbsp;&nbsp;&nbsp;"klasse" Name ( "erweitert" Name )? ( Methode | Attribut)* "*klasse"<br>
+Methode := eine Methode<br>
+Attribut := eine Variablen Deklaration          
+    </body>
+</html>
