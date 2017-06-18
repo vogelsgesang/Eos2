@@ -20,12 +20,9 @@ public class UserFunctionType implements MethodType {
     protected final String signature;
     /**
      * Erzeugt eine statische Java Methode
-     * @param target
+     * @param name
      * @param parameters
      * @param ret
-     * @param name
-     * @param originalName
-     * @throws NoSuchMethodException
      */
     public UserFunctionType(String name, Type[] parameters, Type ret) {
 		this.parameters = parameters;

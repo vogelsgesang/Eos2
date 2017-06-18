@@ -6,6 +6,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.WindowEvent;
@@ -17,6 +19,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.MessageFormat;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -34,6 +37,7 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.Scrollable;
 import javax.swing.WindowConstants;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.undo.UndoManager;
@@ -189,7 +193,7 @@ public class MainWindow extends JFrame implements WindowListener {
 
         mainToolbar.setFloatable(false);
         mainToolbar.setRollover(true);
-        
+        mainToolbar.setBackground(new Color(0xEEEEEE));
         toolbarGroup.setLayout(new GridLayout(2,1)); 
         
         btnSave.setIcon(new ImageIcon(getClass().getResource("/icons/floppy_disk.png")));
@@ -289,6 +293,11 @@ public class MainWindow extends JFrame implements WindowListener {
 
         runToolbar.setFloatable(false);
         runToolbar.setRollover(true);
+        runToolbar.setBackground(new Color(0xEEEEEE));
+        runToolbar.setLayout(new GridBagLayout());
+        GridBagConstraints LAST = new GridBagConstraints();
+        LAST.fill = GridBagConstraints.HORIZONTAL;
+        LAST.weightx = 1;
         toolbarGroup.add(runToolbar);
         
         btnStart.setIcon(new ImageIcon(getClass().getResource("/icons/media_play.png")));
@@ -328,12 +337,10 @@ public class MainWindow extends JFrame implements WindowListener {
 
         sliderSpeed.setValue(10);
         sliderSpeed.setFocusable(false);
-//        sliderSpeed.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), GUI.getString("Run.Speed.Slider"), TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", 0, 12)));
-        sliderSpeed.setPreferredSize(new java.awt.Dimension(400, 48));
+        sliderSpeed.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), GUI.getString("Run.Speed.Slider"), TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", 0, 12)));
         sliderSpeed.addChangeListener(evt -> sliderSpeedStateChanged(evt));
-
-        runToolbar.add(sliderSpeed);
-
+        runToolbar.add(sliderSpeed, LAST);
+        
         menuFile.setText(GUI.getString("Menu.File"));
 
         mitNew.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));

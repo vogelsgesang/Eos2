@@ -131,7 +131,7 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 	}
 	/**
 	 * Startet den Auswahldialog für Klassen.
-	 * @param base Typ für den die Auswahl generiert wird.
+	 * @param program Programm für das die Klassenliste erzeugt wird.
 	 * @param position Position im Text für die die Auswahl gestart wurde.
 	 * @throws BadLocationException
 	 */

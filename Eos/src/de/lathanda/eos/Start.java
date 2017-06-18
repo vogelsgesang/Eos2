@@ -9,6 +9,10 @@ import java.io.InputStreamReader;
 import java.util.Locale;
 
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import de.lathanda.eos.common.Factory;
 import de.lathanda.eos.common.Stop;
 import de.lathanda.eos.common.interpreter.AbstractProgram;
@@ -31,8 +35,20 @@ public class Start {
 	 * ohne - Grafische Oberfläche starten.
 	 *  
 	 * @param args Befehlszeilenargumente
+	 * @throws UnsupportedLookAndFeelException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @throws ClassNotFoundException 
 	 */
 	public static void main(String args[]) {
+		try {
+		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+		        if ("Nimbus".equals(info.getName())) {
+		            UIManager.setLookAndFeel(info.getClassName());
+		        }
+		    }
+		} catch (Throwable t) {
+		}
 		Factory.setProgram(Program.class);
 		Runtime.getRuntime().addShutdownHook(new Stop());		
 		apply(args);
