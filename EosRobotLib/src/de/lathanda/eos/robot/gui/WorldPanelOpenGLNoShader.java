@@ -249,7 +249,6 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 			cubeObj = ObjLoader.loadObj("obj/", "cube.obj");
 			rockObj = ObjLoader.loadObj("obj/", "rock.obj");
 			robotObj = ObjLoader.loadObj("obj/", "robot.obj", 50000);
-			entranceObj = ObjLoader.loadObj("obj/", "entrance.obj", 5000);
 			cursorObj = ObjLoader.loadObj("obj/", "cursor.obj");
 		} catch (IOException ioe) {
 			System.err.println("missing file! " + ioe.getMessage());
@@ -265,7 +264,6 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 	private static Polyhedron cubeObj;
 	private static Polyhedron rockObj;
 	private static Polyhedron robotObj;
-	private static Polyhedron entranceObj;
 	private static Polyhedron cursorObj;
 
 	private static Color CURSOR_COLOR = new Color(1f, 1f, 0f, .5f);
@@ -337,7 +335,6 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 		gl.glPushMatrix();
 		gl.glTranslated(e.x * WIDTH, e.y * DEPTH, e.z * HEIGHT);
 		gl.glRotatef(e.d.getAngle(), 0f, 0f, 1f);
-		renderPolyhedron(entranceObj, new Color(1f, 0f, 0f), gl);
 		renderPolyhedron(robotObj, new Color(0.5f, 0.5f, 0.5f, 0.5f), gl);
 		gl.glPopMatrix();
 	}

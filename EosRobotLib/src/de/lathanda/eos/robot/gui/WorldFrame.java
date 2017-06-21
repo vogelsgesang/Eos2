@@ -17,7 +17,6 @@ import de.lathanda.eos.robot.World;
  * 
  *
  * @author Peter (Lathanda) Schneider
- * @since 0.8
  */
 public class WorldFrame extends JFrame {
 	private static final long serialVersionUID = 5001020279686211090L;

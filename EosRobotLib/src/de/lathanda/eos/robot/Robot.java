@@ -151,6 +151,7 @@ public class Robot implements ConfigurationListener, Readout {
     public final void setMark() throws RobotVoidException {
     	getColumn().setMark(true);
     }
+    
     /**
      * Entfernt die Marke zu Füssen des Robters.
      * @throws RobotVoidException
@@ -164,6 +165,14 @@ public class Robot implements ConfigurationListener, Readout {
      */
     public final void dropStone() throws RobotVoidException {
         frontColumn().dropCube(z, Cube.createStone(stoneColor));
+    }
+    /**
+     * Legt einen Stein vor dem Roboter ab.
+     * @param c Farbe des Steins
+     * @throws RobotVoidException
+     */
+    public final void dropStone(Color c) throws RobotVoidException {
+        frontColumn().dropCube(z, Cube.createStone(c));
     }
     /**
      * Gibt die Farbe des Steins zurück auf den der Roboter einen neuen Stein legen würde.
@@ -432,11 +441,22 @@ public class Robot implements ConfigurationListener, Readout {
 	}
 	/**
 	 * Platziert einen Stein auf Fußhöhe + n oder tauscht einen vorhandenen gegen diesen aus.
+	 * @param n
 	 * @throws RobotVoidException
 	 * @throws CubeImmutableException
 	 */
 	public void placeStone(int n) throws RobotVoidException, CubeImmutableException {
 		frontColumn().setCube(z+n, Cube.createStone(stoneColor));	
+	}
+	/**
+	 * Platziert einen farbigen Stein auf Fußhöhe + n oder tauscht einen vorhandenen gegen diesen aus.
+	 * @param n
+	 * @param c Farbe des Steins
+	 * @throws RobotVoidException
+	 * @throws CubeImmutableException
+	 */
+	public void placeStone(int n, Color c) throws RobotVoidException, CubeImmutableException {
+		frontColumn().setCube(z+n, Cube.createStone(c));	
 	}
 	/**
 	 * Entfernt einen Stein auf Fußhöhe + n.

@@ -420,6 +420,16 @@ public class World implements CleanupListener, Readout {
 	public void setStone(int x, int y, int z) {
 		getColumn(x, y).setCube(z, Cube.createStone(stoneColor));
 	}
+	/**
+	 * Setzt einen farbigen Stein bei diesen Koordinaten ohne Rücksicht darauf was sich in diesem Feld befindet.
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param c Farbe des Steins
+	 */
+	public void setStone(int x, int y, int z, Color c) {
+		getColumn(x, y).setCube(z, Cube.createStone(c));
+	}
 	public void setStoneCursor() {
 		getColumn(cursorX, cursorY).setCube(cursorZ, Cube.createStone(stoneColor));
 	}
@@ -479,7 +489,15 @@ public class World implements CleanupListener, Readout {
 	public void dropStone(int x, int y) {
 		getColumn(x, y).dropCube(Cube.createStone(stoneColor));
 	}
-
+	/**
+	 * Lässt einen farbigen Stein von ganz oben Fallen.
+	 * @param x
+	 * @param y
+	 * @param c Farbe des Steins
+	 */
+	public void dropStone(int x, int y, Color c) {
+		getColumn(x, y).dropCube(Cube.createStone(c));
+	}
 	/**
 	 * Entfernt den Stein von dieser Position.
 	 * @param x
