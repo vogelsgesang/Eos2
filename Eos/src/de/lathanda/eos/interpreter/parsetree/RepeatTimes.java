@@ -49,6 +49,7 @@ public class RepeatTimes extends Loop implements LoopTimesUnit {
 
         ops.addAll(body);
 
+        ops.add(new DebugPoint(timesE.marker));           
         ops.add(new LoadVariable(varName));
         ops.add(new LoadConstant(1));
         ops.add(new SubtractI());
@@ -56,7 +57,7 @@ public class RepeatTimes extends Loop implements LoopTimesUnit {
         ops.add(new LoadVariable(varName));
         ops.add(new LoadConstant(0));
         ops.add(new GE());
-        ops.add(new JumpIf(-(7 + body.size())));
+        ops.add(new JumpIf(-(8 + body.size())));
     }
 
     @Override

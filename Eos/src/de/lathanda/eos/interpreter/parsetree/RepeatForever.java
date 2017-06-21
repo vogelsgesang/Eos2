@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import de.lathanda.eos.gui.diagram.LoopForeverUnit;
 import de.lathanda.eos.interpreter.Command;
+import de.lathanda.eos.interpreter.commands.DebugPoint;
 import de.lathanda.eos.interpreter.commands.Jump;
 
 /**
@@ -22,7 +23,8 @@ public class RepeatForever extends Loop implements LoopForeverUnit {
         ArrayList<Command> body =  new ArrayList<>();
         sequence.compile(body, autoWindow);
         ops.addAll(body);
-        ops.add(new Jump(-(body.size())));
+        ops.add(new DebugPoint());        
+        ops.add(new Jump(-(1+body.size())));
     }
 
     @Override
