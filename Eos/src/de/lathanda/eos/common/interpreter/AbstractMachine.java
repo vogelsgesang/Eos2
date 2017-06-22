@@ -70,4 +70,9 @@ public interface AbstractMachine {
 	 * @return
 	 */
 	LinkedList<MemoryEntry> getMemory();
+    /**
+     * Überprüft, ob das Programm gerade neu startet.
+     * @return return 
+     */	
+	boolean isStarting();
 }

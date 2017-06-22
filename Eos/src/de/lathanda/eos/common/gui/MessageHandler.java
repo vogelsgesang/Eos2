@@ -10,6 +10,7 @@ import java.util.LinkedList;
  */
 public class MessageHandler {
 	public static enum ErrorLevel {
+		STATUS(-1),
 		INFORMATION(0),
 		WARNING(1),
 		ERROR(2),
@@ -20,7 +21,12 @@ public class MessageHandler {
 		}
 	}
 	public static final MessageHandler def = new MessageHandler();
-	
+	public void clear() {
+		logListener.forEach(log -> log.clearMessages());		
+	}
+	public void sendStatus(String id) {
+		fireMessage(id, ErrorLevel.STATUS);
+	}
 	public void sendInformation(String information) {
 		fireMessage(information, ErrorLevel.INFORMATION);
 	}
@@ -71,6 +77,7 @@ public class MessageHandler {
 		logListener.forEach(log -> log.message(msg, level));
 	}
 	public interface LogListener {
-		public void message(String msg, ErrorLevel level);		
+		public void message(String msg, ErrorLevel level);	
+		public void clearMessages();
 	}	
 }

@@ -42,6 +42,7 @@ public class Machine implements AbstractMachine {
     private DebugInfo debugInfo = new DebugInfo();
     private volatile boolean executing = false;
     private volatile boolean running   = false;
+    private volatile boolean isStarting = true;
     private volatile boolean isFinished = false;
     private volatile long delay = 5000;
     private final DebugMulticaster dmc = new DebugMulticaster();
@@ -226,6 +227,7 @@ public class Machine implements AbstractMachine {
         while (context.program.length <= context.index) {
             if (callstack.size() == 0) {
                 isFinished = true;
+                messageFinishing();
                 return true;
             } else {
                 context = callstack.pop();
@@ -259,10 +261,24 @@ public class Machine implements AbstractMachine {
         pause();
         //execute a single step
         try {
+        	messageStarting();
             debugStep();
         } catch (Exception e) {
             MessageHandler.def.handle(e);
         }
+    }
+    private void messageStarting() {
+    	if (isStarting) {
+    		MessageHandler.def.clear();
+    		MessageHandler.def.sendStatus("Program.Start");
+    		isStarting = false;
+    	}        	        	    	
+    }
+    private void messageFinishing() {
+    	if (!isStarting) {
+    		MessageHandler.def.sendStatus("Program.End"); 
+    		isStarting = true;
+    	}
     }
     public synchronized void skip() {
     	if (!check()) return;
@@ -272,7 +288,7 @@ public class Machine implements AbstractMachine {
 
     private void debugStep() throws Exception {
         if (isFinished) {
-            stop();
+            reset();
         }
         executing = true;
         running = true;
@@ -289,6 +305,7 @@ public class Machine implements AbstractMachine {
 
     @Override
     public synchronized void stop() {
+    	messageFinishing();
         //stop continues execution
         pause();
         //set machine back to start
@@ -300,6 +317,11 @@ public class Machine implements AbstractMachine {
      */
     private boolean check() {
     	return context.program != null;
+    }
+
+    @Override
+    public boolean isStarting() {
+    	return isStarting;
     }
     @Override
     public void run() {
@@ -357,7 +379,8 @@ public class Machine implements AbstractMachine {
         @Override
         public void run() {
             long laststep = System.nanoTime();
-            running = true;
+            messageStarting();       	
+        	running = true;
             try {
                 while (running) {
                     int diff = (int)(laststep + delay - System.nanoTime());
@@ -391,7 +414,8 @@ public class Machine implements AbstractMachine {
     private class SpeedExecuter implements Runnable {
         @Override
         public void run() {
-            running = true;
+        	messageStarting();       	
+           	running = true;
             try {
                 while (running) {
                     synchronized (Machine.this) {

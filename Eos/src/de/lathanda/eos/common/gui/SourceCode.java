@@ -337,6 +337,9 @@ public class SourceCode extends DefaultStyledDocument
 	@Override
 	public void message(String msg, ErrorLevel level) {
 		switch (level) {
+		case STATUS:
+			message.println(GUI.getString(msg));
+			break;			
 		case INFORMATION:
 			message.println(GUI.getString("Message.Information")+" "+msg);
 			break;
@@ -351,6 +354,10 @@ public class SourceCode extends DefaultStyledDocument
 			break;
 		}
 		
+	}
+	@Override
+	public void clearMessages() {
+		message.clear();
 	}
 	@Override
 	protected void fireUndoableEditUpdate(UndoableEditEvent e) {
