@@ -103,7 +103,7 @@ public class MainWindow extends JFrame implements WindowListener {
         compiler.addCompilerListener(data);
         data.setSpeed(10);
         undoManager = new UndoManager();
-        data.addUndoableEditListener(undoManager);
+        data.setUndoManager(undoManager);
         filechooser = new JFileChooser();
         filechooser.setFileFilter(new FileNameExtensionFilter(GUI.getString("File.EOS"), "eos"));
         filechooser.setCurrentDirectory(new File("."));

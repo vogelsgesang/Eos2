@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.TreeSet;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.UndoableEditEvent;
@@ -22,6 +23,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.Element;
+import javax.swing.undo.UndoManager;
 
 import de.lathanda.eos.base.event.CleanupListener;
 import de.lathanda.eos.common.Stop;
@@ -59,11 +61,11 @@ public class SourceCode extends DefaultStyledDocument
 	private String path = "";
 	private int delay = 0;
 	private AbstractProgram program;
+	private String programText = "";
 	private AutoCompleteHook autoCompleteHook;
 	private CodeColorHook codeColorHook;
 	private TreeSet<Integer> breakpoints = new TreeSet<Integer>();
 	private TreeSet<Integer> errors      = new TreeSet<Integer>();
-
 	private SideInformation sideInformation;
 	
 	public SourceCode() {
@@ -201,17 +203,13 @@ public class SourceCode extends DefaultStyledDocument
 	@Override
 	public String getSourceCode() {
 		synchronized (COMPILE_LOCK) {
-			try {
-				while (!compileNeeded) {
+			while (!compileNeeded) {
+				try {
 					COMPILE_LOCK.wait();
-				}
-				String text = getText(0, getLength());
-				compileNeeded = false;
-				return text;
-			} catch (InterruptedException | BadLocationException ex) {
-				handleException(ex);
-				return "";
+				} catch (InterruptedException ex) {	}
 			}
+			compileNeeded = false;
+			return programText;
 		}
 	}
 
@@ -224,6 +222,11 @@ public class SourceCode extends DefaultStyledDocument
 	public void changed() {
 		synchronized (COMPILE_LOCK) {
 			compileNeeded = true;
+			try {
+				programText = getText(0, getLength());
+			} catch (BadLocationException ex) {
+				handleException(ex);
+			}
 			sourceDirty = true;
 			COMPILE_LOCK.notifyAll();
 		}		
@@ -237,7 +240,7 @@ public class SourceCode extends DefaultStyledDocument
 		machine.setDelay(delay);
 		machine.addDebugListener(this);
 		this.errors.clear();
-		codeColorHook.doColoring();
+		SwingUtilities.invokeLater(()->	codeColorHook.doColoring());
 		for (Integer linenumber : breakpoints) {
 			machine.setBreakpoint(linenumber, true);
 		}
@@ -253,7 +256,7 @@ public class SourceCode extends DefaultStyledDocument
 			for (ErrorInformation err : errors) {
 				if (err.getCode() != null) {
 					this.errors.add(err.getCode().getBeginLine());
-					codeColorHook.markError(err.getCode());
+					SwingUtilities.invokeLater(()->codeColorHook.markError(err.getCode()));
 				}
 			}
 		} else {
@@ -264,7 +267,7 @@ public class SourceCode extends DefaultStyledDocument
 
 	@Override
 	public void debugPointReached(DebugInfo debugInfo) {
-		codeColorHook.markExecutionPoint(debugInfo.getCodeRange());
+		SwingUtilities.invokeLater(()->codeColorHook.markExecutionPoint(debugInfo.getCodeRange()));
 	}
 
 	public class OutputStyle extends DefaultStyledDocument {
@@ -359,14 +362,20 @@ public class SourceCode extends DefaultStyledDocument
 	public void clearMessages() {
 		message.clear();
 	}
+	UndoManager undoManager;
+	public void setUndoManager(UndoManager undoManager) {
+		this.undoManager = undoManager;		
+	}		
 	@Override
 	protected void fireUndoableEditUpdate(UndoableEditEvent e) {
 		if (e.getEdit() instanceof AbstractDocument.DefaultDocumentEvent) {
 			AbstractDocument.DefaultDocumentEvent event = (AbstractDocument.DefaultDocumentEvent)e.getEdit();
 			if  (event.getType().equals(DocumentEvent.EventType.CHANGE)) {
+				super.fireUndoableEditUpdate(e);
 				return;
 			}
 		}		
+		undoManager.undoableEditHappened(e);
 		super.fireUndoableEditUpdate(e);
 	}
 	@Override
@@ -430,5 +439,5 @@ public class SourceCode extends DefaultStyledDocument
 			}
 		}
 		changed();
-	}	
+	}
 }

@@ -171,7 +171,11 @@ public class StringCharStream implements CharStream {
         return line[position];
     }
     public int getLine(int pos) {
-    	return line[pos];
+    	if (pos < line.length) {
+    		return line[pos];
+    	} else {
+    		return posLine;
+    	}
     }
     @Override
     public char[] GetSuffix(int len) {
