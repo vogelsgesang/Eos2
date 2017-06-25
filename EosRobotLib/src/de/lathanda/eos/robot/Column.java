@@ -13,7 +13,8 @@ import de.lathanda.eos.robot.exceptions.CubeMissingException;
  */
 public class Column {
 	private CubeArray cubes = new CubeArray();
-	private boolean isMarked = false;
+	private Color mark = null;
+	private static final Color MARK = Color.YELLOW;
 
     /** 
      * Lässt einen Würfel ausgehend vom Level her "fallen".
@@ -67,14 +68,9 @@ public class Column {
      * @param mark markieren oder nicht
      */
     public void setMark(boolean mark) {
-    	isMarked = mark;      
+    	this.mark = (mark)?MARK:null;      
     }
-    /**
-     * Wechselt den Markierungszustand
-     */
-    public void toggleMark() {
-    	isMarked = ! isMarked;
-    }
+
     /**
      * Prüft ob ein Schritt möglich ist.
      * Dazu wird im bereich level - fall, ...., level, ..., level + climb
@@ -184,12 +180,31 @@ public class Column {
      * @return
      */
     public boolean isMarked() {
-        return isMarked;
+        return mark != null;
+    }
+    public Color getMark() {
+    	return mark;
     }
     public void setMark() {
-    	isMarked = true;
+    	mark = MARK;
     }
-
+    public void setMark(Color c) {
+    	mark = c;
+    }
+    public void toggleMark() {
+    	if (mark == null) {
+    		mark = MARK;
+    	} else {
+    		mark = null;
+    	}
+    }
+    public void toggleMark(Color c) {
+    	if (mark == null) {
+    		mark = c;
+    	} else {
+    		mark = null;
+    	}
+    }
     /**
      * Löscht ein Feld
      * @param level

@@ -63,6 +63,10 @@ public class World implements CleanupListener, Readout {
 	 */
 	private Color stoneColor = Color.RED;
 	/**
+	 * Farbe neuer Markierungen die über die Welt erzeugt werden.
+	 */
+	private Color markColor = Color.YELLOW;
+	/**
 	 * Genutzter x-Bereich.
 	 */
 	private IntRange xRange = new IntRange(0, 0);
@@ -442,28 +446,16 @@ public class World implements CleanupListener, Readout {
 	public void setRock(int x, int y, int z) {
 		getColumn(x, y).setCube(z, Cube.createRock(stoneColor));
 	}
+	
 	public void setRockCursor() {
 		getColumn(cursorX, cursorY).setCube(cursorZ, Cube.createRock(stoneColor));
 	}
-	/**
-	 * Setzt eine Markierung bei diesen Koordinaten.
-	 * @param x
-	 * @param y
-	 */
-	public void setMark(int x, int y) {
-		getColumn(x, y).setMark();
-	}
 
-	/**
-	 * Wechselt die Markierung bei diesen Koordinaten.
-	 * @param x
-	 * @param y
-	 */
-	public void toggleMark(int x, int y) {
-		getColumn(x, y).toggleMark();
-	}
 	public void toggleMarkCursor() {
-		getColumn(cursorX, cursorY).toggleMark();
+		getColumn(cursorX, cursorY).toggleMark(markColor);
+	}
+	public void setMark(int x, int y, Color c) {
+		getColumn(x, y).setMark(c);
 	}
 	/**
 	 * Setzt die Farbe für neue Steine
@@ -480,7 +472,20 @@ public class World implements CleanupListener, Readout {
 	public Color getStoneColor() {
 		return this.stoneColor;
 	}
-
+	/**
+	 * Setzt die Farbe für neue Markierungen
+	 * @param c
+	 */
+	public void setMarkColor(Color c) {
+		this.markColor = c;
+	}
+	/**
+	 * Liefert die Farbe für neue Markierungen.
+	 * @return
+	 */
+	public Color getMarkColor() {
+		return this.markColor;
+	}
 	/**
 	 * Lässt einen Stein von ganz oben Fallen.
 	 * @param x

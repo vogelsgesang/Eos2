@@ -138,13 +138,7 @@ public class Robot implements ConfigurationListener, Readout {
     	this.y = y;
     	this.z = z;
     }
-    /**
-     * Wechselt die Marke zu Füssen des Roboters.
-     * @throws RobotVoidException
-     */
-    public final void toggleMark() throws RobotVoidException {
-    	getColumn().toggleMark();
-    }
+
     /**
      * Setzt eine Marke zu Füssen des Roboters.
      */

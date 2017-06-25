@@ -30,7 +30,7 @@ public class LabyrinthBauen {
 				}
 			}
 		}
-		world.setMark(2*WIDTH-1, 2*HEIGHT-1);
+		world.setMark(2*WIDTH-1, 2*HEIGHT-1, Color.YELLOW);
 		try (FileOutputStream file = new FileOutputStream(FILENAME)){
 			world.save(file);
 		} catch (Exception e) {

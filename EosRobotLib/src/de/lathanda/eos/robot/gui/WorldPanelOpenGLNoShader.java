@@ -356,13 +356,13 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 				renderCube(cubes[i], gl);
 				doMark = true;
 			} else if (column.isMarked() && doMark) {
-				renderPolyhedron(markObj, Color.YELLOW, gl);
+				renderPolyhedron(markObj, column.getMark(), gl);
 				doMark = false;
 			}
 			gl.glTranslated(0d, 0d, HEIGHT);
 		}
 		if (column.isMarked() && doMark) {
-			renderPolyhedron(markObj, Color.YELLOW, gl);
+			renderPolyhedron(markObj, column.getMark(), gl);
 		}
 		gl.glPopMatrix();
 	}
