@@ -383,6 +383,6 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 	}
 
 	private void renderPolyhedron(Polyhedron poly, Color base, GL2 gl) {
-		GLObjectBuffer.get(poly).render(base, gl);
+		GLObjectBuffer.get(poly, gl).render(base, gl);
 	}
 }
