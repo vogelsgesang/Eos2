@@ -11,45 +11,40 @@ import de.lathanda.eos.robot.geom3d.Polyhedron;
 
 public class GLObjectBuffer {
     // ***************** factory *****************
-    private static HashMap<GL, HashMap<Polyhedron, GLObjectBuffer> > glbuffer = new HashMap<>();    
-    public static synchronized GLObjectBuffer get(Polyhedron poly, GL gl) {
-        HashMap<Polyhedron, GLObjectBuffer> objbuffer = glbuffer.get(gl);
-        if (objbuffer == null) {
-            objbuffer = new HashMap<>();
-            glbuffer.put(gl,  objbuffer);
+    private static HashMap<Polyhedron, GLObjectBuffer> objbuffer = new HashMap<>();    
+    public static synchronized GLObjectBuffer get(Polyhedron poly) {        
+        GLObjectBuffer obj = objbuffer.get(poly);
+        if (obj == null) {
+        	obj = new GLObjectBuffer(poly);
+            objbuffer.put(poly, obj);
         }
-        GLObjectBuffer buffer = objbuffer.get(poly);
-        if (buffer == null) {
-            buffer = new GLObjectBuffer(poly);
-            objbuffer.put(poly, buffer);
-        }
-        return buffer;    
+        return obj;    
     }
     public static synchronized void clear(GL gl) {
-        HashMap<Polyhedron, GLObjectBuffer> objbuffer = glbuffer.get(gl);
-        if (objbuffer == null) {
-            return;
-        }
-        for(GLObjectBuffer buffer : objbuffer.values()) {
-            buffer.destroy(gl);
+        for(GLObjectBuffer obj : objbuffer.values()) {
+            obj.destroy(gl);
         }
     }        
     
     //****************** class *******************
     private final Polyhedron data;
-    private LinkedList<GLRenderObject> ro;
+    private HashMap<GL , LinkedList<GLRenderObject> > robuffer = new HashMap<>();
 
     private GLObjectBuffer(Polyhedron poly) {
         this.data = poly;
     }
     public void destroy(GL gl) {
+    	LinkedList<GLRenderObject> ro = robuffer.get(gl); 
         //free resources on graphic card
         if (ro != null) {
             ro.forEach( r->r.destroy(gl));
+            robuffer.remove(gl);
         }
     }    
     public void render(Color base, GL2 gl) {
+    	LinkedList<GLRenderObject> ro = robuffer.get(gl); 
         if (ro == null) {
+            ro = new LinkedList<>(); 
             final boolean VBOsupported = gl.isFunctionAvailable("glGenBuffersARB") &&
                     gl.isFunctionAvailable("glBindBufferARB") &&
                     gl.isFunctionAvailable("glBufferDataARB") &&
@@ -59,7 +54,8 @@ public class GLObjectBuffer {
             } else {
                 ro = new LinkedList<>();
                 ro.add(new GLBaseRenderObject(data));
-            }            
+            }    
+            robuffer.put(gl,  ro);
         }
         ro.forEach( r -> r.render(gl, base));
     }

@@ -13,41 +13,35 @@ import de.lathanda.eos.robot.geom3d.Material;
 
 public class GLTextureBuffer {
 	// ***************** factory *****************
-	private static HashMap<GL, HashMap<Material, GLTextureBuffer> > glbuffer = new HashMap<>();	
+	private static HashMap<Material, GLTextureBuffer> texturebuffer = new HashMap<>();	
 
 	public static synchronized GLTextureBuffer get(Material m, GL gl) {
-		HashMap<Material, GLTextureBuffer> texbuffer = glbuffer.get(gl);
-		if (texbuffer == null) {
-			texbuffer = new HashMap<>();
-			glbuffer.put(gl,  texbuffer);
+		GLTextureBuffer texture = texturebuffer.get(m);
+		if (texture == null) {
+			texture = new GLTextureBuffer(m);
+			texturebuffer.put(m, texture);
 		}
-		GLTextureBuffer buffer = texbuffer.get(m);
-		if (buffer == null) {
-			buffer = new GLTextureBuffer(m);
-			texbuffer.put(m, buffer);
-		}
-		return buffer;    
+		return texture;    
 	}
 	public static synchronized void clear(GL gl) {
-		HashMap<Material, GLTextureBuffer> texbuffer = glbuffer.get(gl);
-		if (texbuffer == null) return;
-		for(GLTextureBuffer buffer : texbuffer.values()) {
+		for(GLTextureBuffer buffer : texturebuffer.values()) {
 			buffer.destroy(gl);
 		}
-		texbuffer.clear();
-		glbuffer.remove(gl);
 	}	
 	
 	//****************** class *******************	
 	private final Material m;
-	private Texture texture;
+	private HashMap<GL, Texture> tbuffer = new HashMap<>();
 	public GLTextureBuffer(Material m) {
 		this.m = m;
 	}
 	public void destroy(GL gl) {
-		if (texture != null) {
-			texture.destroy(gl);
-		}
+		Texture t = tbuffer.get(gl); 
+        //free resources on graphic card
+        if (t != null) {
+            t.destroy(gl);
+            tbuffer.remove(gl);
+        }		
 	}
 	public void openMaterial(Color base, GL2 gl) {
 		gl.glColor4ub((byte) base.getRed(), (byte) base.getGreen(), (byte) base.getBlue(), (byte) base.getAlpha());
@@ -69,9 +63,9 @@ public class GLTextureBuffer {
 		}
 		if (m.image != null) {
 			try {
-				prepareTexture(gl);
-				texture.enable(gl);
-				texture.bind(gl);
+				Texture t = getTexture(gl);
+				t.enable(gl);
+				t.bind(gl);
 				gl.glEnable(GL.GL_TEXTURE);
 				gl.glTexEnvi(GL2.GL_TEXTURE_ENV, GL2.GL_TEXTURE_ENV_MODE, GL2.GL_REPLACE);
 			} catch (GLException gle) {
@@ -80,20 +74,23 @@ public class GLTextureBuffer {
 		}
 	}
 
-	private void prepareTexture(GL2 gl) {
-		if (texture == null) {
+	private Texture getTexture(GL2 gl) {
+		Texture t = tbuffer.get(gl);
+		if (t == null) {
 			AWTTextureData atd = new AWTTextureData(GLProfile.get(GLProfile.GL2), GL.GL_RGBA, GL.GL_RGBA, false,
 					m.image);
-			texture = new Texture(gl, atd);
-			texture.setTexParameterf(gl, GL2.GL_TEXTURE_WRAP_S, GL2.GL_REPEAT);
-			texture.setTexParameterf(gl, GL2.GL_TEXTURE_WRAP_T, GL2.GL_REPEAT);
+			t = new Texture(gl, atd);
+			t.setTexParameterf(gl, GL2.GL_TEXTURE_WRAP_S, GL2.GL_REPEAT);
+			t.setTexParameterf(gl, GL2.GL_TEXTURE_WRAP_T, GL2.GL_REPEAT);
+			tbuffer.put(gl, t);
 		}
+		return t;
 	}
 
 	public void closeMaterial(GL2 gl) {
 		if (m.image != null) {
-			prepareTexture(gl);
-			texture.disable(gl);
+			Texture t = getTexture(gl);
+			t.disable(gl);
 			gl.glDisable(GL.GL_TEXTURE);
 		}
 	}
