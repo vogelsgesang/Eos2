@@ -182,6 +182,13 @@ public class Column {
     public boolean isMarked() {
         return mark != null;
     }
+    /**
+     * Prüft ob die Position mit der Farbe markiert ist.
+     * @return
+     */
+    public boolean isMarked(Color c) {
+        return (mark == null)?false:mark.equals(c);
+    }    
     public Color getMark() {
     	return mark;
     }

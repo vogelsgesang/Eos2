@@ -153,6 +153,9 @@ public class World implements CleanupListener, Readout {
 			case 1:
 				parseVersion1(world);
 				break;
+			case 2:
+				parseVersion2(world);
+				break;
 			default:
 				throw new WorldLoadFailedException();
 			}
@@ -227,6 +230,74 @@ public class World implements CleanupListener, Readout {
 			}
 		}
 	}
+	/**
+	 * Dekodiert eine Version 1 XML-Datei als Welt. 
+	 * @param world
+	 */
+	private void parseVersion2(Element world) {
+		if (world.hasAttribute("minx")) {
+			minX = Integer.parseInt(world.getAttribute("minx"));
+		} else {
+			minX = null;
+		}
+		if (world.hasAttribute("maxx")) {
+			maxX = Integer.parseInt(world.getAttribute("maxx"));
+		} else {
+			maxX = null;
+		}
+		if (world.hasAttribute("miny")) {
+			minY = Integer.parseInt(world.getAttribute("miny"));
+		} else {
+			minY = null;
+		}
+		if (world.hasAttribute("maxy")) {
+			maxY = Integer.parseInt(world.getAttribute("maxy"));
+		} else {
+			maxY = null;
+		}
+		NodeList nodes = world.getChildNodes();
+		for (int i = 0; i < nodes.getLength(); i++) {
+			Node node = nodes.item(i);
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+				Element element = (Element) node;
+				switch (node.getNodeName()) {
+				case "entrance":
+					synchronized (entrances) {
+						int x = Integer.parseInt(element.getAttribute("x"));
+						int y = Integer.parseInt(element.getAttribute("y"));
+						int z = Integer.parseInt(element.getAttribute("z"));
+						Direction d = Direction.getDirection(Integer.parseInt(element.getAttribute("direction")));
+						if (z >= 0) {
+							entrances.add(new Entrance(x, y, z, d));
+						}
+					}
+					break;
+				case "column":
+					Coordinate coordinate = new Coordinate(Integer.parseInt(element.getAttribute("x")),
+							Integer.parseInt(element.getAttribute("y")));
+					Column column = getColumn(coordinate);
+					if (element.hasAttribute("mark")) {
+						column.setMark(new Color(Integer.parseInt(element.getAttribute("mark"))));
+					}
+					NodeList cubeNodes = node.getChildNodes();
+					for (int j = 0; j < cubeNodes.getLength(); j++) {
+						Node cubeNode = cubeNodes.item(j);
+						if (cubeNode.getNodeType() == Node.ELEMENT_NODE && cubeNode.getNodeName().equals("cube")) {
+							Element cubeElement = (Element) cubeNode;
+							Cube cube = Cube.createCube(Integer.parseInt(cubeElement.getAttribute("type")),
+									new Color(Integer.parseInt(cubeElement.getAttribute("color"))));
+							int level = Integer.parseInt(cubeElement.getAttribute("index"));
+							if (level >= 0) {
+								column.setCube(level, cube);
+							}
+						}
+					}
+					break;
+				default:
+				}
+			}
+		}
+	}
 
 	/**
 	 * Speichert eine Welt als XML Strom
@@ -235,7 +306,7 @@ public class World implements CleanupListener, Readout {
 	 * @throws TransformerException
 	 */
 	public void save(OutputStream targetStream) throws ParserConfigurationException, TransformerException {
-		Document world = buildDocumentVersion1();
+		Document world = buildDocumentVersion2();
 		DOMSource worldSource = new DOMSource(world);
 		TransformerFactory tf = TransformerFactory.newInstance();
 		StreamResult target = new StreamResult(targetStream);
@@ -246,18 +317,18 @@ public class World implements CleanupListener, Readout {
 	}
 
 	/**
-	 * Kodiert eine Welt als Version 1 XML-Datei.
+	 * Kodiert eine Welt als Version 2 XML-Datei.
 	 * @return
 	 * @throws ParserConfigurationException
 	 */
-	private Document buildDocumentVersion1() throws ParserConfigurationException {
+	private Document buildDocumentVersion2() throws ParserConfigurationException {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		Document doc = dBuilder.newDocument();
 
 		// create world XML
 		Element world = doc.createElement("world");
-		world.setAttribute("version", "1");
+		world.setAttribute("version", "2");
 		if (minX != null) {
 			world.setAttribute("minx", Integer.toString(minX));
 		}
@@ -288,7 +359,9 @@ public class World implements CleanupListener, Readout {
 				Coordinate coordinate = col.getKey();
 				columnElement.setAttribute("x", "" + coordinate.getX());
 				columnElement.setAttribute("y", "" + coordinate.getY());
-				columnElement.setAttribute("mark", (column.isMarked())?"1":"0");
+				if (column.isMarked()) {
+					columnElement.setAttribute("mark", "" + column.getMark().getRGB());
+				}
 				int index = 0;
 				boolean saveColumn = column.isMarked();
 				for (Cube cube : column.getCubes()) {

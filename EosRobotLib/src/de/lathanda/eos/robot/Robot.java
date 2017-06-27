@@ -145,6 +145,13 @@ public class Robot implements ConfigurationListener, Readout {
     public final void setMark() throws RobotVoidException {
     	getColumn().setMark(true);
     }
+
+    /**
+     * Setzt eine farbige Marke zu Füssen des Roboters.
+     */
+    public final void setMark(Color c) throws RobotVoidException {
+    	getColumn().setMark(c);
+    }
     
     /**
      * Entfernt die Marke zu Füssen des Robters.
@@ -203,6 +210,14 @@ public class Robot implements ConfigurationListener, Readout {
     public final boolean isMarked() throws RobotVoidException {
         return getColumn().isMarked();
     }
+    /**
+     * Prüft ob der Roboter in einer Marke mit einer bestimmten Farbe steht.
+     * @return
+     * @throws RobotVoidException 
+     */
+    public final boolean isMarked(Color c) throws RobotVoidException {
+        return getColumn().isMarked(c);
+    }    
     /**
      * Dreht den Roboter nach links.
      */
