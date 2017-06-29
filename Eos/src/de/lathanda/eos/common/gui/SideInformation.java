@@ -80,8 +80,13 @@ public class SideInformation extends JPanel implements DocumentListener, GuiConf
 		Rectangle clip = g.getClipBounds();
 		Insets insets = getInsets();
 		int rightBorder = getWidth() - insets.right;
-		int position = component.viewToModel(new Point(0, clip.y));
-		int endPosition = component.viewToModel(new Point(0, clip.y + clip.height));
+		int position = component.viewToModel(new Point(0, clip.y));		
+		int endPosition;
+		try {
+			endPosition = component.viewToModel(new Point(0, clip.y + clip.height));
+		} catch (ArrayIndexOutOfBoundsException arioobe) {
+			endPosition = sourceCode.getLength();
+		}
 		int lineNumber = 1;
 		int center = getWidth() / 2;
 		Element root = sourceCode.getDefaultRootElement();

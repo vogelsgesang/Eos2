@@ -40,8 +40,6 @@ import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.undo.UndoManager;
-
 import de.lathanda.eos.base.ResourceLoader;
 import de.lathanda.eos.common.gui.BackgroundCompiler;
 import de.lathanda.eos.common.gui.CodeColoring;
@@ -78,10 +76,6 @@ public class MainWindow extends JFrame implements WindowListener {
      */
     private final JFileChooser exportfilechooser;
     /**
-     * Undostack
-     */
-    private final UndoManager undoManager;
-    /**
      * Konfigurationsfenster
      */
     private final ConfigFrame configFrame = new ConfigFrame();
@@ -102,8 +96,6 @@ public class MainWindow extends JFrame implements WindowListener {
         compiler = new BackgroundCompiler(data);
         compiler.addCompilerListener(data);
         data.setSpeed(10);
-        undoManager = new UndoManager();
-        data.setUndoManager(undoManager);
         filechooser = new JFileChooser();
         filechooser.setFileFilter(new FileNameExtensionFilter(GUI.getString("File.EOS"), "eos"));
         filechooser.setCurrentDirectory(new File("."));
@@ -605,18 +597,14 @@ public class MainWindow extends JFrame implements WindowListener {
      * @param evt
      */
     private void UndoActionPerformed(java.awt.event.ActionEvent evt) {
-        if (undoManager.canUndo()) {
-            undoManager.undo();
-        }
+        data.undo();
     }
     /**
      * Redo.
      * @param evt
      */
     private void RedoActionPerformed(java.awt.event.ActionEvent evt) {
-        if (undoManager.canRedo()) {
-            undoManager.redo();
-        }
+    	data.redo();
     }
     /**
      * Neu Formatieren.
@@ -654,7 +642,7 @@ public class MainWindow extends JFrame implements WindowListener {
     	if (dirtySafetyCheck()) {
             data.clear();
             activeFile = null;
-            undoManager.discardAllEdits();
+            data.discardAllEdits();
     	}
     }
     /**

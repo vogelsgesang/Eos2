@@ -20,7 +20,7 @@ import de.lathanda.eos.common.interpreter.TranslationException;
 public class BackgroundCompiler implements Runnable {
 	private AbstractProgram program;
 	private final Source source;
-	private final LinkedList<ErrorInformation> errors;
+	private LinkedList<ErrorInformation> errors;
 	private final CompilerMulticaster cmc;
 
 	public BackgroundCompiler(Source source) {
@@ -39,7 +39,7 @@ public class BackgroundCompiler implements Runnable {
 	private void update() {
 		try {
 			String src = source.getSourceCode();
-			errors.clear();
+			errors = new LinkedList<>();
 			program = Factory.createProgram(src);
 			program.parse(source.getPath());
 			program.compile();

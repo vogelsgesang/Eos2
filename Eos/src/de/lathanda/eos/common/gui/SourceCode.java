@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.TreeSet;
 
@@ -17,14 +18,10 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.event.UndoableEditEvent;
-import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.Element;
-import javax.swing.undo.UndoManager;
-
 import de.lathanda.eos.base.event.CleanupListener;
 import de.lathanda.eos.common.Stop;
 import de.lathanda.eos.common.gui.GuiConfiguration.GuiConfigurationListener;
@@ -67,6 +64,8 @@ public class SourceCode extends DefaultStyledDocument
 	private TreeSet<Integer> breakpoints = new TreeSet<Integer>();
 	private TreeSet<Integer> errors      = new TreeSet<Integer>();
 	private SideInformation sideInformation;
+	private LinkedList<UndoableEdit> undostack = new LinkedList<>();
+	private LinkedList<UndoableEdit> redostack = new LinkedList<>();
 	
 	public SourceCode() {
 		Stop.addCleanupListener(this);
@@ -216,9 +215,15 @@ public class SourceCode extends DefaultStyledDocument
 	@Override
 	public void insertString(int pos, String text, AttributeSet attributeSet) throws BadLocationException {
 		autoCompleteHook.insertString(pos, text, program);
+		storeInsert(pos, text.length(), text);		
 		super.insertString(pos, text, attributeSet);
 	}
 
+	@Override
+	public void remove(int offs, int len) throws BadLocationException {
+		storeRemove(offs, len, programText.substring(offs, offs + len - 1));
+		super.remove(offs, len);
+	}
 	public void changed() {
 		synchronized (COMPILE_LOCK) {
 			compileNeeded = true;
@@ -229,18 +234,22 @@ public class SourceCode extends DefaultStyledDocument
 			}
 			sourceDirty = true;
 			COMPILE_LOCK.notifyAll();
-		}		
+		}
 	}
 	@Override
 	public void compileComplete(LinkedList<ErrorInformation> errors, AbstractProgram program) {
+		SwingUtilities.invokeLater(() -> compileCompleteInteral(errors, program));
+	}
+	private void compileCompleteInteral(LinkedList<ErrorInformation> errors, AbstractProgram program) {
 		stop();
 		this.program = program;
 		this.machine = program.getMachine();
+		
 		machine.removeDebugListener(this);
 		machine.setDelay(delay);
 		machine.addDebugListener(this);
 		this.errors.clear();
-		SwingUtilities.invokeLater(()->	codeColorHook.doColoring());
+		codeColorHook.doColoring();
 		for (Integer linenumber : breakpoints) {
 			machine.setBreakpoint(linenumber, true);
 		}
@@ -256,15 +265,14 @@ public class SourceCode extends DefaultStyledDocument
 			for (ErrorInformation err : errors) {
 				if (err.getCode() != null) {
 					this.errors.add(err.getCode().getBeginLine());
-					SwingUtilities.invokeLater(()->codeColorHook.markError(err.getCode()));
+					codeColorHook.markError(err.getCode());
 				}
 			}
 		} else {
 			message.println(Messages.getError("Source.Ok"));
 		}
-		sideInformation.repaint();
+		sideInformation.repaint();	
 	}
-
 	@Override
 	public void debugPointReached(DebugInfo debugInfo) {
 		SwingUtilities.invokeLater(()->codeColorHook.markExecutionPoint(debugInfo.getCodeRange()));
@@ -339,6 +347,9 @@ public class SourceCode extends DefaultStyledDocument
 
 	@Override
 	public void message(String msg, ErrorLevel level) {
+		SwingUtilities.invokeLater(() -> messageInteral(msg, level));
+	}
+	private void messageInteral(String msg, ErrorLevel level) {
 		switch (level) {
 		case STATUS:
 			message.println(GUI.getString(msg));
@@ -356,34 +367,20 @@ public class SourceCode extends DefaultStyledDocument
 			message.println(GUI.getString("Message.Fatal")+" "+msg);
 			break;
 		}
-		
 	}
 	@Override
 	public void clearMessages() {
 		message.clear();
 	}
-	UndoManager undoManager;
-	public void setUndoManager(UndoManager undoManager) {
-		this.undoManager = undoManager;		
-	}		
-	@Override
-	protected void fireUndoableEditUpdate(UndoableEditEvent e) {
-		if (e.getEdit() instanceof AbstractDocument.DefaultDocumentEvent) {
-			AbstractDocument.DefaultDocumentEvent event = (AbstractDocument.DefaultDocumentEvent)e.getEdit();
-			if  (event.getType().equals(DocumentEvent.EventType.CHANGE)) {
-				super.fireUndoableEditUpdate(e);
-				return;
-			}
-		}		
-		undoManager.undoableEditHappened(e);
-		super.fireUndoableEditUpdate(e);
-	}
+	
 	@Override
 	public void fontsizeChanged(int fontsize) {
-		codeColorHook.setFontSize(fontsize);		
-		codeColorHook.doColoring();		
+		SwingUtilities.invokeLater(() -> fontsizeChangedInternal(fontsize));		
 	}
-
+	private void fontsizeChangedInternal(int fontsize) {
+		codeColorHook.setFontSize(fontsize);		
+		codeColorHook.doColoring();				
+	}
 	@Override
 	public void terminate() {		
 		if (machine != null) {
@@ -418,7 +415,7 @@ public class SourceCode extends DefaultStyledDocument
 		changed();
 	}
 	@Override
-	public void removeUpdate(DocumentEvent e) {
+	public void removeUpdate(DocumentEvent e) {		
 		int oldLineCount = linecount;
 		linecount = getDefaultRootElement().getElementIndex(getLength()) + 1;
 		int deleteLines = oldLineCount - linecount;
@@ -439,5 +436,64 @@ public class SourceCode extends DefaultStyledDocument
 			}
 		}
 		changed();
+	}
+	public void undo() {
+		if (!undostack.isEmpty()) {
+			UndoableEdit ue = undostack.pop();
+			redostack.push(ue);
+			ue.undo();
+		}
+	}
+	public void redo() {
+		if (!redostack.isEmpty()) {
+			UndoableEdit ue = redostack.pop();
+			undostack.push(ue);
+			ue.redo();
+		}
+	}
+	public void discardAllEdits() {
+		undostack.clear();
+		redostack.clear();
+	}
+	private void storeInsert(int pos, int length, String text) {
+		undostack.push(new UndoableEdit(true, pos, length, text));
+		redostack.clear();
+	}
+	private void storeRemove(int pos, int length, String text) {
+		undostack.push(new UndoableEdit(false, pos, length, text));
+		redostack.clear();
+	}
+	private class UndoableEdit {
+		final boolean insert;
+		final int pos;
+		final int length;
+		final String text;
+		public UndoableEdit(boolean insert, int pos, int length, String text) {
+			super();
+			this.insert = insert;
+			this.pos = pos;
+			this.length = length;
+			this.text = text;
+		}		
+		public void redo() {
+			try {
+				if (insert) {
+					SourceCode.super.insertString(pos, text, null);
+				} else {
+					SourceCode.super.remove(pos, length);
+				}
+			} catch (BadLocationException e) {
+			}
+		}
+		public void undo() {
+			try {
+				if (insert) {
+					SourceCode.super.remove(pos, length);
+				} else {
+					SourceCode.super.insertString(pos, text, null);
+				}
+			} catch (BadLocationException e) {
+			}
+		}
 	}
 }

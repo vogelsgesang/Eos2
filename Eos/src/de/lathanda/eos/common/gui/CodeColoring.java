@@ -3,7 +3,6 @@ package de.lathanda.eos.common.gui;
 import java.awt.Color;
 import java.util.LinkedList;
 
-import javax.swing.SwingUtilities;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
@@ -97,28 +96,24 @@ public class CodeColoring implements CodeColorHook {
 	 * Formatiert den Text neu.
 	 */
 	public void doColoring() {
-		SwingUtilities.invokeLater(() -> doSwingColoring());
-	}
-
-	private void doSwingColoring() {
 		if (sourceCode.getProgram() == null) {
-			sourceCode.setCharacterAttributes(0, sourceCode.getLength() + 1, attributeSetBase, false);
+			sourceCode.setCharacterAttributes(0, sourceCode.getLength(), attributeSetBase, true);
 			return;
 		}
 		LinkedList<InfoToken> tokens = sourceCode.getProgram().getTokenList();
-		// remove previous coloring, +1 is needed or the last symbol will not
+		// remove previous coloring
 		// change size
-		sourceCode.setCharacterAttributes(0, sourceCode.getLength() + 1, attributeSetBase, false);
+		sourceCode.setCharacterAttributes(0, sourceCode.getLength(), attributeSetBase, true);
 		for (InfoToken t : tokens) {
 			switch (t.getFormat()) {
 			case InfoToken.COMMENT:
-				sourceCode.setCharacterAttributes(t.getBegin(), t.getLength(), attributeSetComment, false);
+				sourceCode.setCharacterAttributes(t.getBegin(), t.getLength(), attributeSetComment, true);
 				break;
 			case InfoToken.LITERAL:
-				sourceCode.setCharacterAttributes(t.getBegin(), t.getLength(), attributeSetLiteral, false);
+				sourceCode.setCharacterAttributes(t.getBegin(), t.getLength(), attributeSetLiteral, true);
 				break;
 			case InfoToken.KEYWORD:
-				sourceCode.setCharacterAttributes(t.getBegin(), t.getLength(), attributeSetKeyword, false);
+				sourceCode.setCharacterAttributes(t.getBegin(), t.getLength(), attributeSetKeyword, true);
 				break;
 			case InfoToken.PLAIN:
 				// no formating
@@ -152,8 +147,7 @@ public class CodeColoring implements CodeColorHook {
 		if (codePointer != null) {
 			int begin = codePointer.getBeginPosition();
 			int length = codePointer.getLength();
-			SwingUtilities.invokeLater(() -> sourceCode.setCharacterAttributes(begin, length
-					, attributeSetUnmark, false));
+			sourceCode.setCharacterAttributes(begin, length, attributeSetUnmark, false);
 		}
 	}
 
@@ -162,8 +156,7 @@ public class CodeColoring implements CodeColorHook {
 	 * @param code Bereich der fehlerhaft ist.
 	 */
 	public void markError(Marker code) {
-		SwingUtilities.invokeLater(() -> sourceCode.setCharacterAttributes(code.getBeginPosition(), code.getLength(),
-				attributeSetError, false));
+		sourceCode.setCharacterAttributes(code.getBeginPosition(), code.getLength(), attributeSetError, false);
 	}
 
 	/**
@@ -177,7 +170,7 @@ public class CodeColoring implements CodeColorHook {
 		newCodePointer = codeRange;
 		if (!codePointerDirty) {
 			codePointerDirty = true;
-			SwingUtilities.invokeLater(() -> markExecutionPoint());
+			markExecutionPoint();
 		}
 	}
 
