@@ -309,9 +309,9 @@ public class Program implements AbstractProgram {
 			tok = tok.next;
 
 		}
-		Token token = pe.currentToken.next;
+		Token token = pe.currentToken;
 		return new CompilerError(new Marker(token.beginColumn, token.beginLine, token.endColumn, token.endLine), "Parser.Error", encountered, expected,
-				pe.currentToken.next.endLine);
+				token.endLine);
 	}
 
 	private String unescape(String text) {
