@@ -1,7 +1,7 @@
 package de.lathanda.eos.gui.structogram;
 
 import de.lathanda.eos.common.gui.BackgroundCompiler;
-import de.lathanda.eos.common.gui.GuiConstants;
+import de.lathanda.eos.common.gui.Messages;
 import de.lathanda.eos.common.interpreter.AbstractProgram;
 import de.lathanda.eos.common.interpreter.CompilerListener;
 import de.lathanda.eos.common.interpreter.ErrorInformation;
@@ -33,7 +33,7 @@ public class Structogram extends Diagram implements CompilerListener {
     private static final float SPACE = 10;
 
     public Structogram() {
-        super(GuiConstants.GUI.getString("Structogram.Title"));
+        super(Messages.getString("Structogram.Title"));
         procedures = new LinkedList<>();
         d = new Drawing();
     }

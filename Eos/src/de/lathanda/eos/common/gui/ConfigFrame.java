@@ -1,7 +1,5 @@
 package de.lathanda.eos.common.gui;
 
-import static de.lathanda.eos.common.gui.GuiConstants.GUI;
-
 import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
@@ -44,8 +42,8 @@ public class ConfigFrame extends javax.swing.JFrame {
         setIconImage(ResourceLoader.loadImage("icons/eos.png"));
         generalPanel  = new JPanel();
         commandPanel  = new JPanel();
-        lblFontSize   = new JLabel(GUI.getString("configuration.fontsize"));
-        lblErrorMode  = new JLabel(GUI.getString("configuration.errormode"));
+        lblFontSize   = new JLabel(Messages.getString("configuration.fontsize"));
+        lblErrorMode  = new JLabel(Messages.getString("configuration.errormode"));
         btnOk         = new JButton();
         btnCancel     = new JButton();
         txtFontSize   = new JTextField();
@@ -60,7 +58,7 @@ public class ConfigFrame extends javax.swing.JFrame {
         generalPanel.add(lblErrorMode);
         generalPanel.add(cmbErrorMode);
         
-        generalPanel.setBorder(new TitledBorder(GUI.getString("configuration.general")));
+        generalPanel.setBorder(new TitledBorder(Messages.getString("configuration.general")));
         generalPanel.setLayout(new GridLayout(0, 2));
         getContentPane().add(generalPanel);
 
@@ -120,9 +118,9 @@ public class ConfigFrame extends javax.swing.JFrame {
      *
      */
     private static class ErrorBehaviorEntry {
-    	public static final ErrorBehaviorEntry ABORT = new ErrorBehaviorEntry(GUI.getString("configuration.errorbehavior.abort"), GuiConfiguration.ErrorBehavior.ABORT); 
-    	public static final ErrorBehaviorEntry IGNORE = new ErrorBehaviorEntry(GUI.getString("configuration.errorbehavior.ignore"), GuiConfiguration.ErrorBehavior.IGNORE); 
-    	public static final ErrorBehaviorEntry WARN = new ErrorBehaviorEntry(GUI.getString("configuration.errorbehavior.warn"), GuiConfiguration.ErrorBehavior.WARN); 
+    	public static final ErrorBehaviorEntry ABORT = new ErrorBehaviorEntry(Messages.getString("configuration.errorbehavior.abort"), GuiConfiguration.ErrorBehavior.ABORT); 
+    	public static final ErrorBehaviorEntry IGNORE = new ErrorBehaviorEntry(Messages.getString("configuration.errorbehavior.ignore"), GuiConfiguration.ErrorBehavior.IGNORE); 
+    	public static final ErrorBehaviorEntry WARN = new ErrorBehaviorEntry(Messages.getString("configuration.errorbehavior.warn"), GuiConfiguration.ErrorBehavior.WARN); 
     	private final String label;
     	public final GuiConfiguration.ErrorBehavior errorBehavior;
 		private ErrorBehaviorEntry(String label, ErrorBehavior errorBehavior) {

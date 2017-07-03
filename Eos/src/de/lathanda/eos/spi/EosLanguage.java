@@ -1,7 +1,5 @@
 package de.lathanda.eos.spi;
 
-import static de.lathanda.eos.common.gui.GuiConstants.GUI;
-
 import java.awt.Color;
 import java.io.IOException;
 import java.util.ResourceBundle;
@@ -9,6 +7,7 @@ import java.util.ResourceBundle;
 import de.lathanda.eos.base.Alignment;
 import de.lathanda.eos.base.FillStyle;
 import de.lathanda.eos.base.LineStyle;
+import de.lathanda.eos.common.gui.Messages;
 import de.lathanda.eos.geo.Circle;
 import de.lathanda.eos.geo.Ellipse;
 import de.lathanda.eos.geo.Figure;
@@ -42,7 +41,7 @@ public class EosLanguage /*extends Language*/ implements LanguageProvider {
 		lm.registerNames(ResourceBundle.getBundle("text.map_names"));
 		//init help
 		try {
-			lm.setHelp(GUI.getString("Help.Topics"));
+			lm.setHelp(Messages.getString("Help.Topics"));
 		} catch (IOException e) {
 			//hmm no help, we probably will survive that			
 		}

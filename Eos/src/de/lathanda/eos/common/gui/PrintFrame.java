@@ -1,7 +1,5 @@
 package de.lathanda.eos.common.gui;
 
-import static de.lathanda.eos.common.gui.GuiConstants.GUI;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
@@ -51,7 +49,7 @@ public class PrintFrame extends JFrame {
         btnRight = new JButton();
         space1 = new Filler(new Dimension(20, 0), new Dimension(20, 0), new Dimension(20, 32767));
         btnPrint = new JButton();
-        chkLinenumbers = new JCheckBox(GUI.getString("Print.Linenumbers"), false);
+        chkLinenumbers = new JCheckBox(Messages.getString("Print.Linenumbers"), false);
         txtTitle = new JTextField(title);
         
         printScroll = new JScrollPane();
@@ -114,7 +112,7 @@ public class PrintFrame extends JFrame {
             }
             job.print();
         } catch (HeadlessException | PrinterException t) {
-            JOptionPane.showMessageDialog(this, GUI.getString("Print.Error.Title"),
+            JOptionPane.showMessageDialog(this, Messages.getString("Print.Error.Title"),
                 t.getLocalizedMessage(),
                 JOptionPane.ERROR_MESSAGE
             );

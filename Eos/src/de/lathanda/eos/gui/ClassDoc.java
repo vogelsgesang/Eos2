@@ -17,10 +17,9 @@ import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreePath;
 
 import de.lathanda.eos.base.ResourceLoader;
+import de.lathanda.eos.common.gui.Messages;
 import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
 import de.lathanda.eos.interpreter.parsetree.SystemType;
-
-import static de.lathanda.eos.common.gui.GuiConstants.GUI;
 
 public class ClassDoc extends JFrame {
 	private static final long serialVersionUID = -1384422891907360658L;
@@ -41,14 +40,14 @@ public class ClassDoc extends JFrame {
 		}
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		help.setBounds((int) (screen.width * 0.5), 0, (int) (screen.height * 0.9), (int) (screen.width * 0.5));
-        help.setTitle(GUI.getString("Classbook.Title"));
+        help.setTitle(Messages.getString("Classbook.Title"));
         help.setIconImage(ResourceLoader.loadImage("icons/eos.png"));		
 		help.setVisible(true);
 	}
 	private static DefaultMutableTreeNode root; 
 	static {
 		
-		root = new DefaultMutableTreeNode(new TreeEntry(GUI.getString("Classbook.Classes"), AutoCompleteInformation.CLASS));
+		root = new DefaultMutableTreeNode(new TreeEntry(Messages.getString("Classbook.Classes"), AutoCompleteInformation.CLASS));
 		LinkedList<de.lathanda.eos.interpreter.parsetree.Type> types = SystemType.getAll();
 		
 		for(de.lathanda.eos.interpreter.parsetree.Type t:types) {
@@ -65,8 +64,8 @@ public class ClassDoc extends JFrame {
 					break;
 				}
 			}
-			DefaultMutableTreeNode methodNodes = new DefaultMutableTreeNode(new TreeEntry(GUI.getString("Classbook.Methods"), AutoCompleteInformation.METHOD));
-			DefaultMutableTreeNode propertyNodes = new DefaultMutableTreeNode(new TreeEntry(GUI.getString("Classbook.Properties"), AutoCompleteInformation.PROPERTY));
+			DefaultMutableTreeNode methodNodes = new DefaultMutableTreeNode(new TreeEntry(Messages.getString("Classbook.Methods"), AutoCompleteInformation.METHOD));
+			DefaultMutableTreeNode propertyNodes = new DefaultMutableTreeNode(new TreeEntry(Messages.getString("Classbook.Properties"), AutoCompleteInformation.PROPERTY));
 			for(TreeEntry te:methods) { 
 				methodNodes.add(new DefaultMutableTreeNode(te));
 			}

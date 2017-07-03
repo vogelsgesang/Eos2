@@ -17,7 +17,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import de.lathanda.eos.common.gui.BackgroundCompiler;
-import de.lathanda.eos.common.gui.GuiConstants;
+import de.lathanda.eos.common.gui.Messages;
 import de.lathanda.eos.common.interpreter.AbstractMachine;
 import de.lathanda.eos.common.interpreter.AbstractProgram;
 import de.lathanda.eos.common.interpreter.CompilerListener;
@@ -43,7 +43,7 @@ public class ObjectChart extends Diagram implements CompilerListener, DebugListe
 	private LinkedList<MemoryEntry> memory;
 	private ArrayList<MemoryEntry> variableList = new ArrayList<>();
 	public ObjectChart() {
-		super(GuiConstants.GUI.getString("ObjectChart.Title"));
+		super(Messages.getString("ObjectChart.Title"));
 		memoryModel = new DefaultListModel<String>();
 		memoryList = new JList<>(memoryModel);
 		memoryList.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));

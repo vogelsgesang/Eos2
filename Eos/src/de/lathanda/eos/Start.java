@@ -1,7 +1,5 @@
 package de.lathanda.eos;
 
-import static de.lathanda.eos.common.gui.GuiConstants.GUI;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,6 +13,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import de.lathanda.eos.common.Factory;
 import de.lathanda.eos.common.Stop;
+import de.lathanda.eos.common.gui.Messages;
 import de.lathanda.eos.common.interpreter.AbstractProgram;
 import de.lathanda.eos.gui.MainWindow;
 import de.lathanda.eos.interpreter.parsetree.Program;
@@ -55,7 +54,7 @@ public class Start {
 		try {
 			LanguageManager.prepare();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, GUI.getString("Export.Error.Title"), e.getLocalizedMessage(),
+			JOptionPane.showMessageDialog(null, Messages.getString("Export.Error.Title"), e.getLocalizedMessage(),
 					JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}		switch (mode) {
@@ -169,7 +168,7 @@ public class Start {
 			program.compile();
 			program.getMachine().skip();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, GUI.getString("Export.Error.Title"), e.getLocalizedMessage(),
+			JOptionPane.showMessageDialog(null, Messages.getString("Export.Error.Title"), e.getLocalizedMessage(),
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}

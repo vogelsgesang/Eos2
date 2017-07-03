@@ -1,7 +1,7 @@
 package de.lathanda.eos.gui.flowchart;
 
 import de.lathanda.eos.common.gui.BackgroundCompiler;
-import de.lathanda.eos.common.gui.GuiConstants;
+import de.lathanda.eos.common.gui.Messages;
 import de.lathanda.eos.common.interpreter.AbstractProgram;
 import de.lathanda.eos.common.interpreter.CompilerListener;
 import de.lathanda.eos.common.interpreter.ErrorInformation;
@@ -30,7 +30,7 @@ public class FlowChart extends Diagram implements CompilerListener {
     private static final float SPACE = 10;
 
     public FlowChart() {
-        super(GuiConstants.GUI.getString("FlowChart.Title"));
+        super(Messages.getString("FlowChart.Title"));
         procedures = new LinkedList<>();
         d = new Drawing();        
     }

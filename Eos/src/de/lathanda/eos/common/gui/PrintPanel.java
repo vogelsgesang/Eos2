@@ -1,7 +1,5 @@
 package de.lathanda.eos.common.gui;
 
-import static de.lathanda.eos.common.gui.GuiConstants.GUI;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -63,7 +61,7 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
     			pageFormat = new PageFormat();
     		}
     	} catch (Throwable t) {
-            JOptionPane.showMessageDialog(this, GUI.getString("Print.Error.Title"),
+            JOptionPane.showMessageDialog(this, Messages.getString("Print.Error.Title"),
                     t.getLocalizedMessage(),
                     JOptionPane.ERROR_MESSAGE
             );    		
@@ -84,7 +82,7 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
         try {
             print(g, pageFormat, pageIndex);
         } catch (PrinterException ex) {
-            JOptionPane.showMessageDialog(this, GUI.getString("Print.Error.Title"),
+            JOptionPane.showMessageDialog(this, Messages.getString("Print.Error.Title"),
                     ex.getLocalizedMessage(),
                     JOptionPane.ERROR_MESSAGE
             );

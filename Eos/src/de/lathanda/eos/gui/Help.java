@@ -1,9 +1,8 @@
 package de.lathanda.eos.gui;
 
 import de.lathanda.eos.base.ResourceLoader;
+import de.lathanda.eos.common.gui.Messages;
 import de.lathanda.eos.spi.LanguageManager;
-
-import static de.lathanda.eos.common.gui.GuiConstants.*;
 
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -55,7 +54,7 @@ public class Help extends JFrame {
         }
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         help.setBounds((int) (screen.width * 0.5), 0, (int) (screen.height * 0.9), (int) (screen.width * 0.5));
-        help.setTitle(GUI.getString("Help.Title"));
+        help.setTitle(Messages.getString("Help.Title"));
         help.setIconImage(ResourceLoader.loadImage("icons/eos.png"));
         help.setVisible(true);
     }
@@ -95,7 +94,7 @@ public class Help extends JFrame {
         } catch (ParserConfigurationException | SAXException | IOException e) {
             JOptionPane.showMessageDialog(null, 
                     e.getLocalizedMessage(),
-                    GUI.getString("InternalError.Title"),
+                    Messages.getString("InternalError.Title"),
                     JOptionPane.ERROR_MESSAGE
             );
         } finally {
@@ -253,7 +252,7 @@ public class Help extends JFrame {
 		} catch (IOException | URISyntaxException ioe) {
             JOptionPane.showMessageDialog(null, 
                     ioe.getLocalizedMessage(),
-                    GUI.getString("Info.Error.Title"), 
+                    Messages.getString("Info.Error.Title"), 
                     JOptionPane.ERROR_MESSAGE
                 );
 		}
@@ -281,7 +280,7 @@ public class Help extends JFrame {
         } catch (IOException ioe) {
             JOptionPane.showMessageDialog(null, 
                 ioe.getLocalizedMessage(),
-                GUI.getString("Info.Error.Title"), 
+                Messages.getString("Info.Error.Title"), 
                 JOptionPane.ERROR_MESSAGE
             );
         }

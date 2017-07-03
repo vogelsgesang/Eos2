@@ -1,7 +1,5 @@
 package de.lathanda.eos.common.gui;
 
-import static de.lathanda.eos.common.gui.GuiConstants.GUI;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -93,7 +91,7 @@ public class SourceCode extends DefaultStyledDocument
 			replace(0, getLength(), src.toString(), null);
 		} catch (BadLocationException ble) {
 			// This shouldn't be possible, but if it happens it's fatal
-			JOptionPane.showMessageDialog(null, ble.getLocalizedMessage(), GUI.getString("InternalError.Title"),
+			JOptionPane.showMessageDialog(null, ble.getLocalizedMessage(), Messages.getString("InternalError.Title"),
 					JOptionPane.ERROR_MESSAGE);
 		}
 		br.close();
@@ -112,7 +110,7 @@ public class SourceCode extends DefaultStyledDocument
 			sourceDirty = false;
 		} catch (BadLocationException ble) {
 			// This shouldn't be possible, but if it happens it's fatal
-			JOptionPane.showMessageDialog(null, GUI.getString("InternalError.Title"), ble.getLocalizedMessage(),
+			JOptionPane.showMessageDialog(null, Messages.getString("InternalError.Title"), ble.getLocalizedMessage(),
 					JOptionPane.ERROR_MESSAGE);
 		} finally {
 			if (save != null) {
@@ -145,7 +143,7 @@ public class SourceCode extends DefaultStyledDocument
 			sourceDirty = false;
 		} catch (BadLocationException ble) {
 			// This shouldn't be possible, but if it happens it's fatal
-			JOptionPane.showMessageDialog(null, ble.getLocalizedMessage(), GUI.getString("InternalError.Title"),
+			JOptionPane.showMessageDialog(null, ble.getLocalizedMessage(), Messages.getString("InternalError.Title"),
 					JOptionPane.ERROR_MESSAGE);
 			System.exit(1);
 		}
@@ -285,7 +283,7 @@ public class SourceCode extends DefaultStyledDocument
 				insertString(getLength(), line + "\n", null);
 			} catch (BadLocationException e) {
 				// This should not be possible?
-				JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), GUI.getString("InternalError.Title"),
+				JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), Messages.getString("InternalError.Title"),
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
@@ -295,7 +293,7 @@ public class SourceCode extends DefaultStyledDocument
 				remove(0, getLength());
 			} catch (BadLocationException e) {
 				// This should not be possible?
-				JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), GUI.getString("InternalError.Title"),
+				JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), Messages.getString("InternalError.Title"),
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
@@ -351,19 +349,19 @@ public class SourceCode extends DefaultStyledDocument
 	private void messageInteral(String msg, ErrorLevel level) {
 		switch (level) {
 		case STATUS:
-			message.println(GUI.getString(msg));
+			message.println(Messages.getString(msg));
 			break;			
 		case INFORMATION:
-			message.println(GUI.getString("Message.Information")+" "+msg);
+			message.println(Messages.getString("Message.Information")+" "+msg);
 			break;
 		case WARNING:
-			message.println(GUI.getString("Message.Warning")+" "+msg);
+			message.println(Messages.getString("Message.Warning")+" "+msg);
 			break;
 		case ERROR:
-			message.println(GUI.getString("Message.Error")+" "+msg);
+			message.println(Messages.getString("Message.Error")+" "+msg);
 			break;
 		case FATAL:
-			message.println(GUI.getString("Message.Fatal")+" "+msg);
+			message.println(Messages.getString("Message.Fatal")+" "+msg);
 			break;
 		}
 	}

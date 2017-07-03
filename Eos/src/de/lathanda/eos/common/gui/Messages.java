@@ -13,11 +13,15 @@ import java.util.ResourceBundle;
  */
 public abstract class Messages {
 	private static ResourceBundle ERROR = ResourceBundle.getBundle("text.error");	
+    private static ResourceBundle GUI   = ResourceBundle.getBundle("text.gui");	
 	private Messages(){}
 	public static String getError(String id) {
 		return ERROR.getString(id);
 	}
 	public static String formatError(String id, Object ... info)  {
 		return MessageFormat.format(ERROR.getString(id), info);
+	}
+	public static String getString(String id) {
+		return GUI.getString(id);
 	}
 }

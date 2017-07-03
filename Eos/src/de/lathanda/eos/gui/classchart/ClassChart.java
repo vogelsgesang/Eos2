@@ -13,7 +13,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import de.lathanda.eos.common.gui.BackgroundCompiler;
-import static de.lathanda.eos.common.gui.GuiConstants.GUI;
+import de.lathanda.eos.common.gui.Messages;
 import de.lathanda.eos.gui.diagram.Diagram;
 import de.lathanda.eos.interpreter.parsetree.SystemType;
 import de.lathanda.eos.interpreter.parsetree.Type;
@@ -25,7 +25,7 @@ public class ClassChart extends Diagram implements ListSelectionListener {
 	private DefaultListModel<String> classModel;
 	private ArrayList<Type> variableList = new ArrayList<>();
 	public ClassChart() {
-		super(GUI.getString("ClassChart.Title"));
+		super(Messages.getString("ClassChart.Title"));
 		classModel = new DefaultListModel<String>();
 		classList = new JList<>(classModel);
 		classList.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
