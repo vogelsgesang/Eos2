@@ -3,9 +3,11 @@ package de.lathanda.eos.gui;
 import de.lathanda.eos.base.ResourceLoader;
 import de.lathanda.eos.common.gui.Messages;
 import de.lathanda.eos.spi.LanguageManager;
+import de.lathanda.eos.util.GuiToolkit;
 
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
@@ -177,7 +179,9 @@ public class Help extends JFrame {
     public Help() {
         initComponents();
         treeTopic.setRootVisible(false);
+        treeTopic.setFont(GuiToolkit.createFont(Font.SANS_SERIF, Font.PLAIN, 12));
         txtHelp.setEditorKit(kit);
+        txtHelp.setFont(GuiToolkit.createFont(Font.SERIF, Font.PLAIN, 12));
         javax.swing.text.Document doc = kit.createDefaultDocument();
         txtHelp.setDocument(doc);
         setHtml(defaultHtml);

@@ -8,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.BufferedWriter;
@@ -17,8 +18,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.MessageFormat;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -32,10 +31,8 @@ import javax.swing.JSlider;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
 import javax.swing.Scrollable;
 import javax.swing.WindowConstants;
-import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import de.lathanda.eos.base.ResourceLoader;
@@ -122,22 +119,12 @@ public class MainWindow extends JFrame implements WindowListener {
      * Alle Komponenten einrichten.
      */
     private void initComponents() {
-
+    	mainMenu = new JMenuBar();
         mainToolbar = new JToolBar();
-        btnSave = new JButton();
-        btnOpen = new JButton();
-        jSeparator2 = new JToolBar.Separator();
-        btnCopy = new JButton();
-        btnCut = new JButton();
-        btnPaste = new JButton();
         jSeparator1 = new JToolBar.Separator();
-        btnUndo = new JButton();
-        btnRedo = new JButton();
+        jSeparator2 = new JToolBar.Separator();
         jSeparator3 = new JToolBar.Separator();        
-        btnBreakpoint = new JButton();
         jSeparator4 = new JToolBar.Separator();
-        btnHelp = new JButton();
-        btnClassDoc = new JButton();
         mainSplit = new JSplitPane();
         scrollProgram = new JScrollPane();
         txtProgram = new JTextPane();
@@ -146,123 +133,57 @@ public class MainWindow extends JFrame implements WindowListener {
         txtOutput = new JTextPane();
         runToolbar = new JToolBar();
         toolbarGroup = new JPanel();
-        btnStart = new JButton();
-        btnSingleStep = new JButton();
-        btnPause = new JButton();
-        btnStop = new JButton();
-        btnSkip = new JButton();
         sliderSpeed = new JSlider();
-        mainMenu = new JMenuBar();
-        menuFile = new JMenu();
-        mitNew = new JMenuItem();
-        mitOpen = new JMenuItem();
-        mitSave = new JMenuItem();
-        mitSaveAs = new JMenuItem();
-        mitSaveAsHtml = new JMenuItem();
-        mitPrint = new JMenuItem();
-        mitConfig = new JMenuItem();
-        mitExit = new JMenuItem();
-        editMenu = new JMenu();
-        mitCopy = new JMenuItem();
-        mitCut = new JMenuItem();
-        mitPaste = new JMenuItem();
-        mitUndo = new JMenuItem();
-        mitRedo = new JMenuItem();
-        mitPretty = new JMenuItem();
-        diagramMenu = new JMenu();
-        mitStructogram = new JMenuItem();
-        mitFlowChart = new JMenuItem();
-        mitObjectChart = new JMenuItem();
-        mitClassChart = new JMenuItem();
-        helpMenu = new JMenu();
-        mitHelp = new JMenuItem();
-        mitClassDoc = new JMenuItem();
 
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         
         setTitle(Messages.getString("Title"));
         addWindowListener(this);
 
+
+        toolbarGroup.setLayout(new GridLayout(2,1)); 
+
         mainToolbar.setFloatable(false);
         mainToolbar.setRollover(true);
         mainToolbar.setBackground(new Color(0xEEEEEE));
-        toolbarGroup.setLayout(new GridLayout(2,1)); 
+        toolbarGroup.add(mainToolbar);
         
-        btnSave.setIcon(new ImageIcon(getClass().getResource("/icons/floppy_disk.png")));
-        btnSave.setToolTipText(Messages.getString("Menu.Save.Tooltip"));
-        btnSave.setFocusable(false);
-        btnSave.addActionListener(evt -> SaveActionPerformed(evt));
-
+        btnSave = GuiToolkit.createButton("icons/floppy_disk.png", Messages.getString("Menu.Save.Tooltip"), evt -> SaveActionPerformed(evt));
         mainToolbar.add(btnSave);
 
-        btnOpen.setIcon(new ImageIcon(getClass().getResource("/icons/folder_open.png")));
-        btnOpen.setToolTipText(Messages.getString("Menu.Open.Tooltip"));
-        btnOpen.setFocusable(false);
-        btnOpen.addActionListener(evt -> OpenActionPerformed(evt));
-
+        btnOpen = GuiToolkit.createButton("icons/folder_open.png", Messages.getString("Menu.Open.Tooltip"), evt -> OpenActionPerformed(evt));
         mainToolbar.add(btnOpen);
-        mainToolbar.add(jSeparator2);
-        toolbarGroup.add(mainToolbar);
 
-        btnCopy.setIcon(new ImageIcon(getClass().getResource("/icons/copy.png")));
-        btnCopy.setToolTipText(Messages.getString("Menu.Copy.Tooltip"));
-        btnCopy.setFocusable(false);
-        btnCopy.addActionListener(evt -> CopyActionPerformed(evt));
-
-        mainToolbar.add(btnCopy);
-
-        btnCut.setIcon(new ImageIcon(getClass().getResource("/icons/cut.png")));
-        btnCut.setToolTipText(Messages.getString("Menu.Cut.Tooltip"));
-        btnCut.setFocusable(false);
-        btnCut.addActionListener(evt -> CutActionPerformed(evt));
-
-        mainToolbar.add(btnCut);
-
-        btnPaste.setIcon(new ImageIcon(getClass().getResource("/icons/clipboard_paste.png")));
-        btnPaste.setToolTipText(Messages.getString("Menu.Paste.Tooltip"));
-        btnPaste.setFocusable(false);
-        btnPaste.addActionListener(evt -> PasteActionPerformed(evt));
-
-        mainToolbar.add(btnPaste);
         mainToolbar.add(jSeparator1);
 
-        btnUndo.setIcon(new ImageIcon(getClass().getResource("/icons/undo.png")));
-        btnUndo.setToolTipText(Messages.getString("Menu.Undo.Tooltip"));
-        btnUndo.setFocusable(false);
-        btnUndo.addActionListener(evt -> UndoActionPerformed(evt));
+        btnCopy = GuiToolkit.createButton("icons/copy.png", Messages.getString("Menu.Copy.Tooltip"), evt -> CopyActionPerformed(evt));
+        mainToolbar.add(btnCopy);
 
+        btnCut = GuiToolkit.createButton("icons/cut.png", Messages.getString("Menu.Cut.Tooltip"), evt -> CutActionPerformed(evt));
+        mainToolbar.add(btnCut);
+
+        btnPaste = GuiToolkit.createButton("icons/clipboard_paste.png", Messages.getString("Menu.Paste.Tooltip"), evt -> PasteActionPerformed(evt));
+        mainToolbar.add(btnPaste);
+
+        mainToolbar.add(jSeparator2);
+
+        btnUndo = GuiToolkit.createButton("icons/undo.png", Messages.getString("Menu.Undo.Tooltip"), evt -> UndoActionPerformed(evt));
         mainToolbar.add(btnUndo);
 
-        btnRedo.setIcon(new ImageIcon(getClass().getResource("/icons/redo.png")));
-        btnRedo.setToolTipText(Messages.getString("Menu.Redo.Tooltip"));
-        btnRedo.setFocusable(false);
-        btnRedo.addActionListener(evt -> RedoActionPerformed(evt));
-
+        btnRedo = GuiToolkit.createButton("icons/redo.png", Messages.getString("Menu.Redo.Tooltip"), evt -> RedoActionPerformed(evt));
         mainToolbar.add(btnRedo);
         
         mainToolbar.add(jSeparator3);
         
-        btnBreakpoint.setIcon(new ImageIcon(getClass().getResource("/icons/sign_stop.png")));
-        btnBreakpoint.setToolTipText(Messages.getString("Tooltip.Breakpoint"));
-        btnBreakpoint.setFocusable(false);
-        btnBreakpoint.addActionListener(evt -> BreakpointActionPerformed(evt));
-        
+        btnBreakpoint = GuiToolkit.createButton("icons/sign_stop.png", Messages.getString("Tooltip.Breakpoint"), evt -> BreakpointActionPerformed(evt));        
         mainToolbar.add(btnBreakpoint);
         
         mainToolbar.add(jSeparator4);
         
-        btnClassDoc.setIcon(new ImageIcon(getClass().getResource("/icons/books.png")));
-        btnClassDoc.setToolTipText(Messages.getString("Menu.Classbook.Tooltip"));
-        btnClassDoc.setFocusable(false);
-        btnClassDoc.addActionListener(evt -> ClassDocActionPerformed(evt));
-        
+        btnClassDoc = GuiToolkit.createButton("icons/books.png", Messages.getString("Menu.Classbook.Tooltip"), evt -> ClassDocActionPerformed(evt));
         mainToolbar.add(btnClassDoc);
         
-        btnHelp.setIcon(new ImageIcon(getClass().getResource("/icons/question_and_answer.png")));
-        btnHelp.setToolTipText(Messages.getString("Menu.Handbook.Tooltip"));
-        btnHelp.setFocusable(false);
-        btnHelp.addActionListener(evt -> HelpActionPerformed(evt));
-
+        btnHelp = GuiToolkit.createButton("icons/question_and_answer.png", Messages.getString("Menu.Handbook.Tooltip"), evt -> HelpActionPerformed(evt));
         mainToolbar.add(btnHelp);
 
         mainSplit.setDividerLocation(400);
@@ -290,190 +211,101 @@ public class MainWindow extends JFrame implements WindowListener {
         GridBagConstraints LAST = new GridBagConstraints();
         LAST.fill = GridBagConstraints.HORIZONTAL;
         LAST.weightx = 1;
-        toolbarGroup.add(runToolbar);
+        toolbarGroup.add(runToolbar);                
         
-        btnStart.setIcon(new ImageIcon(getClass().getResource("/icons/media_play.png")));
-        btnStart.setToolTipText(Messages.getString("Tooltip.Start"));
-        btnStart.setFocusable(false);
-        btnStart.addActionListener(evt -> StartActionPerformed(evt));
-
+        btnStart = GuiToolkit.createButton("icons/media_play.png", Messages.getString("Tooltip.Start"), evt -> StartActionPerformed(evt));
         runToolbar.add(btnStart);
 
-        btnSingleStep.setIcon(new ImageIcon(getClass().getResource("/icons/media_end.png")));
-        btnSingleStep.setToolTipText(Messages.getString("Tooltip.SingleStep"));
-        btnSingleStep.setFocusable(false);
-        btnSingleStep.addActionListener(evt -> SingleStepActionPerformed(evt));
-
+        btnSingleStep = GuiToolkit.createButton("icons/media_end.png", Messages.getString("Tooltip.SingleStep"), evt -> SingleStepActionPerformed(evt));
         runToolbar.add(btnSingleStep);
 
-        btnPause.setIcon(new ImageIcon(getClass().getResource("/icons/media_pause.png")));
-        btnPause.setToolTipText(Messages.getString("Tooltip.Pause"));
-        btnPause.setFocusable(false);
-        btnPause.addActionListener(evt -> PauseActionPerformed(evt));
-
+        btnPause = GuiToolkit.createButton("icons/media_pause.png", Messages.getString("Tooltip.Pause"), evt -> PauseActionPerformed(evt));
         runToolbar.add(btnPause);
 
-        btnStop.setIcon(new ImageIcon(getClass().getResource("/icons/media_stop.png")));
-        btnStop.setToolTipText(Messages.getString("Tooltip.Stop"));
-        btnStop.setFocusable(false);
-        btnStop.addActionListener(evt -> StopActionPerformed(evt));
-
+        btnStop = GuiToolkit.createButton("icons/media_stop.png", Messages.getString("Tooltip.Stop"), evt -> StopActionPerformed(evt));
         runToolbar.add(btnStop);
 
-        btnSkip.setIcon(new ImageIcon(getClass().getResource("/icons/media_fast_forward.png")));
-        btnSkip.setToolTipText(Messages.getString("Tooltip.Skip"));
-        btnSkip.setFocusable(false);
-        btnSkip.addActionListener(evt -> SkipActionPerformed(evt));
-
+        btnSkip = GuiToolkit.createButton("icons/media_fast_forward.png", Messages.getString("Tooltip.Skip"), evt -> SkipActionPerformed(evt));
         runToolbar.add(btnSkip);
 
+        sliderSpeed = GuiToolkit.createSlider(Messages.getString("Run.Speed.Slider"), evt -> sliderSpeedStateChanged(evt));
         sliderSpeed.setValue(10);
-        sliderSpeed.setFocusable(false);
-        sliderSpeed.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), Messages.getString("Run.Speed.Slider"), TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", 0, 12)));
-        sliderSpeed.addChangeListener(evt -> sliderSpeedStateChanged(evt));
         runToolbar.add(sliderSpeed, LAST);
         
-        menuFile.setText(Messages.getString("Menu.File"));
+        menuFile = GuiToolkit.createMenue(Messages.getString("Menu.File"));
 
-        mitNew.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-        mitNew.setText(Messages.getString("Menu.New"));
-        mitNew.setToolTipText(Messages.getString("Menu.New.Tooltip"));
-        mitNew.addActionListener(evt -> NewActionPerformed(evt));
-
+        mitNew = GuiToolkit.createMenuItem(Messages.getString("Menu.New"), Messages.getString("Menu.New.Tooltip"), evt -> NewActionPerformed(evt), KeyEvent.VK_N);
         menuFile.add(mitNew);
 
-        mitOpen.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        mitOpen.setText(Messages.getString("Menu.Open"));
-        mitOpen.setToolTipText(Messages.getString("Menu.Open.Tooltip"));
-        mitOpen.addActionListener(evt -> OpenActionPerformed(evt));
-
+        mitOpen = GuiToolkit.createMenuItem(Messages.getString("Menu.Open"), Messages.getString("Menu.Open.Tooltip"), evt -> OpenActionPerformed(evt), KeyEvent.VK_O);
         menuFile.add(mitOpen);
 
-        mitSave.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        mitSave.setText(Messages.getString("Menu.Save"));
-        mitSave.setToolTipText(Messages.getString("Menu.Save.Tooltip"));
-        mitSave.addActionListener(evt -> SaveActionPerformed(evt));
-
+        mitSave = GuiToolkit.createMenuItem(Messages.getString("Menu.Save"), Messages.getString("Menu.Save.Tooltip"), evt -> SaveActionPerformed(evt), KeyEvent.VK_S);
         menuFile.add(mitSave);
 
-        mitSaveAs.setText(Messages.getString("Menu.SaveAs"));
-        mitSaveAs.setToolTipText(Messages.getString("Menu.SaveAs.Tooltip"));
-        mitSaveAs.addActionListener(evt -> SaveAsActionPerformed(evt));
-
+        mitSaveAs = GuiToolkit.createMenuItem(Messages.getString("Menu.SaveAs"), Messages.getString("Menu.SaveAs.Tooltip"), evt -> SaveAsActionPerformed(evt));
         menuFile.add(mitSaveAs);
 
-        mitSaveAsHtml.setText(Messages.getString("Menu.SaveAs.Html"));
-        mitSaveAsHtml.setToolTipText(Messages.getString("Menu.SaveAs.Html.Tooltip"));
-        mitSaveAsHtml.addActionListener(evt -> SaveAsHtmlActionPerformed(evt));
-
+        mitSaveAsHtml = GuiToolkit.createMenuItem(Messages.getString("Menu.SaveAs.Html"), Messages.getString("Menu.SaveAs.Html.Tooltip"), evt -> SaveAsHtmlActionPerformed(evt));
         menuFile.add(mitSaveAsHtml);
 
-        mitPrint.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
-        mitPrint.setText(Messages.getString("Menu.Print"));
-        mitPrint.setToolTipText(Messages.getString("Menu.Print.Tooltip"));
-        mitPrint.addActionListener(evt -> PrintActionPerformed(evt));
-
+        mitPrint = GuiToolkit.createMenuItem(Messages.getString("Menu.Print"), Messages.getString("Menu.Print.Tooltip"), evt -> PrintActionPerformed(evt), KeyEvent.VK_P);
         menuFile.add(mitPrint);
 
-        mitConfig.setText(Messages.getString("Menu.Config"));
-        mitConfig.setToolTipText(Messages.getString("Menu.Config.Tooltip"));
-        mitConfig.addActionListener(evt -> ConfigActionPerformed(evt));
-
+        mitConfig = GuiToolkit.createMenuItem(Messages.getString("Menu.Config"), Messages.getString("Menu.Config.Tooltip"), evt -> ConfigActionPerformed(evt));
         menuFile.add(mitConfig);
 
-        mitExit.setText(Messages.getString("Menu.Close"));
-        mitExit.setToolTipText(Messages.getString("Menu.Close.Tooltip"));
-        mitExit.addActionListener(evt -> ExitActionPerformed(evt));
-
+        mitExit = GuiToolkit.createMenuItem(Messages.getString("Menu.Close"), Messages.getString("Menu.Close.Tooltip"), evt -> ExitActionPerformed(evt));
         menuFile.add(mitExit);
 
         mainMenu.add(menuFile);
 
-        editMenu.setText(Messages.getString("Menu.Edit"));
+        editMenu = GuiToolkit.createMenue(Messages.getString("Menu.Edit"));
 
-        mitCopy.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
-        mitCopy.setText(Messages.getString("Menu.Copy"));
-        mitCopy.setToolTipText(Messages.getString("Menu.Copy.Tooltip"));
-        mitCopy.addActionListener(evt -> CopyActionPerformed(evt));
-
+        mitCopy = GuiToolkit.createMenuItem(Messages.getString("Menu.Copy"), Messages.getString("Menu.Copy.Tooltip"), evt -> CopyActionPerformed(evt), KeyEvent.VK_C);
         editMenu.add(mitCopy);
 
-        mitCut.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
-        mitCut.setText(Messages.getString("Menu.Cut"));
-        mitCut.setToolTipText(Messages.getString("Menu.Cut.Tooltip"));
-        mitCut.addActionListener(evt -> CutActionPerformed(evt));
-
+        mitCut = GuiToolkit.createMenuItem(Messages.getString("Menu.Cut"), Messages.getString("Menu.Cut.Tooltip"), evt -> CutActionPerformed(evt), KeyEvent.VK_X);
         editMenu.add(mitCut);
 
-        mitPaste.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
-        mitPaste.setText(Messages.getString("Menu.Paste"));
-        mitPaste.setToolTipText(Messages.getString("Menu.Paste.Tooltip"));
-        mitPaste.addActionListener(evt -> PasteActionPerformed(evt));
-
+        mitPaste = GuiToolkit.createMenuItem(Messages.getString("Menu.Paste"), Messages.getString("Menu.Paste.Tooltip"), evt -> PasteActionPerformed(evt), KeyEvent.VK_V);
         editMenu.add(mitPaste);
 
-        mitUndo.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
-        mitUndo.setText(Messages.getString("Menu.Undo"));
-        mitUndo.setToolTipText(Messages.getString("Menu.Undo.Tooltip"));
-        mitUndo.addActionListener(evt -> UndoActionPerformed(evt));
-
+        mitUndo = GuiToolkit.createMenuItem(Messages.getString("Menu.Undo"), Messages.getString("Menu.Undo.Tooltip"), evt -> UndoActionPerformed(evt), KeyEvent.VK_Z);
         editMenu.add(mitUndo);
 
-        mitRedo.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
-        mitRedo.setText(Messages.getString("Menu.Redo"));
-        mitRedo.setToolTipText(Messages.getString("Menu.Redo.Tooltip"));
-        mitRedo.addActionListener(evt -> RedoActionPerformed(evt));
-
+        mitRedo = GuiToolkit.createMenuItem(Messages.getString("Menu.Redo"), Messages.getString("Menu.Redo.Tooltip"), evt -> RedoActionPerformed(evt), KeyEvent.VK_Y);
         editMenu.add(mitRedo);
 
-        mitPretty.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
-        mitPretty.setText(Messages.getString("Menu.Pretty"));
-        mitPretty.setToolTipText(Messages.getString("Menu.Pretty.Tooltip"));
-        mitPretty.addActionListener(evt -> PrettyActionPerformed(evt));
-        
+        mitPretty = GuiToolkit.createMenuItem(Messages.getString("Menu.Pretty"), Messages.getString("Menu.Pretty.Tooltip"), evt -> PrettyActionPerformed(evt), KeyEvent.VK_F);
         editMenu.add(mitPretty);
 
         mainMenu.add(editMenu);
 
-        diagramMenu.setText(Messages.getString("Menu.Visualization"));
+        diagramMenu = GuiToolkit.createMenue(Messages.getString("Menu.Visualization"));
 
-        mitStructogram.setText(Messages.getString("Menu.Structogram"));
-        mitStructogram.setToolTipText(Messages.getString("Menu.Structogram.Tooltip"));
-        mitStructogram.addActionListener(evt -> StructogramActionPerformed(evt));
+        mitStructogram = GuiToolkit.createMenuItem(Messages.getString("Menu.Structogram"), Messages.getString("Menu.Structogram.Tooltip"), evt -> StructogramActionPerformed(evt));
         diagramMenu.add(mitStructogram);
 
-        mitFlowChart.setText(Messages.getString("Menu.Flowchart"));
-        mitFlowChart.setToolTipText(Messages.getString("Menu.Flowchart.Tooltip"));
-        mitFlowChart.addActionListener(evt -> FlowChartActionPerformed(evt));
+        mitFlowChart = GuiToolkit.createMenuItem(Messages.getString("Menu.Flowchart"), Messages.getString("Menu.Flowchart.Tooltip"), evt -> FlowChartActionPerformed(evt)); 
         diagramMenu.add(mitFlowChart);
 
-        mitObjectChart.setText(Messages.getString("Menu.Objectchart"));
-        mitObjectChart.setToolTipText(Messages.getString("Menu.Objectchart.Tooltip"));
-        mitObjectChart.addActionListener(evt -> ObjectChartActionPerformed(evt));        
+        mitObjectChart = GuiToolkit.createMenuItem(Messages.getString("Menu.Objectchart"), Messages.getString("Menu.Objectchart.Tooltip"), evt -> ObjectChartActionPerformed(evt));
         diagramMenu.add(mitObjectChart);
 
-        mitClassChart.setText(Messages.getString("Menu.Classchart"));
-        mitClassChart.setToolTipText(Messages.getString("Menu.Classchart.Tooltip"));
-        mitClassChart.addActionListener(evt -> ClassChartActionPerformed(evt));        
+        mitClassChart = GuiToolkit.createMenuItem(Messages.getString("Menu.Classchart"), Messages.getString("Menu.Classchart.Tooltip"), evt -> ClassChartActionPerformed(evt));
         diagramMenu.add(mitClassChart);
         
         mainMenu.add(diagramMenu);
         
         LanguageManager.getInstance().addPluginMenues(mainMenu);
         
-        helpMenu.setText(Messages.getString("Menu.Help"));
+        helpMenu = GuiToolkit.createMenue(Messages.getString("Menu.Help"));
 
-        mitClassDoc.setText(Messages.getString("Menu.Classbook"));
-        mitClassDoc.setToolTipText(Messages.getString("Menu.Classbook.Tooltip"));
-        mitClassDoc.addActionListener(evt -> ClassDocActionPerformed(evt));
-
+        mitClassDoc = GuiToolkit.createMenuItem(Messages.getString("Menu.Classbook"), Messages.getString("Menu.Classbook.Tooltip"), evt -> ClassDocActionPerformed(evt));
         helpMenu.add(mitClassDoc);
 
-        mitHelp.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        mitHelp.setText(Messages.getString("Menu.Handbook"));
-        mitHelp.setToolTipText(Messages.getString("Menu.Handbook.Tooltip"));
-        mitHelp.addActionListener(evt -> HelpActionPerformed(evt));
-
+        mitHelp = GuiToolkit.createMenuItem(Messages.getString("Menu.Handbook"), Messages.getString("Menu.Handbook.Tooltip"), evt -> HelpActionPerformed(evt), KeyEvent.VK_F1);
         helpMenu.add(mitHelp);
 
         mainMenu.add(helpMenu);

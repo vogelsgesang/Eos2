@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 
 import de.lathanda.eos.common.gui.BackgroundCompiler;
 import de.lathanda.eos.common.gui.ClipBoard;
+import de.lathanda.eos.util.GuiToolkit;
 
 /**
  * Fenster für Diagramme.
@@ -38,7 +39,7 @@ public class DiagramFrame extends JFrame implements WindowListener {
     private void initComponents() {
 
         diagramToolbar = new javax.swing.JToolBar();
-        btnClipboard = new javax.swing.JButton();
+        btnClipboard = GuiToolkit.createButton("icons/clipboard.png", null, evt -> btnClipboardActionPerformed(evt));
         scroll = new javax.swing.JScrollPane();
         scroll.setPreferredSize(new Dimension(400, 400));
         scroll.setViewportView(diagram);
@@ -48,11 +49,6 @@ public class DiagramFrame extends JFrame implements WindowListener {
 
         diagramToolbar.setFloatable(false);
         diagramToolbar.setRollover(true);
-
-        btnClipboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/clipboard.png"))); // NOI18N
-        btnClipboard.setFocusable(false);
-        btnClipboard.addActionListener(evt -> btnClipboardActionPerformed(evt));
-
         diagramToolbar.add(btnClipboard);
 
         getContentPane().add(diagramToolbar, BorderLayout.NORTH);

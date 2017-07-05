@@ -2,6 +2,7 @@ package de.lathanda.eos.gui;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
@@ -20,6 +21,7 @@ import de.lathanda.eos.base.ResourceLoader;
 import de.lathanda.eos.common.gui.Messages;
 import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
 import de.lathanda.eos.interpreter.parsetree.SystemType;
+import de.lathanda.eos.util.GuiToolkit;
 
 public class ClassDoc extends JFrame {
 	private static final long serialVersionUID = -1384422891907360658L;
@@ -84,6 +86,7 @@ public class ClassDoc extends JFrame {
 	private TooltipTree content;
 	private ClassDoc() {
 		content = new TooltipTree(root);
+		content.setFont(GuiToolkit.createFont(Font.SANS_SERIF, Font.PLAIN, 12));
 		content.setCellRenderer(new ClassCellRenderer());
 		content.setRootVisible(false);
 		getContentPane().add(new JScrollPane(content));

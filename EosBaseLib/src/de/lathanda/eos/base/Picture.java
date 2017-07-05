@@ -4,10 +4,10 @@ import de.lathanda.eos.base.layout.Dimension;
 import de.lathanda.eos.base.math.Point;
 import de.lathanda.eos.base.layout.Transform;
 import de.lathanda.eos.game.geom.Shape;
+import de.lathanda.eos.util.GuiToolkit;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Toolkit;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,7 +42,7 @@ public abstract class Picture {
     protected Font font;
     
     public Picture() {       
-        scaleBase = Toolkit.getDefaultToolkit().getScreenResolution() / 25.4f;
+        scaleBase = GuiToolkit.getScreenResolution() / 25.4f;
         scale = 1.0f;
         centerX = 0;
         centerY = 0;

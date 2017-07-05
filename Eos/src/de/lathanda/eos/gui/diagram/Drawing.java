@@ -5,9 +5,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
+
+import de.lathanda.eos.util.GuiToolkit;
 
 
 /**
@@ -61,7 +62,7 @@ public class Drawing {
      * Bevor das Objekt sinnvoll genutzt werden kann muss init aufgerufen werden. 
      */
     public Drawing() {
-        this(Toolkit.getDefaultToolkit().getScreenResolution(), DUMMY_G);
+        this(GuiToolkit.getScreenResolution(), DUMMY_G);
     }
     /**
      * Erzeugt eine Zeichnung.

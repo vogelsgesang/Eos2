@@ -4,6 +4,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,10 +34,10 @@ public class GuiToolkit {
 	 * Die Betriebssysteme kennen die exakte Bildschirmauflösung nur ungefähr und ab
 	 * und zu wird absichtlich gelogen. (zB Dynamic Super Resolution).
 	 */
-	private static int DPI = Toolkit.getDefaultToolkit().getScreenResolution();
-	private static Font MENU_ITEM_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 12);
-	private static Font MENU_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 12);
-	private static Font LABEL_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 12);
+	private static int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
+	private static final Font MENU_ITEM_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 12);
+	private static final Font MENU_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 12);
+	private static final Font LABEL_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 12);
 
 	/**
 	 * Millimeter in Pixel umrechnen.
@@ -44,7 +46,7 @@ public class GuiToolkit {
 	 * @return
 	 */
 	public static int mm2pixel(double mm) {
-		return (int) (DPI / 25.4f * mm);
+		return (int) (dpi / 25.4f * mm);
 	}
 
 	/**
@@ -54,27 +56,32 @@ public class GuiToolkit {
 	 * @return
 	 */
 	public static double pixel2mm(int pixel) {
-		return pixel * 25.4f / DPI;
+		return pixel * 25.4f / dpi;
 	}
 
 	static {
 		UIManager.getLookAndFeelDefaults().put("ToolTip.font",
-				new FontUIResource(Font.SANS_SERIF, Font.PLAIN, DPI * 12 / 72));
+				new FontUIResource(Font.SANS_SERIF, Font.PLAIN, dpi * 12 / 72));
 	}
-
+	public static int getScreenResolution() {
+		return dpi;
+	}
+	public static void setScreenResolution(int dpi) {
+		GuiToolkit.dpi = dpi;
+	}
 	public static Font createFont(String name, int style, int size) {
 		return new Font(name, style, getFontSize(size));
 	}
 
 	public static int getFontSize(int size) {
-		return DPI * size / 72;
+		return dpi * size / 72;
 	}
 
 	public static JButton createButton(String image, String tooltip, ActionListener action) {
 		JButton btn = new JButton();
 		ImageIcon icon = null;
 		Image i = ResourceLoader.loadImage(image);
-		icon = new ImageIcon(i.getScaledInstance(DPI * 48 / 96, DPI * 48 / 96, Image.SCALE_SMOOTH));
+		icon = new ImageIcon(i.getScaledInstance(dpi * 48 / 96, dpi * 48 / 96, Image.SCALE_SMOOTH));
 
 		btn.setIcon(icon);
 		btn.setToolTipText(tooltip);
@@ -100,9 +107,9 @@ public class GuiToolkit {
 		return mit;
 	}
 
-	public static JMenuItem createMenuItem(String textID, String tooltipID, ActionListener action, int mem) {
-		JMenuItem mit = createMenuItem(textID, tooltipID, action);
-		mit.setAccelerator(KeyStroke.getKeyStroke(mem, java.awt.event.InputEvent.CTRL_MASK));
+	public static JMenuItem createMenuItem(String text, String tooltip, ActionListener action, int mem) {
+		JMenuItem mit = createMenuItem(text, tooltip, action);
+		mit.setAccelerator(KeyStroke.getKeyStroke(mem, InputEvent.CTRL_MASK));
 		return mit;
 	}
 
