@@ -48,6 +48,7 @@ public class Start {
 		    }
 		} catch (Throwable t) {
 		}
+	
 		Factory.setProgram(Program.class);
 		Runtime.getRuntime().addShutdownHook(new Stop());		
 		apply(args);

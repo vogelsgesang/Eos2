@@ -17,8 +17,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.FontUIResource;
 
 /**
  * Sammlung von häufig verwendeten Funktionen für die
@@ -35,9 +37,9 @@ public class GuiToolkit {
      * (zB Dynamic Super Resolution).
      */
     private static int DPI = Toolkit.getDefaultToolkit().getScreenResolution();
-	private static Font MENU_ITEM_FONT   = new Font(Font.SANS_SERIF, Font.PLAIN, DPI*10/72);
-	private static Font MENU_FONT   = new Font(Font.SANS_SERIF, Font.PLAIN, DPI*10/72);
-	private static Font LABEL_FONT  = new Font(Font.SANS_SERIF, Font.PLAIN, DPI*10/72);
+	private static Font MENU_ITEM_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 12);
+	private static Font MENU_FONT      = createFont(Font.SANS_SERIF, Font.PLAIN, 12);
+	private static Font LABEL_FONT     = createFont(Font.SANS_SERIF, Font.PLAIN, 12);
 
     /**
      * Millimeter in Pixel umrechnen.
@@ -57,12 +59,21 @@ public class GuiToolkit {
     public static double pixel2mm(int pixel) {
         return pixel * 25.4f / DPI;
     }	
+    static {
+    	UIManager.getLookAndFeelDefaults().put("ToolTip.font", new FontUIResource(Font.SANS_SERIF, Font.PLAIN, DPI*12/72));    	
+    }
+    public static Font createFont(String name, int style, int size) {
+    	return new Font(name, style, getFontSize(size));
+    }
+    public static int getFontSize(int size) {
+    	return DPI*size/72;
+    }
 	public static JButton createButton(String image, String tooltip, ActionListener action) {
 		JButton btn = new JButton();
 		ImageIcon icon = null;
         try (InputStream in = GuiToolkit.class.getResourceAsStream(image)){
         	Image i =  ImageIO.read(in);
-        	icon = new ImageIcon(i.getScaledInstance(DPI*36/72, DPI*36/72, Image.SCALE_SMOOTH));
+        	icon = new ImageIcon(i.getScaledInstance(DPI*48/96, DPI*48/96, Image.SCALE_SMOOTH));
         } catch (IOException ioe) {
         	icon = new ImageIcon(image);
         }

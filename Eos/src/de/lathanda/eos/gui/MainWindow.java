@@ -54,6 +54,7 @@ import de.lathanda.eos.gui.flowchart.FlowChart;
 import de.lathanda.eos.gui.objectchart.ObjectChart;
 import de.lathanda.eos.gui.structogram.Structogram;
 import de.lathanda.eos.spi.LanguageManager;
+import de.lathanda.eos.util.GuiToolkit;
 
 /**
  * Das Hauptfenster.
@@ -268,7 +269,7 @@ public class MainWindow extends JFrame implements WindowListener {
         mainSplit.setOrientation(JSplitPane.VERTICAL_SPLIT);
         mainSplit.setResizeWeight(1.0);
 
-        txtProgram.setFont(new Font("Courier New", Font.PLAIN, GuiConfiguration.def.getFontsize()));
+        txtProgram.setFont(GuiToolkit.createFont("Courier New", Font.PLAIN, GuiConfiguration.def.getFontsize()));
         scrollProgram.setViewportView(new NoTextWrapContainer(txtProgram));
         scrollProgram.getViewport().setBackground(Color.WHITE);
         scrollProgram.setRowHeaderView(sideInformation);
@@ -276,7 +277,7 @@ public class MainWindow extends JFrame implements WindowListener {
         mainSplit.setTopComponent(scrollProgram);
 
         txtOutput.setEditable(false);
-        txtOutput.setFont(new Font("Courier New", Font.PLAIN, 12));
+        txtOutput.setFont(GuiToolkit.createFont("Courier New", Font.PLAIN, 12));
         txtOutput.setFocusable(false);
         scrollOutput.setViewportView(txtOutput);
 

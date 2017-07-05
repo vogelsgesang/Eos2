@@ -32,7 +32,7 @@ public class Drawing {
      */
     private final float scale;
     /**
-     * Fontskalierung.
+     * Fontskalierung. Je nach Renderingziel kann diese stark Variieren.
      */
     private final float fontScale2pixel;
     /**
