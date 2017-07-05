@@ -92,44 +92,44 @@ public class WorldEditor extends JFrame implements KeyListener, DocumentListener
 		editorToolbar = new JPanel();
 		editorToolbar.setLayout(new GridLayout(2,7));
 	
-		btnUp = GuiToolkit.createButton("/icons/navigate_up2.png", ROBOT.getString("Tooltip.Up"), evt -> upActionPerformed(evt));
+		btnUp = GuiToolkit.createButton("icons/navigate_up2.png", ROBOT.getString("Tooltip.Up"), evt -> upActionPerformed(evt));
 	    mnemonics.put(KeyEvent.VK_A, evt -> upActionPerformed(evt));
 
-	    btnDown = GuiToolkit.createButton("/icons/navigate_down2.png", ROBOT.getString("Tooltip.Down"), evt -> downActionPerformed(evt)); 
+	    btnDown = GuiToolkit.createButton("icons/navigate_down2.png", ROBOT.getString("Tooltip.Down"), evt -> downActionPerformed(evt)); 
 	    mnemonics.put(KeyEvent.VK_Z, evt -> downActionPerformed(evt));
 	    
-	    btnLeft = GuiToolkit.createButton("/icons/navigate_left.png", ROBOT.getString("Tooltip.Left"), evt -> leftActionPerformed(evt));
+	    btnLeft = GuiToolkit.createButton("icons/navigate_left.png", ROBOT.getString("Tooltip.Left"), evt -> leftActionPerformed(evt));
 	    mnemonics.put(KeyEvent.VK_LEFT,	evt -> leftActionPerformed(evt));
 	    
-	    btnRight = GuiToolkit.createButton("/icons/navigate_right.png", ROBOT.getString("Tooltip.Right"), evt -> rightActionPerformed(evt)); 
+	    btnRight = GuiToolkit.createButton("icons/navigate_right.png", ROBOT.getString("Tooltip.Right"), evt -> rightActionPerformed(evt)); 
 	    mnemonics.put(KeyEvent.VK_RIGHT, evt -> rightActionPerformed(evt));
 	    
-	    btnForward = GuiToolkit.createButton("/icons/navigate_up.png", ROBOT.getString("Tooltip.Forward"), evt -> forwardActionPerformed(evt)); 
+	    btnForward = GuiToolkit.createButton("icons/navigate_up.png", ROBOT.getString("Tooltip.Forward"), evt -> forwardActionPerformed(evt)); 
 	    mnemonics.put(KeyEvent.VK_UP, evt -> forwardActionPerformed(evt));
 	    
-	    btnBack = GuiToolkit.createButton("/icons/navigate_down.png", ROBOT.getString("Tooltip.Back"), evt -> backActionPerformed(evt));
+	    btnBack = GuiToolkit.createButton("icons/navigate_down.png", ROBOT.getString("Tooltip.Back"), evt -> backActionPerformed(evt));
 	    mnemonics.put(KeyEvent.VK_DOWN, evt -> backActionPerformed(evt));
 
-	    btnSaveAs = GuiToolkit.createButton("/icons/save_as.png", ROBOT.getString("Tooltip.SaveAs"), evt -> saveAsActionPerformed(evt)); 
+	    btnSaveAs = GuiToolkit.createButton("icons/save_as.png", ROBOT.getString("Tooltip.SaveAs"), evt -> saveAsActionPerformed(evt)); 
 
-	    btnLoad = GuiToolkit.createButton("/icons/folder_open.png", ROBOT.getString("Tooltip.Load"), evt -> loadActionPerformed(evt)); 
+	    btnLoad = GuiToolkit.createButton("icons/folder_open.png", ROBOT.getString("Tooltip.Load"), evt -> loadActionPerformed(evt)); 
 	    
-	    btnChooseColor = GuiToolkit.createButton("/icons/painters_palette.png", ROBOT.getString("Tooltip.ChooseColor"), evt -> chooseColorActionPerformed(evt)); 
+	    btnChooseColor = GuiToolkit.createButton("icons/painters_palette.png", ROBOT.getString("Tooltip.ChooseColor"), evt -> chooseColorActionPerformed(evt)); 
 	    mnemonics.put(KeyEvent.VK_C, evt -> chooseColorActionPerformed(evt));
 	    
-	    btnRemove = GuiToolkit.createButton("/icons/garbage.png", ROBOT.getString("Tooltip.Remove"), evt -> removeActionPerformed(evt)); 
+	    btnRemove = GuiToolkit.createButton("icons/garbage.png", ROBOT.getString("Tooltip.Remove"), evt -> removeActionPerformed(evt)); 
 	    mnemonics.put(KeyEvent.VK_X, evt -> removeActionPerformed(evt));
 	    
-	    btnStone = GuiToolkit.createButton("/icons/cubes.png", ROBOT.getString("Tooltip.Stone"), evt -> stoneActionPerformed(evt)); 
+	    btnStone = GuiToolkit.createButton("icons/cubes.png", ROBOT.getString("Tooltip.Stone"), evt -> stoneActionPerformed(evt)); 
 	    mnemonics.put(KeyEvent.VK_S, evt -> stoneActionPerformed(evt));
 	    
-	    btnRock = GuiToolkit.createButton("/icons/brickwall.png", ROBOT.getString("Tooltip.Rock"), evt -> rockActionPerformed(evt));
+	    btnRock = GuiToolkit.createButton("icons/brickwall.png", ROBOT.getString("Tooltip.Rock"), evt -> rockActionPerformed(evt));
 	    mnemonics.put(KeyEvent.VK_R, evt -> rockActionPerformed(evt));
 	    
-	    btnMark = GuiToolkit.createButton("/icons/gold_bar.png", ROBOT.getString("Tooltip.Mark"), evt -> markActionPerformed(evt)); 
+	    btnMark = GuiToolkit.createButton("icons/gold_bar.png", ROBOT.getString("Tooltip.Mark"), evt -> markActionPerformed(evt)); 
 	    mnemonics.put(KeyEvent.VK_M, evt -> markActionPerformed(evt));
 	    
-	    btnEntrance = GuiToolkit.createButton("/icons/robot.png", ROBOT.getString("Tooltip.Entrance"), evt -> entranceActionPerformed(evt)); 
+	    btnEntrance = GuiToolkit.createButton("icons/robot.png", ROBOT.getString("Tooltip.Entrance"), evt -> entranceActionPerformed(evt)); 
 	    mnemonics.put(KeyEvent.VK_E, evt -> entranceActionPerformed(evt));
 
 	    editorToolbar.add(btnUp);

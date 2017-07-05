@@ -1,9 +1,11 @@
 package de.lathanda.eos.gui;
 
-import static de.lathanda.eos.base.ResourceLoader.*;
+import de.lathanda.eos.base.ResourceLoader;
 import de.lathanda.eos.base.math.Point;
 import de.lathanda.eos.geo.Window;
 import de.lathanda.eos.gui.event.CursorListener;
+import de.lathanda.eos.util.GuiToolkit;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
@@ -14,7 +16,6 @@ import java.awt.event.KeyListener;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,10 +30,7 @@ import javax.swing.JToolBar;
 public class ViewFrame extends JFrame {
     private static final long serialVersionUID = 8808554555627848478L;
     private static final ResourceBundle VIEW   = ResourceBundle.getBundle("text.view");
-    private static final ImageIcon ZOOM_IN     = loadIcon("icons/document_zoom_in.png");
-    private static final ImageIcon ZOOM_OUT    = loadIcon("icons/document_zoom_out.png");
-    private static final ImageIcon ZOOM_100    = loadIcon("icons/document_view.png");
-    private static final Image     LOGO        = loadImage("icon/eos.png");
+    private static final Image     LOGO        = ResourceLoader.loadImage("icon/eos.png");
     private ViewPanel view;
     private final JToolBar toolbar;
     private final JButton zoomIn;
@@ -45,10 +43,10 @@ public class ViewFrame extends JFrame {
         this.setIconImage(LOGO);
         view    = new ViewPanel(window);
         toolbar = new JToolBar();
-        zoomIn  = new JButton(ZOOM_IN);
-        zoomOut = new JButton(ZOOM_OUT);
-        zoom100 = new JButton(ZOOM_100);
-        status  = new JLabel(" ");
+        zoomIn  = GuiToolkit.createButton("icons/document_zoom_in.png", null, ae -> view.zoomIn());
+        zoomOut = GuiToolkit.createButton("icons/document_zoom_out.png", null, ae -> view.zoom100());
+        zoom100 = GuiToolkit.createButton("icons/document_view.png", null, ae -> view.zoomOut());
+        status  = GuiToolkit.createLabel(" ");
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -59,10 +57,6 @@ public class ViewFrame extends JFrame {
         toolbar.add(zoomIn);
         toolbar.add(zoom100);
         toolbar.add(zoomOut);
-
-        zoomIn.addActionListener(ae -> view.zoomIn());
-        zoom100.addActionListener(ae -> view.zoom100());
-        zoomOut.addActionListener(ae -> view.zoomOut());
 
         getContentPane().add(view,    BorderLayout.CENTER);
         getContentPane().add(toolbar, BorderLayout.NORTH);
