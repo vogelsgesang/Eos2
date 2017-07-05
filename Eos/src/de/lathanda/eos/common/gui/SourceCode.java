@@ -272,7 +272,7 @@ public class SourceCode extends DefaultStyledDocument
 	}
 	@Override
 	public void debugPointReached(DebugInfo debugInfo) {
-		SwingUtilities.invokeLater(()->codeColorHook.markExecutionPoint(debugInfo.getCodeRange()));
+		codeColorHook.markExecutionPoint(debugInfo.getCodeRange());
 	}
 
 	public class OutputStyle extends DefaultStyledDocument {

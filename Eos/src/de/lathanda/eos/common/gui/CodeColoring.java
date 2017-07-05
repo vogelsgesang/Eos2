@@ -3,11 +3,13 @@ package de.lathanda.eos.common.gui;
 import java.awt.Color;
 import java.util.LinkedList;
 
+import javax.swing.SwingUtilities;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
 import de.lathanda.eos.common.interpreter.InfoToken;
 import de.lathanda.eos.common.interpreter.Marker;
+import de.lathanda.eos.util.GuiToolkit;
 
 /**
  * Diese Klasse färbt ein Dokument abhängig vom Parser.
@@ -84,12 +86,12 @@ public class CodeColoring implements CodeColorHook {
 	 * @param size
 	 */
 	public void setFontSize(int size) {
-		StyleConstants.setFontSize(attributeSetBase, size);
-		StyleConstants.setFontSize(attributeSetComment, size);
-		StyleConstants.setFontSize(attributeSetLiteral, size);
-		StyleConstants.setFontSize(attributeSetKeyword, size);
-		StyleConstants.setFontSize(attributeSetMark, size);
-		StyleConstants.setFontSize(attributeSetUnmark, size);
+		StyleConstants.setFontSize(attributeSetBase,    GuiToolkit.getFontSize(size));
+		StyleConstants.setFontSize(attributeSetComment, GuiToolkit.getFontSize(size));
+		StyleConstants.setFontSize(attributeSetLiteral, GuiToolkit.getFontSize(size));
+		StyleConstants.setFontSize(attributeSetKeyword, GuiToolkit.getFontSize(size));
+		StyleConstants.setFontSize(attributeSetMark,    GuiToolkit.getFontSize(size));
+		StyleConstants.setFontSize(attributeSetUnmark,  GuiToolkit.getFontSize(size));
 	}
 
 	/**
@@ -170,7 +172,7 @@ public class CodeColoring implements CodeColorHook {
 		newCodePointer = codeRange;
 		if (!codePointerDirty) {
 			codePointerDirty = true;
-			markExecutionPoint();
+			SwingUtilities.invokeLater(() -> markExecutionPoint());
 		}
 	}
 

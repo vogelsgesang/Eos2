@@ -25,6 +25,7 @@ import javax.swing.text.Utilities;
 
 import de.lathanda.eos.base.ResourceLoader;
 import de.lathanda.eos.common.gui.GuiConfiguration.GuiConfigurationListener;
+import de.lathanda.eos.util.GuiToolkit;
 /**
  * Diese Komponente zeigt zusätzliche Informationen zum Editorfeld an.
  *
@@ -50,7 +51,7 @@ public class SideInformation extends JPanel implements DocumentListener, GuiConf
 		sourceCode.addDocumentListener(this);
 		sourceCode.setSideInformation(this);
 		addMouseListener(this);
-		setFont(new Font("Serif", Font.PLAIN, GuiConfiguration.def.getFontsize()));
+		setFont(GuiToolkit.createFont(Font.SERIF, Font.PLAIN, GuiConfiguration.def.getFontsize()));
 		updateSize();
 		GuiConfiguration.def.addConfigurationListener(this);
 	}
@@ -135,7 +136,7 @@ public class SideInformation extends JPanel implements DocumentListener, GuiConf
 
 	@Override
 	public void fontsizeChanged(int fontsize) {
-		setFont(font.deriveFont((float)fontsize));
+		setFont(GuiToolkit.createFont(Font.SERIF, Font.PLAIN, fontsize));
 	}
 	@Override
 	public void mouseClicked(MouseEvent me) {
