@@ -3,6 +3,7 @@ package de.lathanda.eos.gui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -35,6 +36,7 @@ import de.lathanda.eos.common.interpreter.AutoCompleteHook;
 import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
 import de.lathanda.eos.spi.AutoCompleteEntry;
 import de.lathanda.eos.spi.LanguageManager;
+import de.lathanda.eos.util.GuiToolkit;
 /**
  * \brief Codevervollständigung
  * 
@@ -81,6 +83,7 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 		choiceWindow = new JWindow();
 		choiceWindow.setFocusable(false);
 		choiceList = new TooltipList();
+		choiceList.setFont(GuiToolkit.createFont(Font.MONOSPACED, Font.PLAIN, 10));
 		choiceList.setCellRenderer(new ChoiceCellRenderer());
 		choiceList.setEnabled(true);
 		choiceList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
