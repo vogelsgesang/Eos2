@@ -2,7 +2,6 @@ package de.lathanda.eos.common.interpreter;
 
 import javax.swing.ImageIcon;
 
-import de.lathanda.eos.base.ResourceLoader;
 import de.lathanda.eos.util.GuiToolkit;
 
 public interface AutoCompleteInformation extends Comparable<AutoCompleteInformation> {

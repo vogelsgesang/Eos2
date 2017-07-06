@@ -74,8 +74,8 @@ public class UserClass extends MarkedNode {
 		}
 		for(Method m:meths.values()) {
 			env.setVariableType(ReservedVariables.SELF, self.ut);
-			env.restoreVariables();
 			m.resolveNamesAndTypes(self, env);
+			env.restoreVariables();
 		}
 		env.restoreVariables();
 	}

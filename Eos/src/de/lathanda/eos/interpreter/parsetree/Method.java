@@ -22,6 +22,7 @@ public class Method extends Node implements ProgramUnit {
 	private final Type returnType;
 	private UserMethodType methodType;
 	private final UserClass uc;
+	private String signature;
 
 	public Method(String name, Parameters parameters, Sequence sequence, Type returnType, UserClass uc) {
 		this.name = name;
@@ -29,6 +30,7 @@ public class Method extends Node implements ProgramUnit {
 		this.sequence = sequence;
 		this.returnType = (returnType == null) ? Type.getVoid() : returnType;
 		this.uc = uc;
+		this.signature = ReservedVariables.createSignature(name, parameters.size());
 	}
 
 	public String getName() {
@@ -36,7 +38,7 @@ public class Method extends Node implements ProgramUnit {
 	}
 
 	public String getSignature() {
-		return methodType.getSignature();
+		return signature;
 	}
 
 	public Sequence getSequence() {
