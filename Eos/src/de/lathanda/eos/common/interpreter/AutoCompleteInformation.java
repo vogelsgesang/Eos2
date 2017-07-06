@@ -3,13 +3,14 @@ package de.lathanda.eos.common.interpreter;
 import javax.swing.ImageIcon;
 
 import de.lathanda.eos.base.ResourceLoader;
+import de.lathanda.eos.util.GuiToolkit;
 
 public interface AutoCompleteInformation extends Comparable<AutoCompleteInformation> {
 	final static ImageIcon[] ICON = {
-   		 ResourceLoader.loadIcon("icons/method.png"),
-   		 ResourceLoader.loadIcon("icons/attribut.png"),
-   		 ResourceLoader.loadIcon("icons/class.png"),
-   		 ResourceLoader.loadIcon("icons/attribut.png"),
+   		 GuiToolkit.createSmallIcon("icons/gearwheels.png"),
+   		 GuiToolkit.createSmallIcon("icons/memory.png"),
+   		 GuiToolkit.createSmallIcon("icons/book.png"),
+   		 GuiToolkit.createSmallIcon("icons/memory.png"),
     };
 	final static char[] PREFIX = {	'@','%','!','$'	};
 	final int METHOD = 0;

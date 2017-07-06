@@ -36,8 +36,9 @@ public class GuiToolkit {
 	 */
 	private static int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
 	private static final Font MENU_ITEM_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 12);
-	private static final Font MENU_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 12);
-	private static final Font LABEL_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 12);
+	private static final Font MENU_FONT   = createFont(Font.SANS_SERIF, Font.PLAIN, 12);
+	private static final Font LABEL_FONT  = createFont(Font.SANS_SERIF, Font.PLAIN, 12);
+	private static final Font SLIDER_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 10);
 
 	/**
 	 * Millimeter in Pixel umrechnen.
@@ -117,7 +118,7 @@ public class GuiToolkit {
 		JSlider slider = new JSlider();
 		slider.setFocusable(false);
 		slider.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), text, TitledBorder.CENTER,
-				TitledBorder.TOP, LABEL_FONT));
+				TitledBorder.TOP, SLIDER_FONT));
 		slider.addChangeListener(change);
 		return slider;
 	}
@@ -132,5 +133,12 @@ public class GuiToolkit {
 		JTextField textfield = new JTextField();
 		textfield.setFont(LABEL_FONT);
 		return textfield;
+	}
+
+	public static ImageIcon createSmallIcon(String image) {
+		ImageIcon icon = null;
+		Image i = ResourceLoader.loadImage(image);
+		icon = new ImageIcon(i.getScaledInstance(dpi * 16 / 96, dpi * 16 / 96, Image.SCALE_SMOOTH));
+		return icon;
 	}
 }
