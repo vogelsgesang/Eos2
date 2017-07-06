@@ -218,7 +218,7 @@ public class SourceCode extends DefaultStyledDocument
 
 	@Override
 	public void remove(int offs, int len) throws BadLocationException {
-		storeRemove(offs, len, programText.substring(offs, offs + len - 1));
+		storeRemove(offs, len, programText.substring(offs, offs + len));
 		super.remove(offs, len);
 	}
 	public void changed() {

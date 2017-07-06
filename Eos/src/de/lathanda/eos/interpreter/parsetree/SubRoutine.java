@@ -46,8 +46,8 @@ public class SubRoutine extends Node implements ProgramUnit {
 	@Override
 	public void compile(ArrayList<Command> ops, boolean autoWindow) throws Exception {
 		for(Parameter p: parameters.getParameters()) {
-			ops.add(new CreateVariable(p.getName(), p.getType().getMType()));
-			ops.add(new StoreVariable(p.getName()));
+			ops.add(new CreateVariable(p.getName().toLowerCase(), p.getType().getMType()));
+			ops.add(new StoreVariable(p.getName().toLowerCase()));
 		}
 		if (returnType != null && !returnType.isVoid()) {
 			ops.add(new CreateVariable(ReservedVariables.RESULT, returnType.getMType()));
