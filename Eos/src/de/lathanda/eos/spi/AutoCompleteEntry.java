@@ -68,19 +68,19 @@ public class AutoCompleteEntry  implements AutoCompleteInformation {
 		}
 		switch (description.charAt(0)) {
 		case '@':
-			type = AutoCompleteInformation.METHOD;
+			type = METHOD;
 			break;
 		case '%':
-			type = AutoCompleteInformation.PROPERTY;
+			type = PROPERTY;
 			break;
 		case '!':
-			type = AutoCompleteInformation.CLASS;
+			type = CLASS;
 			break;
 		case '$':
-			type = AutoCompleteInformation.PRIVATE;
+			type = PRIVATE;
 			break;
 		default:
-			type = AutoCompleteInformation.METHOD;
+			type = NEUTRAL;
 		}
 	}	
 	/**
@@ -96,7 +96,7 @@ public class AutoCompleteEntry  implements AutoCompleteInformation {
 		this.template = description.substring(separator+1);
 		this.label = description.substring(0, separator);
 		this.labelLong = label;
-		type = 3;
+		type = CODE;
 		cls = Type.getVoid();
 	}
 

@@ -11,13 +11,15 @@ public interface AutoCompleteInformation extends Comparable<AutoCompleteInformat
    		 GuiToolkit.createSmallIcon("icons/book.png"),
    		 GuiToolkit.createSmallIcon("icons/memory.png"),
    		 GuiToolkit.createSmallIcon("icons/element.png"),
+   		 GuiToolkit.createSmallIcon("icons/code.png"),
     };
-	final static char[] PREFIX = {	'@','%','!','$'	};
-	final int METHOD = 0;
+	final static char[] PREFIX = {	'@','%','!','$','§', '&'};
+	final int METHOD   = 0;
 	final int PROPERTY = 1;
-	final int CLASS = 2;
-	final int PRIVATE = 3;
-	final int NEUTRAL = 4;
+	final int CLASS    = 2;
+	final int PRIVATE  = 3;
+	final int NEUTRAL  = 4;
+	final int CODE     = 5;
 	String getScantext();
 	String getLabel();
 	int getType();
