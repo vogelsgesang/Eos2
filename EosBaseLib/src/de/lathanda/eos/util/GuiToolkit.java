@@ -1,5 +1,7 @@
 package de.lathanda.eos.util;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -9,6 +11,7 @@ import java.awt.event.InputEvent;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -35,10 +38,11 @@ public class GuiToolkit {
 	 * und zu wird absichtlich gelogen. (zB Dynamic Super Resolution).
 	 */
 	private static int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
-	private static final Font MENU_ITEM_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 12);
-	private static final Font MENU_FONT   = createFont(Font.SANS_SERIF, Font.PLAIN, 12);
-	private static final Font LABEL_FONT  = createFont(Font.SANS_SERIF, Font.PLAIN, 12);
-	private static final Font SLIDER_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 10);
+	private static final Font MENU_ITEM_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 10);
+	private static final Font MENU_FONT   = createFont(Font.SANS_SERIF, Font.PLAIN, 10);
+	private static final Font LABEL_FONT  = createFont(Font.SANS_SERIF, Font.PLAIN, 10);
+	private static final Font SLIDER_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 8);
+	private static final Font TITLE_BORDER_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 8);
 
 	/**
 	 * Millimeter in Pixel umrechnen.
@@ -62,7 +66,7 @@ public class GuiToolkit {
 
 	static {
 		UIManager.getLookAndFeelDefaults().put("ToolTip.font",
-				new FontUIResource(Font.SANS_SERIF, Font.PLAIN, dpi * 12 / 72));
+				new FontUIResource(Font.SANS_SERIF, Font.PLAIN, dpi * 10 / 72));
 	}
 	public static int getScreenResolution() {
 		return dpi;
@@ -78,11 +82,18 @@ public class GuiToolkit {
 		return dpi * size / 72;
 	}
 
+	public static int scaledSize(int size) {
+		return dpi * size / 72;
+	}
+	public static Dimension scaledDimension(int width, int height) {
+		return new Dimension(dpi * width / 72, dpi * height / 72);
+	}
+	
 	public static JButton createButton(String image, String tooltip, ActionListener action) {
 		JButton btn = new JButton();
 		ImageIcon icon = null;
 		Image i = ResourceLoader.loadImage(image);
-		icon = new ImageIcon(i.getScaledInstance(dpi * 48 / 96, dpi * 48 / 96, Image.SCALE_SMOOTH));
+		icon = new ImageIcon(i.getScaledInstance(dpi * 32 / 96, dpi * 32 / 96, Image.SCALE_SMOOTH));
 
 		btn.setIcon(icon);
 		btn.setToolTipText(tooltip);
@@ -122,6 +133,10 @@ public class GuiToolkit {
 		slider.addChangeListener(change);
 		return slider;
 	}
+	public static TitledBorder createTitledBorder(String title) {
+		return BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), title, TitledBorder.CENTER,
+				TitledBorder.TOP, TITLE_BORDER_FONT);
+	}
 
 	public static JLabel createLabel(String text) {
 		JLabel label = new JLabel(text);
@@ -129,6 +144,12 @@ public class GuiToolkit {
 		return label;
 	}
 
+	public static JCheckBox createCheckBox(String label) {
+		JCheckBox checkbox = new JCheckBox(label, false);
+		checkbox.setFont(LABEL_FONT);
+		return checkbox;
+	}
+	
 	public static JTextField createTextField() {
 		JTextField textfield = new JTextField();
 		textfield.setFont(LABEL_FONT);

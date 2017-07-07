@@ -59,670 +59,759 @@ import de.lathanda.eos.util.GuiToolkit;
  * @author Peter (Lathanda) Schneider
  */
 public class MainWindow extends JFrame implements WindowListener {
-    private static final long serialVersionUID = -5517007240148560239L;
-    /**
-     * Der aktuelle Quellcode.
-     */
-    private final SourceCode data;
-    /**
-     * Laden/Speichern Dateidialog
-     */
-    private final JFileChooser filechooser;
-    /**
-     * Export Dateidialog
-     */
-    private final JFileChooser exportfilechooser;
-    /**
-     * Konfigurationsfenster
-     */
-    private final ConfigFrame configFrame = new ConfigFrame();
-    /**
-     * Aktuell geöffnete Datei
-     */
-    private File activeFile = null;
-    /**
-     * Hintergrund Compiler
-     */
-    private final BackgroundCompiler compiler;
+	private static final long serialVersionUID = -5517007240148560239L;
+	/**
+	 * Der aktuelle Quellcode.
+	 */
+	private final SourceCode data;
+	/**
+	 * Laden/Speichern Dateidialog
+	 */
+	private final JFileChooser filechooser;
+	/**
+	 * Export Dateidialog
+	 */
+	private final JFileChooser exportfilechooser;
+	/**
+	 * Konfigurationsfenster
+	 */
+	private final ConfigFrame configFrame = new ConfigFrame();
+	/**
+	 * Aktuell geöffnete Datei
+	 */
+	private File activeFile = null;
+	/**
+	 * Hintergrund Compiler
+	 */
+	private final BackgroundCompiler compiler;
 
-    /**
-     * Erzeugt das Hauptfenster.
-     */
-    public MainWindow() {
-        data = new SourceCode();
-        compiler = new BackgroundCompiler(data);
-        compiler.addCompilerListener(data);
-        data.setSpeed(10);
-        filechooser = new JFileChooser();
-        filechooser.setFileFilter(new FileNameExtensionFilter(Messages.getString("File.EOS"), "eos"));
-        filechooser.setCurrentDirectory(new File("."));
-        exportfilechooser = new JFileChooser();
-        exportfilechooser.addChoosableFileFilter(new FileNameExtensionFilter(Messages.getString("File.Html"), "html"));
-        exportfilechooser.setCurrentDirectory(new File("."));
-        initComponents();
-        data.init(new AutoCompletion(txtProgram, this), new CodeColoring());
-        sliderSpeed.setToolTipText(MessageFormat.format(Messages.getString("Speed.Tooltip"), data.getSpeed()));
-        setIconImage(ResourceLoader.loadImage("icons/eos.png"));
-        
-        txtProgram.setDocument(data);
-        txtOutput.setDocument(data.getOutput());
-        txtProgram.requestFocus();
-    }
-    /**
-     * Startet den Hintergrund Übersetzungsthread.
-     */
-    public void startCompiler() {
-        new Thread(compiler).start();
-    }
+	/**
+	 * Erzeugt das Hauptfenster.
+	 */
+	public MainWindow() {
+		data = new SourceCode();
+		compiler = new BackgroundCompiler(data);
+		compiler.addCompilerListener(data);
+		data.setSpeed(10);
+		filechooser = new JFileChooser();
+		filechooser.setFileFilter(new FileNameExtensionFilter(Messages.getString("File.EOS"), "eos"));
+		filechooser.setCurrentDirectory(new File("."));
+		exportfilechooser = new JFileChooser();
+		exportfilechooser.addChoosableFileFilter(new FileNameExtensionFilter(Messages.getString("File.Html"), "html"));
+		exportfilechooser.setCurrentDirectory(new File("."));
+		initComponents();
+		data.init(new AutoCompletion(txtProgram, this), new CodeColoring());
+		sliderSpeed.setToolTipText(MessageFormat.format(Messages.getString("Speed.Tooltip"), data.getSpeed()));
+		setIconImage(ResourceLoader.loadImage("icons/eos.png"));
 
-    /**
-     * Alle Komponenten einrichten.
-     */
-    private void initComponents() {
-    	mainMenu = new JMenuBar();
-        mainToolbar = new JToolBar();
-        jSeparator1 = new JToolBar.Separator();
-        jSeparator2 = new JToolBar.Separator();
-        jSeparator3 = new JToolBar.Separator();        
-        jSeparator4 = new JToolBar.Separator();
-        mainSplit = new JSplitPane();
-        scrollProgram = new JScrollPane();
-        txtProgram = new JTextPane();
-        sideInformation = new SideInformation(txtProgram, data);
-        scrollOutput = new JScrollPane();
-        txtOutput = new JTextPane();
-        runToolbar = new JToolBar();
-        toolbarGroup = new JPanel();
-        sliderSpeed = new JSlider();
+		txtProgram.setDocument(data);
+		txtOutput.setDocument(data.getOutput());
+		txtProgram.requestFocus();
+	}
 
-        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        
-        setTitle(Messages.getString("Title"));
-        addWindowListener(this);
+	/**
+	 * Startet den Hintergrund Übersetzungsthread.
+	 */
+	public void startCompiler() {
+		new Thread(compiler).start();
+	}
 
+	/**
+	 * Alle Komponenten einrichten.
+	 */
+	private void initComponents() {
+		setIconImage(ResourceLoader.loadImage("icon/eos.png"));
+		mainMenu = new JMenuBar();
+		mainToolbar = new JToolBar();
+		jSeparator1 = new JToolBar.Separator();
+		jSeparator2 = new JToolBar.Separator();
+		jSeparator3 = new JToolBar.Separator();
+		jSeparator4 = new JToolBar.Separator();
+		mainSplit = new JSplitPane();
+		scrollProgram = new JScrollPane();
+		txtProgram = new JTextPane();
+		sideInformation = new SideInformation(txtProgram, data);
+		scrollOutput = new JScrollPane();
+		txtOutput = new JTextPane();
+		runToolbar = new JToolBar();
+		toolbarGroup = new JPanel();
+		sliderSpeed = new JSlider();
 
-        toolbarGroup.setLayout(new GridLayout(2,1)); 
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        mainToolbar.setFloatable(false);
-        mainToolbar.setRollover(true);
-        mainToolbar.setBackground(new Color(0xEEEEEE));
-        toolbarGroup.add(mainToolbar);
-        
-        btnSave = GuiToolkit.createButton("icons/floppy_disk.png", Messages.getString("Menu.Save.Tooltip"), evt -> SaveActionPerformed(evt));
-        mainToolbar.add(btnSave);
+		setTitle(Messages.getString("Title"));
+		addWindowListener(this);
 
-        btnOpen = GuiToolkit.createButton("icons/folder_open.png", Messages.getString("Menu.Open.Tooltip"), evt -> OpenActionPerformed(evt));
-        mainToolbar.add(btnOpen);
+		toolbarGroup.setLayout(new GridLayout(2, 1));
 
-        mainToolbar.add(jSeparator1);
+		mainToolbar.setFloatable(false);
+		mainToolbar.setRollover(true);
+		mainToolbar.setBackground(new Color(0xEEEEEE));
+		toolbarGroup.add(mainToolbar);
 
-        btnCopy = GuiToolkit.createButton("icons/copy.png", Messages.getString("Menu.Copy.Tooltip"), evt -> CopyActionPerformed(evt));
-        mainToolbar.add(btnCopy);
+		btnSave = GuiToolkit.createButton("icons/floppy_disk.png", Messages.getString("Menu.Save.Tooltip"),
+				evt -> SaveActionPerformed(evt));
+		mainToolbar.add(btnSave);
 
-        btnCut = GuiToolkit.createButton("icons/cut.png", Messages.getString("Menu.Cut.Tooltip"), evt -> CutActionPerformed(evt));
-        mainToolbar.add(btnCut);
+		btnOpen = GuiToolkit.createButton("icons/folder_open.png", Messages.getString("Menu.Open.Tooltip"),
+				evt -> OpenActionPerformed(evt));
+		mainToolbar.add(btnOpen);
 
-        btnPaste = GuiToolkit.createButton("icons/clipboard_paste.png", Messages.getString("Menu.Paste.Tooltip"), evt -> PasteActionPerformed(evt));
-        mainToolbar.add(btnPaste);
+		mainToolbar.add(jSeparator1);
 
-        mainToolbar.add(jSeparator2);
+		btnCopy = GuiToolkit.createButton("icons/copy.png", Messages.getString("Menu.Copy.Tooltip"),
+				evt -> CopyActionPerformed(evt));
+		mainToolbar.add(btnCopy);
 
-        btnUndo = GuiToolkit.createButton("icons/undo.png", Messages.getString("Menu.Undo.Tooltip"), evt -> UndoActionPerformed(evt));
-        mainToolbar.add(btnUndo);
+		btnCut = GuiToolkit.createButton("icons/cut.png", Messages.getString("Menu.Cut.Tooltip"),
+				evt -> CutActionPerformed(evt));
+		mainToolbar.add(btnCut);
 
-        btnRedo = GuiToolkit.createButton("icons/redo.png", Messages.getString("Menu.Redo.Tooltip"), evt -> RedoActionPerformed(evt));
-        mainToolbar.add(btnRedo);
-        
-        mainToolbar.add(jSeparator3);
-        
-        btnBreakpoint = GuiToolkit.createButton("icons/sign_stop.png", Messages.getString("Tooltip.Breakpoint"), evt -> BreakpointActionPerformed(evt));        
-        mainToolbar.add(btnBreakpoint);
-        
-        mainToolbar.add(jSeparator4);
-        
-        btnClassDoc = GuiToolkit.createButton("icons/books.png", Messages.getString("Menu.Classbook.Tooltip"), evt -> ClassDocActionPerformed(evt));
-        mainToolbar.add(btnClassDoc);
-        
-        btnHelp = GuiToolkit.createButton("icons/question_and_answer.png", Messages.getString("Menu.Handbook.Tooltip"), evt -> HelpActionPerformed(evt));
-        mainToolbar.add(btnHelp);
+		btnPaste = GuiToolkit.createButton("icons/clipboard_paste.png", Messages.getString("Menu.Paste.Tooltip"),
+				evt -> PasteActionPerformed(evt));
+		mainToolbar.add(btnPaste);
 
-        mainSplit.setDividerLocation(400);
-        mainSplit.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        mainSplit.setResizeWeight(1.0);
+		mainToolbar.add(jSeparator2);
 
-        txtProgram.setFont(GuiToolkit.createFont("Courier New", Font.PLAIN, GuiConfiguration.def.getFontsize()));
-        scrollProgram.setViewportView(new NoTextWrapContainer(txtProgram));
-        scrollProgram.getViewport().setBackground(Color.WHITE);
-        scrollProgram.setRowHeaderView(sideInformation);
-        
-        mainSplit.setTopComponent(scrollProgram);
+		btnUndo = GuiToolkit.createButton("icons/undo.png", Messages.getString("Menu.Undo.Tooltip"),
+				evt -> UndoActionPerformed(evt));
+		mainToolbar.add(btnUndo);
 
-        txtOutput.setEditable(false);
-        txtOutput.setFont(GuiToolkit.createFont("Courier New", Font.PLAIN, 12));
-        txtOutput.setFocusable(false);
-        scrollOutput.setViewportView(txtOutput);
+		btnRedo = GuiToolkit.createButton("icons/redo.png", Messages.getString("Menu.Redo.Tooltip"),
+				evt -> RedoActionPerformed(evt));
+		mainToolbar.add(btnRedo);
 
-        mainSplit.setRightComponent(scrollOutput);
+		mainToolbar.add(jSeparator3);
 
-        runToolbar.setFloatable(false);
-        runToolbar.setRollover(true);
-        runToolbar.setBackground(new Color(0xEEEEEE));
-        runToolbar.setLayout(new GridBagLayout());
-        GridBagConstraints LAST = new GridBagConstraints();
-        LAST.fill = GridBagConstraints.HORIZONTAL;
-        LAST.weightx = 1;
-        toolbarGroup.add(runToolbar);                
-        
-        btnStart = GuiToolkit.createButton("icons/media_play.png", Messages.getString("Tooltip.Start"), evt -> StartActionPerformed(evt));
-        runToolbar.add(btnStart);
+		btnBreakpoint = GuiToolkit.createButton("icons/sign_stop.png", Messages.getString("Tooltip.Breakpoint"),
+				evt -> BreakpointActionPerformed(evt));
+		mainToolbar.add(btnBreakpoint);
 
-        btnSingleStep = GuiToolkit.createButton("icons/media_end.png", Messages.getString("Tooltip.SingleStep"), evt -> SingleStepActionPerformed(evt));
-        runToolbar.add(btnSingleStep);
+		mainToolbar.add(jSeparator4);
 
-        btnPause = GuiToolkit.createButton("icons/media_pause.png", Messages.getString("Tooltip.Pause"), evt -> PauseActionPerformed(evt));
-        runToolbar.add(btnPause);
+		btnClassDoc = GuiToolkit.createButton("icons/books.png", Messages.getString("Menu.Classbook.Tooltip"),
+				evt -> ClassDocActionPerformed(evt));
+		mainToolbar.add(btnClassDoc);
 
-        btnStop = GuiToolkit.createButton("icons/media_stop.png", Messages.getString("Tooltip.Stop"), evt -> StopActionPerformed(evt));
-        runToolbar.add(btnStop);
+		btnHelp = GuiToolkit.createButton("icons/question_and_answer.png", Messages.getString("Menu.Handbook.Tooltip"),
+				evt -> HelpActionPerformed(evt));
+		mainToolbar.add(btnHelp);
 
-        btnSkip = GuiToolkit.createButton("icons/media_fast_forward.png", Messages.getString("Tooltip.Skip"), evt -> SkipActionPerformed(evt));
-        runToolbar.add(btnSkip);
+		mainSplit.setOrientation(JSplitPane.VERTICAL_SPLIT);
+		mainSplit.setResizeWeight(1.0);
 
-        sliderSpeed = GuiToolkit.createSlider(Messages.getString("Run.Speed.Slider"), evt -> sliderSpeedStateChanged(evt));
-        sliderSpeed.setValue(10);
-        runToolbar.add(sliderSpeed, LAST);
-        
-        menuFile = GuiToolkit.createMenue(Messages.getString("Menu.File"));
+		txtProgram.setFont(GuiToolkit.createFont("Courier New", Font.PLAIN, GuiConfiguration.def.getFontsize()));
+		scrollProgram.setViewportView(new NoTextWrapContainer(txtProgram));
+		scrollProgram.getViewport().setBackground(Color.WHITE);
+		scrollProgram.setRowHeaderView(sideInformation);
 
-        mitNew = GuiToolkit.createMenuItem(Messages.getString("Menu.New"), Messages.getString("Menu.New.Tooltip"), evt -> NewActionPerformed(evt), KeyEvent.VK_N);
-        menuFile.add(mitNew);
+		mainSplit.setTopComponent(scrollProgram);
 
-        mitOpen = GuiToolkit.createMenuItem(Messages.getString("Menu.Open"), Messages.getString("Menu.Open.Tooltip"), evt -> OpenActionPerformed(evt), KeyEvent.VK_O);
-        menuFile.add(mitOpen);
+		txtOutput.setEditable(false);
+		txtOutput.setFont(GuiToolkit.createFont("Courier New", Font.PLAIN, 12));
+		txtOutput.setFocusable(false);
+		scrollOutput.setViewportView(txtOutput);
 
-        mitSave = GuiToolkit.createMenuItem(Messages.getString("Menu.Save"), Messages.getString("Menu.Save.Tooltip"), evt -> SaveActionPerformed(evt), KeyEvent.VK_S);
-        menuFile.add(mitSave);
+		mainSplit.setRightComponent(scrollOutput);
 
-        mitSaveAs = GuiToolkit.createMenuItem(Messages.getString("Menu.SaveAs"), Messages.getString("Menu.SaveAs.Tooltip"), evt -> SaveAsActionPerformed(evt));
-        menuFile.add(mitSaveAs);
+		runToolbar.setFloatable(false);
+		runToolbar.setRollover(true);
+		runToolbar.setBackground(new Color(0xEEEEEE));
+		runToolbar.setLayout(new GridBagLayout());
+		GridBagConstraints LAST = new GridBagConstraints();
+		LAST.fill = GridBagConstraints.HORIZONTAL;
+		LAST.weightx = 1;
+		toolbarGroup.add(runToolbar);
 
-        mitSaveAsHtml = GuiToolkit.createMenuItem(Messages.getString("Menu.SaveAs.Html"), Messages.getString("Menu.SaveAs.Html.Tooltip"), evt -> SaveAsHtmlActionPerformed(evt));
-        menuFile.add(mitSaveAsHtml);
+		btnStart = GuiToolkit.createButton("icons/media_play.png", Messages.getString("Tooltip.Start"),
+				evt -> StartActionPerformed(evt));
+		runToolbar.add(btnStart);
 
-        mitPrint = GuiToolkit.createMenuItem(Messages.getString("Menu.Print"), Messages.getString("Menu.Print.Tooltip"), evt -> PrintActionPerformed(evt), KeyEvent.VK_P);
-        menuFile.add(mitPrint);
+		btnSingleStep = GuiToolkit.createButton("icons/media_end.png", Messages.getString("Tooltip.SingleStep"),
+				evt -> SingleStepActionPerformed(evt));
+		runToolbar.add(btnSingleStep);
 
-        mitConfig = GuiToolkit.createMenuItem(Messages.getString("Menu.Config"), Messages.getString("Menu.Config.Tooltip"), evt -> ConfigActionPerformed(evt));
-        menuFile.add(mitConfig);
+		btnPause = GuiToolkit.createButton("icons/media_pause.png", Messages.getString("Tooltip.Pause"),
+				evt -> PauseActionPerformed(evt));
+		runToolbar.add(btnPause);
 
-        mitExit = GuiToolkit.createMenuItem(Messages.getString("Menu.Close"), Messages.getString("Menu.Close.Tooltip"), evt -> ExitActionPerformed(evt));
-        menuFile.add(mitExit);
+		btnStop = GuiToolkit.createButton("icons/media_stop.png", Messages.getString("Tooltip.Stop"),
+				evt -> StopActionPerformed(evt));
+		runToolbar.add(btnStop);
 
-        mainMenu.add(menuFile);
+		btnSkip = GuiToolkit.createButton("icons/media_fast_forward.png", Messages.getString("Tooltip.Skip"),
+				evt -> SkipActionPerformed(evt));
+		runToolbar.add(btnSkip);
 
-        editMenu = GuiToolkit.createMenue(Messages.getString("Menu.Edit"));
+		sliderSpeed = GuiToolkit.createSlider(Messages.getString("Run.Speed.Slider"),
+				evt -> sliderSpeedStateChanged(evt));
+		sliderSpeed.setValue(10);
+		runToolbar.add(sliderSpeed, LAST);
 
-        mitCopy = GuiToolkit.createMenuItem(Messages.getString("Menu.Copy"), Messages.getString("Menu.Copy.Tooltip"), evt -> CopyActionPerformed(evt), KeyEvent.VK_C);
-        editMenu.add(mitCopy);
+		menuFile = GuiToolkit.createMenue(Messages.getString("Menu.File"));
 
-        mitCut = GuiToolkit.createMenuItem(Messages.getString("Menu.Cut"), Messages.getString("Menu.Cut.Tooltip"), evt -> CutActionPerformed(evt), KeyEvent.VK_X);
-        editMenu.add(mitCut);
+		mitNew = GuiToolkit.createMenuItem(Messages.getString("Menu.New"), Messages.getString("Menu.New.Tooltip"),
+				evt -> NewActionPerformed(evt), KeyEvent.VK_N);
+		menuFile.add(mitNew);
 
-        mitPaste = GuiToolkit.createMenuItem(Messages.getString("Menu.Paste"), Messages.getString("Menu.Paste.Tooltip"), evt -> PasteActionPerformed(evt), KeyEvent.VK_V);
-        editMenu.add(mitPaste);
+		mitOpen = GuiToolkit.createMenuItem(Messages.getString("Menu.Open"), Messages.getString("Menu.Open.Tooltip"),
+				evt -> OpenActionPerformed(evt), KeyEvent.VK_O);
+		menuFile.add(mitOpen);
 
-        mitUndo = GuiToolkit.createMenuItem(Messages.getString("Menu.Undo"), Messages.getString("Menu.Undo.Tooltip"), evt -> UndoActionPerformed(evt), KeyEvent.VK_Z);
-        editMenu.add(mitUndo);
+		mitSave = GuiToolkit.createMenuItem(Messages.getString("Menu.Save"), Messages.getString("Menu.Save.Tooltip"),
+				evt -> SaveActionPerformed(evt), KeyEvent.VK_S);
+		menuFile.add(mitSave);
 
-        mitRedo = GuiToolkit.createMenuItem(Messages.getString("Menu.Redo"), Messages.getString("Menu.Redo.Tooltip"), evt -> RedoActionPerformed(evt), KeyEvent.VK_Y);
-        editMenu.add(mitRedo);
+		mitSaveAs = GuiToolkit.createMenuItem(Messages.getString("Menu.SaveAs"),
+				Messages.getString("Menu.SaveAs.Tooltip"), evt -> SaveAsActionPerformed(evt));
+		menuFile.add(mitSaveAs);
 
-        mitPretty = GuiToolkit.createMenuItem(Messages.getString("Menu.Pretty"), Messages.getString("Menu.Pretty.Tooltip"), evt -> PrettyActionPerformed(evt), KeyEvent.VK_F);
-        editMenu.add(mitPretty);
+		mitSaveAsHtml = GuiToolkit.createMenuItem(Messages.getString("Menu.SaveAs.Html"),
+				Messages.getString("Menu.SaveAs.Html.Tooltip"), evt -> SaveAsHtmlActionPerformed(evt));
+		menuFile.add(mitSaveAsHtml);
 
-        mainMenu.add(editMenu);
+		mitPrint = GuiToolkit.createMenuItem(Messages.getString("Menu.Print"), Messages.getString("Menu.Print.Tooltip"),
+				evt -> PrintActionPerformed(evt), KeyEvent.VK_P);
+		menuFile.add(mitPrint);
 
-        diagramMenu = GuiToolkit.createMenue(Messages.getString("Menu.Visualization"));
+		mitConfig = GuiToolkit.createMenuItem(Messages.getString("Menu.Config"),
+				Messages.getString("Menu.Config.Tooltip"), evt -> ConfigActionPerformed(evt));
+		menuFile.add(mitConfig);
 
-        mitStructogram = GuiToolkit.createMenuItem(Messages.getString("Menu.Structogram"), Messages.getString("Menu.Structogram.Tooltip"), evt -> StructogramActionPerformed(evt));
-        diagramMenu.add(mitStructogram);
+		mitExit = GuiToolkit.createMenuItem(Messages.getString("Menu.Close"), Messages.getString("Menu.Close.Tooltip"),
+				evt -> ExitActionPerformed(evt));
+		menuFile.add(mitExit);
 
-        mitFlowChart = GuiToolkit.createMenuItem(Messages.getString("Menu.Flowchart"), Messages.getString("Menu.Flowchart.Tooltip"), evt -> FlowChartActionPerformed(evt)); 
-        diagramMenu.add(mitFlowChart);
+		mainMenu.add(menuFile);
 
-        mitObjectChart = GuiToolkit.createMenuItem(Messages.getString("Menu.Objectchart"), Messages.getString("Menu.Objectchart.Tooltip"), evt -> ObjectChartActionPerformed(evt));
-        diagramMenu.add(mitObjectChart);
+		editMenu = GuiToolkit.createMenue(Messages.getString("Menu.Edit"));
 
-        mitClassChart = GuiToolkit.createMenuItem(Messages.getString("Menu.Classchart"), Messages.getString("Menu.Classchart.Tooltip"), evt -> ClassChartActionPerformed(evt));
-        diagramMenu.add(mitClassChart);
-        
-        mainMenu.add(diagramMenu);
-        
-        LanguageManager.getInstance().addPluginMenues(mainMenu);
-        
-        helpMenu = GuiToolkit.createMenue(Messages.getString("Menu.Help"));
+		mitCopy = GuiToolkit.createMenuItem(Messages.getString("Menu.Copy"), Messages.getString("Menu.Copy.Tooltip"),
+				evt -> CopyActionPerformed(evt), KeyEvent.VK_C);
+		editMenu.add(mitCopy);
 
-        mitClassDoc = GuiToolkit.createMenuItem(Messages.getString("Menu.Classbook"), Messages.getString("Menu.Classbook.Tooltip"), evt -> ClassDocActionPerformed(evt));
-        helpMenu.add(mitClassDoc);
+		mitCut = GuiToolkit.createMenuItem(Messages.getString("Menu.Cut"), Messages.getString("Menu.Cut.Tooltip"),
+				evt -> CutActionPerformed(evt), KeyEvent.VK_X);
+		editMenu.add(mitCut);
 
-        mitHelp = GuiToolkit.createMenuItem(Messages.getString("Menu.Handbook"), Messages.getString("Menu.Handbook.Tooltip"), evt -> HelpActionPerformed(evt), KeyEvent.VK_F1);
-        helpMenu.add(mitHelp);
+		mitPaste = GuiToolkit.createMenuItem(Messages.getString("Menu.Paste"), Messages.getString("Menu.Paste.Tooltip"),
+				evt -> PasteActionPerformed(evt), KeyEvent.VK_V);
+		editMenu.add(mitPaste);
 
-        mainMenu.add(helpMenu);
+		mitUndo = GuiToolkit.createMenuItem(Messages.getString("Menu.Undo"), Messages.getString("Menu.Undo.Tooltip"),
+				evt -> UndoActionPerformed(evt), KeyEvent.VK_Z);
+		editMenu.add(mitUndo);
 
-        setJMenuBar(mainMenu);
-        
-        getContentPane().setLayout(new BorderLayout());
-        getContentPane().add(toolbarGroup, BorderLayout.NORTH);
-        getContentPane().add(mainSplit, BorderLayout.CENTER);
-        mainSplit.setPreferredSize(new Dimension(500, 600));
-        pack();
-    }
+		mitRedo = GuiToolkit.createMenuItem(Messages.getString("Menu.Redo"), Messages.getString("Menu.Redo.Tooltip"),
+				evt -> RedoActionPerformed(evt), KeyEvent.VK_Y);
+		editMenu.add(mitRedo);
 
-    /**
-     * Programm starten.
-     * @param evt
-     */
-    private void StartActionPerformed(java.awt.event.ActionEvent evt) {
-        data.run();
-    }
-    /**
-     * Speichern.
-     * @param evt
-     */
-    private void SaveActionPerformed(java.awt.event.ActionEvent evt) {
-        save();
-    }
-    /**
-     * Speichern
-     * @return erfolgreich?
-     */
-    private boolean save() {
-        try {
-            if (activeFile != null) {
-                data.saveProgram(activeFile);
-                ResourceLoader.setWorkingDirectory(activeFile.getParent());
-                return true;
-            } else {
-                return saveAs();
-            }
-        } catch (IOException io) {
-            JOptionPane.showMessageDialog(this, Messages.getString("Save.Error.Title"),
-                    io.getLocalizedMessage(),
-                    JOptionPane.ERROR_MESSAGE
-            );
-            return false;
-        }
-    }
-    /**
-     * Unter neuem Ort speichern.
-     * @return erfolgreich?
-     */
-    private boolean saveAs() {
-        try {
-            if (filechooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            	File target = filechooser.getSelectedFile();
-            	if (!target.getName().contains(".")) {
-            		target = new File(target.toString()+".eos");
-            	}
-            	if (!overwriteSafetyCheck(target)) {
-            		return false;
-            	}
-                data.saveProgram(target);
-                activeFile = target;
-                ResourceLoader.setWorkingDirectory(activeFile.getParent());
-                return true;
-            } else {
-                return false;
-            }
-        } catch (IOException io) {
-            JOptionPane.showMessageDialog(this, Messages.getString("Save.Error.Title"),
-                    io.getLocalizedMessage(),
-                    JOptionPane.ERROR_MESSAGE
-            );
-            return false;
-        }
-    }
+		mitPretty = GuiToolkit.createMenuItem(Messages.getString("Menu.Pretty"),
+				Messages.getString("Menu.Pretty.Tooltip"), evt -> PrettyActionPerformed(evt), KeyEvent.VK_F);
+		editMenu.add(mitPretty);
 
-    /**
-     * Datei öffnen.
-     * @param evt
-     */
-    private void OpenActionPerformed(java.awt.event.ActionEvent evt) {
-        try {
-            if (filechooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            	if (dirtySafetyCheck()) {
-            		data.loadProgram(filechooser.getSelectedFile());
-                	activeFile = filechooser.getSelectedFile();
-                	ResourceLoader.setWorkingDirectory(activeFile.getParent());
-            	}
-            }
-        } catch (IOException io) {
-            JOptionPane.showMessageDialog(this, Messages.getString("Open.Error.Title"),
-                    io.getLocalizedMessage(),
-                    JOptionPane.ERROR_MESSAGE
-            );
-        }
-    }
-    /**
-     * Externes Laden.
-     * @param file Dateiname
-     * @throws IOException
-     */
-    public void load(File file) {
+		mainMenu.add(editMenu);
 
-        try {
-        	filechooser.setSelectedFile(file);        	
+		diagramMenu = GuiToolkit.createMenue(Messages.getString("Menu.Visualization"));
+
+		mitStructogram = GuiToolkit.createMenuItem(Messages.getString("Menu.Structogram"),
+				Messages.getString("Menu.Structogram.Tooltip"), evt -> StructogramActionPerformed(evt));
+		diagramMenu.add(mitStructogram);
+
+		mitFlowChart = GuiToolkit.createMenuItem(Messages.getString("Menu.Flowchart"),
+				Messages.getString("Menu.Flowchart.Tooltip"), evt -> FlowChartActionPerformed(evt));
+		diagramMenu.add(mitFlowChart);
+
+		mitObjectChart = GuiToolkit.createMenuItem(Messages.getString("Menu.Objectchart"),
+				Messages.getString("Menu.Objectchart.Tooltip"), evt -> ObjectChartActionPerformed(evt));
+		diagramMenu.add(mitObjectChart);
+
+		mitClassChart = GuiToolkit.createMenuItem(Messages.getString("Menu.Classchart"),
+				Messages.getString("Menu.Classchart.Tooltip"), evt -> ClassChartActionPerformed(evt));
+		diagramMenu.add(mitClassChart);
+
+		mainMenu.add(diagramMenu);
+
+		LanguageManager.getInstance().addPluginMenues(mainMenu);
+
+		helpMenu = GuiToolkit.createMenue(Messages.getString("Menu.Help"));
+
+		mitClassDoc = GuiToolkit.createMenuItem(Messages.getString("Menu.Classbook"),
+				Messages.getString("Menu.Classbook.Tooltip"), evt -> ClassDocActionPerformed(evt));
+		helpMenu.add(mitClassDoc);
+
+		mitHelp = GuiToolkit.createMenuItem(Messages.getString("Menu.Handbook"),
+				Messages.getString("Menu.Handbook.Tooltip"), evt -> HelpActionPerformed(evt), KeyEvent.VK_F1);
+		helpMenu.add(mitHelp);
+
+		mainMenu.add(helpMenu);
+
+		setJMenuBar(mainMenu);
+
+		getContentPane().setLayout(new BorderLayout());
+		getContentPane().add(toolbarGroup, BorderLayout.NORTH);
+		getContentPane().add(mainSplit, BorderLayout.CENTER);
+		mainSplit.setPreferredSize(GuiToolkit.scaledDimension(500, 600));
+		pack();
+		mainSplit.setDividerLocation(mainSplit.getHeight()-GuiToolkit.scaledSize(100));
+	}
+
+	/**
+	 * Programm starten.
+	 * 
+	 * @param evt
+	 */
+	private void StartActionPerformed(java.awt.event.ActionEvent evt) {
+		data.run();
+	}
+
+	/**
+	 * Speichern.
+	 * 
+	 * @param evt
+	 */
+	private void SaveActionPerformed(java.awt.event.ActionEvent evt) {
+		save();
+	}
+
+	/**
+	 * Speichern
+	 * 
+	 * @return erfolgreich?
+	 */
+	private boolean save() {
+		try {
+			if (activeFile != null) {
+				data.saveProgram(activeFile);
+				ResourceLoader.setWorkingDirectory(activeFile.getParent());
+				return true;
+			} else {
+				return saveAs();
+			}
+		} catch (IOException io) {
+			JOptionPane.showMessageDialog(this, Messages.getString("Save.Error.Title"), io.getLocalizedMessage(),
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+	}
+
+	/**
+	 * Unter neuem Ort speichern.
+	 * 
+	 * @return erfolgreich?
+	 */
+	private boolean saveAs() {
+		try {
+			if (filechooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+				File target = filechooser.getSelectedFile();
+				if (!target.getName().contains(".")) {
+					target = new File(target.toString() + ".eos");
+				}
+				if (!overwriteSafetyCheck(target)) {
+					return false;
+				}
+				data.saveProgram(target);
+				activeFile = target;
+				ResourceLoader.setWorkingDirectory(activeFile.getParent());
+				return true;
+			} else {
+				return false;
+			}
+		} catch (IOException io) {
+			JOptionPane.showMessageDialog(this, Messages.getString("Save.Error.Title"), io.getLocalizedMessage(),
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+	}
+
+	/**
+	 * Datei öffnen.
+	 * 
+	 * @param evt
+	 */
+	private void OpenActionPerformed(java.awt.event.ActionEvent evt) {
+		try {
+			if (filechooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+				if (dirtySafetyCheck()) {
+					data.loadProgram(filechooser.getSelectedFile());
+					activeFile = filechooser.getSelectedFile();
+					ResourceLoader.setWorkingDirectory(activeFile.getParent());
+				}
+			}
+		} catch (IOException io) {
+			JOptionPane.showMessageDialog(this, Messages.getString("Open.Error.Title"), io.getLocalizedMessage(),
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	/**
+	 * Externes Laden.
+	 * 
+	 * @param file
+	 *            Dateiname
+	 * @throws IOException
+	 */
+	public void load(File file) {
+
+		try {
+			filechooser.setSelectedFile(file);
 			data.loadProgram(file);
 			activeFile = file;
 			ResourceLoader.setWorkingDirectory(file.getParent());
 		} catch (IOException io) {
-            JOptionPane.showMessageDialog(this, Messages.getString("Open.Error.Title"),
-                    io.getLocalizedMessage(),
-                    JOptionPane.ERROR_MESSAGE
-            );
-		}            	
-    }
+			JOptionPane.showMessageDialog(this, Messages.getString("Open.Error.Title"), io.getLocalizedMessage(),
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
 
-    /**
-     * Undo.
-     * @param evt
-     */
-    private void UndoActionPerformed(java.awt.event.ActionEvent evt) {
-        data.undo();
-    }
-    /**
-     * Redo.
-     * @param evt
-     */
-    private void RedoActionPerformed(java.awt.event.ActionEvent evt) {
-    	data.redo();
-    }
-    /**
-     * Neu Formatieren.
-     * @param evt
-     */
-    private void PrettyActionPerformed(java.awt.event.ActionEvent evt) {
-        data.prettyPrint();
-    }    
-    /**
-     * Kopieren.
-     * @param evt
-     */
-    private void CopyActionPerformed(java.awt.event.ActionEvent evt) {
-        txtProgram.copy();
-    }
-    /**
-     * Ausschneiden.
-     * @param evt
-     */
-    private void CutActionPerformed(java.awt.event.ActionEvent evt) {
-        txtProgram.cut();
-    }
-    /**
-     * Einfügen.
-     * @param evt
-     */
-    private void PasteActionPerformed(java.awt.event.ActionEvent evt) {
-        txtProgram.paste();
-    }
-    /**
-     * Neues Programm.
-     * @param evt
-     */
-    private void NewActionPerformed(java.awt.event.ActionEvent evt) {
-    	if (dirtySafetyCheck()) {
-            data.clear();
-            activeFile = null;
-            data.discardAllEdits();
-    	}
-    }
-    /**
-     * Hilfe anzeigen.
-     * @param evt
-     */
-    private void HelpActionPerformed(java.awt.event.ActionEvent evt) {
-        Help.showHelp();
-    }
-    /**
-     * Klassenhilfe anzeigen.
-     * @param evt
-     */
-    private void ClassDocActionPerformed(java.awt.event.ActionEvent evt) {
-       ClassDoc.showDoc();
-    }    
-    /**
-     * Einzelschritt.
-     * @param evt
-     */
-    private void SingleStepActionPerformed(java.awt.event.ActionEvent evt) {
-        data.singleStep();
-    }
-    /**
-     * Programmausführung unterbrechen.
-     * @param evt
-     */
-    private void PauseActionPerformed(java.awt.event.ActionEvent evt) {
-        data.pause();
-    }
-    /**
-     * Programm anhalten.
-     * @param evt
-     */
-    private void StopActionPerformed(java.awt.event.ActionEvent evt) {
-        data.stop();
-    }
-    /**
-     * Programm mit maximaler Geschwindigkeit ausführen.
-     * @param evt
-     */
-    private void SkipActionPerformed(java.awt.event.ActionEvent evt) {
-        data.skip();
-    }
-    /**
-     * Geschwindigkeit ändern.
-     * @param evt
-     */
-    private void sliderSpeedStateChanged(ChangeEvent evt) {
-        data.setSpeed(sliderSpeed.getValue());
-        sliderSpeed.setToolTipText(MessageFormat.format(Messages.getString("Speed.Tooltip"), data.getSpeed()));
-    }
-    /**
-     * Unter neuem Ort speichern.
-     * @param evt
-     */
-    private void SaveAsActionPerformed(java.awt.event.ActionEvent evt) {
-        saveAs();
-    }
-    /**
-     * Haltepunkt setzen.
-     * @param evt
-     */
-    private void BreakpointActionPerformed(java.awt.event.ActionEvent evt) {
-        data.setToggleBreakpoint(txtProgram.getCaretPosition());
-        sideInformation.repaint();
-    }
-    /**
-     * Druckvorschau anzeigen.
-     * @param evt
-     */
-    private void PrintActionPerformed(java.awt.event.ActionEvent evt) {    	
-   		PrintFrame pf = new PrintFrame((activeFile != null)?activeFile.getName():Messages.getString("Print.Noname"));
-       	pf.init(data.getProgram());
-       	pf.setVisible(true);
-    }
-    /**
-     * Konfigurationsfenster anzeigen.
-     * @param evt
-     */
-    private void ConfigActionPerformed(java.awt.event.ActionEvent evt) {
-        configFrame.setVisible(true);
-    }
-    /**
-     * Programm beenden.
-     * @param evt
-     */
-    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {
-        closeApp();
-    }
-    /**
-     * Programm als HTML exportieren.
-     * @param evt
-     */
-    private void SaveAsHtmlActionPerformed(java.awt.event.ActionEvent evt) {
+	/**
+	 * Undo.
+	 * 
+	 * @param evt
+	 */
+	private void UndoActionPerformed(java.awt.event.ActionEvent evt) {
+		data.undo();
+	}
 
-        if (exportfilechooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File file = exportfilechooser.getSelectedFile();
-            if (!overwriteSafetyCheck(file)) {
-            	return;
-            }
-            String text = HtmlExport.export2html(data.getProgram(), file.getName());
-            try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "Utf-8"))) {
-                bw.append(text);
-            } catch (IOException ioe) {
-                JOptionPane.showMessageDialog(this, Messages.getString("Export.Error.Title"),
-                        ioe.getLocalizedMessage(),
-                        JOptionPane.ERROR_MESSAGE
-                );
-            }
-        }
-    }
-    /**
-     * Struktogramm ansicht anzeigen.
-     * @param evt
-     */
-    private void StructogramActionPerformed(java.awt.event.ActionEvent evt) {
-        new DiagramFrame(new Structogram(), compiler).setVisible(true);
-    }
-    /**
-     * Kontrollflussansicht anzeigen.
-     * @param evt
-     */
-    private void FlowChartActionPerformed(java.awt.event.ActionEvent evt) {
-        new DiagramFrame(new FlowChart(), compiler).setVisible(true);
-    }
-    /**
-     * Objectdiagramm anzeigen.
-     * @param evt
-     */
-    private void ObjectChartActionPerformed(java.awt.event.ActionEvent evt) {
-        new DiagramFrame(new ObjectChart(), compiler).setVisible(true);
-    }
-    /**
-     * Klassendiagramm anzeigen.
-     * @param evt
-     */
-    private void ClassChartActionPerformed(java.awt.event.ActionEvent evt) {
-        new DiagramFrame(new ClassChart(), compiler).setVisible(true);
-    }   
-    /**
-     * Anwendung schliessen.
-     */
-    private void closeApp() {
-    	if (dirtySafetyCheck()) {
-    		System.exit(0);
-    	}
-    }
-    private boolean overwriteSafetyCheck(File file) {
-    	if (!file.exists()) {
-    		return true;
-    	}
-        int answer = JOptionPane.showConfirmDialog(
-                this, Messages.getString("Save.Overwrite.Text"), Messages.getString("Save.Overwrite.Title"),
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-        return answer == JOptionPane.OK_OPTION;
-    }
-    private boolean dirtySafetyCheck() {
-        if (data.isSourceDirty()) {
-            int answer = JOptionPane.showConfirmDialog(
-                    this, Messages.getString("Closing.Save.Text"), Messages.getString("Closing.Save.Title"),
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-            switch (answer) {
-                case JOptionPane.YES_OPTION:
-                    if (save()) {
-                        return true;
-                    } else {
-                    	return false;
-                    }
-                case JOptionPane.NO_OPTION:
-                    return true;
-                case JOptionPane.CANCEL_OPTION:
-                	return false;
-                default:
-                	return false;
-            }
-        } else {
-            return true;
-        }
-    }
+	/**
+	 * Redo.
+	 * 
+	 * @param evt
+	 */
+	private void RedoActionPerformed(java.awt.event.ActionEvent evt) {
+		data.redo();
+	}
 
-    private JButton btnCopy;
-    private JButton btnCut;
-    private JButton btnHelp;
-    private JButton btnClassDoc;
-    private JButton btnOpen;
-    private JButton btnPaste;
-    private JButton btnPause;
-    private JButton btnRedo;
-    private JButton btnSave;
-    private JButton btnBreakpoint;
-    private JButton btnSingleStep;
-    private JButton btnSkip;
-    private JButton btnStart;
-    private JButton btnStop;
-    private JButton btnUndo;
-    private JMenu diagramMenu;
-    private JMenu editMenu;
-    private JMenu helpMenu;
-    private JToolBar.Separator jSeparator1;
-    private JToolBar.Separator jSeparator2;
-    private JToolBar.Separator jSeparator3;
-    private JToolBar.Separator jSeparator4;
-    private JMenuBar mainMenu;
-    private JSplitPane mainSplit;
-    private JToolBar mainToolbar;
-    private JPanel toolbarGroup;
-    private JMenu menuFile;
-    private JMenuItem mitConfig;
-    private JMenuItem mitCopy;
-    private JMenuItem mitCut;
-    private JMenuItem mitPretty;
-    private JMenuItem mitExit;
-    private JMenuItem mitFlowChart;
-    private JMenuItem mitObjectChart;
-    private JMenuItem mitClassChart;
-    private JMenuItem mitHelp;
-    private JMenuItem mitClassDoc;
-    private JMenuItem mitNew;
-    private JMenuItem mitOpen;
-    private JMenuItem mitPaste;
-    private JMenuItem mitPrint;
-    private JMenuItem mitRedo;
-    private JMenuItem mitSave;
-    private JMenuItem mitSaveAs;
-    private JMenuItem mitSaveAsHtml;
-    private JMenuItem mitStructogram;
+	/**
+	 * Neu Formatieren.
+	 * 
+	 * @param evt
+	 */
+	private void PrettyActionPerformed(java.awt.event.ActionEvent evt) {
+		data.prettyPrint();
+	}
 
-    private JMenuItem mitUndo;
-    private JToolBar runToolbar;
-    private JScrollPane scrollOutput;
-    private JScrollPane scrollProgram;
-    private JSlider sliderSpeed;
-    private JTextPane txtOutput;
-    private JTextPane txtProgram;
-    private SideInformation sideInformation;
-//Window Listener
+	/**
+	 * Kopieren.
+	 * 
+	 * @param evt
+	 */
+	private void CopyActionPerformed(java.awt.event.ActionEvent evt) {
+		txtProgram.copy();
+	}
+
+	/**
+	 * Ausschneiden.
+	 * 
+	 * @param evt
+	 */
+	private void CutActionPerformed(java.awt.event.ActionEvent evt) {
+		txtProgram.cut();
+	}
+
+	/**
+	 * Einfügen.
+	 * 
+	 * @param evt
+	 */
+	private void PasteActionPerformed(java.awt.event.ActionEvent evt) {
+		txtProgram.paste();
+	}
+
+	/**
+	 * Neues Programm.
+	 * 
+	 * @param evt
+	 */
+	private void NewActionPerformed(java.awt.event.ActionEvent evt) {
+		if (dirtySafetyCheck()) {
+			data.clear();
+			activeFile = null;
+			data.discardAllEdits();
+		}
+	}
+
+	/**
+	 * Hilfe anzeigen.
+	 * 
+	 * @param evt
+	 */
+	private void HelpActionPerformed(java.awt.event.ActionEvent evt) {
+		Help.showHelp();
+	}
+
+	/**
+	 * Klassenhilfe anzeigen.
+	 * 
+	 * @param evt
+	 */
+	private void ClassDocActionPerformed(java.awt.event.ActionEvent evt) {
+		ClassDoc.showDoc();
+	}
+
+	/**
+	 * Einzelschritt.
+	 * 
+	 * @param evt
+	 */
+	private void SingleStepActionPerformed(java.awt.event.ActionEvent evt) {
+		data.singleStep();
+	}
+
+	/**
+	 * Programmausführung unterbrechen.
+	 * 
+	 * @param evt
+	 */
+	private void PauseActionPerformed(java.awt.event.ActionEvent evt) {
+		data.pause();
+	}
+
+	/**
+	 * Programm anhalten.
+	 * 
+	 * @param evt
+	 */
+	private void StopActionPerformed(java.awt.event.ActionEvent evt) {
+		data.stop();
+	}
+
+	/**
+	 * Programm mit maximaler Geschwindigkeit ausführen.
+	 * 
+	 * @param evt
+	 */
+	private void SkipActionPerformed(java.awt.event.ActionEvent evt) {
+		data.skip();
+	}
+
+	/**
+	 * Geschwindigkeit ändern.
+	 * 
+	 * @param evt
+	 */
+	private void sliderSpeedStateChanged(ChangeEvent evt) {
+		data.setSpeed(sliderSpeed.getValue());
+		sliderSpeed.setToolTipText(MessageFormat.format(Messages.getString("Speed.Tooltip"), data.getSpeed()));
+	}
+
+	/**
+	 * Unter neuem Ort speichern.
+	 * 
+	 * @param evt
+	 */
+	private void SaveAsActionPerformed(java.awt.event.ActionEvent evt) {
+		saveAs();
+	}
+
+	/**
+	 * Haltepunkt setzen.
+	 * 
+	 * @param evt
+	 */
+	private void BreakpointActionPerformed(java.awt.event.ActionEvent evt) {
+		data.setToggleBreakpoint(txtProgram.getCaretPosition());
+		sideInformation.repaint();
+	}
+
+	/**
+	 * Druckvorschau anzeigen.
+	 * 
+	 * @param evt
+	 */
+	private void PrintActionPerformed(java.awt.event.ActionEvent evt) {
+		PrintFrame pf = new PrintFrame(
+				(activeFile != null) ? activeFile.getName() : Messages.getString("Print.Noname"));
+		pf.init(data.getProgram());
+		pf.setVisible(true);
+	}
+
+	/**
+	 * Konfigurationsfenster anzeigen.
+	 * 
+	 * @param evt
+	 */
+	private void ConfigActionPerformed(java.awt.event.ActionEvent evt) {
+		configFrame.setVisible(true);
+	}
+
+	/**
+	 * Programm beenden.
+	 * 
+	 * @param evt
+	 */
+	private void ExitActionPerformed(java.awt.event.ActionEvent evt) {
+		closeApp();
+	}
+
+	/**
+	 * Programm als HTML exportieren.
+	 * 
+	 * @param evt
+	 */
+	private void SaveAsHtmlActionPerformed(java.awt.event.ActionEvent evt) {
+
+		if (exportfilechooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+			File file = exportfilechooser.getSelectedFile();
+			if (!overwriteSafetyCheck(file)) {
+				return;
+			}
+			String text = HtmlExport.export2html(data.getProgram(), file.getName());
+			try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "Utf-8"))) {
+				bw.append(text);
+			} catch (IOException ioe) {
+				JOptionPane.showMessageDialog(this, Messages.getString("Export.Error.Title"), ioe.getLocalizedMessage(),
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+
+	/**
+	 * Struktogramm ansicht anzeigen.
+	 * 
+	 * @param evt
+	 */
+	private void StructogramActionPerformed(java.awt.event.ActionEvent evt) {
+		new DiagramFrame(new Structogram(), compiler).setVisible(true);
+	}
+
+	/**
+	 * Kontrollflussansicht anzeigen.
+	 * 
+	 * @param evt
+	 */
+	private void FlowChartActionPerformed(java.awt.event.ActionEvent evt) {
+		new DiagramFrame(new FlowChart(), compiler).setVisible(true);
+	}
+
+	/**
+	 * Objectdiagramm anzeigen.
+	 * 
+	 * @param evt
+	 */
+	private void ObjectChartActionPerformed(java.awt.event.ActionEvent evt) {
+		new DiagramFrame(new ObjectChart(), compiler).setVisible(true);
+	}
+
+	/**
+	 * Klassendiagramm anzeigen.
+	 * 
+	 * @param evt
+	 */
+	private void ClassChartActionPerformed(java.awt.event.ActionEvent evt) {
+		new DiagramFrame(new ClassChart(), compiler).setVisible(true);
+	}
+
+	/**
+	 * Anwendung schliessen.
+	 */
+	private void closeApp() {
+		if (dirtySafetyCheck()) {
+			System.exit(0);
+		}
+	}
+
+	private boolean overwriteSafetyCheck(File file) {
+		if (!file.exists()) {
+			return true;
+		}
+		int answer = JOptionPane.showConfirmDialog(this, Messages.getString("Save.Overwrite.Text"),
+				Messages.getString("Save.Overwrite.Title"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+		return answer == JOptionPane.OK_OPTION;
+	}
+
+	private boolean dirtySafetyCheck() {
+		if (data.isSourceDirty()) {
+			int answer = JOptionPane.showConfirmDialog(this, Messages.getString("Closing.Save.Text"),
+					Messages.getString("Closing.Save.Title"), JOptionPane.YES_NO_CANCEL_OPTION,
+					JOptionPane.QUESTION_MESSAGE);
+			switch (answer) {
+			case JOptionPane.YES_OPTION:
+				if (save()) {
+					return true;
+				} else {
+					return false;
+				}
+			case JOptionPane.NO_OPTION:
+				return true;
+			case JOptionPane.CANCEL_OPTION:
+				return false;
+			default:
+				return false;
+			}
+		} else {
+			return true;
+		}
+	}
+
+	private JButton btnCopy;
+	private JButton btnCut;
+	private JButton btnHelp;
+	private JButton btnClassDoc;
+	private JButton btnOpen;
+	private JButton btnPaste;
+	private JButton btnPause;
+	private JButton btnRedo;
+	private JButton btnSave;
+	private JButton btnBreakpoint;
+	private JButton btnSingleStep;
+	private JButton btnSkip;
+	private JButton btnStart;
+	private JButton btnStop;
+	private JButton btnUndo;
+	private JMenu diagramMenu;
+	private JMenu editMenu;
+	private JMenu helpMenu;
+	private JToolBar.Separator jSeparator1;
+	private JToolBar.Separator jSeparator2;
+	private JToolBar.Separator jSeparator3;
+	private JToolBar.Separator jSeparator4;
+	private JMenuBar mainMenu;
+	private JSplitPane mainSplit;
+	private JToolBar mainToolbar;
+	private JPanel toolbarGroup;
+	private JMenu menuFile;
+	private JMenuItem mitConfig;
+	private JMenuItem mitCopy;
+	private JMenuItem mitCut;
+	private JMenuItem mitPretty;
+	private JMenuItem mitExit;
+	private JMenuItem mitFlowChart;
+	private JMenuItem mitObjectChart;
+	private JMenuItem mitClassChart;
+	private JMenuItem mitHelp;
+	private JMenuItem mitClassDoc;
+	private JMenuItem mitNew;
+	private JMenuItem mitOpen;
+	private JMenuItem mitPaste;
+	private JMenuItem mitPrint;
+	private JMenuItem mitRedo;
+	private JMenuItem mitSave;
+	private JMenuItem mitSaveAs;
+	private JMenuItem mitSaveAsHtml;
+	private JMenuItem mitStructogram;
+
+	private JMenuItem mitUndo;
+	private JToolBar runToolbar;
+	private JScrollPane scrollOutput;
+	private JScrollPane scrollProgram;
+	private JSlider sliderSpeed;
+	private JTextPane txtOutput;
+	private JTextPane txtProgram;
+	private SideInformation sideInformation;
+
+	// Window Listener
 	@Override
 	public void windowActivated(WindowEvent we) {
 	}
 
 	@Override
-	public void windowClosed(WindowEvent we) {		
+	public void windowClosed(WindowEvent we) {
 	}
 
 	@Override
 	public void windowClosing(WindowEvent arg0) {
-		closeApp();	
+		closeApp();
 	}
 
 	@Override
@@ -738,16 +827,15 @@ public class MainWindow extends JFrame implements WindowListener {
 	}
 
 	@Override
-	public void windowOpened(WindowEvent we) {	
+	public void windowOpened(WindowEvent we) {
 	}
+
 	/**
-	 * Diese Klasse dient als Workarround.
-	 * Um den automatischen Umbruch des JTextPane innerhalb von JScrollPane
-	 * zu unterbinden.
-	 * Die JRE aktiviert automatisch einen Zeilenumbruch,
-	 * wenn der Container ein Viewport ist.
-	 * Diese Klasse schaltet sich zwischen den JTextPane und den Viewport 
-	 * und stört damit diese Erkennung.
+	 * Diese Klasse dient als Workarround. Um den automatischen Umbruch des
+	 * JTextPane innerhalb von JScrollPane zu unterbinden. Die JRE aktiviert
+	 * automatisch einen Zeilenumbruch, wenn der Container ein Viewport ist. Diese
+	 * Klasse schaltet sich zwischen den JTextPane und den Viewport und stört damit
+	 * diese Erkennung.
 	 * 
 	 * @author Peter (Lathanda) Schneider
 	 *
@@ -755,7 +843,7 @@ public class MainWindow extends JFrame implements WindowListener {
 	private static class NoTextWrapContainer extends JPanel implements Scrollable {
 		private static final long serialVersionUID = 1687707567072204851L;
 		private Scrollable scrollable;
-		
+
 		public NoTextWrapContainer(JTextPane textpane) {
 			super(new BorderLayout());
 			scrollable = textpane;
@@ -786,6 +874,6 @@ public class MainWindow extends JFrame implements WindowListener {
 		public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
 			return scrollable.getScrollableUnitIncrement(visibleRect, orientation, direction);
 		}
-		
+
 	}
 }

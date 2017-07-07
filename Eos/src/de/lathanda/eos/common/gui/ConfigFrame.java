@@ -3,16 +3,14 @@ package de.lathanda.eos.common.gui;
 import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.TitledBorder;
-
 import de.lathanda.eos.base.ResourceLoader;
 import de.lathanda.eos.common.gui.GuiConfiguration.ErrorBehavior;
+import de.lathanda.eos.util.GuiToolkit;
 
 /**
  * Einstellungsfenster
@@ -42,10 +40,8 @@ public class ConfigFrame extends javax.swing.JFrame {
         setIconImage(ResourceLoader.loadImage("icons/eos.png"));
         generalPanel  = new JPanel();
         commandPanel  = new JPanel();
-        lblFontSize   = new JLabel(Messages.getString("configuration.fontsize"));
-        lblErrorMode  = new JLabel(Messages.getString("configuration.errormode"));
-        btnOk         = new JButton();
-        btnCancel     = new JButton();
+        lblFontSize   = GuiToolkit.createLabel(Messages.getString("configuration.fontsize"));
+        lblErrorMode  = GuiToolkit.createLabel(Messages.getString("configuration.errormode"));
         txtFontSize   = new JTextField();
         cmbErrorMode  = new JComboBox<>();
         
@@ -58,15 +54,13 @@ public class ConfigFrame extends javax.swing.JFrame {
         generalPanel.add(lblErrorMode);
         generalPanel.add(cmbErrorMode);
         
-        generalPanel.setBorder(new TitledBorder(Messages.getString("configuration.general")));
+        generalPanel.setBorder(GuiToolkit.createTitledBorder(Messages.getString("configuration.general")));
         generalPanel.setLayout(new GridLayout(0, 2));
         getContentPane().add(generalPanel);
 
-        btnOk.setIcon(new ImageIcon(getClass().getResource("/icons/ok.png")));
-        btnOk.addActionListener(ae -> {writeData(); setVisible(false);});
+        btnOk = GuiToolkit.createButton("icons/ok.png", null, ae -> {writeData(); setVisible(false);});
         
-        btnCancel.setIcon(new ImageIcon(getClass().getResource("/icons/close.png")));
-        btnCancel.addActionListener(ae -> {readData(); setVisible(false);});
+        btnCancel = GuiToolkit.createButton("icons/close.png", null, ae -> {readData(); setVisible(false);});
         
         commandPanel.add(btnOk);
         commandPanel.add(btnCancel);

@@ -66,8 +66,8 @@ public class ClassDoc extends JFrame {
 					break;
 				}
 			}
-			DefaultMutableTreeNode methodNodes = new DefaultMutableTreeNode(new TreeEntry(Messages.getString("Classbook.Methods"), AutoCompleteInformation.METHOD));
-			DefaultMutableTreeNode propertyNodes = new DefaultMutableTreeNode(new TreeEntry(Messages.getString("Classbook.Properties"), AutoCompleteInformation.PROPERTY));
+			DefaultMutableTreeNode methodNodes = new DefaultMutableTreeNode(new TreeEntry(Messages.getString("Classbook.Methods"), AutoCompleteInformation.NEUTRAL));
+			DefaultMutableTreeNode propertyNodes = new DefaultMutableTreeNode(new TreeEntry(Messages.getString("Classbook.Properties"), AutoCompleteInformation.NEUTRAL));
 			for(TreeEntry te:methods) { 
 				methodNodes.add(new DefaultMutableTreeNode(te));
 			}

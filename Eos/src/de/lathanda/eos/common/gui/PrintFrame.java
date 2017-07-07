@@ -1,33 +1,31 @@
 package de.lathanda.eos.common.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.util.ResourceBundle;
 
-import javax.swing.Box.Filler;
 import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import de.lathanda.eos.common.interpreter.AbstractProgram;
+import de.lathanda.eos.util.GuiToolkit;
 
 
 /**
  * Druckvorschaufenster
  *
  * @author Peter (Lathanda) Schneider
- * @since 0.8
  */
 public class PrintFrame extends JFrame {
 
@@ -45,12 +43,15 @@ public class PrintFrame extends JFrame {
     private void initComponents(String title) {
 
         controlToolbar = new JToolBar();
-        btnLeft = new JButton();
-        btnRight = new JButton();
-        space1 = new Filler(new Dimension(20, 0), new Dimension(20, 0), new Dimension(20, 32767));
-        btnPrint = new JButton();
-        chkLinenumbers = new JCheckBox(Messages.getString("Print.Linenumbers"), false);
-        txtTitle = new JTextField(title);
+        left = new JPanel();
+        right = new JPanel();
+        center = new JPanel();
+        controlToolbar.setLayout(new BorderLayout());
+        controlToolbar.add(left, BorderLayout.WEST);
+        controlToolbar.add(right, BorderLayout.EAST);
+        controlToolbar.add(center, BorderLayout.CENTER);
+        chkLinenumbers = GuiToolkit.createCheckBox(Messages.getString("Print.Linenumbers"));
+        txtTitle = GuiToolkit.createTextField();
         
         printScroll = new JScrollPane();
         printview = new PrintPanel();
@@ -62,40 +63,32 @@ public class PrintFrame extends JFrame {
         controlToolbar.setFloatable(false);
         controlToolbar.setRollover(true);
 
-        btnLeft.setIcon(new ImageIcon(getClass().getResource("/icons/navigate_left.png")));
-        btnLeft.setFocusable(false);
+        btnLeft = GuiToolkit.createButton("icons/navigate_left.png", null, evt -> btnLeftActionPerformed(evt));
 
-        btnLeft.addActionListener(evt -> btnLeftActionPerformed(evt));
+        left.add(btnLeft);
 
-        controlToolbar.add(btnLeft);
-
-        btnRight.setIcon(new ImageIcon(getClass().getResource("/icons/navigate_right.png")));
-        btnRight.setFocusable(false);
-        btnRight.addActionListener(evt -> btnRightActionPerformed(evt));
+        btnRight = GuiToolkit.createButton("icons/navigate_right.png", null, evt -> btnRightActionPerformed(evt));
         
-        controlToolbar.add(btnRight);
+        left.add(btnRight);
 
         chkLinenumbers.setFocusable(false);
         chkLinenumbers.addChangeListener(evt -> chkLinenumbersChanged(evt));                
         
-        controlToolbar.add(chkLinenumbers);                
+        left.add(chkLinenumbers);                
               
         txtTitle.addActionListener(ae -> printview.setHeader(txtTitle.getText()));
         txtTitle.setText(title);
-        controlToolbar.add(txtTitle);
+        left.add(txtTitle);
         
-        controlToolbar.add(space1);
+        btnPrint = GuiToolkit.createButton("icons/printer.png", null, evt -> btnPrintActionPerformed(evt));
 
-        btnPrint.setIcon(new ImageIcon(getClass().getResource("/icons/printer.png")));
-        btnPrint.addActionListener(evt -> btnPrintActionPerformed(evt));
-
-        controlToolbar.add(btnPrint);
+        right.add(btnPrint);
 
         GroupLayout printviewLayout = new GroupLayout(printview);
         printview.setLayout(printviewLayout);
 
         printScroll.setViewportView(printview);
-        printScroll.setPreferredSize(new Dimension(500, 600));
+        printScroll.setPreferredSize(GuiToolkit.scaledDimension(400, 500));
         
         getContentPane().add(controlToolbar,  BorderLayout.NORTH);
         getContentPane().add(printScroll, BorderLayout.CENTER);
@@ -139,5 +132,7 @@ public class PrintFrame extends JFrame {
     private JToolBar controlToolbar;
     private JScrollPane printScroll;
     private PrintPanel printview;
-    private Filler space1;
+    private JPanel left;
+    private JPanel right;
+    private JPanel center;
 }

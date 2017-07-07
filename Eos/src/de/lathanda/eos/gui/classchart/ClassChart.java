@@ -1,6 +1,7 @@
 package de.lathanda.eos.gui.classchart;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
@@ -17,6 +18,7 @@ import de.lathanda.eos.common.gui.Messages;
 import de.lathanda.eos.gui.diagram.Diagram;
 import de.lathanda.eos.interpreter.parsetree.SystemType;
 import de.lathanda.eos.interpreter.parsetree.Type;
+import de.lathanda.eos.util.GuiToolkit;
 
 public class ClassChart extends Diagram implements ListSelectionListener {
 	private static final long serialVersionUID = -9004622410733768404L;
@@ -30,6 +32,7 @@ public class ClassChart extends Diagram implements ListSelectionListener {
 		classList = new JList<>(classModel);
 		classList.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		classList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		classList.setFont(GuiToolkit.createFont(Font.SANS_SERIF, Font.PLAIN, 10));
 		classDiagram = new ClassDiagram();
 		setLayout(new BorderLayout());
 		add(new JScrollPane(classList), BorderLayout.WEST);

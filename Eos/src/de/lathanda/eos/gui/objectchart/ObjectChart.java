@@ -1,6 +1,7 @@
 package de.lathanda.eos.gui.objectchart;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -28,6 +29,7 @@ import de.lathanda.eos.gui.diagram.Diagram;
 import de.lathanda.eos.gui.diagram.MemoryEntry;
 import de.lathanda.eos.gui.diagram.Unit;
 import de.lathanda.eos.interpreter.ReservedVariables;
+import de.lathanda.eos.util.GuiToolkit;
 /**
  * Objektdiagramm
  *
@@ -48,6 +50,7 @@ public class ObjectChart extends Diagram implements CompilerListener, DebugListe
 		memoryList = new JList<>(memoryModel);
 		memoryList.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		memoryList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		memoryList.setFont(GuiToolkit.createFont(Font.SANS_SERIF, Font.PLAIN, 10));
 		objectDiagram = new ObjectDiagram();
 		setLayout(new BorderLayout());
 		add(new JScrollPane(memoryList), BorderLayout.WEST);
