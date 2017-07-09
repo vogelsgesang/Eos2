@@ -279,8 +279,21 @@ public abstract class Picture {
 	 * @param height Höhe des Rechtecks das beschrieben werden soll.
 	 */
     public void drawText(List<String> text, double left, double bottom, double width, double height) {
+    	drawText(text.toArray(new String[text.size()]), left, bottom, width, height);
+    }
+	/**
+	 * Mehrzeiligen Text zeichnen.
+     * Vorher sollte die Textausrichtung festgelegt werden!
+	 * @param text Ferld der Textzeilen
+	 * @param left Linke Grenze des Rechtecks das beschrieben werden soll. 
+	 * @param bottom Untere Grenze des Rechtecks das beschrieben werden soll.
+	 * @param width Breite des Rechtecks das beschrieben werden soll.
+	 * @param height Höhe des Rechtecks das beschrieben werden soll.
+	 * @return 
+	 */    
+    public void drawText(String[] text, double left, double bottom, double width, double height) {
         double lineheight = getStringHeight();
-        double textheight = (lineheight + vspace) * text.size() - vspace;
+        double textheight = (lineheight + vspace) * text.length - vspace;
         double descent = getStringDescent();
         double y = 0;
         double dx = left + width / 2;
