@@ -31,6 +31,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import de.lathanda.eos.common.gui.Messages;
 import de.lathanda.eos.robot.World;
 import de.lathanda.eos.robot.exceptions.RobotException;
 import de.lathanda.eos.robot.gui.WorldPanelOpenGLNoShader;
@@ -55,13 +56,15 @@ public class WorldEditor extends JFrame implements KeyListener, DocumentListener
     private JButton btnRight;
     private JButton btnForward;
     private JButton btnBack;
-    private JButton btnChooseColor;
+    private JButton btnChooseColorStone;
+    private JButton btnChooseColorMark;
     private JButton btnRemove;
     private JButton btnStone;
     private JButton btnRock;
     private JButton btnMark;
     private JButton btnEntrance;
     private JButton btnSaveAs;
+    private JButton btnSave;
     private JButton btnLoad;
     
     private JPanel rangeToolbar;    
@@ -72,7 +75,11 @@ public class WorldEditor extends JFrame implements KeyListener, DocumentListener
   
     private JLabel lblRangeX;
     private JLabel lblRangeY;
-    
+	/**
+	 * Aktuell geöffnete Datei
+	 */
+	private File activeFile = null;
+	
 	public WorldEditor( ) {
 		super(RobotLanguage.ROBOT.getString("Title"));
         this.setIconImage(LOGO);
@@ -90,7 +97,7 @@ public class WorldEditor extends JFrame implements KeyListener, DocumentListener
     	getContentPane().add(view, BorderLayout.CENTER);
     	
 		editorToolbar = new JPanel();
-		editorToolbar.setLayout(new GridLayout(2,7));
+		editorToolbar.setLayout(new GridLayout(2,8));
 	
 		btnUp = GuiToolkit.createButton("icons/navigate_up2.png", ROBOT.getString("Tooltip.Up"), evt -> upActionPerformed(evt));
 	    mnemonics.put(KeyEvent.VK_A, evt -> upActionPerformed(evt));
@@ -112,11 +119,16 @@ public class WorldEditor extends JFrame implements KeyListener, DocumentListener
 
 	    btnSaveAs = GuiToolkit.createButton("icons/save_as.png", ROBOT.getString("Tooltip.SaveAs"), evt -> saveAsActionPerformed(evt)); 
 
+	    btnSave = GuiToolkit.createButton("icons/floppy_disk.png", ROBOT.getString("Tooltip.Save"), evt -> saveActionPerformed(evt)); 
+	    
 	    btnLoad = GuiToolkit.createButton("icons/folder_open.png", ROBOT.getString("Tooltip.Load"), evt -> loadActionPerformed(evt)); 
 	    
-	    btnChooseColor = GuiToolkit.createButton("icons/painters_palette.png", ROBOT.getString("Tooltip.ChooseColor"), evt -> chooseColorActionPerformed(evt)); 
-	    mnemonics.put(KeyEvent.VK_C, evt -> chooseColorActionPerformed(evt));
+	    btnChooseColorStone = GuiToolkit.createButton("icons/painters_palette.png", ROBOT.getString("Tooltip.ChooseColorMark"), evt -> chooseColorStoneActionPerformed(evt)); 
+	    mnemonics.put(KeyEvent.VK_C, evt -> chooseColorStoneActionPerformed(evt));
 	    
+	    btnChooseColorMark = GuiToolkit.createButton("icons/painters_palette2.png", ROBOT.getString("Tooltip.ChooseColorStone"), evt -> chooseColorMarkActionPerformed(evt)); 
+	    mnemonics.put(KeyEvent.VK_V, evt -> chooseColorMarkActionPerformed(evt));
+
 	    btnRemove = GuiToolkit.createButton("icons/garbage.png", ROBOT.getString("Tooltip.Remove"), evt -> removeActionPerformed(evt)); 
 	    mnemonics.put(KeyEvent.VK_X, evt -> removeActionPerformed(evt));
 	    
@@ -133,19 +145,21 @@ public class WorldEditor extends JFrame implements KeyListener, DocumentListener
 	    mnemonics.put(KeyEvent.VK_E, evt -> entranceActionPerformed(evt));
 
 	    editorToolbar.add(btnUp);
-	    editorToolbar.add(btnChooseColor);
-	    editorToolbar.add(btnForward);
-	    editorToolbar.add(btnRemove);
 	    editorToolbar.add(btnEntrance);
+	    editorToolbar.add(btnForward);
 	    editorToolbar.add(btnStone);
+	    editorToolbar.add(btnRock);
+	    editorToolbar.add(btnChooseColorStone);
 	    editorToolbar.add(btnSaveAs);
+	    editorToolbar.add(btnSave);
 	    editorToolbar.add(btnDown);
 	    editorToolbar.add(btnLeft);
 	    editorToolbar.add(btnBack);
 	    editorToolbar.add(btnRight);
 	    editorToolbar.add(btnMark);
-	    editorToolbar.add(btnRock);
+	    editorToolbar.add(btnChooseColorMark);
 	    editorToolbar.add(btnLoad);
+	    editorToolbar.add(btnRemove);
 
 	    getContentPane().add(editorToolbar, BorderLayout.SOUTH);
 	    
@@ -157,12 +171,14 @@ public class WorldEditor extends JFrame implements KeyListener, DocumentListener
 	    btnRight.addKeyListener(this);
 	    btnForward.addKeyListener(this);
 	    btnBack.addKeyListener(this);
-	    btnChooseColor.addKeyListener(this);
+	    btnChooseColorStone.addKeyListener(this);
+	    btnChooseColorMark.addKeyListener(this);
 	    btnRemove.addKeyListener(this);
 	    btnStone.addKeyListener(this);
 	    btnRock.addKeyListener(this);
 	    btnMark.addKeyListener(this);
 	    btnEntrance.addKeyListener(this);
+	    btnSave.addKeyListener(this);
 	    btnSaveAs.addKeyListener(this);
 	    btnLoad.addKeyListener(this);
 	    
@@ -199,7 +215,7 @@ public class WorldEditor extends JFrame implements KeyListener, DocumentListener
 	}
 	
 	private void entranceActionPerformed(ActionEvent evt) {
-		world.toggleEntranceCursor();
+		world.setEntranceCursor();
 	}
 	private void markActionPerformed(ActionEvent evt) {
 		world.toggleMarkCursor();
@@ -213,10 +229,16 @@ public class WorldEditor extends JFrame implements KeyListener, DocumentListener
 	private void removeActionPerformed(ActionEvent evt) {
 		world.removeCursor();
 	}
-	private void chooseColorActionPerformed(ActionEvent evt) {
+	private void chooseColorStoneActionPerformed(ActionEvent evt) {
 		Color color = JColorChooser.showDialog(this, RobotLanguage.ROBOT.getString("Color.Title"), world.getStoneColor());
 		if (color != null) {
 			world.setStoneColor(color);
+		}
+	}
+	private void chooseColorMarkActionPerformed(ActionEvent evt) {
+		Color color = JColorChooser.showDialog(this, RobotLanguage.ROBOT.getString("Color.Title"), world.getMarkColor());
+		if (color != null) {
+			world.setMarkColor(color);
 		}
 	}
 	private void backActionPerformed(ActionEvent evt) {
@@ -240,7 +262,8 @@ public class WorldEditor extends JFrame implements KeyListener, DocumentListener
 	public void saveAsActionPerformed(ActionEvent ae) {
         try {
             if (filechooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            	try (FileOutputStream fos = new FileOutputStream(filechooser.getSelectedFile())) {
+            	activeFile = filechooser.getSelectedFile();
+            	try (FileOutputStream fos = new FileOutputStream(activeFile)) {
             		world.save(fos);
             	}
             }
@@ -251,9 +274,24 @@ public class WorldEditor extends JFrame implements KeyListener, DocumentListener
             );
         }
 	}	
+	public void saveActionPerformed(ActionEvent ae) {
+		try {
+			if (activeFile != null) {
+            	try (FileOutputStream fos = new FileOutputStream(activeFile)) {
+            		world.save(fos);
+            	}
+			} else {
+				saveAsActionPerformed(ae);
+			}
+		} catch (TransformerException | ParserConfigurationException | IOException io) {
+			JOptionPane.showMessageDialog(this, Messages.getString("Save.Error.Title"), io.getLocalizedMessage(),
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}	
 	public void loadActionPerformed(ActionEvent ae) {
         try {
             if (filechooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            	activeFile = filechooser.getSelectedFile();
             	try (FileInputStream fis = new FileInputStream(filechooser.getSelectedFile())) {
             		world.load(fis);
             	}

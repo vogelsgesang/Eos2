@@ -81,7 +81,6 @@ public class World implements CleanupListener, Readout {
 	private int cursorX;
 	private int cursorY;
 	private int cursorZ;
-	private Direction cursorD; 
 	private boolean showCursor = false;
 	private Integer minX;
 	private Integer maxX;
@@ -485,8 +484,19 @@ public class World implements CleanupListener, Readout {
 	/**
 	 * Erschafft einen neuen Eingang an der Cursorposition 
 	 */
-	public void toggleEntranceCursor() {
-		toggleEntrance(cursorX, cursorY, cursorZ, cursorD);
+	public void setEntranceCursor() {
+		synchronized (entrances) {
+			Entrance e;
+			Iterator<Entrance> i = entrances.iterator();
+			while (i.hasNext()) {
+				e = i.next();
+				if (e.x == cursorX && e.y == cursorY && e.z == cursorZ) {
+					e.rotate();
+					return;
+				}
+			}
+			entrances.add(new Entrance(cursorX, cursorY, cursorZ, Direction.EAST));
+		}	
 	}
 	/**
 	 * Setzt einen Stein bei diesen Koordinaten ohne Rücksicht darauf was sich in diesem Feld befindet.
@@ -598,6 +608,17 @@ public class World implements CleanupListener, Readout {
 	}
 	public void removeCursor() {
 		getColumn(cursorX, cursorY).remove(cursorZ);
+		synchronized (entrances) {
+			Entrance e;
+			Iterator<Entrance> i = entrances.iterator();
+			while (i.hasNext()) {
+				e = i.next();
+				if (e.x == cursorX && e.y == cursorY && e.z == cursorZ) {
+					i.remove();
+					return;
+				}
+			}
+		}		
 	}
 	/**
 	 * Hebt den obersten Stein auf.
@@ -759,14 +780,10 @@ public class World implements CleanupListener, Readout {
 	public int getCursorZ() {
 		return cursorZ;
 	}
-	public Direction getCursorDirection() {
-		return cursorD;
-	}
-	public void setCursor(int x, int y, int z, Direction d) {
+	public void setCursor(int x, int y, int z) {
 		cursorX = x;
 		cursorY = y;
 		cursorZ = z;
-		cursorD = d;
 	}
 	public boolean isShowCursor() {
 		return showCursor;
@@ -774,19 +791,15 @@ public class World implements CleanupListener, Readout {
 
 	public void moveCursorNorth() {
 		cursorY++;
-		cursorD = Direction.NORTH;
 	}
 	public void moveCursorSouth() {
 		cursorY--;
-		cursorD = Direction.SOUTH;
 	}
 	public void moveCursorWest() {
 		cursorX--;
-		cursorD = Direction.WEST;
 	}
 	public void moveCursorEast() {
 		cursorX++;
-		cursorD = Direction.EAST;
 	}
 	public void moveCursorUp() {
 		cursorZ++;

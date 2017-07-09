@@ -10,12 +10,16 @@ public class Entrance {
     public final int x;
     public final int y;
     public final int z;
-    public final Direction d;
+    public Direction d;
    
     public Entrance(int x, int y, int z, Direction d) {
         this.x = x;
         this.y = y;
         this.z = z;
         this.d = d;
-    }  
+    }
+
+	public void rotate() {
+		d = d.getRight();		
+	}  
 }

@@ -93,7 +93,7 @@ public class GuiToolkit {
 		JButton btn = new JButton();
 		ImageIcon icon = null;
 		Image i = ResourceLoader.loadImage(image);
-		icon = new ImageIcon(i.getScaledInstance(dpi * 32 / 96, dpi * 32 / 96, Image.SCALE_SMOOTH));
+		icon = new ImageIcon(i.getScaledInstance(dpi * 40 / 96, dpi * 40 / 96, Image.SCALE_SMOOTH));
 
 		btn.setIcon(icon);
 		btn.setToolTipText(tooltip);

@@ -44,8 +44,8 @@ public class ViewFrame extends JFrame {
         view    = new ViewPanel(window);
         toolbar = new JToolBar();
         zoomIn  = GuiToolkit.createButton("icons/document_zoom_in.png", null, ae -> view.zoomIn());
-        zoomOut = GuiToolkit.createButton("icons/document_zoom_out.png", null, ae -> view.zoom100());
-        zoom100 = GuiToolkit.createButton("icons/document_view.png", null, ae -> view.zoomOut());
+        zoomOut = GuiToolkit.createButton("icons/document_view.png", null, ae -> view.zoom100());
+        zoom100 = GuiToolkit.createButton("icons/document_zoom_out.png", null, ae -> view.zoomOut());
         status  = GuiToolkit.createLabel(" ");
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
