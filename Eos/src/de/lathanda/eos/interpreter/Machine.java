@@ -210,12 +210,10 @@ public class Machine implements AbstractMachine {
         } catch (ArrayIndexOutOfBoundsException aiobe) {
         	MessageHandler.def.fireMessage(Messages.formatError("NoProgram"), MessageHandler.ErrorLevel.FATAL);
         } catch (ProgramTerminationException pte) {
-        	pte.printStackTrace();
         	MessageHandler.def.handleError(pte);
         	stop();
         	return true;
     	} catch (Exception e) {
-    		e.printStackTrace();
     		MessageHandler.def.handleOrThrowException(e);
     		actcontext.index++;
     	}

@@ -43,6 +43,9 @@ public class MessageHandler {
 		switch (GuiConfiguration.def.getErrorBehavior()) {
 		case WARN:
 			sendWarning(e.getLocalizedMessage());
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e1) {	}
 			break;
 		case IGNORE:
 			//well ignore it :)

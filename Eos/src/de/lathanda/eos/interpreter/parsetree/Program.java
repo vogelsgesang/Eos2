@@ -83,7 +83,6 @@ public class Program implements AbstractProgram {
 		} catch (RuntimeException re) {
 			throw new TranslationException(new CompilerError("Generic.Error", re.getLocalizedMessage()));			
 		} catch (Throwable t) {
-			t.printStackTrace();
 			throw new TranslationException(new CompilerError("UnknownError", t.getLocalizedMessage()));					
 		}
     }
