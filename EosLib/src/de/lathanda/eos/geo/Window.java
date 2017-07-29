@@ -19,6 +19,8 @@ public class Window implements FigureGroup, CleanupListener, Readout {
     ViewFrame vf;
     ChangeMultiCaster cmc;
     protected ConcurrentLinkedList<Figure> members;
+    protected int mouseX, mouseY;
+    protected boolean mouseClick = false;
 
     public Window() {
         members = new ConcurrentLinkedList<Figure>();
@@ -187,5 +189,27 @@ public class Window implements FigureGroup, CleanupListener, Readout {
         attributes.add(new Attribut("backcolor", getBackgroundColor()));
         attributes.add(new Attribut("gridwidth", getGridWidth()));
         attributes.add(new Attribut("gridvisible", getGridVisible()));	
+	}
+
+	public void setMouse(int x, int y) {
+		mouseX = x;
+		mouseY = y;
+	}
+
+	public void setMouseClick() {
+		mouseClick = true;		
+	}
+	public boolean isMouseClick() {
+		if (mouseClick) {
+			mouseClick = false;
+			return mouseClick;
+		}
+		return false;
+	}
+	public int getMouseX() {
+		return mouseX;
+	}
+	public int getMouseY() {
+		return mouseY;
 	}
 }

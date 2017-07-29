@@ -1,5 +1,6 @@
 package de.lathanda.eos.interpreter;
 
+import java.util.Calendar;
 import java.util.Random;
 /**
  * Globales Eos Funktionen.
@@ -52,5 +53,25 @@ public abstract class SystemFunctions {
     public static double r(double x, double y) {
         return Math.sqrt(x*x+y*y);
     }
+    public static int hour() {
+    	return Calendar.getInstance().get(Calendar.HOUR);
+    }
+    public static int minute() {
+    	return Calendar.getInstance().get(Calendar.MINUTE);
+    }
+    public static int second() {
+    	return Calendar.getInstance().get(Calendar.SECOND);
+    }
+    public static int year() {
+    	return Calendar.getInstance().get(Calendar.YEAR);
+    }
+    public static int month() {
+    	return Calendar.getInstance().get(Calendar.MONTH);
+    }
+    public static int day() {
+    	return Calendar.getInstance().get(Calendar.DATE);
+    }
+    	
+    
     public SystemFunctions() {}
 }

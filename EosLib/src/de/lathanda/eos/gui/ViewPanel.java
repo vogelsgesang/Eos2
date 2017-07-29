@@ -159,14 +159,18 @@ public class ViewPanel extends JPanel {
         }
 
         @Override
-        public void mouseMoved(MouseEvent e) {            
+        public void mouseMoved(MouseEvent e) {  
+            window.setMouse(e.getX(), e.getY());
+
             cursorMulticaster.fireCursorMoved(
                 gmm.pointFromPixel(e.getX(), e.getY())
             );          
         }
 
         @Override
-        public void mouseClicked(MouseEvent e) { }
+        public void mouseClicked(MouseEvent e) { 
+        	window.setMouseClick();
+        }
 
         @Override
         public void mousePressed(MouseEvent e) {
