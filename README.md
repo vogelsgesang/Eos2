@@ -8,7 +8,8 @@ Es ist gedacht für den Einsatz im Informatikunterricht der Klassen 6 bis 12.
 Das Projekt ist aufgeteilt in verschiedene Module, welche jeder Jahrgangsstufe einen anderen Zugang erlauben.
 
 
-#Eos2 (simple objectbased language)
+# Eos2 
+simple objectbased language
 
 The project is the successor of Eos. (http://www.pabst-software.de)
 
