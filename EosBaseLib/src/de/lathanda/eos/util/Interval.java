@@ -19,7 +19,7 @@ public interface Interval {
 			return Place.BETWEEN;
 		}
 	}
-	default double center() {
+	default double getCenter() {
 		return (getLow() + getHigh()) / 2d; 
 	}
 	static class LowAscComparator<T extends Interval & Comparable<T> > implements Comparator<T> {
