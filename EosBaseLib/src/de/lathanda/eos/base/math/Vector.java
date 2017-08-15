@@ -367,7 +367,7 @@ public class Vector {
         if (length == 0) {
             return getLength();
         } else {
-            return getSignedParallelogramArea(base) / length;
+            return crossproduct(base) / length;
         }
     }
 
@@ -395,7 +395,7 @@ public class Vector {
      * @return Fläche des aufgespannten Parallelogramms
      */
     public double getParallelogramArea(Vector a) {
-        return Math.abs(getSignedParallelogramArea(a));
+        return Math.abs(crossproduct(a));
     }
 
     /**
@@ -408,7 +408,7 @@ public class Vector {
      * @param a Zweiter Vektor
      * @return Vorzeichen behaftete Fläche des aufgespannten Parallelogramms
      */
-    public double getSignedParallelogramArea(Vector a) {
+    public double crossproduct(Vector a) {
         return dY * a.dX - dX * a.dY;
     }
 
