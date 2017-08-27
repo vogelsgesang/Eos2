@@ -113,7 +113,7 @@ public class Polygon extends Shape {
             j = (i + 1) % n;
             actual = new Vector(coordinates_x[j] - coordinates_x[i],
                     coordinates_y[j] - coordinates_y[i]);
-            if (previous.crossproduct(actual) < 0) {
+            if (previous.crossproduct(actual) > 0) {
                 throw new ConcaveCornerRuntimeException(i,
                         new Point(coordinates_x[(i - 1 + n) % n], coordinates_y[(i - 1 + n) % n]),
                         new Point(coordinates_x[i], coordinates_y[i]),
@@ -126,9 +126,6 @@ public class Polygon extends Shape {
         transform();
     }
 
-    /* (non-Javadoc)
-     * @see de.lathanda.sgl.geom2d.Outline#getOutlineType()
-     */
     public Types getOutlineType() {
         return Types.POLYGON;
     }
@@ -183,7 +180,7 @@ public class Polygon extends Shape {
                     coordinates_final_y[j] - coordinates_final_y[i]);
             w = new Vector(x - coordinates_final_x[i], y
                     - coordinates_final_y[i]);
-            if (v.crossproduct(w) < 0) {
+            if (v.crossproduct(w) > 0) {
                 return false;
             }
         }

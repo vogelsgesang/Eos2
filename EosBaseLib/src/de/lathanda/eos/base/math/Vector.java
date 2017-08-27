@@ -274,11 +274,48 @@ public class Vector {
      * @return Winkel für Polarkoordinaten
      */
     public double getAngle() {
-        double angle = Math.atan(dY / dX);
-        if (dX < 0) {
-            angle += Math.PI;
-        }
-        return angle;
+    	if (dX == 0) {
+    		if (dY < 0) {
+    			return 1.5* Math.PI;
+    		} else if (dY > 0) {
+    			return 0.5 * Math.PI;
+    		} else {
+    			return Double.NaN;
+    		}
+    	} else {
+    		double angle = Math.atan(dY / dX);
+    		if (dX < 0) {
+    			angle += Math.PI;
+    		}
+    		if (angle < 0) {
+    			angle += 2*Math.PI;
+    		}
+    		return angle;
+    	}
+    }
+    /**
+     * Die Funktion liefert einen approximierten Wert für den Winkel, welcher streng monoton mit dem Winkel steigt.
+     * Dieser Wert ist somit geeignet um Vektoren nach ihrem Winkel zu sortieren.
+     * Im Unterschied zum exakten Winkel ist diese Funktion sehr viel schneller.
+     * Die Werte liegen im Bereich von 0 - 4, wobei jeder Quadrat jeweil 1 umfasst.
+     * +180° bedeutet +2 modulo 4.
+     * Multipliziert man den Wert mit 90°, so erhält man einen Winkel der weniger als 5° vom echten Winkel abweicht.
+     * @return
+     */
+    public double getAngleOrder() {
+    	if (dX > 0) {
+    		if (dY > 0) {
+    			return     dY / (dX + dY);
+    		} else {
+    			return 3 + dX / (dX - dY);
+    		}
+    	} else {
+    		if (dY > 0) {
+    			return 1 + dX / (dX - dY);    			
+    		} else {
+    			return 2 + dY / (dX + dY);    			
+    		}
+    	}
     }
 
     /**
@@ -400,7 +437,7 @@ public class Vector {
 
     /**
      * Berechnet die Vorzeichen behaftet Fläche des Parallelogramms, welches die
-     * beiden Vektoren aufspannen. Der Wert ist negativ wenn die Fläche links
+     * beiden Vektoren aufspannen. Der Wert ist positiv, wenn die Fläche links
      * von diesem Vektor liegt. Dies erlaubt Orientierungstest. Die Orientierung
      * hängt jedoch von der Orientierung der Achsen ab, daher sollte man die
      * Methode einfach ausprobieren, das Verhalten bleibt wie es ist.
@@ -408,8 +445,8 @@ public class Vector {
      * @param a Zweiter Vektor
      * @return Vorzeichen behaftete Fläche des aufgespannten Parallelogramms
      */
-    public double crossproduct(Vector a) {
-        return dY * a.dX - dX * a.dY;
+    public double crossproduct(Vector b) {
+        return  dX * b.dY - dY * b.dX;
     }
 
     /**

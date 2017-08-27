@@ -1,5 +1,17 @@
-package de.lathanda.eos.util;
+package de.lathanda.eos.game.geom;
 
+import de.lathanda.eos.util.Interval;
+
+/**
+ * \brief BoundingBox
+ * 
+ * Ein Rechteck, welches ein anderes geometrisches Objekt umgibt, zur effizienteren Bestimmung
+ * von Kollisionen und Überlappungen.
+ * 
+ * @author Peter (Lathanda) Schneider
+ *
+ * @param <T> Klasse welche die BoundingBox umgibt.
+ */
 public class BoundingBox<T extends Comparable<T> > {
 	private final double x1, y1;
 	private final double x2, y2;

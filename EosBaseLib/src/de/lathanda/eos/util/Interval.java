@@ -1,15 +1,38 @@
 package de.lathanda.eos.util;
 
 import java.util.Comparator;
-
+/**
+ * \brief Interval
+ * 
+ * Diese Schnittstelle muss realisiert werden um einen IntervalTree zu nutzen.
+ * 
+ * @author Peter (Lathanda) Schneider
+ *
+ */
 public interface Interval {
 	enum Place {
+		///Davor
 		LOWER,
+		///Dazwischen
 		BETWEEN,
+		///Danach
 		HIGHER
 	}
+	/**
+	 * Untere Grenze
+	 * @return
+	 */
 	double getLow();
+	/**
+	 * Obere Grenze
+	 * @return
+	 */
 	double getHigh();
+	/**
+	 * Wert innerhalb des Intervalls lokalisieren. 
+	 * @param value
+	 * @return
+	 */
 	default Place locate(double value) {
 		if (value > getHigh() ) {
 			return Place.HIGHER;
@@ -19,9 +42,18 @@ public interface Interval {
 			return Place.BETWEEN;
 		}
 	}
+	/**
+	 * Mitte des Intervals.
+	 * Es darf jeder Wert geliefert werden der innerhalb des Intervals liegt.
+	 * Standard ist der Durchschnitt zwischen low und high.
+	 * @return
+	 */
 	default double getCenter() {
 		return (getLow() + getHigh()) / 2d; 
 	}
+	/**
+	 * Sortierung nach der unteren Grenze aufsteigend.  
+	 */
 	static class LowAscComparator<T extends Interval & Comparable<T> > implements Comparator<T> {
 		@Override
 		public int compare(T a, T b) {
@@ -34,6 +66,9 @@ public interface Interval {
 			}
 		}		
 	}
+	/**
+	 * Sortierung nach der unteren Grenze ansteigend.  
+	 */
 	static class LowDescComparator<T extends Interval & Comparable<T> > implements Comparator<T> {
 		@Override
 		public int compare(T a, T b) {
@@ -46,6 +81,9 @@ public interface Interval {
 			}
 		}		
 	}
+	/**
+	 * Sortierung nach der oberen Grenze aufsteigend.  
+	 */
 	static class HighAscComparator<T extends Interval & Comparable<T> > implements Comparator<T> {
 		@Override
 		public int compare(T a, T b) {
@@ -58,6 +96,9 @@ public interface Interval {
 			}
 		}	
 	}	
+	/**
+	 * Sortierung nach der oberen Grenze absteigend.  
+	 */
 	static class HighDescComparator<T extends Interval & Comparable<T> > implements Comparator<T> {
 		@Override
 		public int compare(T a, T b) {
