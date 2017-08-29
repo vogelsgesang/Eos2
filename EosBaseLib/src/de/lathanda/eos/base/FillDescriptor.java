@@ -8,6 +8,7 @@ import java.awt.Color;
  * @author Peter (Lathanda) Schneider
  */
 public class FillDescriptor {
+	public static final FillDescriptor EMPTY = new FillDescriptor(Color.BLACK, FillStyle.TRANSPARENT);
     private Color color;
     private FillStyle type;
     public FillDescriptor() {

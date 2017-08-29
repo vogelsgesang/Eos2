@@ -8,6 +8,7 @@ import java.awt.Color;
  * @author Peter (Lathanda) Schneider
  */
 public class LineDescriptor {
+	public static final LineDescriptor NONE = new LineDescriptor(Color.BLACK, LineStyle.INVISIBLE, 0);
     private Color color;
     private LineStyle type;
     private double thickness;

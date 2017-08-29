@@ -8,6 +8,7 @@ import de.lathanda.eos.util.GuiToolkit;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -122,7 +123,7 @@ public abstract class Picture {
      * Polygon zeichnen mit Even-Odd-Füllung.
      * @param points Liste der Eckpunkte.
      */
-    public final void drawPolygon(List<Point> points) {
+    public final void drawPolygon(Collection<? extends Point> points) {
         double[] xPoints = new double[points.size()]; 
         double[] yPoints = new double[points.size()]; 
         int n = 0;

@@ -1,6 +1,9 @@
 package de.lathanda.eos.game.geom;
 
 import java.util.Arrays;
+
+import de.lathanda.eos.base.math.Point;
+import de.lathanda.eos.base.math.Vector;
 /**
  * \brief Triangle
  * 
@@ -33,5 +36,11 @@ public class Triangle {
 			s.append("("+x[i]+"/"+y[i]+")");
 		}
 		return "Triangle [x=" + Arrays.toString(x) + ", y=" + Arrays.toString(y) + "]";
+	}
+	public double getArea() {
+		return new Vector(x[1]-x[0], y[1]-y[0]).crossproduct(new Vector(x[1]-x[2], y[1]-y[2]))/2;
 	}	
+	public Point getCenter() {
+		return new Point((x[0]+x[1]+x[2])/3, (y[0]+y[1]+y[2])/3);
+	}
 }

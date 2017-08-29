@@ -34,6 +34,11 @@ public class Tesselation {
 			v.add(new Vertice(x[i], y[i]));
 		}
 	}
+	public Tesselation(Collection<? extends Point> points) {
+		for(Point p : points) {
+			v.add(new Vertice(p.getX(), p.getY()));
+		}
+	}
 	public void addVertice(double x, double y) {
 		v.add(new Vertice(x, y));
 	}

@@ -112,7 +112,7 @@ public class Line extends LineFigure {
 
     @Override
     protected BalancePoint getBalancePoint() {
-        return new BalancePoint(a.getR()*line.getDrawWidth(), getX(), getY()); 
+        return new BalancePoint(2*a.getR()*line.getDrawWidth(), getX(), getY()); 
     }    
     @Override
     protected BoundingBox calculateBoundingBox(Transform base, Transform own) {
