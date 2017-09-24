@@ -24,11 +24,13 @@ public class Kreis extends GefuellteFigur {
 	public Kreis(double x, double y, double radius) {
 		super(new Circle());
 		circle = (Circle)figure;
+    circle.moveTo(x,y);
 		circle.setRadius(radius);
 	}
 	public Kreis(double x, double y, double radius, Color farbe) {
 		super(new Circle());
 		circle = (Circle)figure;
+    circle.moveTo(x,y);
 		circle.setRadius(radius);
 		circle.setLineColor(farbe);
 		circle.setFillColor(farbe);
