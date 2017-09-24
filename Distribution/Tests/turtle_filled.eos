@@ -1,0 +1,9 @@
+test:Turtle
+test.füllartSetzen(ausgemalt)
+test.stiftAuf()
+test.setzeTurtleXY(36,-9)
+test.stiftAb()
+test.setzeTurtleXY(-29,72)
+test.setzeTurtleXY(-7,-62)
+test.setzeTurtleXY(-62,42)
+test.setzeTurtleXY(99,42)

@@ -1,0 +1,7 @@
+t:Turtle
+t.füllartSetzen(ausgemalt)
+t.zentrumSetzen(0,0)
+t.stiftAb()
+wiederhole 10 mal
+  t.setzeTurtleXY(zufall(-100,100),zufall(-100,100))
+*wiederhole
