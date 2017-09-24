@@ -1,7 +1,6 @@
 package de.lathanda.eos.geo;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedList;
 
 import de.lathanda.eos.base.FillStyle;
@@ -12,7 +11,7 @@ import de.lathanda.eos.base.layout.Transform;
 import de.lathanda.eos.base.math.Point;
 import de.lathanda.eos.base.math.Vector;
 import de.lathanda.eos.game.geom.Tesselation;
-import de.lathanda.eos.game.geom.Triangle;
+import de.lathanda.eos.game.geom.TesselationFailedException;
 
 /**
  * Polygonobjekte werden vom Plotter benutzt.
@@ -21,19 +20,23 @@ import de.lathanda.eos.game.geom.Triangle;
  */
 public class Polygon extends FilledFigure {
 	private ArrayList<Point> points;
-	private Collection<Triangle> triangles;
 	private LinkedList<? extends Point> bound;
-	private BalancePoint balance;
+	private double weight = 0;
 	public Polygon() {
 		points = new ArrayList<>();
 		line.setDrawWidth(0.5f);
+		updatePolygon();
 	}
 
 	@Override
 	protected void drawObject(Picture p) {
-		synchronized (points) {
-			if (fill.getFillStyle() != FillStyle.TRANSPARENT && bound != null) {
-				p.drawPolygon(bound);
+		synchronized (this) {
+			if (fill.getFillStyle() != FillStyle.TRANSPARENT) {
+				if (bound != null) {
+					p.drawPolygon(bound);
+				} else {
+					p.drawPolygon(points);
+				}
 			} else {
 				for (int i = 1; i < points.size(); i++) {
 					p.drawLine(points.get(i - 1), points.get(i));
@@ -43,81 +46,116 @@ public class Polygon extends FilledFigure {
 	}
 	@Override
 	protected void scaleInternal(double factor) {
-		for (int i = points.size(); i-- > 0;) {
-			points.get(i).scale(factor);
+		synchronized (this) {
+			for (int i = points.size(); i-- > 0;) {
+				points.get(i).scale(factor);
+			}
+			updatePolygon();
 		}
-		updatePolygon();
 	}
 	
 	@Override
 	protected BalancePoint getBalancePoint() {
-		return balance;
+		return new BalancePoint(weight, getX(), getY());
 	}
 	
 	public boolean isValid() {
-		return points.size() > 1;
+		synchronized (this) {
+			return points.size() > 1;
+		}
 	}
 
 	public void addPoint(Point p) {
-		synchronized (points) {
+		synchronized (this) {
 			Point copy = new Point(p);
 			copy.move(-getX(), -getY());
 			points.add(copy);
+			updatePolygon();
 		}
-		updatePolygon();
 		fireLayoutChanged();
 	}
 	private void updatePolygon() {
+		if (points.isEmpty()) return;
+		double x = 0;
+		double y = 0;
+		weight = 0;
+		
 		if (fill.getFillStyle() != FillStyle.TRANSPARENT) {
-			Tesselation tess = new Tesselation(points);
-			tess.tesselate();
-			bound = tess.getBorder();
-			triangles = tess.getTriangles();
-			double weight = 0;
-			double x = 0;
-			double y = 0;
-			for (Triangle t : triangles) {
-				double triangle_weight = t.getArea();
-				Point center = t.getCenter();
-				x += center.getX() * triangle_weight;
-				y += center.getY() * triangle_weight;
-				weight += triangle_weight;
+			bound = null;
+			BoundingBox bound = new BoundingBox();
+			for (Point p:points) {
+				bound.add(p);
 			}
-			balance = new BalancePoint(weight, new Point(x / weight, y / weight));
+			weight = bound.getArea();
+			x = bound.getCenter().getX();
+			y = bound.getCenter().getY();
+/*				Tesselation tess = new Tesselation(points, 100);
+				tess.calculateBorder();
+				bound = tess.getBorder();
+				Point a = points.get(points.size() - 1);
+				for (int i = 0; i < points.size(); i++) {
+					Point b = points.get(i);
+					double w = a.getX() * b.getY() - b.getX() * a.getY();
+					weight += w;
+					x += (a.getX() + b.getX()) * w;
+					y += (a.getY() + b.getY()) * w;
+					a = b;
+				}
+				x /= 6;
+				y /= 6;
+				weight /= 2;*/			
 		} else {
 			bound = null;
-			triangles = null;
-			double weight = 0;
-			double x = 0;
-			double y = 0;
-			Point last = points.get(points.size() - 1);
-			for (Point p : points) {
-				double line_weight = new Vector(last, p).getLength() * line.getDrawWidth();
-				x += (last.getX() + p.getX()) * line_weight / 2;
-				y += (last.getY() + p.getY()) * line_weight / 2;
+			Point a = points.get(0);
+			for (int i = 1; i < points.size(); i++) {
+				Point b = points.get(i); 
+				double line_weight = new Vector(a, b).getLength() * line.getDrawWidth();
+				x += (a.getX() + b.getX()) * line_weight / 2;
+				y += (b.getY() + b.getY()) * line_weight / 2;
 				weight += line_weight;
+				a = b;
 			}
-			balance = new BalancePoint(weight, new Point(x / weight, y / weight));			
+		}
+		if (weight > 0) {
+			x = x / weight;
+			y = y / weight;
+		} else {
+			x = 0;
+			y = 0;
+		}
+
+		moveInternal(x, y); 
+		for(Point p : points) {
+			p.move(-x, -y);
+		}
+		if (bound != null) {
+			for(Point p : bound) {
+				p.move(-x, -y);
+			}
 		}
 	}
 	@Override
 	protected BoundingBox calculateBoundingBox(Transform base, Transform own) {
 		Transform t = base.transform(own);
 		BoundingBox bound = new BoundingBox();
-		for (Point p:points) {
-			bound.add(t.transform(p));
+		synchronized (this) {
+			for (Point p:points) {
+				bound.add(t.transform(p));
+			}
 		}
 		return bound;
 	}
     @Override
     public Figure copy() {
-    	Polygon poly = (Polygon)super.copy();
-    	poly.points = new ArrayList<>();
-    	for(Point p : points) {
-    		poly.points.add(new Point(p));
+    	synchronized (this) {
+    		Polygon poly = (Polygon)super.copy();
+    		poly.points = new ArrayList<>();
+    		for(Point p : points) {
+    			poly.points.add(new Point(p));
+    		}
+    		poly.updatePolygon();
+            return poly;
     	}
-    	poly.updatePolygon();
-        return poly;
     }
 	@Override
 	public String toString() {

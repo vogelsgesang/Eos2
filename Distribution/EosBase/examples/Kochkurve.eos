@@ -4,13 +4,14 @@ tiefe: integer
 laenge: integer
 
 tiefe := 4
-laenge := 350
+laenge := 150
 
 t.linienstärkeSetzen(1)
 t.stiftAuf()
 t.rechtsdrehen(150)
 t.vor(laenge / 1.73)
 t.linksdrehen(150)
+t.füllartSetzen(ausgemalt)
 t.stiftAb()
 
 koch(tiefe,laenge)

@@ -43,4 +43,11 @@ public class Triangle {
 	public Point getCenter() {
 		return new Point((x[0]+x[1]+x[2])/3, (y[0]+y[1]+y[2])/3);
 	}
+	public void move(double dx, double dy) {
+		for(int i = 0; i < 3; i++) {
+			x[i] += dx;
+			y[i] += dy;
+		}
+		
+	}
 }

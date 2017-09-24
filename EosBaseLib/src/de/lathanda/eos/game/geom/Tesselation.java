@@ -1,5 +1,6 @@
 package de.lathanda.eos.game.geom;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -25,7 +26,8 @@ public class Tesselation {
 	//final triangulation
 	private LinkedList<Triangle> t = new LinkedList<>();
 	//array of all incoming edges
-	private Edge[] edges;
+	private ArrayList<Edge> edges;
+
 	public Tesselation() {
 	}
 	public Tesselation(double[] x, double[] y) {
@@ -39,10 +41,15 @@ public class Tesselation {
 			v.add(new Vertice(p.getX(), p.getY()));
 		}
 	}
+	public Tesselation(Collection<? extends Point> points, double raster) {
+		for(Point p : points) {
+			v.add(new Vertice(((int)(raster*p.getX()))/raster, ((int)(raster*p.getY()))/raster));
+		}
+	}
 	public void addVertice(double x, double y) {
 		v.add(new Vertice(x, y));
 	}
-	public void tesselate() {
+	public void tesselate() throws TesselationFailedException {
 		p.clear();
 		t.clear();
 		switch (v.size()) {
@@ -58,6 +65,21 @@ public class Tesselation {
 			earCut();                      //p -> t
 		}
 	}
+	public void calculateBorder() throws TesselationFailedException {
+		p.clear();
+		t.clear();
+		switch (v.size()) {
+		case 0:
+			break;
+		case 1:
+		case 2:
+			p.addAll(v);
+			break;
+		default:
+			Edge start = createEdges();    //v -> edges
+			convertToSimplePolygon(start); //edges -> p
+		}
+	}
 	public Collection<Triangle> getTriangles() {
 		return t;
 	}
@@ -67,7 +89,7 @@ public class Tesselation {
 	public LinkedList<? extends Point> getPolygon() {
 		return v;
 	}
-	private void convertToSimplePolygon(Edge start) {		
+	private void convertToSimplePolygon(Edge start) throws TesselationFailedException{		
 
 		//prepare search structure
 		IntervalTree<BoundingBox<Edge>.xInterval> xRange = new IntervalTree<>();
@@ -76,9 +98,14 @@ public class Tesselation {
 			xRange.insert(e.b.new xInterval());
 			yRange.insert(e.b.new yInterval());
 		}
-		// --- run clockwise searching insections changing edge ---
+		// --- run clockwise searching intersections changing edge ---
 		Edge act = start;
+		int lastId = -1;
+		int failed = v.size() * 4;
 		do {
+			if (failed -- == 0) {
+				throw new TesselationFailedException();
+			}
 			// check for potential crossing edges using bounding boxes
 			TreeSet<BoundingBox<Edge>.xInterval> xHits = new TreeSet<>();
 			TreeSet<BoundingBox<Edge>.yInterval> yHits = new TreeSet<>();
@@ -103,32 +130,45 @@ public class Tesselation {
 			// check all potential crossing edge if they actually do intersect
 			CrossingPoint best = null;
 			for (Edge e : hits) {
-				if (e.id == act.id) continue; //ignore the self intersection
+				if (e.id == act.id || e.id == lastId) continue; //ignore intersection with identical and previous edge
 				CrossingPoint inter = act.getIntersection(e, edges);
-				//lambda = 0 is the origin and no new crossing, for numerical reasons we check epsilon
-				if (inter != null && inter.lambda > 0) {
+				//edges not chosen in the previous step are ignored
+				if (inter != null && (inter.edge.x1 != act.x1 || inter.edge.y1 != act.y1)) {
 					if (best != null) {
-						if (
-							inter.lambda < best.lambda && inter.angle > 2 || 
-							inter.lambda == best.lambda && inter.angle > best.angle 
-						)
-						best = inter;
+						if (inter.lambda < best.lambda && inter.angle > 2) {
+							//better lambda 
+							best = inter; 
+						} else {
+							if (inter.lambda == best.lambda) {
+								//same crossing point determine better
+								if (best.angle < inter.angle) {
+									//better angle
+									best = inter;
+								} else if (best.angle == inter.angle) {
+									//same angle choose longer
+									if (best.maxLength() < inter.maxLength()) {
+										best = inter;
+									}
+								}
+							}
+						}
 					} else {
-						if (inter.angle > 2 || inter.lambda == 1.0) {
+						if (inter.lambda == 1.0 || act.v.crossproduct(inter.edge.v) > 0) {
 							best = inter;
 						}
 					}
 				}
 			}	
+			lastId = act.id;
 			act = best.edge;
 			p.add(new Vertice(act.x1, act.y1));
 		} while (act.id != start.id);
 		p.removeLast();
 	}
-	private void earCut() {
+	private void earCut() throws TesselationFailedException {
 		//determine concave points and link points
 		Vertice prev = p.getLast();
-		Vertice last = prev;
+		Vertice[] last = new Vertice[] {prev}; //call by ref parameter
 		for(Vertice a : p) {
 			a.linkPredecessor(prev);
 			prev = a;			
@@ -139,29 +179,35 @@ public class Tesselation {
 				concaves.add(a);
 			}
 		}
-		while (!concaves.isEmpty()) {
+		boolean ok = true;
+		while (!concaves.isEmpty() && ok) {
+			ok = false;
 			for(Iterator<Vertice> i = concaves.iterator(); i.hasNext(); ) {
 				Vertice v = i.next();
 				if (v.suc == null || !v.isConcave()) {
 					i.remove();
+					ok = true;
 				} else {
-					if (v.pre.isEar(concaves)) {
-						t.add(v.pre.cutEar());
-						last = v;
-						break;
+					if (v.pre.cutEmpty(last)) {
+						ok = true;
+					} else if (v.suc.cutEmpty(last)) {
+						ok = true;
+					} else if (v.pre.isEar(concaves)) {
+						t.add(v.pre.cutEar(last));
+						ok = true;
 					} else if (v.suc.isEar(concaves)) {
-						t.add(v.suc.cutEar());
-						last = v;
-						break;
+						t.add(v.suc.cutEar(last));
+						ok = true;
 					}
 				}
 			}
 		}
-		while (last.pre.pre.pre != last) { //no triangle
-			t.add(last.pre.cutEar());
-			last = last.pre;
+		if (!ok) {
+			throw new TesselationFailedException();
 		}
-		t.add(last.cutEar());
+		while (last[0].pre.pre != last[0]) { //no triangle
+			t.add(last[0].cutEar(last));
+		}
 	}
 	/**
 	 * Erzeugt Kanten
@@ -169,23 +215,24 @@ public class Tesselation {
 	 * @return Anfangskante
 	 */
 	private Edge createEdges() {
-		edges = new Edge[v.size() + 1];
+		edges = new ArrayList<>();
 		// fill edges
 		Vertice v1 = v.get(v.size() - 1);
 		double minX = Double.POSITIVE_INFINITY;
 		double minY = Double.POSITIVE_INFINITY;
-		int id = 0;
 		for(Vertice v2 : v) {
-			edges[id] = new Edge(v1, v2, id++);
-			v1 = v2;
-			if (v2.getX() < minX) {
-				minX = v2.getX();
-				minY = v2.getY();
+			if (v1.isDifferent(v2)) {
+				edges.add(new Edge(v1, v2, edges.size()));
+				v1 = v2;
+				if (v2.getX() < minX) {
+					minX = v2.getX();
+					minY = v2.getY();
+				}
 			}
 		}
-
-		edges[id] = new Edge(minX, minY, id);
-		return edges[id];
+		Edge start = new Edge(minX, minY, edges.size());
+		edges.add(start);
+		return start;
 	}
 	private static class Vertice extends Point {
 		private Vector v;
@@ -194,17 +241,36 @@ public class Tesselation {
 		public Vertice(double x, double y) {
 			super(x, y);
 		}
+		public boolean isDifferent(Vertice v2) {
+			return x != v2.x || y != v2.y;
+		}
 		public void linkPredecessor(Vertice predecessor) {
 			this.pre = predecessor;
 			predecessor.suc = this;
 			v = new Vector(pre, this);
 		}
-		public Triangle cutEar() {
+		public Triangle cutEar(Vertice[] last) {
+			if (this == last[0]) {
+				last[0] = pre;
+			}
 			Triangle t = new Triangle(pre.x, pre.y, x, y, suc.x, suc.y);
 			suc.linkPredecessor(pre);
 			pre = null;
-			suc = null;
+			suc = null;			
 			return t; 
+		}
+		public boolean cutEmpty(Vertice[] last) {
+			if (v.crossproduct(suc.v) != 0) {
+				if (this == last[0]) {
+					last[0] = pre;
+				}
+				suc.linkPredecessor(pre);
+				pre = null;
+				suc = null;
+				return true;
+			} else {
+				return false;
+			}
 		}
 		public boolean isEar(Vertice p) {
 			Vector cv = new Vector(pre.x - suc.x, pre.y - suc.y);
@@ -239,8 +305,10 @@ public class Tesselation {
 		private final int id;
 		/** Richtung der Kante */
 		private final Vector v;
-		/** bounding box der Kante*/
+		/** Boundingbox der Kante*/
 		private final BoundingBox<Edge> b;
+		/** Winkel der Kante (Maximum Metrik)*/
+		private final double angle;
 		/**
 		 * Anfangskante von links
 		 * @param x x Koordinate des linkesten Punkts des Polygons
@@ -248,57 +316,96 @@ public class Tesselation {
 		 * @param id Index der ursprünglichen Kante
 		 */
 		public Edge(double x, double y, int id) {
-			super();
 			this.x1 = Double.NEGATIVE_INFINITY;
 			this.y1 = y;
 			this.x2 = x;
 			this.y2 = y;
-			this.b = new BoundingBox<>(x, y, x, y, this);
+			this.b = new BoundingBox<>(x2, y2, x2, y2, this);
 			this.id = id;
 			this.v = new Vector(1, 0);
+			this.angle = v.getAngleOrder();
 		}
 		public Edge(double x1, double y1, double x2, double y2, int id) {
-			super();
 			this.x1 = x1;
 			this.y1 = y1;
 			this.x2 = x2;
 			this.y2 = y2;
-			this.b = new BoundingBox<>(x1, y1, x2, y2, this);
+			this.b = new BoundingBox<>(this.x1, this.y1, this.x2, this.y2, this);
 			this.id = id;
-			this.v = new Vector(x2 - x1, y2 - y1);
+			this.v = new Vector(this.x2 - this.x1, this.y2 - this.y1);
+			this.angle = v.getAngleOrder();
 		}
 		public Edge(Vertice v1, Vertice v2, int id) {
-			this(v1.getX(), v1.getY(), v2.getX(), v2.getY(), id);
+			this.x1 = v1.getX();
+			this.y1 = v1.getY();
+			this.x2 = v2.getX();
+			this.y2 = v2.getY();
+			this.b = new BoundingBox<>(this.x1, this.y1, this.x2, this.y2, this);
+			this.id = id;
+			this.v = new Vector(this.x2 - this.x1, this.y2 - this.y1);
+			this.angle = v.getAngleOrder();
 		}
-	    public CrossingPoint getIntersection(Edge b, Edge[] edges) {
+		/**
+		 * Umgedrehte Kante
+		 * @param e
+		 */
+		public Edge(Edge e) {
+			this.x1 = e.x2;
+			this.y1 = e.y2;
+			this.x2 = e.x1;
+			this.y2 = e.y1;
+			this.b  = e.b;
+			this.id = e.id;
+			this.v = e.v.negative();
+			this.angle = (e.angle >= 2)?e.angle - 2:e.angle + 2;
+		}
+
+	    public CrossingPoint getIntersection(Edge b, ArrayList<Edge> edges) {
+	    	/* preface:
+	    	 * In order to calculate crossing points, we do calculate lambda or my.
+	    	 * We can do this using x or y.
+	    	 * In algebra the choice doesn't matter.
+	    	 * In numerical algebra it does.
+	    	 * Depending on our choice the results will differ.
+	    	 * We need to keep divisors as big as possible.
+	    	 * In order to avoid accumulated errors
+	    	 * we will use the original master edges as far as possible.
+	    	 * The shortened edge will only be used in the last step.
+	    	 */
 	    	//check identical point first, this avoids numerical errors
 	    	if (x2 == b.x1 && y2 == b.y1) {
-	    		// continous polygon
+	    		// Continuous polygon
 	    		return new CrossingPoint(this, b, false);
 	    	}
 	    	if (x2 == b.x2 && y2 == b.y2) {
-	    		// inverted continous polygon
+	    		// Inverted continuous polygon
 	    		return new CrossingPoint(this, b, true);	    		
 	    	}
+	    	//Lookup original master edges
 	    	Edge am, bm;
 	    	if (id < b.id) {
-	    		am = edges[id];
-	    		bm = edges[b.id];
+	    		am = edges.get(id);
+	    		bm = edges.get(b.id);
 	    	} else {
-	    		am = edges[b.id];
-	    		bm = edges[id];	    		
+	    		am = edges.get(b.id);
+	    		bm = edges.get(id);	    		
 	    	}
 			//Cramer's rule
 	    	Vector base = new Vector(bm.x1 - am.x1, bm.y1 - am.y1);
 	    	double n = am.v.crossproduct(bm.v);
 	    	double za = base.crossproduct(bm.v);			
-			if (n == 0) {
+			if (n == 0) { //parallel
 				if (za == 0) {
 					//same line
-					double mu = (x2 - b.x1) / (b.x2 - b.x1);
-					if (mu >= 0 && mu <= 1) {
+					double my;
+					if ((bm.x2 - bm.x1) > (bm.y2 - bm.y1)) { //choose numerical more exact version
+						my = (am.x2 - bm.x1) / (bm.x2 - bm.x1);
+					} else {
+						my = (am.y2 - bm.y1) / (bm.y2 - bm.y1);				
+					}
+					if (my >= 0 && my <= 1) {
 						//b is longer, add it at the end
-						return new CrossingPoint(this, b, x2, y2, 1d, mu);
+						return new CrossingPoint(this, b, x2, y2, 1d, my);
 					} else {
 						//b is part of this, ignore it
 						return null;
@@ -308,29 +415,30 @@ public class Tesselation {
 					return null;
 				}
 			} else {
-				double lambdaM = za / n;
-				double px = am.x1 + lambdaM * ( am.x2 - am.x1);
-				double py = am.y1 + lambdaM * ( am.y2 - am.y1);
-				double lambda, mu;
-				if (x1 != x2) {
+				double lambdaM = za / n; //lambda original edge
+				double lambdaM2 = 1 - lambdaM;
+				double px = am.x1 * lambdaM2 + lambdaM * am.x2;
+				double py = am.y1 * lambdaM2 + lambdaM * am.y2;
+				double lambda, my; //lambda, my partial edge
+				if (Math.abs(px - x1) > Math.abs(py - y1)) { //choose the numerical exacter version
 					lambda = (px - x1) / (x2 - x1);					
 				} else {
 					lambda = (py - y1) / (y2 - y1);
 				}
-				if (b.x1 != b.x2) {
-					mu = (px - b.x1) / (b.x2 - b.x1);
+				if (Math.abs(px - b.x1) > Math.abs(py - b.y1)) { //choose the numerical exacter version
+					my = (px - b.x1) / (b.x2 - b.x1);
 				} else {
-					mu = (py - b.y1) / (b.y2 - b.y1);
+					my = (py - b.y1) / (b.y2 - b.y1);
 				}
-				if (lambda >= 0 && mu >= 0 && lambda <= 1 && mu <= 1) {
-					return new CrossingPoint(this, b, px, py, lambda, mu);
+				if (lambda >= 0 && my >= 0 && lambda <= 1 && my <= 1) {
+					return new CrossingPoint(this, b, px, py, lambda, my);
 				} else {
 					return null;
 				}
 			}
 	    }	
 	    public Edge invert() {
-	    	return new Edge(x2, y2, x1, y1, id);
+	    	return new Edge(this);
 	    }
 		@Override
 		public int compareTo(Edge o) {
@@ -344,46 +452,54 @@ public class Tesselation {
 		
 	}	
 	private static class CrossingPoint  {
-		private double lambda;
-		private double angle; //approximated angle from 0 to 4
-		private Vertice p;
-		private Edge edge;
+		private final double lambda;
+		private final double angle;
+		private final Edge edge;
 		public CrossingPoint(Edge a, Edge b, boolean inverted) {
 			lambda = 1;
-			p = new Vertice(a.x2, a.y2);
 			if (inverted) {
 				edge = b.invert();				
 			} else {
 				edge = b;
+			}		
+			double diffA = 2 + edge.angle - a.angle;
+			if (diffA < 0) {
+				this.angle = diffA + 4;
+			} else if (diffA > 4) {
+				this.angle = diffA - 4;
+			} else {
+				this.angle = diffA;
 			}
-			angle = edge.v.getAngleOrder() - a.v.negative().getAngleOrder();
-			if (angle < 0) {
-				angle += 4;
-			}			
 		}
-		public CrossingPoint(Edge a, Edge b, double x, double y, double lambda, double mu) {
-			this.lambda = lambda;			
-			this.p = new Vertice(x, y);
-			if (mu == 0) {
+		public double maxLength() {
+			return Math.max(edge.x2 - edge.x1, edge.y2 - edge.y1);
+		}
+		public CrossingPoint(Edge a, Edge b, double x, double y, double lambda, double my) {
+			this.lambda = lambda;
+			if (my == 0) {
 				edge = b;
-			} else if (mu == 1) {
+			} else if (my == 1) {
 				edge = b.invert();
 			} else {
 				if (a.v.crossproduct(b.v) > 0) {
-					edge = new Edge(p.getX(), p.getY(), b.x2, b.y2, b.id);					
+					edge = new Edge(x, y, b.x2, b.y2, b.id);					
 				} else {
-					edge = new Edge(p.getX(), p.getY(), b.x1, b.y1, b.id);
+					edge = new Edge(x, y, b.x1, b.y1, b.id);
 				}
 			}
-			angle = edge.v.getAngleOrder() - a.v.negative().getAngleOrder(); 
-			if (angle < 0) {
-				angle += 4;
+			double diffA = 2 + edge.angle - a.angle;
+			if (diffA < 0) {
+				this.angle = diffA + 4;
+			} else if (diffA > 4) {
+				this.angle = diffA - 4;
+			} else {
+				this.angle = diffA;
 			}
 		}
 
 		@Override
 		public String toString() {
-			return p+" lambda=" + lambda+" angle"+angle;
+			return edge + " lambda=" + lambda;
 		}
 		
 	}

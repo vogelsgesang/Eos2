@@ -24,7 +24,7 @@ import de.lathanda.eos.util.ConcurrentLinkedList;
 public class Group extends Figure implements FigureGroup  {
     protected ConcurrentLinkedList<Figure> members;
     protected boolean autoCenter = true;
-    private final Object DRAW_LOCK = new Object();
+
     public Group() {
         super();
         members = new ConcurrentLinkedList<Figure>();
@@ -70,13 +70,6 @@ public class Group extends Figure implements FigureGroup  {
         return this;
     }
     
-    @Override
-	public void draw(Picture g) {
-		synchronized (DRAW_LOCK) {
-			super.draw(g);
-		}
-	}
-
 	@Override
     protected void drawObject(Picture p) {
    		for (Figure m : members) {
@@ -163,7 +156,7 @@ public class Group extends Figure implements FigureGroup  {
         return g;
     }
     private void setCenterInternal(double x, double y) {
-        synchronized (DRAW_LOCK) {
+        synchronized (this) {
         	double dx = getX() - x;
         	double dy = getY() - y;
         	members.forEach(figure -> figure.moveInternal(dx,dy));     
@@ -208,8 +201,9 @@ public class Group extends Figure implements FigureGroup  {
             	y += bp.getY() * figureWeight;
             }
         }
+        
         if (weight != 0) {
-            return new BalancePoint(weight, x / weight, y / weight);
+            return new BalancePoint(weight, x / weight, y / weight);            
         } else {
             return new BalancePoint(0, 0, 0);
         }

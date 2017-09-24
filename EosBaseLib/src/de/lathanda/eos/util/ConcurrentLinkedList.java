@@ -69,6 +69,7 @@ public class ConcurrentLinkedList<T>  implements Iterable<T> {
 					if (act == last) {
 						last = prev;
 					}
+					count--;
 					return;
 				}
 				prev = act;
