@@ -11,7 +11,7 @@ import de.lathanda.eos.base.layout.Transform;
 import de.lathanda.eos.base.math.Point;
 import de.lathanda.eos.base.math.Vector;
 import de.lathanda.eos.game.geom.Tesselation;
-import de.lathanda.eos.game.geom.TesselationFailedException;
+import de.lathanda.eos.game.geom.tesselation.TesselationFailedException;
 
 /**
  * Polygonobjekte werden vom Plotter benutzt.
@@ -81,17 +81,10 @@ public class Polygon extends FilledFigure {
 		weight = 0;
 		
 		if (fill.getFillStyle() != FillStyle.TRANSPARENT) {
-			bound = null;
-			BoundingBox bound = new BoundingBox();
-			for (Point p:points) {
-				bound.add(p);
-			}
-			weight = bound.getArea();
-			x = bound.getCenter().getX();
-			y = bound.getCenter().getY();
-/*				Tesselation tess = new Tesselation(points, 100);
-				tess.calculateBorder();
-				bound = tess.getBorder();
+			try {
+				Tesselation tess = Tesselation.getDefaultTesselation();
+				tess.addVertices(points);
+				bound = tess.getOuterBorder();
 				Point a = points.get(points.size() - 1);
 				for (int i = 0; i < points.size(); i++) {
 					Point b = points.get(i);
@@ -103,7 +96,17 @@ public class Polygon extends FilledFigure {
 				}
 				x /= 6;
 				y /= 6;
-				weight /= 2;*/			
+				weight /= 2;
+			} catch (TesselationFailedException tfe) {
+				bound = null;
+				BoundingBox bb = new BoundingBox();
+				for (Point p:points) {
+					bb.add(p);
+				}
+				weight = bb.getArea();
+				x = bb.getCenter().getX();
+				y = bb.getCenter().getY();				
+			}
 		} else {
 			bound = null;
 			Point a = points.get(0);

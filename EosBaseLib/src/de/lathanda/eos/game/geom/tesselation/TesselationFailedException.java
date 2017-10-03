@@ -1,4 +1,4 @@
-package de.lathanda.eos.game.geom;
+package de.lathanda.eos.game.geom.tesselation;
 
 /**
  * \brief Korrupte Tesselierung
