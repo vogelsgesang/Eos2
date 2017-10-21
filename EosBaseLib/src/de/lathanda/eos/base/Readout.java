@@ -12,7 +12,7 @@ public interface Readout {
 	/**
 	 * Der Aufruf befüllt die Map mit Attributen.
 	 * Welche dies sind entscheidet jede Klasse selbst,
-	 * es gibt keinerlei garantie dass die Liste vollständig ist.
+	 * es gibt keinerlei Garantie, dass die Liste vollständig ist.
 	 * Etwa werden nicht technische und interne Attribute in der Regel weggelassen.
 	 * 
 	 * @param attributes Datenspeicher für die Attibute Name -> Wert

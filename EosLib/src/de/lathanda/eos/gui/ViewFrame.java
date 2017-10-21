@@ -13,6 +13,8 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
@@ -27,7 +29,7 @@ import javax.swing.JToolBar;
  *
  * @author Peter (Lathanda) Schneider
  */
-public class ViewFrame extends JFrame {
+public class ViewFrame extends JFrame implements WindowListener {
     private static final long serialVersionUID = 8808554555627848478L;
     private static final ResourceBundle VIEW   = ResourceBundle.getBundle("text.view");
     private static final Image     LOGO        = ResourceLoader.loadImage("icon/eos.png");
@@ -48,7 +50,7 @@ public class ViewFrame extends JFrame {
         zoom100 = GuiToolkit.createButton("icons/document_zoom_out.png", null, ae -> view.zoomOut());
         status  = GuiToolkit.createLabel(" ");
 
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setLayout(new BorderLayout());
 
         view.setFocusable(false);
@@ -196,5 +198,27 @@ public class ViewFrame extends JFrame {
             status.setText(msg.format(new Object[]{p.getX(), p.getY()}));
         }        
     }
+	@Override
+	public void windowActivated(WindowEvent e) {}
+
+	@Override
+	public void windowClosed(WindowEvent e) {}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		setState(ICONIFIED);
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {}
+
+	@Override
+	public void windowIconified(WindowEvent e) {}
+
+	@Override
+	public void windowOpened(WindowEvent e) {}
 }
 
