@@ -34,6 +34,10 @@ window.namelesen(0)              = getTitle,string
 window.strichabstandsetzen(1)    = setGridWidth,real
 window.strichabstandlesen(0)     = getGridWidth,real
 window.zeichne(1)                = addFigure,figure
+window.mausxlesen(0)             = getCursorX,real
+window.mausylesen(0)             = getCursorY,real
+window.mausgedr\u00fccktlesen(0) = isCursorDown,boolean
+window.mausklicklesen(0)         = isCursorClick,boolean
 
 figure.verschieben(2)              = move,real,real
 figure.strecken(1)                 = scale,real

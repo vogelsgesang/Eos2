@@ -162,28 +162,31 @@ public class ViewPanel extends JPanel {
 
         @Override
         public void mouseMoved(MouseEvent e) {  
-            window.setMouse(e.getX(), e.getY());
-
             cursorMulticaster.fireCursorMoved(
                 gmm.pointFromPixel(e.getX(), e.getY())
             );          
         }
 
         @Override
-        public void mouseClicked(MouseEvent e) { 
-        	window.setMouseClick();
-        }
+        public void mouseClicked(MouseEvent e) { }
 
         @Override
         public void mousePressed(MouseEvent e) {
         	if ((e.getModifiersEx() & MouseEvent.BUTTON3_DOWN_MASK) != 0) {
         		x = e.getX();
         		y = e.getY();
+        	} 
+        	if ((e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) != 0) {
+        		cursorMulticaster.fireCursorDown(gmm.pointFromPixel(e.getX(), e.getY()));
         	}
         }
 
         @Override
-        public void mouseReleased(MouseEvent e) { }
+        public void mouseReleased(MouseEvent e) { 
+        	if ((e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) != 0) {
+        		cursorMulticaster.fireCursorUp(gmm.pointFromPixel(e.getX(), e.getY()));
+        	}        	
+        }
 
         @Override
         public void mouseEntered(MouseEvent e) { }
@@ -205,6 +208,16 @@ public class ViewPanel extends JPanel {
         void fireCursorMoved(Point p) {
             cursorListener.forEach((cl) -> {
                 cl.cursorMoved(p);
+            });
+        }
+        void fireCursorDown(Point p) {
+            cursorListener.forEach((cl) -> {
+                cl.cursorUp(p);
+            });
+        }
+        void fireCursorUp(Point p) {
+            cursorListener.forEach((cl) -> {
+                cl.cursorDown(p);
             });
         }
     }

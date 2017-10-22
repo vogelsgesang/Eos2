@@ -154,6 +154,10 @@ public class ViewFrame extends JFrame implements WindowListener {
     public boolean getGridVisible() {
         return view.getGridVisible();
     }
+	public void addCursorListener(CursorListener cl) {
+		view.addCursorListener(cl);		
+	}
+
     private class ViewKeyListener implements KeyListener {
 
         @Override
@@ -197,7 +201,19 @@ public class ViewFrame extends JFrame implements WindowListener {
                 msg = new MessageFormat(VIEW.getString("View.Status.Cursor2"));
             }
             status.setText(msg.format(new Object[]{p.getX(), p.getY()}));
-        }        
+        }
+
+		@Override
+		public void cursorUp(Point p) { 
+            this.p = p;
+            update();  			
+		}
+
+		@Override
+		public void cursorDown(Point p) { 
+            this.p = p;
+            update();  
+		}        
     }
 	@Override
 	public void windowActivated(WindowEvent e) {}
@@ -221,5 +237,6 @@ public class ViewFrame extends JFrame implements WindowListener {
 
 	@Override
 	public void windowOpened(WindowEvent e) {}
+
 }
 

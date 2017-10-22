@@ -10,4 +10,8 @@ import de.lathanda.eos.base.math.Point;
 
 public interface CursorListener {
     void cursorMoved(Point p);
+
+	void cursorUp(Point p);
+
+	void cursorDown(Point p);
 }

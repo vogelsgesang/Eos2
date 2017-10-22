@@ -34,6 +34,10 @@ window.getname(0)             = getTitle,string
 window.setgridwidth(1)        = setGridWidth,real
 window.getgridwidth(0)        = getGridWidth,real
 window.draw(1)                = addFigure,figure
+window.getmousex(0)           = getCursorX,real
+window.getmousey(0)           = getCursorY,real
+window.getmousedown(0)        = isCursorDown,boolean
+window.getmouseclick(0)       = isCursorClick,boolean
 
 figure.move(2)                  = move,real,real
 figure.stretch(1)               = scale,real

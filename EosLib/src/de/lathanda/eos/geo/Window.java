@@ -3,7 +3,9 @@ package de.lathanda.eos.geo;
 import de.lathanda.eos.base.Picture;
 import de.lathanda.eos.base.Readout;
 import de.lathanda.eos.base.event.CleanupListener;
+import de.lathanda.eos.base.math.Point;
 import de.lathanda.eos.gui.ViewFrame;
+import de.lathanda.eos.gui.event.CursorListener;
 import de.lathanda.eos.gui.event.FigureListener;
 import de.lathanda.eos.util.ConcurrentLinkedList;
 
@@ -15,17 +17,19 @@ import java.util.LinkedList;
  *
  * @author Peter (Lathanda) Schneider
  */
-public class Window implements FigureGroup, CleanupListener, Readout {
+public class Window implements FigureGroup, CleanupListener, Readout, CursorListener {
     ViewFrame vf;
     ChangeMultiCaster cmc;
     protected ConcurrentLinkedList<Figure> members;
-    protected int mouseX, mouseY;
-    protected boolean mouseClick = false;
+    protected Point cursor = new Point(0,0);
+    protected boolean cursorDown = false;
+    protected boolean cursorClick = false;
 
     public Window() {
         members = new ConcurrentLinkedList<Figure>();
         cmc = new ChangeMultiCaster();
         vf = new ViewFrame(this);
+        vf.addCursorListener(this);
         vf.setVisible(true);
     }                          
 
@@ -191,25 +195,39 @@ public class Window implements FigureGroup, CleanupListener, Readout {
         attributes.add(new Attribut("gridvisible", getGridVisible()));	
 	}
 
-	public void setMouse(int x, int y) {
-		mouseX = x;
-		mouseY = y;
-	}
 
-	public void setMouseClick() {
-		mouseClick = true;		
-	}
-	public boolean isMouseClick() {
-		if (mouseClick) {
-			mouseClick = false;
-			return mouseClick;
+	public boolean isCursorClick() {
+		if (cursorClick) {
+			cursorClick = false;
+			return cursorClick;
 		}
 		return false;
 	}
-	public int getMouseX() {
-		return mouseX;
+	public boolean isCursorDown() {
+		return cursorDown;
 	}
-	public int getMouseY() {
-		return mouseY;
+	public double getCursorX() {
+		return cursor.getX();
+	}
+	public double getCursorY() {
+		return cursor.getY();
+	}
+
+	@Override
+	public void cursorMoved(Point p) {
+		cursor = p;
+	}
+
+	@Override
+	public void cursorUp(Point p) {
+		cursorDown = false;
+		cursor = p;
+	}
+
+	@Override
+	public void cursorDown(Point p) {
+		cursorDown = true;
+		cursorClick = true;
+		cursor = p;
 	}
 }

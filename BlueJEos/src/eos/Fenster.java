@@ -84,4 +84,17 @@ public class Fenster {
     public void mitteSetzen(double x, double y) {
     	window.setCenter(x, y);
     }
+    public double mausXLesen() {
+    	return window.getCursorX();
+    }
+    public double mausYLesen() {
+    	return window.getCursorY();
+    }
+    public boolean mausGedruecktLesen() {
+    	return window.isCursorDown();
+    }
+    public boolean mausKlickLesen() {
+    	return window.isCursorClick();
+    }
+    
 }
