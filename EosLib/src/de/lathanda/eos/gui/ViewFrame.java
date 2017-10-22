@@ -51,6 +51,7 @@ public class ViewFrame extends JFrame implements WindowListener {
         status  = GuiToolkit.createLabel(" ");
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(this);
         setLayout(new BorderLayout());
 
         view.setFocusable(false);

@@ -152,10 +152,12 @@ public class ViewPanel extends JPanel {
         int x;
         int y;
         @Override
-        public void mouseDragged(MouseEvent e) { 
-            moveView(x - e.getX(), y - e.getY());
-            x = e.getX();
-            y = e.getY();
+        public void mouseDragged(MouseEvent e) {
+        	if ((e.getModifiersEx() & MouseEvent.BUTTON3_DOWN_MASK) != 0) {
+        		moveView(x - e.getX(), y - e.getY());
+        		x = e.getX();
+        		y = e.getY();
+        	}
         }
 
         @Override
@@ -174,8 +176,10 @@ public class ViewPanel extends JPanel {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            x = e.getX();
-            y = e.getY();
+        	if ((e.getModifiersEx() & MouseEvent.BUTTON3_DOWN_MASK) != 0) {
+        		x = e.getX();
+        		y = e.getY();
+        	}
         }
 
         @Override
