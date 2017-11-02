@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
@@ -107,6 +109,7 @@ public class MainWindow extends JFrame implements WindowListener {
 		txtProgram.setDocument(data);
 		txtOutput.setDocument(data.getOutput());
 		txtProgram.requestFocus();
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new FunctionKeyDispatcher());
 	}
 
 	/**
@@ -875,5 +878,32 @@ public class MainWindow extends JFrame implements WindowListener {
 			return scrollable.getScrollableUnitIncrement(visibleRect, orientation, direction);
 		}
 
+	}
+	private class FunctionKeyDispatcher implements KeyEventDispatcher {
+
+		@Override
+		public boolean dispatchKeyEvent(KeyEvent ke) {
+			if (ke.getID() == KeyEvent.KEY_PRESSED) {
+				switch (ke.getKeyCode()) {
+				case KeyEvent.VK_F5:
+					data.run();
+					break;
+				case KeyEvent.VK_F6:
+					data.singleStep();
+					break;
+				case KeyEvent.VK_F7:
+					data.pause();
+					break;
+				case KeyEvent.VK_F8:
+					data.stop();
+					break;
+				case KeyEvent.VK_F9:
+					data.skip();
+					break;
+				}
+			}
+			return false;
+		}
+	
 	}
 }

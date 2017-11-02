@@ -50,6 +50,13 @@ public class MessageHandler {
 		case IGNORE:
 			//well ignore it :)
 			break;
+		case TRACE:
+			sendWarning(e.getLocalizedMessage());
+			e.printStackTrace();
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e1) {	}
+			break;
 		case ABORT:
 			throw e;
 		}
@@ -64,6 +71,13 @@ public class MessageHandler {
 			break;
 		case ABORT:
 			sendError(e.getLocalizedMessage());
+			break;
+		case TRACE:
+			sendWarning(e.getLocalizedMessage());
+			e.printStackTrace();
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e1) {	}
 		}
 	}
 	public void handleError(Exception e) {

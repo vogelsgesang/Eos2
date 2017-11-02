@@ -29,7 +29,11 @@ public class GuiConfiguration {
 		/**
 		 * Fehler, was ist ein Fehler?
 		 */
-		IGNORE;
+		IGNORE,
+		/**
+		 * Fehler, Trace ausgeben aber ignorieren
+		 */
+		TRACE;
 		/**
 		 * Zahl in Verhalten umwandeln.
 		 * @param value
@@ -43,6 +47,8 @@ public class GuiConfiguration {
 				return WARN;
 			case 2:
 				return IGNORE;
+			case 3:
+				return TRACE;
 			}
 			return WARN;	
 		}
@@ -58,6 +64,8 @@ public class GuiConfiguration {
 	    		return 1;
 	    	case IGNORE:
 	    		return 2;
+	    	case TRACE:
+	    		return 3;
 	    	}
 	    	return 1;
 	    }

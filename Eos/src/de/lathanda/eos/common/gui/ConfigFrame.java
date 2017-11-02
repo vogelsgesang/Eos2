@@ -48,6 +48,7 @@ public class ConfigFrame extends javax.swing.JFrame {
         cmbErrorMode.addItem(ErrorBehaviorEntry.IGNORE);
         cmbErrorMode.addItem(ErrorBehaviorEntry.WARN);
         cmbErrorMode.addItem(ErrorBehaviorEntry.ABORT);
+        cmbErrorMode.addItem(ErrorBehaviorEntry.TRACE);
         
         generalPanel.add(lblFontSize);
         generalPanel.add(txtFontSize);
@@ -84,6 +85,9 @@ public class ConfigFrame extends javax.swing.JFrame {
     	case IGNORE:
     		cmbErrorMode.setSelectedItem(ErrorBehaviorEntry.IGNORE);
     		break;
+    	case TRACE:
+    		cmbErrorMode.setSelectedItem(ErrorBehaviorEntry.TRACE);
+    		break;
     	}
     	
     }
@@ -112,9 +116,10 @@ public class ConfigFrame extends javax.swing.JFrame {
      *
      */
     private static class ErrorBehaviorEntry {
-    	public static final ErrorBehaviorEntry ABORT = new ErrorBehaviorEntry(Messages.getString("configuration.errorbehavior.abort"), GuiConfiguration.ErrorBehavior.ABORT); 
+    	public static final ErrorBehaviorEntry TRACE  = new ErrorBehaviorEntry(Messages.getString("configuration.errorbehavior.trace"), GuiConfiguration.ErrorBehavior.TRACE);
+		public static final ErrorBehaviorEntry ABORT  = new ErrorBehaviorEntry(Messages.getString("configuration.errorbehavior.abort"), GuiConfiguration.ErrorBehavior.ABORT); 
     	public static final ErrorBehaviorEntry IGNORE = new ErrorBehaviorEntry(Messages.getString("configuration.errorbehavior.ignore"), GuiConfiguration.ErrorBehavior.IGNORE); 
-    	public static final ErrorBehaviorEntry WARN = new ErrorBehaviorEntry(Messages.getString("configuration.errorbehavior.warn"), GuiConfiguration.ErrorBehavior.WARN); 
+    	public static final ErrorBehaviorEntry WARN   = new ErrorBehaviorEntry(Messages.getString("configuration.errorbehavior.warn"), GuiConfiguration.ErrorBehavior.WARN); 
     	private final String label;
     	public final GuiConfiguration.ErrorBehavior errorBehavior;
 		private ErrorBehaviorEntry(String label, ErrorBehavior errorBehavior) {
