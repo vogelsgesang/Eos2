@@ -1,6 +1,7 @@
 package de.lathanda.eos.geo;
 
 import java.awt.Color;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import de.lathanda.eos.base.FillDescriptor;
@@ -30,7 +31,11 @@ public class Plotter extends Group {
 
 	@Override
 	protected void drawObject(Picture p) {
-		super.drawObject(p);
+		Iterator<Figure> fit = members.iterator();
+		fit.next(); //pen
+   		while(fit.hasNext()) {
+   			fit.next().draw(p);
+   		}
 		pen.draw(p);
 	}
 

@@ -63,6 +63,7 @@ group.randst\u00e4rkesetzen(1)    = setLineWidth,real
 group.f\u00fcllartsetzen(1)       = setFillStyle,fillstyle
 group.f\u00fcllfarbesetzen(1)     = setFillColor,color
 group.schlucke(1)                 = addFigure,figure
+group.hinzuf\u00fcgen(1)          = addFigure,figure
 group.zentrumsetzen(2)            = setCenter,real,real
 group.kopiere(1)                  = copyFigure,figure
 group.spieglex(0)                 = mirrorX

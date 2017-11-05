@@ -49,7 +49,14 @@ public class ConcurrentLinkedList<T>  implements Iterable<T> {
 		}
 		count++;
 	}
-
+	public synchronized void addFront(T t) {
+		if (root == null) {
+			root = new Node<T>(t);
+			last = root;
+		} else {
+			root = new Node<T>(t, root.next);
+		}
+	}
 	public synchronized void remove(T t) {
 		if (root == null) {
 			return;
@@ -97,6 +104,10 @@ public class ConcurrentLinkedList<T>  implements Iterable<T> {
 
 		public Node(T t) {
 			this.t = t;
+		}
+		public Node(T t, Node<T> next) {
+			this.t= t;
+			this.next = next;
 		}
 	}
 

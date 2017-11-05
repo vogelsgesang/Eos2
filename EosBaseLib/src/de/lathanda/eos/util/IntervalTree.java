@@ -94,16 +94,18 @@ public class IntervalTree<T extends Interval & Comparable<T> > {
 		queue.add(start);
 		while (!queue.isEmpty()) {
 			work = queue.pop();
-			if (value <= work.value) {
+			if (value < work.value) {
 				work.addLow(value,  intervals);
 				if (work.lower != null) {
 					queue.addFirst(work.lower);
 				}
-			} else {
+			} else if (value > work.value) {
 				work.addHigh(value,  intervals);
 				if (work.higher != null) {
 					queue.addFirst(work.higher);
 				}
+			} else {
+				work.addAll(intervals);
 			}
 		}
 	}

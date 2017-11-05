@@ -192,6 +192,14 @@ public class Vector {
     public double getLength() {
         return Math.sqrt(dX * dX + dY * dY);
     }
+    /**
+     * Berechnet die Länge des Vektors im Quadrat.
+     *
+     * @return Die Länge des Vektors
+     */
+    public double getSquareLength() {
+        return dX * dX + dY * dY;
+    }
 
     /**
      * Erzeugt einen neuen Vektor der gewünschten Länge.
@@ -302,24 +310,24 @@ public class Vector {
      * Multipliziert man den Wert mit 90°, so erhält man einen Winkel der weniger als 5° vom echten Winkel abweicht.
      * @return
      */
-    public double getAngleOrder() {
+    public double getAngleOrdernumber() {
     	if (dX > 0) {
-    		if (dY > 0) {
-    			return     dY / (dX + dY);
+    		if (dY >= 0) {
+    			return     dY / (dX + dY); //++
     		} else {
-    			return 3 + dX / (dX - dY);
+    			return 3 + dX / (dX - dY); //+-
     		}
     	} else {
     		if (dY > 0) {
-    			return 1 + dX / (dX - dY);    			
+    			return 1 + dX / (dX - dY); //-+   			
     		} else {
-    			return 2 + dY / (dX + dY);    			
+    			return 2 + dY / (dX + dY); //--   			
     		}
     	}
     }
 
     /**
-     * Erzeugt einen um den winkel (im Bogenmaß) rotieren Vektor. Im
+     * Erzeugt einen um den Winkel (im Bogenmaß) rotieren Vektor. Im
      * Standardkoordinatensystem gegen den Uhrzeigersinn. Diese Methode sollte
      * nicht für rechtwinklige Drehungen verwendet werden, da sie rundet. Der
      * Bildschirm ist anders orientiert!

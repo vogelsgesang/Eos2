@@ -63,6 +63,7 @@ group.setborderwidth(1)          = setLineWidth,real
 group.setfillstyle(1)            = setFillStyle,fillstyle
 group.setfillcolor(1)            = setFillColor,color
 group.consume(1)                 = addFigure,figure
+group.add(1)                     = addFigure,figure
 group.setcenter(2)               = setCenter,real,real
 group.copy(1)                    = copyFigure,figure
 group.mirrorx(0)                 = mirrorX
