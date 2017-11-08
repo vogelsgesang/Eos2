@@ -104,6 +104,7 @@ group.randst\u00e4rkesetzen = @randst\u00e4rkeSetzen(st\u00e4rke)#randst\u00e4rk
 group.f\u00fcllartsetzen  = @f\u00fcllartSetzen(art)#f\u00fcllartSetzen(art:F\u00fcllart)<br>Setzt die F\u00fcllart aller Figuren in der Gruppe.
 group.f\u00fcllfarbesetzen = @f\u00fcllfarbeSetzen(farbe)#f\u00fcllfarbeSetzen(farbe:Farbe)<br>Setzt die F\u00fcllfarbe aller Figuren in der Gruppe.
 group.schlucke            = @schlucke(figur)#schlucke(figur:Figur)<br>F\u00fcgt eine Figur in die Gruppe hinzu.
+group.hinzuf\u00fcgen     = @hinzuf\u00fcgen(figur)#hinzuf\u00fcgen(figur:Figur)<br>F\u00fcgt eine Figur in die Gruppe hinzu.
 group.zentrumsetzen       = @zentrumSetzen(x,y)#zentrumSetzen(x:Zahl,y:Zahl)<br>Setzt den Mittelpunkt der Gruppe auf einen neuen Wert ohne die Figur zu verschieben. Dieser Wert ersetzt den Schwerpunkt.
 group.kopiere             = @kopiere(figur)#kopiere(figur:Figur)<br>Erzeugt eine Kopie der Figur und f\u00fcgt die Kopie der Gruppe hinzu.
 group.spieglex            = @spiegleX()#spiegleX()<br>Spiegelt die Gruppe an der y-Achse.

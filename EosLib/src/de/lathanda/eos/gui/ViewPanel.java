@@ -69,13 +69,19 @@ public class ViewPanel extends JPanel {
         return new Dimension(prefWidth, prefHeight);
     }
     public void zoomIn() {
-        gmm.setScale(gmm.getScale() * 1.1d);
-        repaint();
+    	double scale = gmm.getScale();
+    	if (scale < 10000000) {
+    		gmm.setScale(scale * 1.1d);    		
+    		repaint();
+    	}
     }
 
     public void zoomOut() {
-        gmm.setScale(gmm.getScale() / 1.1d);
-        repaint();        
+    	double scale = gmm.getScale();
+    	if (scale > 0.00000001) {
+    		gmm.setScale(scale / 1.1d);
+    		repaint();
+    	}
     }
 
     public void zoom100() {
