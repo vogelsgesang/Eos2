@@ -47,6 +47,10 @@ public class Gruppe extends Figur {
 	public void schlucke(Figur figur) {
 		group.addFigure(figur.figure);
 	}
+
+	public void hinzufuegen(Figur figur) {
+		group.addFigure(figur.figure);
+	}
 	
 	public void kopiere(Figur figur) {
 		group.copyFigure(figur.figure);

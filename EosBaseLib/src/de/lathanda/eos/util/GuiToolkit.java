@@ -121,7 +121,7 @@ public class GuiToolkit {
 
 	public static JMenuItem createMenuItem(String text, String tooltip, ActionListener action, int mem) {
 		JMenuItem mit = createMenuItem(text, tooltip, action);
-		mit.setAccelerator(KeyStroke.getKeyStroke(mem, InputEvent.CTRL_MASK));
+		mit.setAccelerator(KeyStroke.getKeyStroke(mem, InputEvent.CTRL_DOWN_MASK));
 		return mit;
 	}
 
