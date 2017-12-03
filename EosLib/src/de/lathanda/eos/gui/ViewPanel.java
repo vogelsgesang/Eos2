@@ -189,7 +189,7 @@ public class ViewPanel extends JPanel {
 
         @Override
         public void mouseReleased(MouseEvent e) { 
-        	if ((e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) != 0) {
+        	if (e.getButton() == MouseEvent.BUTTON1) {
         		cursorMulticaster.fireCursorUp(gmm.pointFromPixel(e.getX(), e.getY()));
         	}        	
         }
@@ -218,12 +218,12 @@ public class ViewPanel extends JPanel {
         }
         void fireCursorDown(Point p) {
             cursorListener.forEach((cl) -> {
-                cl.cursorUp(p);
+                cl.cursorDown(p);
             });
         }
         void fireCursorUp(Point p) {
             cursorListener.forEach((cl) -> {
-                cl.cursorDown(p);
+                cl.cursorUp(p);
             });
         }
     }
