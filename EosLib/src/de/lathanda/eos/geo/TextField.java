@@ -138,7 +138,7 @@ public class TextField extends Rectangle {
     		linenumber = 0;
     	}
         String[] lines = text.split("\n");
-        for(int i = text.length(); i < linenumber + lines.length; i++) {
+        for(int i = this.text.size(); i < linenumber + lines.length; i++) {
         	this.text.add("");
         }
         for(int i = 0; i < lines.length; i++) {
