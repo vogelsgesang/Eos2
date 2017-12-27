@@ -196,6 +196,12 @@ public class Roboter {
 			throw new SteinFeststehendAusnahme(e);
 		}
 	}
+	public void farbeSetzen(Color farbe) {
+		robot.setRobotColor(farbe);
+	}
+	public Color farbeLesen() {
+		return robot.getRobotColor();
+	}
 	public void steinFarbeSetzen(Color farbe) {
 		robot.setStoneColor(farbe);
 	}
@@ -203,6 +209,13 @@ public class Roboter {
 	public void markeSetzen() {
 		try {
 			robot.setMark();
+		} catch (RobotVoidException e) {
+			throw new RoboterOhneWeltAusnahme(e);
+		}
+	}
+	public void markeSetzen(Color farbe) {
+		try {
+			robot.setMark(farbe);
 		} catch (RobotVoidException e) {
 			throw new RoboterOhneWeltAusnahme(e);
 		}
@@ -218,6 +231,13 @@ public class Roboter {
 	public boolean istMarke() {
 		try {
 			return robot.isMarked();
+		} catch (RobotVoidException e) {
+			throw new RoboterOhneWeltAusnahme(e);
+		}
+	}
+	public boolean istMarke(Color farbe) {
+		try {
+			return robot.isMarked(farbe);
 		} catch (RobotVoidException e) {
 			throw new RoboterOhneWeltAusnahme(e);
 		}
