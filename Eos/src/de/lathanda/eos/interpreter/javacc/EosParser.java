@@ -8,7 +8,7 @@ public abstract class EosParser {
 	protected StringCharStream scs;
 	public abstract void Parse(Program program, String path) throws ParseException;
 	public static EosParser create(String code) {
-		scs = new StringCharStream(code);
+		StringCharStream scs = new StringCharStream(code);
 		switch (Locale.getDefault().getLanguage()) {
 		case "de":
 			ParserTokenManager tokenmanager = new ParserTokenManager(scs);
