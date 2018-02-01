@@ -211,7 +211,11 @@ public class SourceCode extends DefaultStyledDocument
 
 	@Override
 	public void insertString(int pos, String text, AttributeSet attributeSet) throws BadLocationException {
-		autoCompleteHook.insertString(pos, text, program);
+		try {
+			autoCompleteHook.insertString(pos, text, program);
+		} catch (Exception e) {
+			//Auto completion may never cancel input
+		}
 		storeInsert(pos, text.length(), text);		
 		super.insertString(pos, text, attributeSet);
 	}

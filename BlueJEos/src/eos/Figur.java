@@ -45,7 +45,7 @@ public abstract class Figur {
     	figure.rotate(winkel);
     }
 
-    public void drehenAn(double x, double y, double winkel) {
+    public void drehenUm(double x, double y, double winkel) {
     	figure.rotateAround(x, y, winkel);
     }
 

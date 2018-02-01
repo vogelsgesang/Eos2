@@ -187,7 +187,7 @@ public class Program implements AbstractProgram {
     public AutoCompleteType seekType(int position) {
     	Type type;
     	type = seekTypeSemantical(position);
-    	if (type.isUnknown() || type.isVoid()) {
+    	if (type == null || type.isUnknown() || type.isVoid()) {
     		type = useBestGuess(position);
     	}
     	return type;
@@ -277,7 +277,7 @@ public class Program implements AbstractProgram {
 		StringBuilder expected = new StringBuilder();
 		StringBuilder encountered = new StringBuilder();
 		int maxSize = 0;
-		char item = 'a';
+		int item = 1;
 		for (int[] expectedTokenSequence : pe.expectedTokenSequences) {
 			expected.append("\n").append(item++).append(") ");
 			if (maxSize < expectedTokenSequence.length) {
