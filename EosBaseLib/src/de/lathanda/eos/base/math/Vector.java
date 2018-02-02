@@ -450,7 +450,7 @@ public class Vector {
      * hängt jedoch von der Orientierung der Achsen ab, daher sollte man die
      * Methode einfach ausprobieren, das Verhalten bleibt wie es ist.
      *
-     * @param a Zweiter Vektor
+     * @param b Zweiter Vektor
      * @return Vorzeichen behaftete Fläche des aufgespannten Parallelogramms
      */
     public double crossproduct(Vector b) {
