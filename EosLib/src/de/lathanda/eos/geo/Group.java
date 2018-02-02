@@ -134,15 +134,11 @@ public class Group extends Figure implements FigureGroup  {
     }
 
     public void mirrorY() {
-    	for (Figure m : members) {
-            m.transformMirrorY();
-        }
+    	transformMirrorY();
         fireLayoutChanged();
     }        
     public void mirrorX() {
-    	for (Figure m : members) {
-            m.transformMirrorX();
-        }
+    	transformMirrorX();
         fireLayoutChanged();
     } 
 

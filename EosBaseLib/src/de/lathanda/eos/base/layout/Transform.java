@@ -38,7 +38,7 @@ public class Transform {
     public Transform rotate(double x, double y, double angle) {
         if (mirrorx) {
             return new Transform(
-                v.substract(x, y).rotate(angle).add(x, y),
+                v.substract(-x, y).rotate(-angle).add(-x, y),
                 this.angle - angle, true, scale);
         } else {
             return new Transform(
@@ -76,10 +76,18 @@ public class Transform {
     }
     
     public Transform translate(double dx, double dy) {
-        return new Transform(v.add(dx,dy),angle, mirrorx, scale);
+    	if (mirrorx) {
+    		return new Transform(v.add(-dx,dy),angle, mirrorx, scale);    		
+    	} else {
+    		return new Transform(v.add(dx,dy),angle, mirrorx, scale);
+    	}
     }
     public Transform translate(Vector v) {
-        return new Transform(this.v.add(v),angle, mirrorx, scale);
+    	if (mirrorx) {
+    		return new Transform(this.v.add(v.invertX()),angle, mirrorx, scale);
+    	} else {
+    		return new Transform(this.v.add(v),angle, mirrorx, scale);
+    	}
     }
     public Transform transform(Transform child) {
         Transform result = new Transform(
@@ -89,9 +97,10 @@ public class Transform {
                 child.scale
         );
         if (mirrorx) {
-            result.mirrorX();
+        	return result.mirrorX().scale(scale).rotate(angle);
+        } else {
+        	return result.scale(scale).rotate(angle);
         }
-        return result.scale(scale).rotate(angle);
     }
     public Point transform(Point point) {
         Vector result = new Vector(point);
