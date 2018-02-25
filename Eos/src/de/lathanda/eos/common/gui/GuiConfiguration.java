@@ -1,5 +1,6 @@
 package de.lathanda.eos.common.gui;
 
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -87,6 +88,14 @@ public class GuiConfiguration {
 	 */
 	private int fontsize;
 	/**
+	 * Manuelle dpi des Bildschirms. 0 Systemeinstellung
+	 */
+	private int dpi;
+	/**
+	 * Einheit in mm.
+	 */
+	private double unit;
+	/**
 	 * Fehlerverhalten.
 	 */
 	private ErrorBehavior errorBehavior;
@@ -148,20 +157,27 @@ public class GuiConfiguration {
 	private void load(InputStream in) throws IOException {
 		configuration = new Properties();
 		configuration.load(in);
-		fontsize = Integer.valueOf(configuration.getProperty("fontsize"));
+		fontsize      = Integer.valueOf(configuration.getProperty("fontsize"));
 		errorBehavior = ErrorBehavior.decode(Integer.valueOf(configuration.getProperty("errorbehavior")));		
-		errorNumber = Integer.valueOf(configuration.getProperty("errornumber"));
+		errorNumber   = Integer.valueOf(configuration.getProperty("errornumber"));
+		dpi           = Integer.valueOf(configuration.getProperty("dpi", "0"));
+		unit          = Double.valueOf(configuration.getProperty("unit", "1"));
+		if (dpi == 0) {
+			dpi = Toolkit.getDefaultToolkit().getScreenResolution();
+		}
 		dirty = false;
 	}
 	/**
-	 * Speichert die KOnfiguration in einen Datenstrom.
+	 * Speichert die Konfiguration in einen Datenstrom.
 	 * @param out
 	 * @throws IOException
 	 */
 	private void save(OutputStream out) throws IOException {
-		configuration.setProperty("fontsize", Integer.toString(fontsize));
+		configuration.setProperty("fontsize",      Integer.toString(fontsize));
 		configuration.setProperty("errorbehavior", Integer.toString(errorBehavior.encode()));
-		configuration.setProperty("errornumber", Integer.toString(errorNumber));
+		configuration.setProperty("errornumber",   Integer.toString(errorNumber));
+		configuration.setProperty("dpi",           Integer.toString(dpi));
+		configuration.setProperty("unit",          Double.toString(unit));		
 		configuration.store(out, "EOS Configuration");
 		dirty = false;		
 	}
@@ -209,6 +225,26 @@ public class GuiConfiguration {
 			fireErrorBehaviorChanged();
 		}
 	}
+	
+	public int getDpi() {
+		return dpi;
+	}
+	public void setDpi(int dpi) {
+		if (dpi != this.dpi) {
+			this.dpi = dpi;
+			dirty = true;
+		}
+	}
+	public double getUnit() {
+		return unit;
+	}
+	public void setUnit(double unit) {
+		if (unit != this.unit) {
+			this.unit = unit;
+			dirty = true;
+		}
+	}
+
 	/**
 	 * Liste der von der Konfiguration abhängigen Objekte.
 	 * Diese werden bei Änderungen informiert.
