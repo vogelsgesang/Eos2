@@ -1,6 +1,9 @@
 package de.lathanda.eos.common.gui;
 
 import java.awt.GridLayout;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -30,6 +33,7 @@ public class ConfigFrame extends javax.swing.JFrame {
     public ConfigFrame() {
         initComponents();
     }
+    private static final NumberFormat FORMAT = DecimalFormat.getInstance();
     /**
      * Initialisiert die Komponenten.
      */
@@ -41,8 +45,8 @@ public class ConfigFrame extends javax.swing.JFrame {
         generalPanel  = new JPanel();
         commandPanel  = new JPanel();
         lblFontSize   = GuiToolkit.createLabel(Messages.getString("configuration.fontsize"));
-        lblUnit       = GuiToolkit.createLabel(Messages.getString("configuration.dpi"));
-        lblDPI        = GuiToolkit.createLabel(Messages.getString("configuration.unit"));
+        lblUnit       = GuiToolkit.createLabel(Messages.getString("configuration.unit"));
+        lblDPI        = GuiToolkit.createLabel(Messages.getString("configuration.dpi"));
         lblErrorMode  = GuiToolkit.createLabel(Messages.getString("configuration.errormode"));
         txtFontSize   = new JTextField();
         txtDPI        = new JTextField();
@@ -84,7 +88,7 @@ public class ConfigFrame extends javax.swing.JFrame {
     private void readData() {
     	txtFontSize.setText(String.valueOf(guiConf.getFontsize()));
     	txtDPI.setText(String.valueOf(guiConf.getDpi()));
-    	txtUnit.setText(String.valueOf(guiConf.getUnit()));
+    	txtUnit.setText(FORMAT.format(guiConf.getUnit()));
     	switch (guiConf.getErrorBehavior()) {
     	case ABORT:
     		cmbErrorMode.setSelectedItem(ErrorBehaviorEntry.ABORT);
@@ -116,9 +120,9 @@ public class ConfigFrame extends javax.swing.JFrame {
     		txtDPI.setText(String.valueOf(guiConf.getDpi()));
     	}
     	try {
-    		guiConf.setUnit(Integer.parseInt(txtUnit.getText()));
-    	} catch (NumberFormatException e) {
-    		txtUnit.setText(String.valueOf(guiConf.getUnit()));
+    		guiConf.setUnit(FORMAT.parse(txtUnit.getText()).doubleValue());
+    	} catch (ParseException e) {
+    		txtUnit.setText(FORMAT.format(guiConf.getUnit()));
     	}
     	guiConf.setErrorBehavior(((ErrorBehaviorEntry)cmbErrorMode.getSelectedItem()).errorBehavior);
     }

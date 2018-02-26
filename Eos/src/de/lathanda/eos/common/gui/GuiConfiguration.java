@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.Properties;
 
 import de.lathanda.eos.base.ResourceLoader;
+import de.lathanda.eos.util.GuiToolkit;
 
 /**
  * Diese Klasse verwaltet alle Benutzereinstellungen der Oberfläche.
@@ -232,6 +233,7 @@ public class GuiConfiguration {
 	public void setDpi(int dpi) {
 		if (dpi != this.dpi) {
 			this.dpi = dpi;
+			GuiToolkit.setScreenResolution(dpi);
 			dirty = true;
 		}
 	}
@@ -241,6 +243,7 @@ public class GuiConfiguration {
 	public void setUnit(double unit) {
 		if (unit != this.unit) {
 			this.unit = unit;
+			GuiToolkit.setUnit(unit);
 			dirty = true;
 		}
 	}

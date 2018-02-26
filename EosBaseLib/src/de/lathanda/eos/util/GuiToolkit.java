@@ -38,6 +38,7 @@ public class GuiToolkit {
 	 * und zu wird absichtlich gelogen. (zB Dynamic Super Resolution).
 	 */
 	private static int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
+	private static double unit = 1;
 	private static final Font MENU_ITEM_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 10);
 	private static final Font MENU_FONT   = createFont(Font.SANS_SERIF, Font.PLAIN, 10);
 	private static final Font LABEL_FONT  = createFont(Font.SANS_SERIF, Font.PLAIN, 10);
@@ -72,7 +73,17 @@ public class GuiToolkit {
 		return dpi;
 	}
 	public static void setScreenResolution(int dpi) {
-		GuiToolkit.dpi = dpi;
+		if (dpi == 0) {
+			dpi = Toolkit.getDefaultToolkit().getScreenResolution();
+		} else {
+			GuiToolkit.dpi = dpi;
+		}
+	}
+	public static double getUnit() {
+		return unit;
+	}
+	public static void setUnit(double unit) {
+		GuiToolkit.unit = unit;
 	}
 	public static Font createFont(String name, int style, int size) {
 		return new Font(name, style, getFontSize(size));

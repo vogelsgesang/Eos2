@@ -43,7 +43,7 @@ public abstract class Picture {
     protected Font font;
     
     public Picture() {       
-        scaleBase = GuiToolkit.getScreenResolution() / 25.4f;
+        scaleBase = GuiToolkit.getScreenResolution()* GuiToolkit.getUnit() / 25.4f;
         scale = 1.0f;
         centerX = 0;
         centerY = 0;
