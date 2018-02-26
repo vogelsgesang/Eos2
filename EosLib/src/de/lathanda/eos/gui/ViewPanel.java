@@ -5,6 +5,8 @@ import de.lathanda.eos.base.math.Point;
 import de.lathanda.eos.geo.Window;
 import de.lathanda.eos.gui.event.CursorListener;
 import de.lathanda.eos.gui.event.FigureListener;
+import de.lathanda.eos.util.GuiToolkit;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -36,8 +38,8 @@ public class ViewPanel extends JPanel {
         this.window = window;
         gmm = new Picture2D(200, 200, this);
         cursorMulticaster = this.new CursorMulticaster();
-        prefHeight = gmm.mm2pixel(200);
-        prefWidth  = gmm.mm2pixel(200);
+        prefHeight = gmm.mm2pixel(200/GuiToolkit.getUnit());
+        prefWidth  = gmm.mm2pixel(200/GuiToolkit.getUnit());
         window.addFigureListener(this.new DataListener());
         ViewMouseListener vml = this.new ViewMouseListener();
         addMouseMotionListener(vml);
