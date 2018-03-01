@@ -156,6 +156,7 @@ public class Polygon extends FilledFigure {
     		for(Point p : points) {
     			poly.points.add(new Point(p));
     		}
+    		
     		poly.updatePolygon();
             return poly;
     	}

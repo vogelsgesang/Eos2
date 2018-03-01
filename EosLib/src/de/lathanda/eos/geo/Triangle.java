@@ -59,8 +59,18 @@ public class Triangle  extends FilledFigure {
         points[C].negateY();
         fireDataChanged();        
     }    
-  
+ 
     @Override
+	public Figure copy() {
+    	Triangle tri = (Triangle)super.copy();
+		tri.points = new Point[3];
+		for(int i = 0; i < 3; i++) {
+			tri.points[i] = new Point(points[i]);
+		}
+		return tri;
+	}
+
+	@Override
     protected BalancePoint getBalancePoint() {
         double area;
         double xa = points[A].getX();

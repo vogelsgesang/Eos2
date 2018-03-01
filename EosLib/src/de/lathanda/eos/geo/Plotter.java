@@ -163,6 +163,7 @@ public class Plotter extends Group {
     public Figure copy() {
         Plotter g = (Plotter)super.copy();
         g.polygon = (Polygon)polygon.copy();
+        g.pen = (Pen)pen.copy();
         return g;
     }
 	@Override

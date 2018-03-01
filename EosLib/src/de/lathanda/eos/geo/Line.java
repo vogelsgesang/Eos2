@@ -92,7 +92,12 @@ public class Line extends LineFigure {
         b.y2 = y2;
         b.writeBack();
     }
-
+    @Override
+    public Figure copy() {
+        Line line = (Line)super.copy();
+        line.a = new Point(a);
+        return line;
+    }
     private class Box {
         double x1;
         double y1;

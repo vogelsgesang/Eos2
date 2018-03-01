@@ -166,6 +166,7 @@ public class GuiConfiguration {
 		if (dpi == 0) {
 			dpi = Toolkit.getDefaultToolkit().getScreenResolution();
 		}
+		GuiToolkit.setScreenResolution(dpi);
 		dirty = false;
 	}
 	/**
