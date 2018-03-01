@@ -34,7 +34,7 @@ public class ObjectCard extends Unit {
 	}
 	@Override
 	public void drawUnit(Drawing d) {
-		d.drawRect(0, 0, width, height);
+		d.drawRoundRect(0, 0, width, height, 5);
 		d.drawLine(0, yLine, width, yLine);
 		header.draw(d);
 		for(Unit property : properties) {

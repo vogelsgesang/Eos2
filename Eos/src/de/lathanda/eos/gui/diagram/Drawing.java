@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
@@ -201,6 +202,18 @@ public class Drawing {
         g.drawRect(xp(x), yp(y), wp(x, width), hp(y, height));
     }
     /**
+     * Zeichnet ein Rechteck.
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param radius
+     */
+    public void drawRoundRect(float x, float y, float width, float height, float radius) {
+        RoundRectangle2D roundedRectangle = new RoundRectangle2D.Float(xp(x), yp(y), wp(x, width), hp(y, height), scale(radius), scale(radius));
+        g.draw(roundedRectangle);
+    }
+    /**
      * Mal ein Rechteck aus.
      * @param x
      * @param y
@@ -236,6 +249,9 @@ public class Drawing {
     }
     private int hp(float y, float h) {
     	return yp(y+h)-yp(y);
+    }
+    private int scale(float val) {
+    	return (int)(scale * val);
     }
     /**
      * Zeichnet einen Pfeil.
