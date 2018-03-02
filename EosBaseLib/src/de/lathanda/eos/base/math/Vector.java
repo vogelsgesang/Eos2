@@ -412,7 +412,7 @@ public class Vector {
         if (length == 0) {
             return getLength();
         } else {
-            return crossproduct(base) / length;
+            return -crossproduct(base) / length;
         }
     }
 
