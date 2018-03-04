@@ -226,7 +226,9 @@ public class Program implements AbstractProgram {
     	}
     }
     public static void addGuess(String name, Type type) {
-    	guessTable.put(name, type);
+        if (type != null && !type.isUnknown() && !type.isVoid()) { 
+        	guessTable.put(name, type);
+        }
     }
     public String getSource() {
         return source;
@@ -362,7 +364,8 @@ public class Program implements AbstractProgram {
 		if (uc == null) {
 			uc = new UserClass(name);
 			userclass.put(name.toLowerCase(), uc);
-		}		
+		}
+		uc.define();
 		return uc;
 	}
 }

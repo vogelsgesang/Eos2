@@ -105,6 +105,7 @@ public class Declaration extends Node {
         for (String name : names) {
             if (first) {
                 text.append(name);
+                first = false;
             } else {
                 text.append(", ").append(name);
             }

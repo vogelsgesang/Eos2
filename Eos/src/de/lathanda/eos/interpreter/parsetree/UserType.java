@@ -24,6 +24,7 @@ public class UserType extends Type {
 	 */
 	private boolean checked = false;
 	private boolean marked = false;
+	private boolean isUndefined = true;
 	public UserType(String id) {
 		super(id, id);
 		mtype = new MClass(id);
@@ -87,6 +88,10 @@ public class UserType extends Type {
 		return isAbstract;
 	}
 
+	@Override
+	public boolean isUnknown() {
+		return isUndefined;
+	}
 	public void addProperty(Property prop) {
 		for(String name:prop.getNames()) {
 			userproperties.put(name, prop);
@@ -139,5 +144,8 @@ public class UserType extends Type {
 		} else {
 			return null;
 		}
+	}
+	public void define() {
+		isUndefined = false;		
 	}
 }
