@@ -103,12 +103,12 @@ public class Line extends LineFigure {
     		Point A;
     		Point B;
         TrueLine() {
-        		Point A = getTransformedPosition(a);
-        		Point B = getTransformedPosition(b);
+        		A = getTransformedPosition(a);
+        		B = getTransformedPosition(b);
         }
         void writeBack() {
-        	    resetTransformation();
-        	    Vector v = new Vector(A, B).multiply(0.5);
+        	resetTransformation();
+        	Vector v = new Vector(A, B).multiply(0.5);
             a = new Point(-v.getdx(), -v.getdy());
             b = new Point(v.getdx(), v.getdy());
             Line.this.moveTo((A.getX()+B.getX())/2,(A.getY()+B.getY())/2);
