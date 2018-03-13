@@ -111,6 +111,10 @@ public abstract class Figure implements Cloneable, Readout {
         transform = transform.translate(x, y);
         //no update!
     }    
+    protected void resetTransformation() {
+    		transform = Transform.ID;
+    		//no update!
+    }
     public void move(double dx, double dy) {
         transform = transform.translate(dx, dy);
         fireLayoutChanged();        
@@ -189,6 +193,9 @@ public abstract class Figure implements Cloneable, Readout {
             }
         }
         return transform.transform(p);
+    }
+    protected Point getTransformedPosition(Point point) {
+    		return transform.transform(point);
     }
     protected Point getRelativePosition(Point absolute) {
     	if (group != null) {
