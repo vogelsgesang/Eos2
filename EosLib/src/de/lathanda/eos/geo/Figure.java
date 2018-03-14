@@ -18,7 +18,7 @@ import de.lathanda.eos.base.layout.BoundingBox;
 public abstract class Figure implements Cloneable, Readout {
 	private boolean visible;    
     private FigureGroup group;
-    private Transform transform;    
+    protected Transform transform;    
     private BoundingBox bound = new BoundingBox();
     public Figure() {
         transform = Transform.ID;
@@ -283,7 +283,9 @@ public abstract class Figure implements Cloneable, Readout {
         attributes.add(new Attribut("visible", visible));
         attributes.add(new Attribut("x", transform.getdx()));
         attributes.add(new Attribut("y", transform.getdy()));
-        attributes.add(new Attribut("angle", transform.getAngle()/Math.PI*180%360));
+        double angle = transform.getAngle()/Math.PI*180 % 360d;
+        if (angle < 0) { angle += 360d; }
+        attributes.add(new Attribut("angle", Math.round(angle)));
         attributes.add(new Attribut("mirrored", transform.getMirrorX()));		
 	}
 }
