@@ -147,6 +147,7 @@ line.x1                  = %x1#x1:Zahl<br>x-Koordinate des ersten Punktes.
 line.y1                  = %y1#y1:Zahl<br>y-Koordinate des ersten Punktes.
 line.x2                  = %x2#x2:Zahl<br>x-Koordinate des zweiten Punktes.
 line.y2                  = %y2#y2:Zahl<br>y-Koordinate des zweiten Punktes.
+line.l\u00e4nge          = $l\u00e4nge#l\u00e4nge:Zahl<br>L\u00e4nge der Strecke.
 
 square.seitenl\u00e4ngesetzen = @seitenl\u00e4ngeSetzen(l\u00e4nge)#seitenl\u00e4ngeSetzen(l\u00e4nge:Zahl)<br>Setzt die Seitenl\u00e4nge.
 square.linksobensetzen     = @linksObenSetzen(x,y)#linksObenSetzen(x:Zahl,y:Zahl)<br>Setzt die linke obere Ecke.
