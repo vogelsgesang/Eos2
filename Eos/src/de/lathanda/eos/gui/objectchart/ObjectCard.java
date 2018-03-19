@@ -1,6 +1,10 @@
 package de.lathanda.eos.gui.objectchart;
 
+import java.awt.font.TextAttribute;
+import java.util.Hashtable;
 import java.util.LinkedList;
+import java.util.Map;
+
 import de.lathanda.eos.base.Readout;
 import de.lathanda.eos.base.Readout.Attribut;
 import de.lathanda.eos.gui.diagram.Unit;
@@ -17,8 +21,10 @@ public class ObjectCard extends Unit {
     private LinkedList<Property> properties;
 	private float yLine;
 	public ObjectCard(String name, String cls, Readout readout) {
+		Map<TextAttribute, Object> map = new Hashtable<>();
+		map.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 		header = new TextUnit(name + ":" + cls);
-		header.setFont(HEADER_FONT);
+		header.setFont(HEADER_FONT.deriveFont(map));
 		properties = new LinkedList<>();
 		LinkedList<Attribut> attr = new LinkedList<>();
 		readout.getAttributes(attr);
