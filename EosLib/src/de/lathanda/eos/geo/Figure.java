@@ -167,10 +167,7 @@ public abstract class Figure implements Cloneable, Readout {
         scaleInternal(factor);    	
         fireLayoutChanged();        
     }
-    protected void scaleInGroup(double factor) {
-        transform = transform.scalePosition(factor);  
-        scaleInternal(factor);    	
-    }
+
     /**
      * Eine Streckung findet statt. Interne Maße müssen an die neue Streckung angepasst werden.
      * @param factor
