@@ -44,6 +44,7 @@ public class GuiToolkit {
 	private static final Font LABEL_FONT  = createFont(Font.SANS_SERIF, Font.PLAIN, 10);
 	private static final Font SLIDER_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 8);
 	private static final Font TITLE_BORDER_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 8);
+	private static final int CMD_MASK = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
 
 	/**
 	 * Millimeter in Pixel umrechnen.
@@ -132,7 +133,7 @@ public class GuiToolkit {
 
 	public static JMenuItem createMenuItem(String text, String tooltip, ActionListener action, int mem) {
 		JMenuItem mit = createMenuItem(text, tooltip, action);
-		mit.setAccelerator(KeyStroke.getKeyStroke(mem, InputEvent.CTRL_DOWN_MASK));
+		mit.setAccelerator(KeyStroke.getKeyStroke(mem, CMD_MASK));
 		return mit;
 	}
 
