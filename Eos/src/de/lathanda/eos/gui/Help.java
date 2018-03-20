@@ -217,6 +217,7 @@ public class Help extends JFrame {
 		helpSplit.setRightComponent(scrollTopic);
 
 		txtHelp.setEditable(false);
+		txtHelp.setFont(GuiToolkit.createFont(Font.SANS_SERIF, Font.PLAIN, 10));
 		txtHelp.addHyperlinkListener(e -> hyperlinkUpdate(e));
 		scrollHelp.setViewportView(txtHelp);
 
