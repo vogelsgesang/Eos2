@@ -302,8 +302,6 @@ public class SourceCode extends DefaultStyledDocument
 				insertString(getLength(), line + "\n", null);
 			} catch (BadLocationException e) {
 				// This should not be possible?
-				JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), Messages.getString("InternalError.Title"),
-						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 
@@ -312,8 +310,6 @@ public class SourceCode extends DefaultStyledDocument
 				remove(0, getLength());
 			} catch (BadLocationException e) {
 				// This should not be possible?
-				JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), Messages.getString("InternalError.Title"),
-						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

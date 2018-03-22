@@ -14,10 +14,9 @@ import de.lathanda.eos.gui.diagram.TextUnit;
  * Objektkarte
  *
  * @author Peter (Lathanda) Schneider
- * @since 0.9.4
  */
 public class ObjectCard extends Unit {
-    private Unit header;
+    private TextUnit header;
     private LinkedList<Property> properties;
 	private float yLine;
 	public ObjectCard(String name, String cls, Readout readout) {
@@ -54,7 +53,7 @@ public class ObjectCard extends Unit {
 			property.layout(d);
 		}
 		header.setOffsetY(INDENT);
-		header.setOffsetX(INDENT);
+		header.setOffsetX(0);
 		yLine = header.getHeight() + 2 * INDENT;
 		if (properties.isEmpty()) {
 			width = header.getWidth() + 2 * INDENT;
@@ -69,6 +68,8 @@ public class ObjectCard extends Unit {
 				y += property.getHeight() + INDENT;
 			}	
 			height = y;
-		}        
+		}   
+		header.setWidth(width);
+		header.alignCentralX();
 	}
 }
