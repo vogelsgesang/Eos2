@@ -21,7 +21,7 @@ public class Line extends LineFigure {
         super();
         // (-10,10) -> (10, -10)
         this.length = sqrt(800);
-        transform.setAngle(-PI/2d);
+        transform = transform.setAngle(-PI/4d);
 		line.setDrawWidth(0.5f);        
     }
 
