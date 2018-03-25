@@ -6,8 +6,6 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -38,11 +36,13 @@ public class GuiToolkit {
 	 * und zu wird absichtlich gelogen. (zB Dynamic Super Resolution).
 	 */
 	private static int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
+	private static double unit = 1;
 	private static final Font MENU_ITEM_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 10);
 	private static final Font MENU_FONT   = createFont(Font.SANS_SERIF, Font.PLAIN, 10);
 	private static final Font LABEL_FONT  = createFont(Font.SANS_SERIF, Font.PLAIN, 10);
 	private static final Font SLIDER_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 8);
 	private static final Font TITLE_BORDER_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 8);
+	private static final int CMD_MASK = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
 
 	/**
 	 * Millimeter in Pixel umrechnen.
@@ -72,7 +72,17 @@ public class GuiToolkit {
 		return dpi;
 	}
 	public static void setScreenResolution(int dpi) {
-		GuiToolkit.dpi = dpi;
+		if (dpi == 0) {
+			dpi = Toolkit.getDefaultToolkit().getScreenResolution();
+		} else {
+			GuiToolkit.dpi = dpi;
+		}
+	}
+	public static double getUnit() {
+		return unit;
+	}
+	public static void setUnit(double unit) {
+		GuiToolkit.unit = unit;
 	}
 	public static Font createFont(String name, int style, int size) {
 		return new Font(name, style, getFontSize(size));
@@ -121,7 +131,7 @@ public class GuiToolkit {
 
 	public static JMenuItem createMenuItem(String text, String tooltip, ActionListener action, int mem) {
 		JMenuItem mit = createMenuItem(text, tooltip, action);
-		mit.setAccelerator(KeyStroke.getKeyStroke(mem, InputEvent.CTRL_DOWN_MASK));
+		mit.setAccelerator(KeyStroke.getKeyStroke(mem, CMD_MASK));
 		return mit;
 	}
 

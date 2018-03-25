@@ -50,6 +50,7 @@ public class SourceCode extends DefaultStyledDocument
 	private static final Object COMPILE_LOCK = new Object();
 	private final OutputStyle message;
 	private AbstractMachine machine;
+	private AbstractMachine runningMachine;
 	private boolean compileNeeded = false;
 	private boolean sourceDirty = false;
 	private String path = "";
@@ -132,8 +133,12 @@ public class SourceCode extends DefaultStyledDocument
 	}
 
 	public void run() {
-		if (machine != null) {
-			machine.run();
+		if (runningMachine != machine) {
+			stop();
+			runningMachine = machine;
+		}		
+		if (runningMachine != null) {
+			runningMachine.run();
 		}
 	}
 
@@ -160,25 +165,35 @@ public class SourceCode extends DefaultStyledDocument
 	}
 
 	public void singleStep() {
-		if (machine != null) {
-			machine.singleStep();
+		if (runningMachine != machine) {
+			stop();
+			runningMachine = machine;
+		}		
+		if (runningMachine != null) {
+			runningMachine.singleStep();
 		}
 	}
 
 	public void pause() {
-		machine.pause();
+		if (runningMachine != null) {
+			runningMachine.pause();
+		}
 	}
 
 	public void stop() {
-		if (machine != null) {
-			machine.stop();
+		if (runningMachine != null) {
+			runningMachine.stop();
 		}
 		codeColorHook.unmarkExecutionPoint();
 	}
 
 	public void skip() {
-		if (machine != null) {
-			machine.skip();
+		if (runningMachine != machine) {
+			stop();
+			runningMachine = machine;
+		}
+		if (runningMachine != null) {
+			runningMachine.skip();
 		}
 	}
 
@@ -211,7 +226,11 @@ public class SourceCode extends DefaultStyledDocument
 
 	@Override
 	public void insertString(int pos, String text, AttributeSet attributeSet) throws BadLocationException {
-		autoCompleteHook.insertString(pos, text, program);
+		try {
+			autoCompleteHook.insertString(pos, text, program);
+		} catch (Exception e) {
+			//Auto completion may never cancel input
+		}
 		storeInsert(pos, text.length(), text);		
 		super.insertString(pos, text, attributeSet);
 	}
@@ -238,7 +257,7 @@ public class SourceCode extends DefaultStyledDocument
 		SwingUtilities.invokeLater(() -> compileCompleteInteral(errors, program));
 	}
 	private void compileCompleteInteral(LinkedList<ErrorInformation> errors, AbstractProgram program) {
-		stop();
+		pause();
 		this.program = program;
 		this.machine = program.getMachine();
 		
@@ -283,8 +302,6 @@ public class SourceCode extends DefaultStyledDocument
 				insertString(getLength(), line + "\n", null);
 			} catch (BadLocationException e) {
 				// This should not be possible?
-				JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), Messages.getString("InternalError.Title"),
-						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 
@@ -293,8 +310,6 @@ public class SourceCode extends DefaultStyledDocument
 				remove(0, getLength());
 			} catch (BadLocationException e) {
 				// This should not be possible?
-				JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), Messages.getString("InternalError.Title"),
-						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

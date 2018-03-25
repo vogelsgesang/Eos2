@@ -21,7 +21,7 @@ public class TextField extends Rectangle {
     private int size;
     private Color color;
     private boolean hideBorder;
-    private final LinkedList<String> text;
+    private LinkedList<String> text;
     private String fontname;
 
     public TextField() {
@@ -159,6 +159,15 @@ public class TextField extends Rectangle {
     	dirty = true;
     	fireDataChanged();    	
     }
+    @Override
+    public Figure copy() {
+        TextField tf = (TextField)super.copy();
+        tf.text = new LinkedList<>();
+        for(String line : text) {
+        	tf.text.add(line);
+        }
+        return tf;
+    }    
     @Override
 	public void getAttributes(LinkedList<Attribut> attributes) {
     	super.getAttributes(attributes);

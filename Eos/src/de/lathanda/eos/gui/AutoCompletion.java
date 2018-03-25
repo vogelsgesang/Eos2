@@ -110,7 +110,7 @@ public class AutoCompletion implements CaretListener, KeyListener, FocusListener
 	 * @throws BadLocationException
 	 */
 	public void start(AutoCompleteType base, int position) throws BadLocationException {
-		if (base.isUnknown()) {
+		if (base == null || base.isUnknown()) {
 			stop();
 			return;
 		}

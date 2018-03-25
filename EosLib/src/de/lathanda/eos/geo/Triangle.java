@@ -38,7 +38,7 @@ public class Triangle  extends FilledFigure {
         points[C].scale(factor);
 	}
     public void setCorners(double x1, double y1, double x2, double y2, double x3, double y3) {
-        moveToInternal(0,0);
+        resetTransformation();
         points[A] = new Point(x1, y1);
         points[B] = new Point(x2, y2);
         points[C] = new Point(x3, y3);        
@@ -59,8 +59,18 @@ public class Triangle  extends FilledFigure {
         points[C].negateY();
         fireDataChanged();        
     }    
-  
+ 
     @Override
+	public Figure copy() {
+    	Triangle tri = (Triangle)super.copy();
+		tri.points = new Point[3];
+		for(int i = 0; i < 3; i++) {
+			tri.points[i] = new Point(points[i]);
+		}
+		return tri;
+	}
+
+	@Override
     protected BalancePoint getBalancePoint() {
         double area;
         double xa = points[A].getX();
@@ -98,8 +108,8 @@ public class Triangle  extends FilledFigure {
     @Override
 	public void getAttributes(LinkedList<Attribut> attributes) {
     	super.getAttributes(attributes);
-    	attributes.add(new Attribut("a", points[A].toString()));
-    	attributes.add(new Attribut("b", points[B].toString()));
-    	attributes.add(new Attribut("c", points[C].toString()));
+    	attributes.add(new Attribut("a", getTransformedPosition(points[A]).toString()));
+    	attributes.add(new Attribut("b", getTransformedPosition(points[B]).toString()));
+    	attributes.add(new Attribut("c", getTransformedPosition(points[C]).toString()));
 	}     
 }

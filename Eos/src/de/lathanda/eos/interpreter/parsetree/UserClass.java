@@ -34,6 +34,10 @@ public class UserClass extends MarkedNode {
 	public void setSuperClass(String name) {
 		sup = name;
 	}
+	
+	public void define() {
+		self.define();
+	}
 	public void addProperty(Property prop) throws DoublePropertyDeclarationException {
 		for (String name:prop.getNames()) {
 			if (props.containsKey(name)) {
@@ -85,6 +89,9 @@ public class UserClass extends MarkedNode {
 		public Self() {
 			ut = new UserType(UserClass.this.name);
 			type = ut;
+		}
+		public void define() {
+			ut.define();			
 		}
 		public void bind(Environment env) {
 			ut.setSuperclass(sup);		

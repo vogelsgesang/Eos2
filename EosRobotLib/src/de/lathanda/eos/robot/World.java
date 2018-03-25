@@ -391,8 +391,18 @@ public class World implements CleanupListener, Readout {
 	 */
 	public void fillRandom(int left, int top, int right, int bottom, double density) {
 		for (int x = left; x <= right; x++) {
-			for (int y = bottom; y <= top; y++) {
+			next: for (int y = bottom; y <= top; y++) {
 				if (random.nextDouble() <= density) {
+					for (Robot robot : robots) {
+						if (robot.getX() == x && robot.getY() == y) {
+							continue next;
+						}
+					}
+					for (Entrance e: entrances) {
+						if (e.x == x && e.y == y) {
+							continue next;
+						}
+					}
 					dropStone(x, y);
 				}
 			}

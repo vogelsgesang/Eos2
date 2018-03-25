@@ -42,6 +42,7 @@ import de.lathanda.eos.common.gui.BackgroundCompiler;
 import de.lathanda.eos.common.gui.CodeColoring;
 import de.lathanda.eos.common.gui.ConfigFrame;
 import de.lathanda.eos.common.gui.GuiConfiguration;
+import de.lathanda.eos.common.gui.GuiConfiguration.GuiConfigurationListener;
 import de.lathanda.eos.common.gui.HtmlExport;
 import de.lathanda.eos.common.gui.PrintFrame;
 import de.lathanda.eos.common.gui.SideInformation;
@@ -60,7 +61,7 @@ import de.lathanda.eos.util.GuiToolkit;
  *
  * @author Peter (Lathanda) Schneider
  */
-public class MainWindow extends JFrame implements WindowListener {
+public class MainWindow extends JFrame implements WindowListener, GuiConfigurationListener {
 	private static final long serialVersionUID = -5517007240148560239L;
 	/**
 	 * Der aktuelle Quellcode.
@@ -109,6 +110,7 @@ public class MainWindow extends JFrame implements WindowListener {
 		txtProgram.setDocument(data);
 		txtOutput.setDocument(data.getOutput());
 		txtProgram.requestFocus();
+		GuiConfiguration.def.addConfigurationListener(this);
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new FunctionKeyDispatcher());
 	}
 
@@ -203,7 +205,7 @@ public class MainWindow extends JFrame implements WindowListener {
 		mainSplit.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		mainSplit.setResizeWeight(1.0);
 
-		txtProgram.setFont(GuiToolkit.createFont("Courier New", Font.PLAIN, GuiConfiguration.def.getFontsize()));
+		txtProgram.setFont(GuiToolkit.createFont(Font.MONOSPACED, Font.PLAIN, GuiConfiguration.def.getFontsize()));
 		scrollProgram.setViewportView(new NoTextWrapContainer(txtProgram));
 		scrollProgram.getViewport().setBackground(Color.WHITE);
 		scrollProgram.setRowHeaderView(sideInformation);
@@ -745,6 +747,9 @@ public class MainWindow extends JFrame implements WindowListener {
 		} else {
 			return true;
 		}
+	}
+	public void fontsizeChanged(int fontsize) {
+		txtProgram.setFont(GuiToolkit.createFont(Font.MONOSPACED, Font.PLAIN, fontsize));
 	}
 
 	private JButton btnCopy;

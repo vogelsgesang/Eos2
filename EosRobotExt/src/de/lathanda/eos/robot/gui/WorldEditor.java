@@ -123,10 +123,10 @@ public class WorldEditor extends JFrame implements KeyListener, DocumentListener
 	    
 	    btnLoad = GuiToolkit.createButton("icons/folder_open.png", ROBOT.getString("Tooltip.Load"), evt -> loadActionPerformed(evt)); 
 	    
-	    btnChooseColorStone = GuiToolkit.createButton("icons/painters_palette.png", ROBOT.getString("Tooltip.ChooseColorMark"), evt -> chooseColorStoneActionPerformed(evt)); 
+	    btnChooseColorStone = GuiToolkit.createButton("icons/painters_palette.png", ROBOT.getString("Tooltip.ChooseColorStone"), evt -> chooseColorStoneActionPerformed(evt)); 
 	    mnemonics.put(KeyEvent.VK_C, evt -> chooseColorStoneActionPerformed(evt));
 	    
-	    btnChooseColorMark = GuiToolkit.createButton("icons/painters_palette2.png", ROBOT.getString("Tooltip.ChooseColorStone"), evt -> chooseColorMarkActionPerformed(evt)); 
+	    btnChooseColorMark = GuiToolkit.createButton("icons/painters_palette2.png", ROBOT.getString("Tooltip.ChooseColorMark"), evt -> chooseColorMarkActionPerformed(evt)); 
 	    mnemonics.put(KeyEvent.VK_V, evt -> chooseColorMarkActionPerformed(evt));
 
 	    btnRemove = GuiToolkit.createButton("icons/garbage.png", ROBOT.getString("Tooltip.Remove"), evt -> removeActionPerformed(evt)); 
@@ -230,13 +230,13 @@ public class WorldEditor extends JFrame implements KeyListener, DocumentListener
 		world.removeCursor();
 	}
 	private void chooseColorStoneActionPerformed(ActionEvent evt) {
-		Color color = JColorChooser.showDialog(this, RobotLanguage.ROBOT.getString("Color.Title"), world.getStoneColor());
+		Color color = JColorChooser.showDialog(this, RobotLanguage.ROBOT.getString("Color.Title.Stone"), world.getStoneColor());
 		if (color != null) {
 			world.setStoneColor(color);
 		}
 	}
 	private void chooseColorMarkActionPerformed(ActionEvent evt) {
-		Color color = JColorChooser.showDialog(this, RobotLanguage.ROBOT.getString("Color.Title"), world.getMarkColor());
+		Color color = JColorChooser.showDialog(this, RobotLanguage.ROBOT.getString("Color.Title.Mark"), world.getMarkColor());
 		if (color != null) {
 			world.setMarkColor(color);
 		}

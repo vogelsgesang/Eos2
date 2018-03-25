@@ -80,8 +80,9 @@ public class ResourceLoader {
             //nothing to do
         }
         //2. try thread class loader
-        is = Thread.currentThread().getContextClassLoader().getResourceAsStream(filename);
-        
+        if (is == null) {
+        	is = Thread.currentThread().getContextClassLoader().getResourceAsStream(filename);
+        }        
         //3. try resource class loader
         if (is == null) {
             is = ResourceLoader.class.getClassLoader().getResourceAsStream(filename);

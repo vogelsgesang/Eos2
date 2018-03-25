@@ -1,6 +1,10 @@
 package de.lathanda.eos.gui.objectchart;
 
+import java.awt.font.TextAttribute;
+import java.util.Hashtable;
 import java.util.LinkedList;
+import java.util.Map;
+
 import de.lathanda.eos.base.Readout;
 import de.lathanda.eos.base.Readout.Attribut;
 import de.lathanda.eos.gui.diagram.Unit;
@@ -10,15 +14,16 @@ import de.lathanda.eos.gui.diagram.TextUnit;
  * Objektkarte
  *
  * @author Peter (Lathanda) Schneider
- * @since 0.9.4
  */
 public class ObjectCard extends Unit {
-    private Unit header;
+    private TextUnit header;
     private LinkedList<Property> properties;
 	private float yLine;
 	public ObjectCard(String name, String cls, Readout readout) {
+		Map<TextAttribute, Object> map = new Hashtable<>();
+		map.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 		header = new TextUnit(name + ":" + cls);
-		header.setFont(HEADER_FONT);
+		header.setFont(HEADER_FONT.deriveFont(map));
 		properties = new LinkedList<>();
 		LinkedList<Attribut> attr = new LinkedList<>();
 		readout.getAttributes(attr);
@@ -34,7 +39,7 @@ public class ObjectCard extends Unit {
 	}
 	@Override
 	public void drawUnit(Drawing d) {
-		d.drawRect(0, 0, width, height);
+		d.drawRoundRect(0, 0, width, height, 5);
 		d.drawLine(0, yLine, width, yLine);
 		header.draw(d);
 		for(Unit property : properties) {
@@ -48,7 +53,7 @@ public class ObjectCard extends Unit {
 			property.layout(d);
 		}
 		header.setOffsetY(INDENT);
-		header.setOffsetX(INDENT);
+		header.setOffsetX(0);
 		yLine = header.getHeight() + 2 * INDENT;
 		if (properties.isEmpty()) {
 			width = header.getWidth() + 2 * INDENT;
@@ -63,6 +68,8 @@ public class ObjectCard extends Unit {
 				y += property.getHeight() + INDENT;
 			}	
 			height = y;
-		}        
+		}   
+		header.setWidth(width);
+		header.alignCentralX();
 	}
 }

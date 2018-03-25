@@ -217,6 +217,7 @@ public class Help extends JFrame {
 		helpSplit.setRightComponent(scrollTopic);
 
 		txtHelp.setEditable(false);
+		txtHelp.setFont(GuiToolkit.createFont(Font.SANS_SERIF, Font.PLAIN, 10));
 		txtHelp.addHyperlinkListener(e -> hyperlinkUpdate(e));
 		scrollHelp.setViewportView(txtHelp);
 
@@ -264,7 +265,10 @@ public class Help extends JFrame {
 				if (target.getProtocol().equals("file")) {
 					treeTopic.clearSelection();
 					txtHelp.setPage(target);
-				} else {
+				} else if (target.getProtocol().equals("jar")){
+					treeTopic.clearSelection();
+					txtHelp.setPage(target);
+				}else {
 					URI uri = target.toURI();
 					Desktop.getDesktop().browse(uri);
 				}

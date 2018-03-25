@@ -147,6 +147,7 @@ line.x1               = %x1#x1:Number<br>x coordinate of the first point.
 line.y1               = %y1#y1:Number<br>y coordinate of the first point.
 line.x2               = %x2#x2:Number<br>x coordinate of the second point.
 line.y2               = %y2#y2:Number<br>y coordinate of the second point.
+line.length           = $length#length:Number<br>Length of the line.
 
 square.setside        = @setSide(length)#setSide(length:Number)<br>Sets the length of the side.
 square.setlefttop     = @setTopLeft(x,y)#setTopLeft(x:Number,y:Number)<br>Sets teh coordinates of the top left corner.

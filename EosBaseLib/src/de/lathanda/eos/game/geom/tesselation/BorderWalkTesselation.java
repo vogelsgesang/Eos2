@@ -161,7 +161,7 @@ public class BorderWalkTesselation implements Tesselation {
 				}
 				CrossingPoint inter = act.getIntersection(e, edges);
 				//edges not chosen in the previous step are ignored (same starting point)
-				if (inter.edge != null && (inter.edge.x1 != act.x1 || inter.edge.y1 != act.y1)) {
+				if (inter != null && (inter.edge.x1 != act.x1 || inter.edge.y1 != act.y1)) {
 					if (best != null) {
 						//remark: mathematically inter.angle > 2 is equal to act.v.crossproduct(inter.edge.v) > 0
 						if (inter.lambda < best.lambda && act.v.crossproduct(inter.edge.v) > 0) {
@@ -566,7 +566,7 @@ public class BorderWalkTesselation implements Tesselation {
 				}
 				return new CrossingPoint(edge, lambda, angle);
 			} else {
-				return new CrossingPoint(null, lambda, my);
+				return null;
 			}			
 		}
 		@Override
