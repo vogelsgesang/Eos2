@@ -51,21 +51,18 @@ public class ClassDiagram extends JPanel {
         render(d);
     }
 	public BufferedImage export(float dpi) {
-		if (type == null) return new BufferedImage(1,1, BufferedImage.TYPE_INT_ARGB);
-		ClassUnit unit = new ClassUnit(type);
-		Drawing drawing = new Drawing(300);
+		if (type == null) return new BufferedImage(1,1, BufferedImage.TYPE_INT_RGB);
+		Drawing drawing = new Drawing(dpi);
 		unit.layout(drawing);
 		Dimension dim = new Dimension(drawing.convertmm2pixel(unit.getWidth()), drawing.convertmm2pixel(unit.getHeight()));;
-		BufferedImage image = new BufferedImage(dim.width, dim.height, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage image = new BufferedImage(dim.width, dim.height, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = image.createGraphics();
-		g.setColor(new Color(255, 255, 255, 0));
-		g.fillRect(0, 0, dim.width, dim.height);
+		g.setBackground(Color.WHITE);
+		g.clearRect(0, 0, dim.width, dim.height);
 		drawing.init(g);
-		drawing.setDrawWidth(0.5f);
-		drawing.setColor(Color.BLACK);
-		unit.draw(drawing);
-		return image;
-
+        render(drawing);
+        layout(d);
+		return image;		
 	}
 	private Dimension layout(Drawing d) {
 		unit.layout(d);

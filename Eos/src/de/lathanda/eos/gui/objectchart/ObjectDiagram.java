@@ -40,34 +40,17 @@ public class ObjectDiagram extends JPanel {
 	}
 
 	public BufferedImage export(float dpi) {
-		if (data == null) return new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-		 LinkedList<Unit> units = new LinkedList<>();
-		for (MemoryEntry v : data) {
-			units.add(Toolkit.create(v));
-		}
-		Drawing drawing = new Drawing(300);
-		units.forEach(p -> p.layout(drawing));
-		float h = 0;
-		float w = 0;
-		for (Unit u : units) {
-			u.setOffsetY(h);
-			h = h + u.getHeight() + SPACE;
-			if (w < u.getWidth()) {
-				w = u.getWidth();
-			}
-		}
-		h -= SPACE;
-		Dimension dim = new Dimension(drawing.convertmm2pixel(w), drawing.convertmm2pixel(h));
-		BufferedImage image = new BufferedImage(dim.width, dim.height, BufferedImage.TYPE_INT_ARGB);
+		if (data == null) return new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
+        Drawing drawing = new Drawing(dpi);
+        Dimension dim = layout(drawing);
+		BufferedImage image = new BufferedImage(dim.width, dim.height, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = image.createGraphics();
-		g.setColor(new Color(255, 255, 255, 0));
-		g.fillRect(0, 0, dim.width, dim.height);
+		g.setBackground(Color.WHITE);
+		g.clearRect(0, 0, dim.width, dim.height);
         drawing.init(g);
-        drawing.setDrawWidth(0.5f);
-        drawing.setColor(Color.BLACK);
-		units.stream().forEachOrdered(p -> p.draw(drawing));
+        render(drawing);
+        layout(d);
 		return image;
-
 	}
     public void render(Graphics2D g) {
         d.init(g);

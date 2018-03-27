@@ -67,12 +67,12 @@ public class Structogram extends Diagram implements CompilerListener {
     }
     @Override
     public BufferedImage export(float dpi) {
-        Drawing drawing = new Drawing(300);
+        Drawing drawing = new Drawing(dpi);
         Dimension dim = layout(drawing);
-        BufferedImage image = new BufferedImage(dim.width, dim.height, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = new BufferedImage(dim.width, dim.height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g = image.createGraphics();
-        g.setColor(new Color(255,255,255,0));
-        g.fillRect(0, 0, dim.width, dim.height);
+		g.setBackground(Color.WHITE);
+		g.clearRect(0, 0, dim.width, dim.height);
         drawing.init(g);
         render(drawing);
         layout(d);
