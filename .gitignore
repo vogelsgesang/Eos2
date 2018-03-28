@@ -9,6 +9,7 @@ bin
 *.war
 *.ear
 *.zip
+*.gz
 
 # generated documents #
 Distribution/doc

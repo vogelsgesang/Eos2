@@ -1,7 +1,6 @@
 package de.lathanda.eos.gui.diagram;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -41,7 +40,7 @@ public class DiagramFrame extends JFrame implements WindowListener {
         diagramToolbar = new javax.swing.JToolBar();
         btnClipboard = GuiToolkit.createButton("icons/clipboard.png", null, evt -> btnClipboardActionPerformed(evt));
         scroll = new javax.swing.JScrollPane();
-        scroll.setPreferredSize(new Dimension(400, 400));
+        scroll.setPreferredSize(GuiToolkit.scaledDimension(400, 400));
         scroll.setViewportView(diagram);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);

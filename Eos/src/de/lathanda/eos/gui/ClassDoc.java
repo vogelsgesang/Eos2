@@ -156,7 +156,7 @@ public class ClassDoc extends JFrame {
         private JLabel label;
 
         ClassCellRenderer() {
-            label = new JLabel();
+            label = GuiToolkit.createLabel("");
         }
 
         public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded,
