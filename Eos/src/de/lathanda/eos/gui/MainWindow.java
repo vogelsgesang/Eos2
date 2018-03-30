@@ -223,9 +223,11 @@ public class MainWindow extends JFrame implements WindowListener, GuiConfigurati
 		runToolbar.setRollover(true);
 		runToolbar.setBackground(new Color(0xEEEEEE));
 		runToolbar.setLayout(new GridBagLayout());
+		
 		GridBagConstraints LAST = new GridBagConstraints();
-		LAST.fill = GridBagConstraints.HORIZONTAL;
+		LAST.fill = GridBagConstraints.BOTH;
 		LAST.weightx = 1;
+		LAST.weighty = 1;
 		toolbarGroup.add(runToolbar);
 
 		btnStart = GuiToolkit.createButton("icons/media_play.png", Messages.getString("Tooltip.Start"),
