@@ -42,7 +42,8 @@ public class GuiToolkit {
 	private static final Font LABEL_FONT  = createFont(Font.SANS_SERIF, Font.PLAIN, 10);
 	private static final Font SLIDER_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 8);
 	private static final Font TITLE_BORDER_FONT = createFont(Font.SANS_SERIF, Font.PLAIN, 8);
-	private static final int CMD_MASK = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+//	private static final int CMD_MASK = Toolkit.getDefaultToolkit(). getMenuShortcutKeyMaskEx();
+	private static final int CMD_MASK = Toolkit.getDefaultToolkit(). getMenuShortcutKeyMask();
 
 	/**
 	 * Millimeter in Pixel umrechnen.
@@ -51,7 +52,7 @@ public class GuiToolkit {
 	 * @return
 	 */
 	public static int mm2pixel(double mm) {
-		return (int) (dpi / 25.4f * mm);
+		return (int) (dpi / 25.4d * mm);
 	}
 
 	/**
@@ -61,12 +62,11 @@ public class GuiToolkit {
 	 * @return
 	 */
 	public static double pixel2mm(int pixel) {
-		return pixel * 25.4f / dpi;
+		return pixel * 25.4d / dpi;
 	}
 
 	static {
-		UIManager.getLookAndFeelDefaults().put("ToolTip.font",
-				new FontUIResource(Font.SANS_SERIF, Font.PLAIN, dpi * 10 / 72));
+        UIManager.put("ToolTip.font", new FontUIResource(GuiToolkit.createFont(Font.SANS_SERIF, Font.PLAIN, 10)));
 	}
 	public static int getScreenResolution() {
 		return dpi;

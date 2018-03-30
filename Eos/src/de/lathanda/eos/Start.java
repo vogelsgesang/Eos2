@@ -1,6 +1,5 @@
 package de.lathanda.eos;
 
-import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,14 +10,11 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.FontUIResource;
-
 import de.lathanda.eos.common.gui.Messages;
 import de.lathanda.eos.common.interpreter.AbstractProgram;
 import de.lathanda.eos.gui.MainWindow;
 import de.lathanda.eos.interpreter.parsetree.Program;
 import de.lathanda.eos.spi.LanguageManager;
-import de.lathanda.eos.util.GuiToolkit;
 
 /**
  * \brief Startklasse
@@ -45,7 +41,6 @@ public class Start {
 		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 		        if ("Nimbus".equals(info.getName())) {
 		            UIManager.setLookAndFeel(info.getClassName());
-		            UIManager.put("ToolTip.font", new FontUIResource(GuiToolkit.createFont(Font.SANS_SERIF, Font.PLAIN, 10)));
 		        }
 		    }
 		} catch (Throwable t) {
