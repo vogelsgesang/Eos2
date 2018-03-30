@@ -25,7 +25,7 @@ public class SubRoutine extends Node implements ProgramUnit {
 
 	public SubRoutine(String name, Parameters parameters, Sequence sequence, Type returnType, boolean globalAccess) {
 		this.name = name;
-		this.parameters = parameters;
+		this.parameters = (parameters != null)?parameters:new Parameters();
 		this.sequence = sequence;
 		this.returnType = (returnType == null) ? Type.getVoid() : returnType;
 		this.globalAccess = globalAccess;

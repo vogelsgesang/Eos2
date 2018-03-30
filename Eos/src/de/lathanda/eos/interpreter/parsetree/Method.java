@@ -26,11 +26,11 @@ public class Method extends Node implements ProgramUnit {
 
 	public Method(String name, Parameters parameters, Sequence sequence, Type returnType, UserClass uc) {
 		this.name = name;
-		this.parameters = parameters;
+		this.parameters = (parameters != null)?parameters:new Parameters();
 		this.sequence = sequence;
 		this.returnType = (returnType == null) ? Type.getVoid() : returnType;
 		this.uc = uc;
-		this.signature = ReservedVariables.createSignature(name, parameters.size());
+		this.signature = ReservedVariables.createSignature(name, this.parameters.size());
 	}
 
 	public String getName() {
