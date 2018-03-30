@@ -1,4 +1,4 @@
-package de.lathanda.eos.common;
+package de.lathanda.eos;
 
 import java.util.LinkedList;
 

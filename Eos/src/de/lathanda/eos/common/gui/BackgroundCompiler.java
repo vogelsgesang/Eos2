@@ -2,12 +2,12 @@ package de.lathanda.eos.common.gui;
 
 import java.util.LinkedList;
 
-import de.lathanda.eos.common.Factory;
 import de.lathanda.eos.common.interpreter.AbstractProgram;
 import de.lathanda.eos.common.interpreter.CompilerListener;
 import de.lathanda.eos.common.interpreter.ErrorInformation;
 import de.lathanda.eos.common.interpreter.Source;
 import de.lathanda.eos.common.interpreter.TranslationException;
+import de.lathanda.eos.interpreter.parsetree.Program;
 
 /**
  * Asynchroner Kompiler.
@@ -40,7 +40,7 @@ public class BackgroundCompiler implements Runnable {
 		try {
 			String src = source.getSourceCode();
 			errors = new LinkedList<>();
-			program = Factory.createProgram(src);
+			program = new Program(src);
 			program.parse(source.getPath());
 			program.compile();
 		} catch (TranslationException te) {

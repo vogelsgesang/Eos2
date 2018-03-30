@@ -19,8 +19,9 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.Element;
+
+import de.lathanda.eos.Stop;
 import de.lathanda.eos.base.event.CleanupListener;
-import de.lathanda.eos.common.Stop;
 import de.lathanda.eos.common.gui.GuiConfiguration.GuiConfigurationListener;
 import de.lathanda.eos.common.gui.MessageHandler.ErrorLevel;
 import de.lathanda.eos.common.gui.MessageHandler.LogListener;
