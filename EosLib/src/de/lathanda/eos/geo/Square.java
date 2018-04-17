@@ -38,10 +38,10 @@ public class Square extends FilledFigure {
     }
 
     public void setLeftTop(double left, double top) {
-        moveTo(left + side/2, top + side/2);
+        moveTo(left + side/2, top - side/2);
     }
     public void setRightBottom(double right, double bottom) {
-        moveTo(right - side/2, bottom - side/2);
+        moveTo(right - side/2, bottom + side/2);
     }
     @Override
     protected BalancePoint getBalancePoint() {
