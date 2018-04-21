@@ -7,5 +7,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/EosLib"/>
 	<classpathentry kind="lib" path="/Distribution/RobotExt/EosRobotExt.jar"/>
 	<classpathentry kind="lib" path="/Distribution/LejosExt/EosLejosExt.jar"/>
+	<classpathentry kind="lib" path="/Distribution/EosBase/ExtSolParser.jar"/>
+	<classpathentry kind="lib" path="/Distribution/EosBase/ExtEosParser.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

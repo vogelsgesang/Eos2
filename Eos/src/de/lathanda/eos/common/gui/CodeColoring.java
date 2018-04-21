@@ -108,16 +108,16 @@ public class CodeColoring implements CodeColorHook {
 		sourceCode.setCharacterAttributes(0, sourceCode.getLength(), attributeSetBase, true);
 		for (InfoToken t : tokens) {
 			switch (t.getFormat()) {
-			case InfoToken.COMMENT:
+			case COMMENT:
 				sourceCode.setCharacterAttributes(t.getBegin(), t.getLength(), attributeSetComment, true);
 				break;
-			case InfoToken.LITERAL:
+			case LITERAL:
 				sourceCode.setCharacterAttributes(t.getBegin(), t.getLength(), attributeSetLiteral, true);
 				break;
-			case InfoToken.KEYWORD:
+			case KEYWORD:
 				sourceCode.setCharacterAttributes(t.getBegin(), t.getLength(), attributeSetKeyword, true);
 				break;
-			case InfoToken.PLAIN:
+			case PLAIN:
 				// no formating
 			default:
 				// no formating

@@ -51,17 +51,17 @@ public class HtmlExport {
      */
     private static void token2html(String text, InfoToken st, StringBuilder html) {
         switch (st.getFormat()) {
-            case InfoToken.COMMENT:
+            case COMMENT:
                 html.append(COMMENT);
                 html.append(text2html(text));
                 html.append(COMMENT2);
                 break;
-            case InfoToken.LITERAL:
+            case LITERAL:
                 html.append(LITERAL);
                 html.append(text2html(text));
                 html.append(LITERAL2);
                 break;
-            case InfoToken.KEYWORD:
+            case KEYWORD:
                 html.append(KEYWORD);
                 html.append(text2html(text));
                 html.append(KEYWORD2);

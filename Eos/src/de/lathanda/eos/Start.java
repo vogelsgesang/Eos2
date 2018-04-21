@@ -48,13 +48,7 @@ public class Start {
 	
 		Runtime.getRuntime().addShutdownHook(new Stop());		
 		apply(args);
-		try {
-			LanguageManager.prepare();
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, Messages.getString("Export.Error.Title"), e.getLocalizedMessage(),
-					JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-		}		switch (mode) {
+		switch (mode) {
 		case EDITOR:
 			editorStart();
 			break;

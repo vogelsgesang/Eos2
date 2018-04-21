@@ -1,0 +1,1115 @@
+/**
+ * Copyright (c) 2015, Peter "Lathanda" Schneider
+ * CC BY-NC-SA
+ * Version 1.1.0
+ *
+ */
+options {
+  LOOKAHEAD              = 1;
+  CHOICE_AMBIGUITY_CHECK = 2;
+  OTHER_AMBIGUITY_CHECK  = 2;
+  STATIC = false;
+  DEBUG_PARSER        = false;
+  DEBUG_LOOKAHEAD     = false;
+  DEBUG_TOKEN_MANAGER = false;
+  ERROR_REPORTING     = true;
+  JAVA_UNICODE_ESCAPE = false;
+  UNICODE_INPUT       = true;
+  IGNORE_CASE         = true;
+  USER_TOKEN_MANAGER  = false;
+  USER_CHAR_STREAM    = true;
+  BUILD_PARSER        = true;
+  BUILD_TOKEN_MANAGER = true;
+  SANITY_CHECK        = true;
+  FORCE_LA_CHECK      = false;
+  COMMON_TOKEN_ACTION = true;
+  CACHE_TOKENS        = false;
+  OUTPUT_DIRECTORY    = "../src/de/lathanda/eos/interpreter/eoslang";
+}
+
+PARSER_BEGIN(Parser)
+
+package de.lathanda.eos.interpreter.eoslang;
+import de.lathanda.eos.interpreter.parsetree.*;
+import de.lathanda.eos.interpreter.*;
+import de.lathanda.eos.common.interpreter.*;
+import de.lathanda.eos.base.*;
+import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
+@SuppressWarnings("unused")
+public class Parser {  
+    private MarkerStack markerStack = new MarkerStack();
+    private Program program;
+    private String path;
+    private int level;
+    void open() {
+        markerStack.push(new Marker());
+        Token old = token;     
+        getNextToken();  
+        markerStack.peek().begin(token.beginColumn, token.beginLine);
+        token = old;
+    }
+    void close(MarkedNode node) {
+        markerStack.peek().end(token.endColumn, token.endLine);
+        node.setMarker(markerStack.pop());
+        program.addNode(node);
+    }
+    void setCode(MarkedNode node) {
+        node.setMarker(new Marker(token.beginColumn, token.beginLine, token.endColumn, token.endLine));
+        program.addNode(node);
+    }
+    void newlineInc() {
+        Token old = token;
+        program.prettyPrinterNewline(getNextToken().beginColumn, level);
+        level++;
+        token = old;    
+    }
+    void newlineDec() {
+        Token old = token;
+        level--;
+        program.prettyPrinterNewline(getNextToken().beginColumn, level);
+        token = old;    
+    }
+    void newlineDecInc() {
+        Token old = token;
+        level--;
+        program.prettyPrinterNewline(getNextToken().beginColumn, level);
+        level++;
+        token = old;    
+    }
+    void newline() {
+        Token old = token;
+        program.prettyPrinterNewline(getNextToken().beginColumn, level);
+        token = old;    
+    }    
+}
+
+
+PARSER_END(Parser)
+
+TOKEN_MGR_DECLS : {
+  Program program;
+  void CommonTokenAction(Token t) {
+    Token comment = t.specialToken;
+    if (comment != null) {
+      while (comment.specialToken != null) {
+        comment = comment.specialToken;
+      }
+      while (comment != null) {
+        program.addToken(SourceTokenFactory.create(comment));
+        comment = comment.next;
+      }      
+    }
+    program.addToken(SourceTokenFactory.create(t));
+  }
+  public void setProgram(Program program) {
+    this.program = program;
+  }
+}
+
+/** Wörter der Sprache */
+TOKEN: 
+{ 
+  < IMPORT:        "einfügen" >
+| < END_IMPORT:    "*einfügen" >
+| < PROGRAM:       "programm" >
+| < END_PROGRAM:   "*programm" >
+| < PROCEDURE:     "anweisung" >
+| < END_PROCEDURE: "*anweisung" >   
+| < METHOD:        "methode" >
+| < END_METHOD:    "*methode" >   
+| < REPEAT:        "wiederhole" >
+| < TIMES:         "mal">  
+| < FOREVER:       "immer" >
+| < UNTIL:         "bis" >
+| < END_REPEAT:    "*wiederhole" >
+| < IF:            "wenn" >
+| < THEN:          "dann" >
+| < ELSE:          "sonst" >
+| < END_IF:        "*wenn" >
+| < WITH:          "für" >
+| < END_WITH:      "*für" >
+| < CLASS:         "klasse" >
+| < EXTENDS:       "erweitert" >
+| < END_CLASS:     "*klasse" >
+| < SELF:          "selbst" >
+| < WHILE:         "solange" >
+| < DO:            "tue" > 
+| < END_WHILE:     "*solange" >
+| < TRUE:          "wahr" >
+| < FALSE:         "falsch" >
+| < RESULT:        "ergebnis" >
+| < BREAKPOINT:    "haltepunkt" >
+| < STOP:          "beenden" >
+}
+
+/** Trennende Zeichen */
+TOKEN : 
+{
+  < LPAREN:    "(" >
+| < RPAREN:    ")" >
+| < SEMICOLON: ";" >
+| < COLON:     ":" >  
+| < SEPARATOR: "," >
+| < DOT:       "." >
+}
+
+/** Operationen */
+TOKEN : 
+{
+  < ASSIGN: ":=" >
+| < GT:     ">" >
+| < LT:     "<" >
+| < EQ:     "=" >
+| < LE:     "<=" >
+| < GE:     ">=" >
+| < NE:     "<>" >
+| < OR:     "oder" >
+| < AND:    "und" >
+| < NOT:    "nicht" >
+| < PLUS:   "+" >
+| < MINUS:  "-" >
+| < MULT:   "*" >
+| < DIV:    "/" >
+| < POW:    "^" >
+}
+
+/** Konstanten */
+TOKEN : 
+{
+  < YELLOW:        "gelb" >
+| < RED:           "rot" >
+| < GREEN:         "grün" >
+| < BLUE:          "blau" >
+| < WHITE:         "weiß" >
+| < BLACK:         "schwarz" >
+| < BROWN:         "braun" >
+| < LIGHT_BLUE:    "hellblau" >
+| < LIGHT_GREEN:   "hellgrün" >
+| < GRAY:          "grau" >
+| < LIGHT_GRAY:    "hellgrau" >
+| < DASHED:        "gestrichelt" >
+| < SOLID:         "durchgezogen" >
+| < DOTTED:        "gepunktelt" >
+| < DASHED_DOTTED: "gestrichpunktelt" >
+| < INVISIBLE:     "unsichtbar" >
+| < FILLED:        "ausgemalt" >
+| < SHADED:        "schraffiert" >
+| < DARK_SHADED:   "kariert" >
+| < TRANSPARENT:   "durchsichtig" >
+| < CENTER:        "zentriert" >
+| < LEFT:          "linksbündig" >
+| < RIGHT:         "rechtsbündig" >
+| < TOP:           "obenbündig" >
+| < BOTTOM:        "untenbündig" >
+}
+
+/** Leere Zeichen */
+SKIP : 
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| "\f"
+| "\u00a0"
+}
+
+/** Kommentare */
+SPECIAL_TOKEN : 
+{
+  <SINGLE_LINE_COMMENT: "//" (~["\n","\r"])* ("\n"|"\r"|"\r\n")>
+| <MULTI_LINE_COMMENT: "/*" (~["*"])* "*" ("*" | (~["*","/"] (~["*"])* "*"))* "/">
+| <MULTI_LINE_COMMENT2: "{" (~["}"])* "}">
+}
+
+/** Zahlen und Zeichenketten */
+TOKEN : 
+{
+  < INTEGER_LITERAL:
+        <DECIMAL_LITERAL>
+  >
+|
+  < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* | "0" >
+|
+  < FLOATING_POINT_LITERAL:
+        (["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)?
+      | "." (["0"-"9"])+ (<EXPONENT>)?
+      | (["0"-"9"])+ <EXPONENT>
+  >
+|
+  < #EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ >
+|
+  < STRING_LITERAL1:
+      "\""
+      (   (~["\"","\\","\n","\r"])
+        | ("\\"
+            ( ["n","t","r","\\","\""]
+            )
+          )
+      )*
+      "\""
+  >
+|  < STRING_LITERAL2:
+      "\'"
+      (   (~["\'","\\","\n","\r"])
+        | ("\\"
+            ( ["n","t","r","\\","\'"]
+            )
+          )
+      )*
+      "\'"
+  >
+| < COLOR_LITERAL_RGB:
+     "#" ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"]
+  >
+| < COLOR_LITERAL_RGBA:
+     "#" ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] ["0"-"9","A"-"F"] 
+  >
+}
+/** Bezeichner */
+TOKEN : 
+{
+  < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
+|
+  < #LETTER:
+      [
+       "\u0024",
+       "\u0041"-"\u005a",
+       "\u005f",
+       "\u0061"-"\u007a",
+       "\u00c0"-"\u00d6",
+       "\u00d8"-"\u00f6",
+       "\u00f8"-"\u00ff",
+       "\u0100"-"\u1fff",
+       "\u3040"-"\u318f",
+       "\u3300"-"\u337f",
+       "\u3400"-"\u3d2d",
+       "\u4e00"-"\u9fff",
+       "\uf900"-"\ufaff"
+      ]
+  >
+|
+  < #DIGIT:
+      [
+       "\u0030"-"\u0039",
+       "\u0660"-"\u0669",
+       "\u06f0"-"\u06f9",
+       "\u0966"-"\u096f",
+       "\u09e6"-"\u09ef",
+       "\u0a66"-"\u0a6f",
+       "\u0ae6"-"\u0aef",
+       "\u0b66"-"\u0b6f",
+       "\u0be6"-"\u0bef",
+       "\u0c66"-"\u0c6f",
+       "\u0ce6"-"\u0cef",
+       "\u0d66"-"\u0d6f",
+       "\u0e50"-"\u0e59",
+       "\u0ed0"-"\u0ed9",
+       "\u1040"-"\u1049"
+      ]
+  >
+}
+
+/** Produktionen */
+void Parse(Program program, String path) :
+{
+  this.path = path;
+  this.program = program;
+  token_source.setProgram(program);
+  Sequence sequence;
+  SubRoutine sub;
+  UserClass cls;
+}
+{
+  sequence = Sequence() {program.add(sequence); }
+  (
+    ( 
+      sequence = Program() {program.add(sequence);} | 
+      sub = Procedure()    {program.add(sub);} |
+      sub = Method()       {program.add(sub);} |
+      cls = UserClass()    {program.add(cls);} |
+      Import()
+    )
+     sequence = Sequence() {program.add(sequence);}
+  )*
+  <EOF>
+}
+Sequence Program( ) :
+{Sequence sequence;}
+{
+  {newlineInc();} "programm"
+    sequence = Sequence()
+  {newlineDec();} "*programm"
+  {
+    return sequence;
+  }
+}
+
+SubRoutine Procedure( ) :
+{String name; Sequence sequence;Parameters parameters = null; Type ret =null;}
+{
+  {open();}
+  {newlineInc();} "anweisung" name = Name() [parameters = Parameters()] [":" ret = Type()]
+    sequence = Sequence()
+  {newlineDec();} "*anweisung"
+  {
+    SubRoutine subroutine = new SubRoutine(name, parameters, sequence, ret, false);
+    close(subroutine); 
+    return subroutine;
+  }
+}
+
+UserClass UserClass() :
+{ String name; String sup = null; UserClass cls; Method meth; Property prop;Sequence sequence;}
+{
+  {open();}
+  {newlineInc();} "klasse" name = Name() ["erweitert" sup = Name()]
+  {cls = program.createUserClass(name); cls.setSuperClass(sup);}
+  ({newline();} (meth = UserMethod(cls) {cls.addMethod(meth);} | prop = UserProperty(cls) {cls.addProperty(prop);}) )* 
+  {newlineDec();} "*klasse"
+  {
+    close(cls);
+    return cls;
+  } 
+}
+Method UserMethod( UserClass ut ) :
+{String name; Sequence sequence;Parameters parameters = null; Type ret =null;}
+{
+  {open();}
+  {newlineInc();} "methode" name = Name() [parameters = Parameters()] [":" ret = Type()]
+    sequence = Sequence()
+  {newlineDec();} "*methode"
+  {
+    Method method = new Method(name, parameters, sequence, ret, ut);
+    close(method); 
+    return method;
+  }
+}
+Property UserProperty( UserClass ut ) :
+{
+  String name;
+  Type type;
+  Property property = new Property(ut);
+}
+{
+  name = Name() {property.addName(name);} 
+  ("," name = Name() {property.addName(name); })* 
+  ":" type = Type() {property.setType(type);}
+  {
+    return property;
+  }
+}
+SubRoutine Method( ) :
+{String name; Sequence sequence;Parameters parameters = null; Type ret =null;}
+{
+  {open();}
+  {newlineInc();} "methode" name = Name() [parameters = Parameters()] [":" ret = Type()]
+    sequence = Sequence()
+  {newlineDec();} "*methode"
+  {
+    SubRoutine subroutine = new SubRoutine(name, parameters, sequence, ret, true);
+    close(subroutine); 
+    return subroutine;
+  }
+}
+
+Parameters Parameters( ) :
+{Parameters parameters = new Parameters();}
+{      
+  "(" [ 
+    Parameter(parameters)  
+    ( "," Parameter(parameters) )* 
+  ] ")"
+  { return parameters;}
+}
+
+void Parameter(Parameters parameters ) :
+{String name; Type type; }
+{
+  name = Name() {parameters.addName(name);} 
+  (
+    "," name = Name() {parameters.addName(name);}
+  )* ":" type = Type() {parameters.setType(type);}
+}
+
+void Import( ) :
+{
+  File file;
+  Program subprogram;
+}
+{
+  {newlineInc();} "einfügen"
+    file = File()
+    {
+      try {
+        subprogram = new Program();
+        Parser parser = new Parser(new StringCharStream(file));
+        parser.Parse(subprogram, file.getParent());
+        program.merge(subprogram, new Marker(token.beginColumn, token.beginLine, token.endColumn, token.endLine));
+      } catch (IOException ioe) {
+        throw new ParseException(ioe.getLocalizedMessage());
+      }
+    } 
+    
+    ( "," {newline();} file = File()
+      {
+        try {
+          subprogram = new Program();
+          Parser parser = new Parser(new StringCharStream(file));
+          parser.Parse(subprogram, file.getParent());
+          program.merge(subprogram, new Marker(token.beginColumn, token.beginLine, token.endColumn, token.endLine));
+        } catch (IOException ioe) {
+          throw new ParseException(ioe.getLocalizedMessage());
+        }
+      } )*
+  {newlineDec();} "*einfügen"
+}
+
+Sequence Sequence( ) :
+{
+  Sequence sequence = new Sequence();
+  Node instruction;
+  open();
+}
+{
+  (
+  {
+    open();
+  }
+  (
+    instruction = Loop() |
+    instruction = IfElse() |
+    instruction = With() |
+    instruction = Statement()
+  )
+  {
+    close(instruction);
+    sequence.append(instruction);
+  }
+  )*
+  {    
+    close(sequence);
+    return sequence;
+  }
+}
+
+Node Loop( ) : 
+{Node loop;}
+{
+  (
+  {newlineInc();} "wiederhole" (
+    loop = RepeatForever() | 
+    loop = RepeatUntil() | 
+    //LOOKAHEAD(1)  //Erzwingt Erkennung von wiederhole solange wie in EOS1
+    LOOKAHEAD("solange" Expression() ("*wiederhole" | "solange"| "wiederhole" | Name() | "ergebnis" | "selbst" | "wenn" | "für") ) //Langsamere korrekte Erkennung
+    loop = RepeatPreWhile() |
+    //Erkennung von wiederhole Term mal
+    LOOKAHEAD(Expression() "mal")
+    loop = RepeatTimes() |
+    loop = RepeatPostWhile()
+  ) |
+  loop = WhileDo()
+  )
+  {
+    return loop;
+  }
+}   
+IfElse IfElse( ) : 
+{
+  Sequence a;
+  Sequence b = null;
+  Expression expression;
+}
+{
+  {newlineInc();} "wenn" expression = Expression() "dann" 
+    a = Sequence()
+[ {newlineDecInc();} "sonst"
+    b = Sequence() ]  
+  {newlineDec();} "*wenn"
+  {
+    return new IfElse(expression,a,b);
+  }   
+}
+
+With With( ) :
+{
+  Expression with;
+  Sequence sequence;
+}
+{
+  {newlineInc();} "für"
+    with = Expression()
+    sequence = Sequence()
+  {newlineDec();} "*für"
+  {
+    return new With(with, sequence);
+  }  
+}
+
+RepeatForever RepeatForever( ) :
+{
+  Sequence sequence;
+}
+{
+  "immer"
+    sequence = Sequence()
+  {newlineDec();} "*wiederhole"
+  {
+    return new RepeatForever(sequence);
+  }  
+}
+
+RepeatTimes RepeatTimes( ) : 
+{
+  Sequence sequence;
+  Expression times = null;
+}
+{ 
+      times = Expression() {setCode(times);}
+  "mal"
+    sequence = Sequence()
+  {newlineDec();} "*wiederhole"
+  {
+    return new RepeatTimes(times, sequence);
+  }
+}
+
+WhileDo RepeatUntil( ) :
+{
+  Expression expression;
+  Expression not;
+  Sequence sequence;
+}
+{
+  "bis" expression = Expression()
+    sequence = Sequence()
+  {newlineDec();} "*wiederhole"  
+  {
+    not = expression.not();
+    not.sameMarker(expression);
+    return new WhileDo(not, sequence);
+  }   
+}
+
+WhileDo RepeatPreWhile( ) :
+{
+  Expression expression;
+  Sequence sequence;
+}
+{
+  "solange" expression = Expression()
+    sequence = Sequence()
+  {newlineDec();} "*wiederhole" 
+  {
+    return new WhileDo(expression, sequence);
+  }   
+}
+
+DoWhile RepeatPostWhile( ) :
+{
+  Expression expression;
+  Sequence sequence;
+}
+{
+  
+    sequence = Sequence()
+  {newlineDec();} "*wiederhole" "solange" expression = Expression() 
+  {
+    return new DoWhile(sequence, expression);
+  }  
+}
+
+WhileDo WhileDo( ) :
+{
+  Expression expression;
+  Sequence sequence;
+}
+{
+  {newlineInc();} "solange" expression = Expression() "tue"
+    sequence = Sequence()
+  {newlineDec();} "*solange"  
+  {
+    return new WhileDo(expression, sequence);
+  }
+}
+
+Node Statement( ) :
+{Node statement;}
+{
+  {newline();}
+  (
+  LOOKAHEAD(2)
+  statement = Declaration() |
+  statement = Command(null) |
+  statement = Breakpoint()  |
+  statement = Stop()    
+  ) {return statement;}
+}
+
+Node Breakpoint( ) :
+{}
+{
+  "haltepunkt"
+  {return new Breakpoint(); }
+}
+
+Node Stop( ) :
+{}
+{
+  "beenden"
+  {return new Stoppoint();}
+} 
+ 
+Declaration Declaration( ) :
+{
+  String name;
+  Type type;
+  Declaration declaration = new Declaration();
+}
+{
+  name = Name() {declaration.addName(name);} 
+  ("," name = Name() {declaration.addName(name); })* 
+  ":" type = Type() {declaration.setType(type);}
+  {
+    return declaration;
+  }
+}
+
+Node Command(Expression left) :
+{
+  Expression expression;
+  Node command = null;
+}
+{
+  LOOKAHEAD(2)
+  expression = Function(left) 
+  {
+    return expression;
+  }
+|
+  LOOKAHEAD(2)
+  command = Assignment(left)
+  {
+    return command;
+  } 
+|
+  expression = PropertyRead(left) ["." command = Command(expression)]
+  {
+    if (command != null) {
+      return command;
+    } else {
+      return expression;
+    }
+  }
+}
+
+Assignment Assignment(Expression left) :
+{ 
+  PropertyWrite property;
+  Expression expression;
+}
+{
+  property=PropertyWrite(left) AssignmentOperator() expression=Expression()
+  {
+    return new Assignment(property, expression);
+  }
+}
+
+void AssignmentOperator( ) :
+{}
+{
+  "=" | ":="
+}
+
+Expression Expression() :
+{Expression expression; Expression b; open();}
+{
+  expression = AndExpression() ( 
+    "oder" b=AndExpression() {close(expression);open();expression = expression.or(b);}
+  )*  
+  {
+    close(expression);
+    return expression;
+  }
+}
+
+Expression AndExpression() :
+{Expression expression; Expression b; open();}
+{
+  expression = EqualityExpression() ( 
+    "und" b=EqualityExpression() {expression = expression.and(b);}
+  )*
+  {
+    close(expression);
+    return expression;
+  }
+}
+
+Expression EqualityExpression() :
+{Expression expression; Expression b; open();}
+{
+  expression = RelationalExpression() ( 
+    "="  b=RelationalExpression() {expression = expression.equals(b);}|
+    "<>" b=RelationalExpression() {expression = expression.unequals(b);}
+  )?
+  {
+    close(expression);
+    return expression;
+  }
+}
+
+Expression RelationalExpression() :
+{Expression expression; Expression b; open();}
+{
+  expression = AdditiveExpression() (
+    "<"  b=AdditiveExpression() {expression = expression.less(b);}|
+    ">"  b=AdditiveExpression() {expression = expression.greater(b);} | 
+    "<=" b=AdditiveExpression() {expression = expression.lessEquals(b);}|
+    ">=" b=AdditiveExpression() {expression = expression.greaterEquals(b);} 
+  )?
+  {
+    close(expression);
+    return expression;
+  }
+}
+
+Expression AdditiveExpression() :
+{Expression expression; Expression b; open();}
+{
+  expression = MultiplicativeExpression() (
+    "+" b=MultiplicativeExpression() {expression = expression.plus(b);}|
+    "-" b=MultiplicativeExpression() {expression = expression.minus(b);} 
+  )*
+  {
+    close(expression);
+    return expression;
+  }
+}
+
+Expression MultiplicativeExpression() :
+{Expression expression; Expression b; open();}
+{
+  expression = UnaryExpression() ( 
+    "*" b=UnaryExpression() {expression = expression.multiply(b);}|
+    "/" b=UnaryExpression() {expression = expression.divide(b);}
+  )*
+  {
+    close(expression);
+    return expression;
+  }
+}
+
+Expression UnaryExpression() :
+{Expression expression; open();}
+{ 
+  (         
+  "-"     expression=Pow() {expression = expression.negate();} |
+  "nicht" expression=Pow() {expression = expression.not();} |
+  expression=Pow()
+  ) 
+  {
+    close(expression);
+    return expression;
+  }
+}
+
+Expression Pow() :
+{Expression expression; Expression b; open();}
+{
+  (
+  expression=PrimaryExpression() [ "^" b = Pow() {expression = expression.pow(b);} ]
+  )
+  {
+    close(expression);
+    return expression;
+  }
+}
+
+Expression PrimaryExpression() :
+{Expression expression; open();}
+{
+  (
+    expression = Literal() |
+    LOOKAHEAD(2) expression = Function(null) |
+    expression = PropertyRead(null) |  
+    "(" expression = Expression() ")"
+  )
+  [expression = PostPrimaryExpression(expression)]
+  {
+    close(expression);
+    return expression;
+  }
+}
+Expression PostPrimaryExpression(Expression left) :
+{Expression expression = left;}
+{
+  (
+  "."
+  (
+    LOOKAHEAD(2) expression = Function(expression) |
+    expression = PropertyRead(expression)  
+  )
+  )+
+  {
+    return expression;
+  }
+}
+
+PropertyRead PropertyRead(Expression left) : 
+{
+  String name; 
+  open();
+}
+{
+  (name = Name() | "ergebnis" {name = ReservedVariables.RESULT;} | "selbst" {name = ReservedVariables.SELF;} )
+  {
+    PropertyRead propertyRead = new PropertyRead(left, name);
+    close(propertyRead);
+    return propertyRead;
+  }
+}
+PropertyWrite PropertyWrite(Expression left) : 
+{
+  String name; 
+  open();
+}
+{
+  (name = Name() | "ergebnis" {name = ReservedVariables.RESULT;} )
+  {
+    PropertyWrite propertyWrite = new PropertyWrite(left, name);
+    close(propertyWrite);
+    return propertyWrite;
+  }
+}
+
+Invoke Function(Expression left) : 
+{
+  Arguments args;
+  String name;
+  open();
+}
+{
+  name = Name() 
+  args = Arguments()
+  {
+    Invoke invoke = new Invoke(left, name, args);
+    close(invoke);
+    return invoke;
+  }
+} 
+              
+Arguments Arguments() : 
+{
+  Arguments args = new Arguments();
+  Expression arg;
+}
+{
+  "(" 
+    [ 
+      arg = Expression() {args.append(arg);} 
+      ( 
+        "," arg = Expression() {args.append(arg);} 
+      )* 
+    ] 
+  ")"  
+  {
+    return args;
+  }
+}
+Constant Literal() :
+{Constant literal;}
+{
+  (
+  literal = IntNumber() |
+  literal = DoubleNumber() |
+  literal = Text() |
+  literal = BooleanLiteral() | 
+  literal = Color() |
+  literal = LineStyle() |
+  literal = FillStyle() |
+  literal = Alignment() |
+  literal = ColorLiteral()
+  )
+  {
+    setCode(literal);
+    return literal;
+  }
+}
+
+Constant BooleanLiteral() :
+{}
+{  
+  "wahr"   {return new Constant(Boolean.TRUE,  Type.getBoolean(), "wahr");} |
+  "falsch" {return new Constant(Boolean.FALSE, Type.getBoolean(), "falsch");}
+}
+
+Constant Color() :
+{Color c;}
+{
+  (
+  "gelb"     {c = Color.YELLOW;}|
+  "rot"      {c = Color.RED;}|
+  "grün"     {c = Color.GREEN;}|
+  "blau"     {c = Color.BLUE;}|
+  "weiß"     {c = Color.WHITE;}|
+  "schwarz"  {c = Color.BLACK;}|
+  "braun"    {c = new Color(118,80,8);}|
+  "hellblau" {c = new Color(123,177,244);}|
+  "hellgrün" {c = new Color(87,225,4);}|
+  "grau"     {c = Color.GRAY;}|
+  "hellgrau" {c = Color.LIGHT_GRAY;}
+  )
+  {
+    return new Constant(c, Type.getColor(), token.image);
+  }         
+}
+
+Constant ColorLiteral() :
+{Token color; Color c; String hex; int r; int g; int b; int a;}
+{
+  (
+  (color = <COLOR_LITERAL_RGB> 
+  { 
+    hex = color.image;
+    r = Integer.parseInt(hex.substring(1,3),16);
+    g = Integer.parseInt(hex.substring(3,5),16);
+    b = Integer.parseInt(hex.substring(5,7),16);
+    c = new Color(r, g, b); 
+  } ) |
+  (color = <COLOR_LITERAL_RGBA> 
+  { 
+    hex = color.image;
+    r = Integer.parseInt(hex.substring(1,3),16);
+    g = Integer.parseInt(hex.substring(3,5),16);
+    b = Integer.parseInt(hex.substring(5,7),16);
+    a = Integer.parseInt(hex.substring(7,9),16);
+    c = new Color(r, g, b, a); 
+  } )
+  )
+  {
+    return new Constant(c, Type.getColor(), token.image);
+  } 
+}
+
+Constant LineStyle() :
+{
+  LineStyle line;
+}
+{
+  (
+  "gestrichelt"      {line = LineStyle.DASHED;}|
+  "durchgezogen"     {line = LineStyle.SOLID;}|
+  "gepunktelt"       {line = LineStyle.DOTTED;}|
+  "gestrichpunktelt" {line = LineStyle.DASHED_DOTTED;}|
+  "unsichtbar"       {line = LineStyle.INVISIBLE;}
+  )
+  {
+    return new Constant(line, Type.getLineStyle(), token.image);
+  }
+}
+
+Constant FillStyle() :
+{FillStyle fill;}
+{
+  (
+  "ausgemalt"    {fill = FillStyle.FILLED;} |
+  "schraffiert"  {fill = FillStyle.RULED;}|
+  "kariert"      {fill = FillStyle.CHECKED;}|
+  "durchsichtig" {fill = FillStyle.TRANSPARENT;}
+  )
+  {
+    return new Constant(fill, Type.getFillStyle(), token.image);
+  } 
+}
+
+Constant Alignment() :
+{Alignment align;}
+{
+  (
+  "zentriert"    {align = Alignment.CENTER;} |
+  "linksbündig"  {align = Alignment.LEFT;}|
+  "rechtsbündig" {align = Alignment.RIGHT;}|
+  "obenbündig"   {align = Alignment.TOP;}|
+  "untenbündig"  {align = Alignment.BOTTOM;}
+  )
+  {
+    return new Constant(align, Type.getAlignment(), token.image);
+  }    
+}
+
+String Name() :
+{Token name;}
+{
+  name = <IDENTIFIER>
+  {return name.image;}
+}
+
+Type Type() :
+{Token type;}
+{ 
+  type = <IDENTIFIER>
+  {return program.getType(type.image);}
+}
+
+File File() :
+{String filename; }
+{
+  filename = TextRaw()
+  {    
+     File file = new File(filename);
+     if (!file.exists()) {
+       file = new File(path + File.separator + filename);
+     }
+     return file;
+  }  
+}
+
+Constant Text() : 
+{String text; }
+{
+  text = TextRaw()
+  {
+    return new Constant(text, Type.getString(), token.image); 
+  }
+}
+String TextRaw() : 
+{Token t; String text; }
+{
+  (
+  t = <STRING_LITERAL1> |
+  t = <STRING_LITERAL2>
+  )
+  {
+    text = t.image;
+    text = text.replace("\\n", "\n")
+      .replace("\\t", "\t")
+      .replace("\\n", "\n")
+      .replace("\\r", "\r")
+      .replace("\\\'", "\'")
+      .replace("\\\\", "\\");
+    return text.substring(1, text.length() - 1);
+  }
+}
+Constant IntNumber() :
+{Token number;}
+{
+  number = <INTEGER_LITERAL>
+  {
+      try {
+        return new Constant(Integer.valueOf(number.image), Type.getInteger(), number.image);
+      } catch (NumberFormatException nfe) {
+    			throw new NumberFormatException(number.image);
+      }
+  }
+}
+
+Constant DoubleNumber() :
+{Token number;}
+{
+  number = <FLOATING_POINT_LITERAL>
+  {
+      return new Constant(Double.valueOf(number.image), Type.getDouble(), number.image);
+  }
+}

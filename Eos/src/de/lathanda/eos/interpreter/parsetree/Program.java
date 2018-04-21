@@ -3,8 +3,6 @@ package de.lathanda.eos.interpreter.parsetree;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.TreeMap;
-import java.util.TreeSet;
-
 import de.lathanda.eos.common.interpreter.AbstractMachine;
 import de.lathanda.eos.common.interpreter.AbstractProgram;
 import de.lathanda.eos.common.interpreter.AutoCompleteInformation;
@@ -14,7 +12,9 @@ import de.lathanda.eos.common.interpreter.InfoToken;
 import de.lathanda.eos.common.interpreter.Marker;
 import de.lathanda.eos.common.interpreter.ProgramSequence;
 import de.lathanda.eos.common.interpreter.ProgramUnit;
+import de.lathanda.eos.common.interpreter.SourceToken;
 import de.lathanda.eos.common.interpreter.TranslationException;
+import de.lathanda.eos.extension.BasicParser;
 import de.lathanda.eos.interpreter.Command;
 import de.lathanda.eos.interpreter.MProcedure;
 import de.lathanda.eos.interpreter.Machine;
@@ -23,12 +23,8 @@ import de.lathanda.eos.interpreter.ReservedVariables;
 import de.lathanda.eos.interpreter.commands.CreateVariable;
 import de.lathanda.eos.interpreter.commands.DebugPoint;
 import de.lathanda.eos.interpreter.exceptions.DoubleClassDeclarationException;
-import de.lathanda.eos.interpreter.javacc.CommonParserConstants;
-import de.lathanda.eos.interpreter.javacc.EosParser;
-import de.lathanda.eos.interpreter.javacc.ParseException;
-import de.lathanda.eos.interpreter.javacc.SourceToken;
-import de.lathanda.eos.interpreter.javacc.Token;
-import de.lathanda.eos.interpreter.javacc.TokenMgrError;
+import de.lathanda.eos.spi.ExtensionManager;
+
 
 /**
  * Speichert und behandelt den Syntaxbaum des Programms.
@@ -36,6 +32,7 @@ import de.lathanda.eos.interpreter.javacc.TokenMgrError;
  * @author Peter (Lathanda) Schneider
  */
 public class Program implements AbstractProgram {
+    private final static ExtensionManager extensionManager = ExtensionManager.get();
     private final static TreeMap<String, Type> guessTable = new TreeMap<>();
     private final Sequence program;    
     private final LinkedList<SubRoutine> sub;
@@ -46,11 +43,11 @@ public class Program implements AbstractProgram {
     private final String source;
     private final PrettyPrinter prettyPrinter;
     private final Machine machine;
-    private EosParser parser;
+    private BasicParser parser;
     public Program() {
     	this.machine = new Machine();
         this.program = new Sequence();
-        this.prettyPrinter = new PrettyPrinter("");    	
+        this.prettyPrinter = new PrettyPrinter("");
         this.source = "";
         sub = new LinkedList<>();
         userclass = new TreeMap<>();
@@ -71,20 +68,8 @@ public class Program implements AbstractProgram {
     }
     @Override
     public synchronized void parse(String path) throws TranslationException {
-		parser = EosParser.create(source);
-		try {
-			parser.Parse(this, path);			
-		} catch (ParseException pe) {
-			throw new TranslationException(handleParseException(pe));
-		} catch (TokenMgrError ex) {
-			throw new TranslationException(new CompilerError("Token.Error", ex.getLocalizedMessage()));
-		} catch (NumberFormatException nfe) {
-			throw new TranslationException(new CompilerError("Number.Error", nfe.getLocalizedMessage()));
-		} catch (RuntimeException re) {
-			throw new TranslationException(new CompilerError("Generic.Error", re.getLocalizedMessage()));			
-		} catch (Throwable t) {
-			throw new TranslationException(new CompilerError("UnknownError", t.getLocalizedMessage()));					
-		}
+		parser = extensionManager.createParser(source);
+		parser.parse(this, path);			
     }
     public void add(Sequence s) {
         program.append(s);
@@ -98,8 +83,8 @@ public class Program implements AbstractProgram {
     public void addNode(MarkedNode node) {
         nodeList.add(node);
     }
-    public void addToken(SourceToken token) {
-        tokenList.add(token);
+    public void addToken(SourceToken sourceToken) {
+        tokenList.add(sourceToken);
     }
     public LinkedList<MarkedNode> getNodeList() {
         return nodeList;
@@ -272,66 +257,7 @@ public class Program implements AbstractProgram {
 	public AbstractMachine getMachine() {
 		return machine;
 	}
-	private ErrorInformation handleParseException(ParseException pe) {
-		if (pe.expectedTokenSequences == null) {
-			return new CompilerError("Compile.Error", pe.getLocalizedMessage());
-		}
-		StringBuilder expected = new StringBuilder();
-		StringBuilder encountered = new StringBuilder();
-		int maxSize = 0;
-		int item = 1;
-		for (int[] expectedTokenSequence : pe.expectedTokenSequences) {
-			expected.append("\n").append(item++).append(") ");
-			if (maxSize < expectedTokenSequence.length) {
-				maxSize = expectedTokenSequence.length;
-			}
-			for (int j = 0; j < expectedTokenSequence.length; j++) {
-				expected.append(unescape(pe.tokenImage[expectedTokenSequence[j]])).append(' ');
-			}
-			if (expectedTokenSequence[expectedTokenSequence.length - 1] != 0) {
-				expected.append("...");
-			}
-		}
-		Token tok = pe.currentToken.next;
-		TreeSet<String> alreadyUsed = new TreeSet<>();
-		for (int i = 0; i < maxSize; i++) {
-			if (!alreadyUsed.add(pe.tokenImage[i])) {
-				continue;
-			}
-			if (i != 0) {
-				encountered.append(" ");
-			}
-			if (tok.kind == CommonParserConstants.EOF) {
-				encountered.append(pe.tokenImage[0]);
-				break;
-			}
-
-			encountered.append(unescape(pe.tokenImage[tok.kind]));
-			tok = tok.next;
-
-		}
-		Token token = pe.currentToken;
-		return new CompilerError(new Marker(token.beginColumn, token.beginLine, token.endColumn, token.endLine), "Parser.Error", encountered, expected,
-				token.endLine);
-	}
-
-	private String unescape(String text) {
-		int i = text.indexOf("\\u");
-		if (i == -1) {
-			return text;
-		}
-
-		StringBuilder sb = new StringBuilder();
-		int a = 0;
-		while (i != -1) {
-			sb.append(text.substring(a, i));
-			a = i + 6;
-			sb.append((char) Integer.parseInt(text.substring(i + 2, a), 16));
-			i = text.indexOf("\\u", a);
-		}
-		sb.append(text.substring(a));
-		return sb.toString();
-	}
+	
 	@Override
 	public LinkedList<AutoCompleteInformation> getClassAutoCompletes() {
 		LinkedList<AutoCompleteInformation> classInfos = new LinkedList<>();

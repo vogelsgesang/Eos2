@@ -2,9 +2,9 @@ package de.lathanda.eos.interpreter;
 
 import java.util.TreeMap;
 
+import de.lathanda.eos.extension.ObjectSource;
 import de.lathanda.eos.interpreter.exceptions.TypeMissMatchException;
 import de.lathanda.eos.interpreter.parsetree.Property.Signature;
-import de.lathanda.eos.interpreter.parsetree.SystemType.ObjectSource;
 
 /**
  * Informationen über eine Java Klasse

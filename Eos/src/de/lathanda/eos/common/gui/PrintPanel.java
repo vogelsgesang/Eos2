@@ -17,6 +17,7 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import de.lathanda.eos.common.interpreter.AbstractProgram;
+import de.lathanda.eos.common.interpreter.Format;
 import de.lathanda.eos.common.interpreter.InfoToken;
 
 /**
@@ -154,7 +155,7 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
         int linenumber = 0;        
 
         for (InfoToken st : program.getTokenList()) {
-        	if (st.getFormat() == InfoToken.IGNORE) continue;
+        	if (st.getFormat() == Format.IGNORE) continue;
             String token = source.substring(sourceIndex, st.getBegin() + st.getLength());
             tokenIndexBegin = 0;
 
@@ -187,13 +188,13 @@ public class PrintPanel extends javax.swing.JPanel implements Printable, Pageabl
               		}
                    	part = token.substring(tokenIndexBegin, tokenIndexEnd);
                 	switch (st.getFormat()) {
-                    	case InfoToken.COMMENT:
+                    	case COMMENT:
                         	text = new Text(part, fontComment, new Color(0, 160, 0), false);
                         	break;
-                    	case InfoToken.LITERAL:
+                    	case LITERAL:
                         	text = new Text(part, fontLiteral, Color.BLACK, false);
                         	break;
-                    	case InfoToken.KEYWORD:
+                    	case KEYWORD:
                         	text = new Text(part, fontKeyword, Color.BLACK, false);
                         	break;
                     	default:

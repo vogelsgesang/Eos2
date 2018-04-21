@@ -10,8 +10,8 @@ import javax.swing.JOptionPane;
 import com.jogamp.opengl.GLProfile;
 
 import de.lathanda.eos.common.gui.Messages;
+import de.lathanda.eos.extension.ObjectSource;
 import de.lathanda.eos.gui.objectchart.DirectionValue;
-import de.lathanda.eos.interpreter.parsetree.SystemType.ObjectSource;
 import de.lathanda.eos.robot.Direction;
 import de.lathanda.eos.robot.Robot;
 import de.lathanda.eos.robot.World;

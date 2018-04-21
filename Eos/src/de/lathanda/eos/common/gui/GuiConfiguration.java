@@ -96,6 +96,7 @@ public class GuiConfiguration {
 	 * Einheit in mm.
 	 */
 	private double unit;
+	private String parserSource = "eos2.german";
 	/**
 	 * Fehlerverhalten.
 	 */
@@ -247,6 +248,14 @@ public class GuiConfiguration {
 			GuiToolkit.setUnit(unit);
 			dirty = true;
 		}
+	}
+
+	public String getParserSource() {
+		return parserSource;
+	}
+	public void setParserSource(String parserProvides) {
+		this.parserSource = parserProvides;
+		dirty = true;
 	}
 
 	/**

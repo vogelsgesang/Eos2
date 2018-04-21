@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 
 import de.lathanda.eos.base.ResourceLoader;
 import de.lathanda.eos.common.interpreter.MissingTypeException;
+import de.lathanda.eos.extension.ObjectSource;
 import de.lathanda.eos.gui.diagram.TextUnit;
 import de.lathanda.eos.gui.diagram.Unit;
 import de.lathanda.eos.gui.objectchart.UnitSource;
@@ -29,7 +30,6 @@ import de.lathanda.eos.interpreter.parsetree.SystemFunctionType;
 import de.lathanda.eos.interpreter.parsetree.SystemMethodType;
 import de.lathanda.eos.interpreter.parsetree.SystemType;
 import de.lathanda.eos.interpreter.parsetree.Type;
-import de.lathanda.eos.interpreter.parsetree.SystemType.ObjectSource;
 
 /**
  * \brief Sprach Konfiguration
@@ -37,7 +37,6 @@ import de.lathanda.eos.interpreter.parsetree.SystemType.ObjectSource;
  * Singleton zur Verwaltung aller Spracherweiterungen.
  *
  * @author Peter (Lathanda) Schneider
- * @since 0.9.7
  */
 public class LanguageManager {
 	private static LanguageManager lm = null;
@@ -67,7 +66,7 @@ public class LanguageManager {
 	private String helpInfo = "";
 	
 	private boolean lockProperties = false;
-	private LanguageManager() {
+	public LanguageManager() {
 	}
 
 	private void init() throws Exception {

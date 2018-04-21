@@ -8,6 +8,7 @@ import de.lathanda.eos.base.Alignment;
 import de.lathanda.eos.base.FillStyle;
 import de.lathanda.eos.base.LineStyle;
 import de.lathanda.eos.common.gui.Messages;
+import de.lathanda.eos.extension.ObjectSource;
 import de.lathanda.eos.geo.Circle;
 import de.lathanda.eos.geo.Ellipse;
 import de.lathanda.eos.geo.Figure;
@@ -23,7 +24,7 @@ import de.lathanda.eos.geo.TextField;
 import de.lathanda.eos.geo.Triangle;
 import de.lathanda.eos.geo.Window;
 import de.lathanda.eos.interpreter.SystemFunctions;
-import de.lathanda.eos.interpreter.parsetree.SystemType.ObjectSource;
+
 /**
  * \brief Spracherweiterung Basissprache
  * 

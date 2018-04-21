@@ -2,6 +2,7 @@ package de.lathanda.eos.interpreter.parsetree;
 
 import de.lathanda.eos.common.interpreter.AutoCompleteType;
 import de.lathanda.eos.common.interpreter.MissingTypeException;
+import de.lathanda.eos.extension.ObjectSource;
 import de.lathanda.eos.interpreter.MJavaClass;
 import de.lathanda.eos.interpreter.MType;
 import java.util.LinkedList;
@@ -186,9 +187,6 @@ public class SystemType extends Type implements Comparable<Type>, AutoCompleteTy
 		return objSrc == null;
 	}
 
-	public interface ObjectSource {
-		public Object createObject();
-	}
 
 	public MType getMType() {
 		return new MJavaClass(description, cls, objSrc);
