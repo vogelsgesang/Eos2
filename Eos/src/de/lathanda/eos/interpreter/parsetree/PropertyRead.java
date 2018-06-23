@@ -33,7 +33,7 @@ public class PropertyRead extends Expression {
     public void compile(ArrayList<Command> ops, boolean autoWindow) throws Exception {
         if (isVariable) {
             ops.add(new LoadVariable(member));
-        } else if (target != null) {
+        } else if (target != null && methodType != null) {
             methodType.compile(ops, target, autoWindow);
         } 
     }
