@@ -771,7 +771,7 @@ if (command != null) {
       }
       jj_consume_token(OR);
       b = AndExpression();
-close(expression);open();expression = expression.or(b);
+expression = expression.or(b);
     }
 close(expression);
     {if ("" != null) return expression;}
