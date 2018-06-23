@@ -45,10 +45,8 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 	private GLU glu;
 	private FPSAnimator animator;
 
-	private double[] cameraPositionXYZ;
-	private double cameraRotationX; // 360°
-	private double cameraRotationZ; // 360°
-
+	private Camera cam;
+	
 	private int lastMouseX, lastMouseY;
 	private int lastButton;
 	private World world;
@@ -56,6 +54,7 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 	public WorldPanelOpenGLNoShader(World world) {
 		super(new GLCapabilities(GLProfile.get(GLProfile.GL2)));
 		this.world = world;
+		cam = world.getCamera();
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		setPreferredSize(new Dimension(screen.width / 2, screen.height / 2));
 
@@ -64,11 +63,6 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 
 	private void init() {
 		glu = new GLU();
-
-		// initial camera position
-		cameraPositionXYZ = new double[] { 0d, -10, 6 };
-		cameraRotationX = -60;
-		cameraRotationZ = 0;
 
 		// link controller
 		addMouseListener(this);
@@ -94,8 +88,8 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 		gl.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
 
 		// apply camera position
-		gl.glRotated(cameraRotationX, 1d, 0d, 0d);
-		gl.glRotated(cameraRotationZ, 0d, 0d, 1d);
+		gl.glRotated(cam.getCameraRotationX(), 1d, 0d, 0d);
+		gl.glRotated(cam.getCameraRotationZ(), 0d, 0d, 1d);
 
 		// setup rendering parameters
 		gl.glEnable(GL.GL_BLEND);
@@ -109,7 +103,7 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 
 		renderSkybox(gl);
 
-		gl.glTranslated(-cameraPositionXYZ[0], -cameraPositionXYZ[1], -cameraPositionXYZ[2]);
+		gl.glTranslated(-cam.getCameraPositionX(), -cam.getCameraPositionY(), -cam.getCameraPositionZ());
 		gl.glEnable(GL.GL_DEPTH_TEST);
 		gl.glDepthFunc(GL.GL_LEQUAL);
 
@@ -167,17 +161,24 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 		int dY = e.getY() - lastMouseY;
 		switch (lastButton) {
 		case MouseEvent.BUTTON1: // Left
-			cameraPositionXYZ[0] -= (dX * cos(cameraRotationZ) - dY * sin(cameraRotationZ)) * MOVE_SPEED_SIDE;
-			cameraPositionXYZ[1] += (dX * sin(cameraRotationZ) + dY * cos(cameraRotationZ)) * MOVE_SPEED_SIDE;
+			cam.moveCamera(
+				-(dX * cos(cam.getCameraRotationZ()) - dY * sin(cam.getCameraRotationZ())) * MOVE_SPEED_SIDE,
+				 (dX * sin(cam.getCameraRotationZ()) + dY * cos(cam.getCameraRotationZ())) * MOVE_SPEED_SIDE,
+				 0d
+			);
 			break;
 		case MouseEvent.BUTTON2: // middle
-			cameraPositionXYZ[0] -= dX * cos(cameraRotationZ) * MOVE_SPEED_SIDE;
-			cameraPositionXYZ[1] += dX * sin(cameraRotationZ) * MOVE_SPEED_SIDE;
-			cameraPositionXYZ[2] += dY * MOVE_SPEED_UP_DOWN;
+			cam.moveCamera(
+				-dX * cos(cam.getCameraRotationZ()) * MOVE_SPEED_SIDE,
+				 dX * sin(cam.getCameraRotationZ()) * MOVE_SPEED_SIDE,
+				 dY * MOVE_SPEED_UP_DOWN
+			);
 			break;
 		case MouseEvent.BUTTON3: // right
-			cameraRotationZ += dX * ROTATION_SPEED_SIDE;
-			cameraRotationX += dY * ROTATION_SPEED_UP_DOWN;
+			cam.rotateCamera(
+				dY * ROTATION_SPEED_UP_DOWN,
+				dX * ROTATION_SPEED_SIDE
+			);
 			break;
 		}
 		restrictCamera();
@@ -186,8 +187,8 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 	}
 
 	private void restrictCamera() {
-		if (cameraPositionXYZ[2] < 0.1) {
-			cameraPositionXYZ[2] = 0.1;
+		if (cam.getCameraPositionZ() < 0.1) {
+			cam.setCameraRotationZ(0.1);
 		}
 	}
 
@@ -227,9 +228,11 @@ public class WorldPanelOpenGLNoShader extends GLCanvas
 	}
 
 	private void moveCamera(double distance) {
-		cameraPositionXYZ[0] += sin(cameraRotationZ) * sin(cameraRotationX) * distance;
-		cameraPositionXYZ[1] += cos(cameraRotationZ) * sin(cameraRotationX) * distance;
-		cameraPositionXYZ[2] += cos(cameraRotationX) * distance;
+		cam.moveCamera(
+			sin(cam.getCameraRotationZ()) * sin(cam.getCameraRotationX()) * distance,
+			cos(cam.getCameraRotationZ()) * sin(cam.getCameraRotationX()) * distance,
+			cos(cam.getCameraRotationX()) * distance
+		);
 		restrictCamera();
 	}
 

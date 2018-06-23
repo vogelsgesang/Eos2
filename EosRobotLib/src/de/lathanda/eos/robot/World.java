@@ -36,6 +36,7 @@ import de.lathanda.eos.robot.exceptions.RobotEntranceMissingException;
 import de.lathanda.eos.robot.exceptions.RobotNoSpaceException;
 import de.lathanda.eos.robot.exceptions.WorldLoadFailedException;
 import de.lathanda.eos.robot.exceptions.WorldNotFoundException;
+import de.lathanda.eos.robot.gui.Camera;
 import de.lathanda.eos.robot.gui.WorldFrame;
 
 /**
@@ -88,6 +89,8 @@ public class World implements CleanupListener, Readout {
 	private Integer maxY;
 	private static final Column BORDER = new BorderColumn();
 	private Random random = new Random();
+	//Camera
+	private Camera cam = new Camera();
 	/**
 	 * Erzeugt eine neue Welt inklusive eines Fensters.
 	 */
@@ -254,6 +257,23 @@ public class World implements CleanupListener, Readout {
 		} else {
 			maxY = null;
 		}
+		//camera data
+		if (world.hasAttribute("camerapositionx")) {
+			cam.setCameraPositionX(Double.parseDouble(world.getAttribute("camerapositionx")));
+		}		
+		if (world.hasAttribute("camerapositiony")) {
+			cam.setCameraPositionY(Double.parseDouble(world.getAttribute("camerapositiony")));
+		}		
+		if (world.hasAttribute("camerapositionz")) {
+			cam.setCameraPositionZ(Double.parseDouble(world.getAttribute("camerapositionz")));
+		}
+		if (world.hasAttribute("camerarotationx")) {
+			cam.setCameraRotationX(Double.parseDouble(world.getAttribute("camerarotationx")));
+		}		
+		if (world.hasAttribute("camerarotationz")) {
+			cam.setCameraRotationZ(Double.parseDouble(world.getAttribute("camerarotationz")));
+		}		
+		
 		NodeList nodes = world.getChildNodes();
 		for (int i = 0; i < nodes.getLength(); i++) {
 			Node node = nodes.item(i);
@@ -340,6 +360,13 @@ public class World implements CleanupListener, Readout {
 		if (maxY != null) {		
 			world.setAttribute("maxy", Integer.toString(maxY));
 		}
+		//camera data
+		world.setAttribute("camerapositionx", Double.toString(cam.getCameraPositionX()));
+		world.setAttribute("camerapositiony", Double.toString(cam.getCameraPositionY()));
+		world.setAttribute("camerapositionz", Double.toString(cam.getCameraPositionZ()));
+		world.setAttribute("camerarotationx", Double.toString(cam.getCameraRotationX()));
+		world.setAttribute("camerarotationz", Double.toString(cam.getCameraRotationZ()));
+
 		doc.appendChild(world);
 		synchronized (entrances) {
 			for (Entrance entrance : entrances) {
@@ -380,6 +407,13 @@ public class World implements CleanupListener, Readout {
 			}
 		}
 		return doc;
+	}
+	/**
+	 * Liefert ein geteiltes Cameraobjekt
+	 * @return
+	 */
+	public Camera getCamera() {
+		return cam;
 	}
 	/**
 	 * Füllt den Bereich der Welt zufällig mit Steinen.
