@@ -1,0 +1,36 @@
+Zblatt:KREIS
+Sockel:RECHTECK
+Minute:LINIE
+Stunde:LINIE
+X:Integer
+
+Zblatt.radius:=120
+Zblatt.füllfarbe:=gelb
+Sockel.eckenSetzen(-60,-120,60,-150)
+Sockel.füllfarbe:=blau
+
+Minute.linienStärke:=3
+//Minute.punkt1Setzen(0,0)
+Minute.endpunkteSetzen(0,0,0,105)
+//Minute.punkt2Setzen(0,105)
+
+Stunde.linienStärke:=4
+//Stunde.punkt1Setzen(0,0)
+Stunde.endpunkteSetzen(0,0,70,0)
+//Stunde.punkt2Setzen(70,0)
+
+wiederhole solange X < 48
+
+   wiederhole 360 mal
+      Minute.drehenUm(0,0,-1)
+   *wiederhole
+   Stunde.drehenUm(0,0,-30)
+   wenn Stunde.y=-35 dann
+      Zblatt.füllfarbe:=rot
+   *wenn
+   wenn Stunde.x=-35 dann
+      Zblatt.füllfarbe:=gelb
+   *wenn
+   X:=X+1
+
+*wiederhole
