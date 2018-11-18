@@ -17,7 +17,7 @@ import de.lathanda.eos.base.layout.BoundingBox;
  */
 public abstract class Figure implements Cloneable, Readout {
 	private boolean visible;    
-    private FigureGroup group;
+    protected FigureGroup group;
     protected Transform transform;    
     private BoundingBox bound = new BoundingBox();
     public Figure() {

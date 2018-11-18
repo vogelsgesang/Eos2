@@ -38,12 +38,12 @@ public class Group extends Figure implements FigureGroup {
 	@Override
 	public void addFigure(Figure figure) {
 		//check recursive loop		
-		Group grp = this.getGroup();
+		FigureGroup grp = this;
 		while (grp != null) {
-			if (grp == this) {
+			if (grp == figure) {
 				throw new RecursiveGroupException();
 			} else {
-				grp = grp.getGroup();
+				grp = grp.getParentGroup();
 			}
 		}
 		
@@ -80,7 +80,10 @@ public class Group extends Figure implements FigureGroup {
 	public Group getGroup() {
 		return this;
 	}
-
+    @Override
+    public FigureGroup getParentGroup() {
+        return group;
+    }
 	@Override
 	protected void drawObject(Picture p) {
 		for (Figure m : members) {

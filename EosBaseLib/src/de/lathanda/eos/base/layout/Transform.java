@@ -32,19 +32,28 @@ public class Transform {
 	}
 
 	public Transform rotate(double angle) {
-		return new Transform(v, this.angle + angle, false, scale);
+		if (mirrorx) {
+			return new Transform(v, this.angle - angle, true, scale);
+		} else {
+			return new Transform(v, this.angle + angle, false, scale);
+		}
+		
 	}
 
 	public Transform rotate(double x, double y, double angle) {
-		return new Transform(v.substract(x, y).rotate(angle).add(x, y), this.angle + angle, false, scale);
+		if (mirrorx) {
+			return new Transform(v.substract(-x, y).rotate(-angle).add(-x, y), this.angle - angle, true, scale);			
+		} else {
+			return new Transform(v.substract(x, y).rotate(angle).add(x, y), this.angle + angle, false, scale);
+		}
 	}
 
 	public Transform mirrorX() {
-		return new Transform(v, -angle, !mirrorx, scale);
+		return new Transform(v.invertX(), -angle, !mirrorx, scale);
 	}
 
 	public Transform mirrorY() {
-		return new Transform(v, Math.PI-angle, !mirrorx, scale);
+		return new Transform(v.invertX(), Math.PI-angle, !mirrorx, scale);
 	}
 
 	public Transform scale(double factor) {

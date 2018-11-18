@@ -49,7 +49,10 @@ public class Window implements FigureGroup, CleanupListener, Readout, CursorList
     public Group getGroup() {
         return null;
     }
-    
+    @Override
+    public FigureGroup getParentGroup() {
+        return null;
+    }  
     public void draw(Picture g) {
     	for (Figure m : members) {
     		m.draw(g);
