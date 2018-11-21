@@ -60,10 +60,6 @@ public class Transform {
 		return new Transform(v, angle, mirrorx, scale * factor);
 	}
 
-	public Transform scalePosition(double factor) {
-		return new Transform(v.multiply(factor), angle, mirrorx, scale);
-	}
-
 	public Transform scalePositionAt(double x, double y, double factor) {
 		return new Transform(v.substract(x, y).multiply(factor).add(x, y), angle, mirrorx, scale);
 	}
@@ -85,8 +81,12 @@ public class Transform {
 	}
 
 	public Transform transform(Transform child) {
-		Transform result = new Transform(child.v.multiply(scale).rotate(angle).add(v), child.angle, child.mirrorx,
-				child.scale);
+		Transform result;
+		if (child.mirrorx) {
+			result = new Transform(child.v.multiply(scale).rotate(-angle).add(v), child.angle, child.mirrorx, child.scale);			
+		} else {
+			result = new Transform(child.v.multiply(scale).rotate(angle).add(v), child.angle, child.mirrorx, child.scale);
+		}
 		if (mirrorx) {
 			return result.mirrorX().scale(scale).rotate(angle);
 		} else {
