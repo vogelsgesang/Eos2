@@ -12,6 +12,7 @@ import de.lathanda.eos.interpreter.ReservedVariables;
 import de.lathanda.eos.interpreter.commands.DeclareVariable;
 import de.lathanda.eos.interpreter.commands.StoreVariable;
 import de.lathanda.eos.interpreter.exceptions.CyclicStorageException;
+import de.lathanda.eos.interpreter.exceptions.DoubleClassDeclarationException;
 
 public class UserType extends Type {
 	private String supCls = null;
@@ -25,54 +26,62 @@ public class UserType extends Type {
 	private boolean checked = false;
 	private boolean marked = false;
 	private boolean isUndefined = true;
+
 	public UserType(String id) {
 		super(id, id);
 		mtype = new MClass(id);
 	}
+
 	public void setSuperclass(String sup) {
 		this.supCls = sup;
 	}
+
 	public void bind(Environment env) {
 		if (superType == null && supCls != null) {
 			superType = env.getProgram().getType(supCls);
 			if (superType instanceof UserType) {
-				((UserType)superType).bind(env);
+				((UserType) superType).bind(env);
 			}
 			mtype.setSuper(superType.getMType());
 		}
 		for (Method s : usermethods.values()) {
 			s.createMethodType(env);
-			methods.put(s.getSignature(), s.getMethodType(env));			
+			methods.put(s.getSignature(), s.getMethodType(env));
 		}
 	}
+
 	public void checkCyclicStorage() throws CyclicStorageException {
-		if (checked) return; 
+		if (checked)
+			return;
 		checkCyclicStorageInternal();
 	}
+
 	private void checkCyclicStorageInternal() throws CyclicStorageException {
 		if (marked) {
 			throw new CyclicStorageException(id);
 		}
 		marked = true;
 		checkCyclicStorageInternal(superType);
-		for( Property prop : userproperties.values()) {
+		for (Property prop : userproperties.values()) {
 			checkCyclicStorageInternal(prop.getPropertyType());
 		}
 		checked = true;
-		
+
 	}
+
 	private void checkCyclicStorageInternal(Type t) throws CyclicStorageException {
 		if (t != null && t instanceof UserType) {
-			((UserType)t).checkCyclicStorage();
+			((UserType) t).checkCyclicStorage();
 		}
-	}	
+	}
+
 	@Override
 	public LinkedList<AutoCompleteInformation> getAutoCompletes() {
-		LinkedList<AutoCompleteInformation> aci = (supCls == null)?new LinkedList<>():superType.getAutoCompletes();
-		for(Property p:userproperties.values()) {
+		LinkedList<AutoCompleteInformation> aci = (supCls == null) ? new LinkedList<>() : superType.getAutoCompletes();
+		for (Property p : userproperties.values()) {
 			aci.addAll(p.getAutoCompletes());
 		}
-		for(Method m:usermethods.values()) {
+		for (Method m : usermethods.values()) {
 			aci.add(m.getAutoComplete());
 		}
 		return aci;
@@ -92,10 +101,11 @@ public class UserType extends Type {
 	public boolean isUnknown() {
 		return isUndefined;
 	}
+
 	public void addProperty(Property prop) {
-		for(String name:prop.getNames()) {
+		for (String name : prop.getNames()) {
 			userproperties.put(name, prop);
-		}		
+		}
 	}
 
 	public void addMethod(Method meth) {
@@ -105,47 +115,54 @@ public class UserType extends Type {
 	public MClass getMClass() {
 		return mtype;
 	}
-	public void compile() throws Exception {		
-		//generate properties
-		for(Property p: userproperties.values()) {
-			for(String name:p.getNames()) {
+
+	public void compile() throws Exception {
+		// generate properties
+		for (Property p : userproperties.values()) {
+			for (String name : p.getNames()) {
 				mtype.addProperty(name, p.getPropertyType().getMType());
 			}
 		}
-		//generate methods
-		for(Method m: usermethods.values() ) {
+		// generate methods
+		for (Method m : usermethods.values()) {
 			ArrayList<Command> methCmd = new ArrayList<>();
-			//store self
-			methCmd.add(new DeclareVariable(ReservedVariables.SELF, mtype));			
+			// store self
+			methCmd.add(new DeclareVariable(ReservedVariables.SELF, mtype));
 			methCmd.add(new StoreVariable(ReservedVariables.SELF));
-			//compile method
-			m.compile(methCmd,  false);
+			// compile method
+			m.compile(methCmd, false);
 			MProcedure meth = new MProcedure(m.getSignature(), methCmd, false);
 			mtype.addMethod(meth);
-		}	
+		}
 	}
 
 	@Override
 	public MethodType getReadProperty(String name) {
 		if (userproperties.containsKey(name)) {
 			return new UserReadProperty(this, name, userproperties.get(name));
-		} else if (superType != null){
+		} else if (superType != null) {
 			return superType.getReadProperty(name);
 		} else {
 			return null;
 		}
 	}
+
 	@Override
 	public MethodType getAssignProperty(String name) {
 		if (userproperties.containsKey(name)) {
 			return new UserAssignProperty(this, name, userproperties.get(name));
-		} else if (superType != null){
+		} else if (superType != null) {
 			return superType.getAssignProperty(name);
 		} else {
 			return null;
 		}
 	}
+
 	public void define() {
-		isUndefined = false;		
+		if (isUndefined) {
+			isUndefined = false;
+		} else {
+			throw new DoubleClassDeclarationException(id);
+		}
 	}
 }
