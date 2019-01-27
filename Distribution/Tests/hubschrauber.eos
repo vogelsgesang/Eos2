@@ -1,0 +1,456 @@
+// EOS 1.5 - Programm
+// Der Baum
+himmel:RECHTECK
+erde:RECHTECK
+karosseri:RECHTECK
+radforn:KREIS
+radhinten:KREIS
+karosseriforn:RECHTECK
+scheibe:DREIECK
+stamm:LINIE
+blätter:KREIS
+asteroit:KREIS
+karosseri1:RECHTECK
+ladefläche:RECHTECK
+ladeflächehinten:DREIECK
+gelblicht:RECHTECK
+radforn1:KREIS
+radhinten1:KREIS
+scheibe1:RECHTECK
+abschlepper:GRUPPE
+heck:GRUPPE
+karosseri2:RECHTECK
+karosseriforne2:RECHTECK
+karosserihinten2:RECHTECK
+scheibe2:DREIECK
+scheibe3:DREIECK
+radforn2:KREIS
+radhinten2:KREIS
+blaulicht:RECHTECK
+polizei:GRUPPE
+seil:LINIE
+meteor:KREIS
+kufen:LINIE
+kufe1:LINIE
+kufe2:LINIE
+rumpf:ELLIPSE
+rotor:LINIE
+rotor1:LINIE
+heck1:RECHTECK
+heck2:DREIECK
+scheibe4:DREIECK
+heli:GRUPPE
+mkette:RECHTECK
+vkette:DREIECK
+hkette:DREIECK
+kanonenrohr:LINIE
+schalldämpfer:RECHTECK
+panzerv:DREIECK
+panzerm:RECHTECK
+panzerh:DREIECK
+panzero:RECHTECK
+panzer:GRUPPE
+kanonenkugel:KREIS
+baum:GRUPPE
+straße:LINIE
+
+fenster.hintergrundfarbeSetzen(weiß)
+straße.linienStärkeSetzen(20)
+straße.punkt1Setzen(-1000,0)
+straße.punkt2Setzen(1000,0)
+himmel.breiteSetzen(2000)
+himmel.höheSetzen(925)
+himmel.linksObenSetzen(-952,521)
+himmel.füllfarbeSetzen(hellblau)
+erde.breiteSetzen(2000)
+erde.höheSetzen(2000)
+erde.linksObenSetzen(-952,0)
+erde.füllfarbeSetzen(braun)
+
+seil.linienStärkeSetzen(5)
+seil.punkt1Setzen(0,0)
+seil.punkt2Setzen(0,0)
+meteor.verschieben(-40,170)
+meteor.verschieben(-600,600)
+meteor.radiusSetzen(30)
+meteor.füllfarbeSetzen(grau)
+karosseri.breiteSetzen(80)
+karosseri.höheSetzen(50)
+karosseri.linksObenSetzen(-860,80)
+karosseri.füllfarbeSetzen(rot)
+radforn.radiusSetzen(10)
+karosseriforn.füllfarbeSetzen(rot)
+radhinten.radiusSetzen(10)
+radforn.füllfarbeSetzen(schwarz)
+radhinten.füllfarbeSetzen(schwarz)
+radforn.mittelpunktSetzen(-780,20)
+radhinten.mittelpunktSetzen(-845,20)
+karosseriforn.breiteSetzen(20)
+karosseriforn.höheSetzen(25)
+karosseriforn.linksObenSetzen(-780,55)
+scheibe.eckenSetzen(-780,80,-780,55,-770,55)
+scheibe.füllfarbeSetzen(blau)
+stamm.punkt1Setzen(0,10)
+stamm.punkt2Setzen(0,110)
+stamm.linienStärkeSetzen(30)
+stamm.farbeSetzen(braun)
+blätter.radiusSetzen(50)
+blätter.mittelpunktSetzen(0,140)
+blätter.füllfarbeSetzen(grün)
+
+baum.schlucke(stamm)
+baum.schlucke(blätter)
+auto:GRUPPE
+auto.schlucke(karosseri)
+auto.schlucke(karosseriforn)
+auto.schlucke(radforn)
+auto.schlucke(radhinten)
+auto.schlucke(scheibe)
+karosseri1.breiteSetzen(50)
+karosseri1.höheSetzen(60)
+karosseri1.linksObenSetzen(-1080,100)
+karosseri1.füllfarbeSetzen(gelb)
+radforn1.radiusSetzen(15)
+radforn1.mittelpunktSetzen(-1060,25)
+radforn1.füllfarbeSetzen(schwarz)
+ladefläche.breiteSetzen(140)
+ladefläche.füllfarbeSetzen(grau)
+ladefläche.linksObenSetzen(-1220,60)
+ladeflächehinten.eckenSetzen(-1250,60,-1220,60,-1220,40)
+ladeflächehinten.füllfarbeSetzen(grau)
+radhinten1.mittelpunktSetzen(-1190,25)
+radhinten1.radiusSetzen(15)
+radhinten1.füllfarbeSetzen(schwarz)
+gelblicht.höheSetzen(10)
+gelblicht.breiteSetzen(10)
+gelblicht.linksObenSetzen(-1060,110)
+scheibe1.linksObenSetzen(-1050,90)
+scheibe1.füllfarbeSetzen(blau)
+abschlepper.schlucke(karosseri1)
+abschlepper.schlucke(radforn1)
+abschlepper.schlucke(radhinten1)
+abschlepper.schlucke(scheibe1)
+abschlepper.schlucke(gelblicht)
+abschlepper.zentrumSetzen(-1117,20)
+heck.schlucke(ladefläche)
+heck.schlucke(ladeflächehinten)
+karosseri2.breiteSetzen(50)
+karosseri2.höheSetzen(40)
+karosseri2.linksObenSetzen(-1200,70)
+karosseri2.füllfarbeSetzen(schwarz)
+karosseriforne2.breiteSetzen(40)
+karosseriforne2.linksObenSetzen(-1150,50)
+karosseriforne2.füllfarbeSetzen(schwarz)
+scheibe2.eckenSetzen(-1150,70,-1130,50,-1150,50)
+scheibe2.füllfarbeSetzen(blau)
+karosserihinten2.breiteSetzen(30)
+karosserihinten2.linksObenSetzen(-1230,50)
+karosserihinten2.füllfarbeSetzen(schwarz)
+radforn2.mittelpunktSetzen(-1130,20)
+radforn2.füllfarbeSetzen(schwarz)
+radhinten2.mittelpunktSetzen(-1210,20)
+radhinten2.füllfarbeSetzen(schwarz)
+scheibe3.eckenSetzen(-1200,70,-1200,50,-1210,50)
+scheibe3.füllfarbeSetzen(blau)
+blaulicht.höheSetzen(10)
+blaulicht.breiteSetzen(10)
+blaulicht.linksObenSetzen(-1180,80)
+kufen.punkt1Setzen(-1250,250)
+kufen.punkt2Setzen(-1360,250)
+kufen.linienStärkeSetzen(10)
+kufe1.punkt1Setzen(-1280,250)
+kufe2.punkt1Setzen(-1330,250)
+kufe1.punkt2Setzen(-1280,280)
+kufe2.punkt2Setzen(-1330,280)
+kufe1.linienStärkeSetzen(10)
+kufe2.linienStärkeSetzen(10)
+rumpf.mittelpunktSetzen(-1305,320)
+rumpf.radiusySetzen(40)
+rumpf.radiusxSetzen(60)
+rumpf.füllfarbeSetzen(hellgrün)
+heck1.breiteSetzen(100)
+heck1.linksObenSetzen(-1460,330)
+heck1.füllfarbeSetzen(hellgrün)
+heck2.eckenSetzen(-1460,330,-1460,360,-1430,330)
+heck2.füllfarbeSetzen(hellgrün)
+rotor1.punkt1Setzen(-1305,370)
+rotor1.punkt2Setzen(-1305,360)
+rotor1.linienStärkeSetzen(10)
+rotor.punkt1Setzen(-1220,375)
+rotor.punkt2Setzen(-1390,375)
+rotor.linienStärkeSetzen(10)
+scheibe4.eckenSetzen(-1250,320,-1280,320,-1280,350)
+scheibe4.füllfarbeSetzen(blau)
+polizei.schlucke(karosseri2)
+polizei.schlucke(karosseriforne2)
+polizei.schlucke(karosserihinten2)
+polizei.schlucke(blaulicht)
+polizei.schlucke(radforn2)
+polizei.schlucke(radhinten2)
+polizei.schlucke(scheibe2)
+polizei.schlucke(scheibe3)
+heli.schlucke(rumpf)
+heli.schlucke(kufen)
+heli.schlucke(kufe1)
+heli.schlucke(kufe2)
+heli.schlucke(scheibe4)
+heli.schlucke(heck1)
+heli.schlucke(heck2)
+heli.schlucke(rotor)
+heli.schlucke(rotor1)
+heli.drehenUm(-1305,320,-20)
+vkette.eckenSetzen(-1000,10,-980,30,-1000,30)
+vkette.füllfarbeSetzen(grün)
+mkette.breiteSetzen(100)
+mkette.linksObenSetzen(-1100,30)
+mkette.füllfarbeSetzen(grün)
+hkette.eckenSetzen(-1100,30,-1100,10,-1120,30)
+hkette.füllfarbeSetzen(grün)
+panzerh.eckenSetzen(-1090,60,-1120,30,-1090,30)
+panzerh.füllfarbeSetzen(grün)
+panzerv.eckenSetzen(-980,30,-1010,30,-1010,60)
+panzerv.füllfarbeSetzen(grün)
+panzerm.breiteSetzen(80)
+panzerm.höheSetzen(30)
+panzerm.linksObenSetzen(-1090,60)
+panzerm.füllfarbeSetzen(grün)
+panzero.breiteSetzen(60)
+panzero.linksObenSetzen(-1080,80)
+panzero.füllfarbeSetzen(grün)
+kanonenrohr.punkt1Setzen(-900,50)
+kanonenrohr.punkt2Setzen(-1050,50)
+kanonenrohr.linienStärkeSetzen(10)
+kanonenrohr.farbeSetzen(grün)
+schalldämpfer.breiteSetzen(25)
+schalldämpfer.höheSetzen(15)
+schalldämpfer.linksObenSetzen(-920,57)
+schalldämpfer.füllfarbeSetzen(grün)
+panzer.schlucke(vkette)
+panzer.schlucke(mkette)
+panzer.schlucke(hkette)
+panzer.schlucke(panzerv)
+panzer.schlucke(panzerm)
+panzer.schlucke(panzero)
+panzer.schlucke(panzerh)
+panzer.schlucke(kanonenrohr)
+panzer.schlucke(schalldämpfer)
+kanonenkugel.radiusSetzen(5)
+kanonenkugel.füllfarbeSetzen(grau)
+kanonenkugel.mittelpunktSetzen(-1111111,111111)
+panzer.verschieben(-100,0)
+
+wiederhole 745 mal
+    auto.verschieben(1,0)
+*wiederhole
+
+wiederhole 45 mal
+    baum.drehenUm(0,10,-1)
+*wiederhole
+
+wiederhole 400 mal
+    abschlepper.verschieben(2,0)
+    heck.verschieben(2,0)
+    gelblicht.füllfarbeSetzen(gelb)
+    gelblicht.füllfarbeSetzen(weiß)
+*wiederhole
+
+abschlepper.spiegleX()
+heck.spiegleX()
+heck.verschieben(75,0)
+
+wiederhole 70 mal
+    heck.verschieben(1,0)
+    gelblicht.füllfarbeSetzen(gelb)
+    gelblicht.füllfarbeSetzen(weiß)
+*wiederhole
+
+wiederhole 25 mal
+    gelblicht.füllfarbeSetzen(gelb)
+    gelblicht.füllfarbeSetzen(weiß)
+    heck.drehenUm(-245,40,-1)
+*wiederhole
+
+wiederhole 40 mal
+    auto.verschieben(-1,0)
+    gelblicht.füllfarbeSetzen(gelb)
+    gelblicht.füllfarbeSetzen(weiß)
+*wiederhole
+
+wiederhole 25 mal
+    auto.drehen(-1)
+    auto.verschieben(-1,0)
+    gelblicht.füllfarbeSetzen(gelb)
+    gelblicht.füllfarbeSetzen(weiß)
+*wiederhole
+
+wiederhole 25 mal
+    auto.verschieben(-2,1)
+    gelblicht.füllfarbeSetzen(gelb)
+    gelblicht.füllfarbeSetzen(weiß)
+*wiederhole
+
+
+wiederhole 25 mal
+    heck.drehenUm(-245,40,1)
+    auto.drehenUm(-245,40,1)
+    gelblicht.füllfarbeSetzen(gelb)
+    gelblicht.füllfarbeSetzen(weiß)
+*wiederhole
+
+wiederhole 50 mal
+    heck.verschieben(-1,0)
+    auto.verschieben(-1,0)
+    gelblicht.füllfarbeSetzen(gelb)
+    gelblicht.füllfarbeSetzen(weiß)
+*wiederhole
+
+wiederhole 30 mal
+    auto.verschieben(-1,0)
+*wiederhole
+
+wiederhole 420 mal
+    abschlepper.verschieben(-2,0)
+    heck.verschieben(-2,0)
+    gelblicht.füllfarbeSetzen(gelb)
+    auto.verschieben(-2,0)
+    gelblicht.füllfarbeSetzen(weiß)
+*wiederhole
+
+wiederhole 950 mal
+    polizei.verschieben(1,0)
+    blaulicht.füllfarbeSetzen(rot)
+    blaulicht.füllfarbeSetzen(blau)
+*wiederhole
+
+polizei.spiegleX()
+seil.punkt1Setzen(-190,40)
+seil.punkt2Setzen(10,40)
+
+wiederhole 45 mal
+    baum.drehenUm(0,10,1)
+    auto.verschieben(-1,0)
+*wiederhole
+
+seil.punkt1Setzen(0,0)
+seil.punkt2Setzen(0,0)
+
+wiederhole 475 mal
+    polizei.verschieben(-2,0)
+    blaulicht.füllfarbeSetzen(rot)
+    blaulicht.füllfarbeSetzen(blau)
+*wiederhole
+
+wiederhole 580 mal
+    meteor.verschieben(1,-1)
+*wiederhole
+
+wiederhole 45 mal
+    baum.drehenUm(0,10,-1)
+    meteor.verschieben(0,-3)
+*wiederhole
+
+wiederhole 15 mal
+    meteor.verschieben(0,-1)
+*wiederhole
+
+wiederhole 950 mal
+    meteor.verschieben(-1,0)
+*wiederhole
+
+wiederhole 1200 mal
+    heli.verschieben(1,0)
+*wiederhole
+
+wiederhole 20 mal
+    heli.drehenUm(105,320,1)
+*wiederhole
+
+seil.punkt1Setzen(-90,175)
+seil.punkt2Setzen(40,120)
+
+wiederhole 45 mal
+    baum.drehenUm(0,10,1)
+*wiederhole
+
+seil.punkt1Setzen(0,0)
+seil.punkt2Setzen(0,0)
+
+wiederhole 400 mal
+    heli.verschieben(0,1)
+*wiederhole
+
+polizei.spiegleX()
+
+wiederhole 245 mal
+    meteor.verschieben(4,0)
+    blaulicht.füllfarbeSetzen(rot)
+    polizei.verschieben(4,0)
+    blaulicht.füllfarbeSetzen(blau)
+*wiederhole
+
+wiederhole 45 mal
+    baum.drehenUm(0,10,-1)
+    meteor.verschieben(1,1)
+*wiederhole
+
+wiederhole 500 mal
+    meteor.verschieben(0,1)
+*wiederhole
+
+polizei.spiegleX()
+heli.verschieben(100,20)
+
+wiederhole 250 mal
+    meteor.verschieben(0,-2)
+    heli.verschieben(0,-2)
+*wiederhole
+
+wiederhole 45 mal
+    heli.drehenUm(60,95,1)
+    meteor.verschieben(-1,-1)
+*wiederhole
+
+wiederhole 245 mal
+    meteor.verschieben(-4,0)
+    blaulicht.füllfarbeSetzen(rot)
+    polizei.verschieben(-4,0)
+    blaulicht.füllfarbeSetzen(blau)
+*wiederhole
+
+wiederhole 650 mal
+    panzer.verschieben(1,0)
+*wiederhole
+
+kanonenkugel.mittelpunktSetzen(-358,50)
+
+wiederhole 275 mal
+    kanonenkugel.verschieben(1,0)
+*wiederhole
+
+kanonenkugel.verschieben(-1111111,99999)
+
+wiederhole 150 mal
+    heli.drehenUm(-700,10,1)
+*wiederhole
+
+wiederhole 400 mal
+    panzer.verschieben(1,0)
+*wiederhole
+
+wiederhole 70 mal
+    panzer.verschieben(1,0)
+    baum.drehenUm(0,-5,-1)
+*wiederhole
+
+baum.verschieben(0,-5)
+
+wiederhole 1500 mal
+    panzer.verschieben(-1,0)
+*wiederhole
+
+baum.verschieben(0,-200)
+baum.drehenUm(0,-190,115)
+
+wiederhole 180 mal
+    baum.verschieben(0,1)
+*wiederhole
