@@ -2,4 +2,5 @@ i:Integer
 r:Rechteck
 wiederhole solange i < 10
     r.verschieben(1,0)
+    i = i + 1
 *wiederhole

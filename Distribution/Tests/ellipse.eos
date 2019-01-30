@@ -4,7 +4,7 @@ e.radiusYSetzen(40)
 e.randartSetzen(gestrichpunktelt)
 e.verschieben(20,20)
 wiederhole 10 mal
-    e.drehenAn(10,0,2)
+    e.drehenUm(10,0,2)
 *wiederhole
 e.randartSetzen(gestrichelt)
 e.randartSetzen(unsichtbar)

@@ -200,9 +200,10 @@ public class Picture2D extends Picture {
         g.setTransform(baseTrans);
         g.translate(mm2unitd(transform.getdx()), -mm2unitd(transform.getdy()));
         g.rotate(-transform.getAngle()); 
-        g.scale(transform.getScale(), transform.getScale());
         if (transform.getMirrorX()) {
-            g.scale(-1,1);
+            g.scale(-transform.getScale(),transform.getScale());
+        } else {
+        	g.scale(transform.getScale(),transform.getScale());
         }
     }
     @Override

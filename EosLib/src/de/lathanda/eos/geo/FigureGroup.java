@@ -35,4 +35,9 @@ interface FigureGroup {
      * @return Die Figurengruppe oder null, wenn es ein Fenster ist.
      */
     Group getGroup();
+    /**
+     * 
+     * @return Liefert die Übergeordnete Gruppe
+     */
+    FigureGroup getParentGroup();
 }

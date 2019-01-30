@@ -74,9 +74,9 @@ public class Welt {
     	try {
     		world.load(name);
     	} catch (WorldLoadFailedException cwe) {
-    		throw new KeinSteinVorhandenAusnahme(cwe);    		
+    		throw new WeltKorruptAusnahme(cwe);    		
     	} catch (WorldNotFoundException wnfe) {
-    		throw new SteinFeststehendAusnahme(wnfe);    		
+    		throw new WeltNichtGefundenAusnahme(wnfe);    		
 		}
     }
     public void ziegelVerstreuen(int links, int oben, int rechts, int unten, double dichte) {

@@ -123,7 +123,7 @@ public class Program implements AbstractProgram {
         	uc.bind(env);
         } 
         for(UserClass uc : userclass.values()) { //check for storage cycles
-        	uc.checkCyclicStorage();
+			uc.checkCyclicStorage();
         } 
         
         for(SubRoutine s : sub) { //register all sub routines
@@ -249,7 +249,6 @@ public class Program implements AbstractProgram {
 			machine.reinit();
 			compile(machine);
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new TranslationException(new CompilerError("Compile.Error", e.getLocalizedMessage()));
 		}
 	}
