@@ -216,14 +216,11 @@ public abstract class Figure implements Cloneable, Readout {
         }
         transform = relativeTo.transform.transformBack(transform);
     }
-    protected void restoreTransformation(Figure relativeTo) {
-        transform = transform.transform(relativeTo.transform);
-        if (group != null) {
-            Figure parent = group.getGroup();
-            while (parent != null) {
-                transform = transform.transform(parent.transform);
-                parent = parent.group.getGroup();
-            }
+    protected void restoreTransformation(Group relativeTo) {
+        Group parent = relativeTo; 
+        while (parent != null) {
+        	transform = transform.transform(relativeTo.transform);
+        	parent = parent.getGroup();
         }
     }    
     //******************

@@ -249,6 +249,7 @@ public class Program implements AbstractProgram {
 			machine.reinit();
 			compile(machine);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new TranslationException(new CompilerError("Compile.Error", e.getLocalizedMessage()));
 		}
 	}

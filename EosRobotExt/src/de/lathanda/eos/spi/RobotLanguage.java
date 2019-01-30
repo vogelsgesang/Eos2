@@ -24,7 +24,7 @@ public class RobotLanguage extends Language implements LanguageProvider {
 	public void registerLanguage(LanguageManager lm) throws IOException {
 		try {
     	//init JOGL to avoid wait time before first call
-			GLProfile.initSingleton();
+			GLProfile.get(GLProfile.GL2);
 		} catch (Throwable t) {
             JOptionPane.showMessageDialog(null, Messages.getString("Export.Error.Title"),
                     t.getLocalizedMessage(),

@@ -728,7 +728,7 @@ Expression Expression() :
 {Expression expression; Expression b; open();}
 {
   expression = AndExpression() ( 
-    "oder" b=AndExpression() {close(expression);open();expression = expression.or(b);}
+    "oder" b=AndExpression() {expression = expression.or(b);}
   )*  
   {
     close(expression);

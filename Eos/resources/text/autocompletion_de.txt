@@ -94,7 +94,7 @@ figure.mirrored            = $gespiegelt#gespiegelt:Wahrheitswert<br>Ist die Fig
 filledfigure.f\u00fcllartsetzen  = @f\u00fcllartSetzen(art)#f\u00fcllartSetzen(art:F\u00fcllart)<br>Setzt die Art wie die Figur gef\u00fcllt wird.
 filledfigure.f\u00fcllfarbesetzen = @f\u00fcllfarbeSetzen(farbe)#f\u00fcllfarbeSetzen(farbe:Farbe)<br>Setzt die Farbe mit der die Figur gef\u00fcllt wird.
 filledfigure.f\u00fcllartlesen   = @f\u00fcllartLesen()#f\u00fcllartLesen():F\u00fcllart<br>Liefert die F\u00fcllart der Figur.
-filledfigure.f\u00fcllfarbelesen = @f\u00fcllfarbeLesen()#f\u00fcllfarbeLesen()Farbe<br>Liefert die Farbe mit der die Figur gef\u00fcllt wird.
+filledfigure.f\u00fcllfarbelesen = @f\u00fcllfarbeLesen()#f\u00fcllfarbeLesen():Farbe<br>Liefert die Farbe mit der die Figur gef\u00fcllt wird.
 filledfigure.f\u00fcllart        = %f\u00fcllart#f\u00fcllart:F\u00fcllart<br>F\u00fcllart der Figur.
 filledfigure.f\u00fcllfarbe      = %f\u00fcllfarbe#f\u00fcllfarbe:Farbe<br>F\u00fcllfarbe der Figur
 
@@ -215,7 +215,7 @@ grafic.ladebild            = @ladeBild(dateiname)#ladeBild(dateiname:Zeichenkett
 grafic.bildstrecken        = @bildStrecken()#bildStrecken()<br>Das Bild wird auf das Rechteck gestreckt. Das Bild wird verzerrt.
 grafic.bildabschneiden     = @bildAbschneiden()#bildAbschneiden()<br>Das Bild wird \u00fcber das Rechteck gelegt. Wobei Teile des Bildes nicht genutzt werden. 
 grafic.bildeinpassen       = @bildEinpassen()#bildEinpassen()<br> Das Bild wird so gro\u00dfe wie m\u00f6glich bis es den Rand erreicht. Das Rechteck wird nicht vollst\u00e4ndig bedeckt.
-grafic.skalierung          = $skalierung#skalierung:F\u00fc"llmodus<br>Legt fest wie das Rechteck mit dem Bild gef\u00fcllt wird. 
+grafic.skalierung          = $skalierung#skalierung:F\u00fcllmodus<br>Legt fest wie das Rechteck mit dem Bild gef\u00fcllt wird. 
 grafic.bild                = $bild#bild:Zeichenkette<br>Name des Bilddatei.
 
 plotter.stiftab             = @stiftAb()#stiftAb()<br>Startet einen Zeichenvorgang.

@@ -9,6 +9,7 @@ import de.lathanda.eos.base.Picture;
 import de.lathanda.eos.base.layout.BalancePoint;
 import de.lathanda.eos.base.layout.BoundingBox;
 import de.lathanda.eos.base.layout.Transform;
+import de.lathanda.eos.geo.exceptions.RecursiveGroupException;
 import de.lathanda.eos.util.ConcurrentLinkedList;
 
 /**
@@ -36,6 +37,16 @@ public class Group extends Figure implements FigureGroup {
 
 	@Override
 	public void addFigure(Figure figure) {
+		//check recursive loop		
+		Group grp = this.getGroup();
+		while (grp != null) {
+			if (grp == this) {
+				throw new RecursiveGroupException();
+			} else {
+				grp = grp.getGroup();
+			}
+		}
+		
 		figure.replaceGroup(this);
 		members.add(figure);
 		figure.changeTransformation(this);
