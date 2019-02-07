@@ -34,6 +34,7 @@ import de.lathanda.eos.robot.exceptions.CubeImmutableException;
 import de.lathanda.eos.robot.exceptions.CubeMissingException;
 import de.lathanda.eos.robot.exceptions.RobotEntranceMissingException;
 import de.lathanda.eos.robot.exceptions.RobotNoSpaceException;
+import de.lathanda.eos.robot.exceptions.UnknownWorldVersionException;
 import de.lathanda.eos.robot.exceptions.WorldLoadFailedException;
 import de.lathanda.eos.robot.exceptions.WorldNotFoundException;
 import de.lathanda.eos.robot.gui.Camera;
@@ -114,7 +115,7 @@ public class World implements CleanupListener, Readout {
 	 * @throws WorldLoadFailedException
 	 * @throws WorldNotFoundException
 	 */
-	public void load(String filename) throws WorldLoadFailedException, WorldNotFoundException {
+	public void load(String filename) throws WorldLoadFailedException, WorldNotFoundException, UnknownWorldVersionException {
 		
 		try (InputStream worldStream = ResourceLoader.getResourceAsStream(filename)) {
 			load(worldStream);
@@ -131,7 +132,7 @@ public class World implements CleanupListener, Readout {
 	 * @throws SAXException
 	 * @throws IOException
 	 */
-	public void load(InputStream worldStream) throws WorldLoadFailedException {
+	public void load(InputStream worldStream) throws WorldLoadFailedException, UnknownWorldVersionException {
 		synchronized (columns) {
 			columns.clear();
 		}
@@ -159,7 +160,7 @@ public class World implements CleanupListener, Readout {
 				parseVersion2(world);
 				break;
 			default:
-				throw new WorldLoadFailedException();
+				throw new UnknownWorldVersionException();
 			}
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			throw new WorldLoadFailedException();

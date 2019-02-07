@@ -7,6 +7,7 @@ import de.lathanda.eos.robot.exceptions.CubeImmutableException;
 import de.lathanda.eos.robot.exceptions.CubeMissingException;
 import de.lathanda.eos.robot.exceptions.RobotEntranceMissingException;
 import de.lathanda.eos.robot.exceptions.RobotNoSpaceException;
+import de.lathanda.eos.robot.exceptions.UnknownWorldVersionException;
 import de.lathanda.eos.robot.exceptions.WorldLoadFailedException;
 import de.lathanda.eos.robot.exceptions.WorldNotFoundException;
 import eos.ausnahmen.EingangFehltAusnahme;
@@ -30,7 +31,7 @@ public class Welt {
     	this();
     	try {
     		world.load(filename);
-    	} catch (WorldLoadFailedException cwe) {
+    	} catch (UnknownWorldVersionException | WorldLoadFailedException cwe) {
     		throw new WeltKorruptAusnahme(cwe);
     	} catch (WorldNotFoundException wnfe) {
     		throw new WeltNichtGefundenAusnahme(wnfe);
@@ -73,7 +74,7 @@ public class Welt {
     public void laden(String name) {
     	try {
     		world.load(name);
-    	} catch (WorldLoadFailedException cwe) {
+    	} catch (UnknownWorldVersionException | WorldLoadFailedException cwe) {
     		throw new WeltKorruptAusnahme(cwe);    		
     	} catch (WorldNotFoundException wnfe) {
     		throw new WeltNichtGefundenAusnahme(wnfe);    		
