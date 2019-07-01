@@ -71,8 +71,8 @@ public class Program implements AbstractProgram {
     }
     @Override
     public synchronized void parse(String path) throws TranslationException {
-		parser = EosParser.create(source);
 		try {
+			parser = EosParser.create(source);
 			parser.Parse(this, path);			
 		} catch (ParseException pe) {
 			throw new TranslationException(handleParseException(pe));

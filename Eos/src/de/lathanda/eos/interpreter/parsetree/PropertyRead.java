@@ -49,7 +49,7 @@ public class PropertyRead extends Expression {
             if (!type.isUnknown()) {
                 //variable exists
                 isVariable = true;
-            } else if (with != null) {
+            } else if (with != null && this != with) {
                 //try with
                 target = with;
                 target.resolveNamesAndTypes(null, env);
