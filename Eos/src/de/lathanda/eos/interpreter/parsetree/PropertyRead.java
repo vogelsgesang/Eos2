@@ -18,6 +18,7 @@ public class PropertyRead extends Expression {
     private String member;
     private MethodType methodType;
     private boolean isVariable;
+    protected boolean resolved = false;
 
     public PropertyRead(Expression target, String member) {
         this.target = target;
@@ -40,6 +41,7 @@ public class PropertyRead extends Expression {
 
     @Override
     public void resolveNamesAndTypes(Expression with, Environment env) {
+    	if (resolved) return; else resolved = true;
         if (target != null) {
             //access member
             accessMember(env);
@@ -49,7 +51,7 @@ public class PropertyRead extends Expression {
             if (!type.isUnknown()) {
                 //variable exists
                 isVariable = true;
-            } else if (with != null && this != with) {
+            } else if (with != null) {
                 //try with
                 target = with;
                 target.resolveNamesAndTypes(null, env);

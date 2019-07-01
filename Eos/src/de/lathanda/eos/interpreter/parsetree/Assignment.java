@@ -13,6 +13,7 @@ public class Assignment extends Node {
 
     private final Expression right;
     private final PropertyWrite left;
+    protected boolean resolved = false;
 
     public Assignment(PropertyWrite left, Expression right) {
         this.left = left;
@@ -36,6 +37,7 @@ public class Assignment extends Node {
 
     @Override
     public void resolveNamesAndTypes(Expression with, Environment env) {
+    	if (resolved) return; else resolved = true;
         right.resolveNamesAndTypes(with, env);
         left.resolveNamesAndTypes(with, env);
         if (!left.getType().checkType(right.getType())) {
