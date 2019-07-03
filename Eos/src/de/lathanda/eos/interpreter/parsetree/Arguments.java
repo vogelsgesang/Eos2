@@ -16,7 +16,6 @@ public class Arguments extends Node {
 
     private final LinkedList<Expression> arguments;
     private Type[] types;
-    protected boolean resolved = false;
 
     public Arguments() {
         arguments = new LinkedList<>();
@@ -36,7 +35,6 @@ public class Arguments extends Node {
 
     @Override
     public void resolveNamesAndTypes(Expression with, Environment env) {
-    	if (resolved) return; else resolved = true;    	
         types = new Type[arguments.size()];
         for (int i = 0; i < arguments.size(); i++) {
             arguments.get(i).resolveNamesAndTypes(with, env);

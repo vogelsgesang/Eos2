@@ -23,7 +23,6 @@ public class Method extends Node implements ProgramUnit {
 	private UserMethodType methodType;
 	private final UserClass uc;
 	private String signature;
-    protected boolean resolved = false;
 
 	public Method(String name, Parameters parameters, Sequence sequence, Type returnType, UserClass uc) {
 		this.name = name;
@@ -65,8 +64,6 @@ public class Method extends Node implements ProgramUnit {
 
 	@Override
 	public void resolveNamesAndTypes(Expression with, Environment env) {
-    	if (resolved) return; else resolved = true;
-		
 		if (parameters != null) {
 			parameters.registerParameters(env);
 		}

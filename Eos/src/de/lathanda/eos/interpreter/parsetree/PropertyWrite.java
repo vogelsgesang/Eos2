@@ -18,7 +18,6 @@ public class PropertyWrite extends Node {
     private final String member;
     private MethodType methodType;
     private boolean isVariable;
-    protected boolean resolved = false;
 
     public PropertyWrite(Expression target, String member) {
         this.target = target;
@@ -43,8 +42,7 @@ public class PropertyWrite extends Node {
 
     @Override
     public void resolveNamesAndTypes(Expression with, Environment env) {
-    	if (resolved) return; else resolved = true;    	
-        if (target != null) {
+    	if (target != null) {
             //access member
             target.resolveNamesAndTypes(with, env);
             accessMember(env);
@@ -68,7 +66,6 @@ public class PropertyWrite extends Node {
     private void accessMember(Environment env) {
         //access member
         type = target.getType();
-        target.resolveNamesAndTypes(null, env);
         methodType = type.getAssignProperty(member);
         isVariable = false;
         if (methodType == null) {

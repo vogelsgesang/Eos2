@@ -18,7 +18,6 @@ public class PropertyRead extends Expression {
     private String member;
     private MethodType methodType;
     private boolean isVariable;
-    protected boolean resolved = false;
 
     public PropertyRead(Expression target, String member) {
         this.target = target;
@@ -41,9 +40,9 @@ public class PropertyRead extends Expression {
 
     @Override
     public void resolveNamesAndTypes(Expression with, Environment env) {
-    	if (resolved) return; else resolved = true;
         if (target != null) {
             //access member
+            target.resolveNamesAndTypes(with, env);        	
             accessMember(env);
         } else {
             //try direct variable
@@ -54,7 +53,7 @@ public class PropertyRead extends Expression {
             } else if (with != null) {
                 //try with
                 target = with;
-                target.resolveNamesAndTypes(null, env);
+                target.resolveNamesAndTypes(null, env);                
                 //access member
                 accessMember(env);
             } else if (member.equals(LanguageManager.getInstance().getDefaultWindowName())) {
@@ -74,7 +73,6 @@ public class PropertyRead extends Expression {
 
     private void accessMember(Environment env) {
         //access member
-        target.resolveNamesAndTypes(null, env);
         type = target.getType();
         methodType = type.getReadProperty(member);
         isVariable = false;

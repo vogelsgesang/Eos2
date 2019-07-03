@@ -76,7 +76,7 @@ public class Invoke extends Expression {
                     } else {
                         //apply with
                         target = with;
-                        target.resolveNamesAndTypes(with, env);
+                        target.resolveNamesAndTypes(null, env);
                     }
                 }
             }
