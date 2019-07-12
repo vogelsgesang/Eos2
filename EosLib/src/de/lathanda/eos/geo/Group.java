@@ -37,7 +37,7 @@ public class Group extends Figure implements FigureGroup {
 
 	@Override
 	public void addFigure(Figure figure) {
-		//check recursive loop		
+		//check recursive loop (error check add group within itself)		
 		FigureGroup grp = this;
 		while (grp != null) {
 			if (grp == figure) {
@@ -47,6 +47,7 @@ public class Group extends Figure implements FigureGroup {
 			}
 		}
 		
+		//add is safe, now do it
 		figure.replaceGroup(this);
 		members.add(figure);
 		figure.changeTransformation(this);
@@ -61,7 +62,11 @@ public class Group extends Figure implements FigureGroup {
 	@Override
 	public void removeFigure(Figure go) {
 		members.remove(go);
-		go.restoreTransformation(this);
+		Group grp = this;
+		while (grp != null) {
+			go.restoreTransformation(grp);
+			grp = grp.getParentGroup().getGroup();
+		}
 		fireLayoutChanged();
 	}
 
