@@ -324,6 +324,7 @@ public class SourceCode extends DefaultStyledDocument
 	public void setToggleBreakpoint(int position) {
 		Element root = getDefaultRootElement();
 		int linenumber = root.getElementIndex(position) + 1;
+		if (linenumber < 1) return;
 		if (breakpoints.contains(linenumber)) {
 			breakpoints.remove(linenumber);
 			if (machine != null) {
