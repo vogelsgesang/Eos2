@@ -33,6 +33,7 @@ import javax.xml.transform.TransformerException;
 
 import de.lathanda.eos.common.gui.Messages;
 import de.lathanda.eos.robot.World;
+import de.lathanda.eos.robot.World.IntRange;
 import de.lathanda.eos.robot.exceptions.RobotException;
 import de.lathanda.eos.robot.gui.WorldPanelOpenGLNoShader;
 import de.lathanda.eos.spi.RobotLanguage;
@@ -294,6 +295,12 @@ public class WorldEditor extends JFrame implements KeyListener, DocumentListener
             	activeFile = filechooser.getSelectedFile();
             	try (FileInputStream fis = new FileInputStream(filechooser.getSelectedFile())) {
             		world.load(fis);
+            		IntRange xr = world.getxRange();
+            		IntRange yr = world.getyRange();
+            		txtMinX.setText(String.valueOf(xr.getMin()));
+            		txtMaxX.setText(String.valueOf(xr.getMax()));
+            		txtMinY.setText(String.valueOf(yr.getMin()));
+            		txtMaxY.setText(String.valueOf(yr.getMax()));
             	}
             }
         } catch (RobotException | IOException io) {
