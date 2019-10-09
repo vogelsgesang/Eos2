@@ -468,7 +468,7 @@ public class World implements CleanupListener, Readout {
 		if (maxX != null && co.getX() > maxX) {
 			return BORDER;
 		}
-		if (maxY != null && co.getY() > maxX) {
+		if (maxY != null && co.getY() > maxY) {
 			return BORDER;
 		}
 		Column c = null;
